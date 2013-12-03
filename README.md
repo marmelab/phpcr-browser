@@ -3,6 +3,8 @@ PHPCR Browser
 
 PHPCR Browser provides web interface to explore PHPCR repositories. The current implementation supports Jackalope Jackrabbit.
 
+![screenshot](http://marmelab.com/phpcr-browser/img/screenshot.png)
+
 Installation
 ------------
 
