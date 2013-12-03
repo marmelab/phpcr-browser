@@ -43,4 +43,4 @@ You can also copy the `config/prod.yml-dist` file as `config/prod.yml` to get th
 License
 -------
 
-This bundle is available under the MIT License, courtesy of [marmelab](http://marmelab.com).
+This application is available under the MIT License, courtesy of [marmelab](http://marmelab.com).
