@@ -1,0 +1,67 @@
+{% extends 'layout.twig.html' %}
+
+{% block content %}
+<div ng-app="browserApp">
+  <div ng-init="repository='{{ repository }}';workspace='{{ workspace }}';path='{{ path }}';baseUrl='{{ path('browser.repositories') }}'">
+<div style="padding-left: 20px;padding-right:20px;">
+  <div class="row">
+    <div class="col-lg-12" ng-controller="BreadcrumbCtrl">
+     <a href="{{ path('browser.workspaces', { 'repository': repository } ) }}" class="btn btn-primary">
+      <span class="glyphicon glyphicon-circle-arrow-left"></span> Go back to {{ repository }}
+    </a>
+    <a href="{{ path('browser.rootNode', { 'repository': repository, 'workspace': workspace } ) }}" class="btn btn-info">
+      Workspace {{ workspace }}
+    </a>
+ 
+    <ol class="breadcrumb">
+      <li data-ng-repeat="b in model.breadcrumb" breadcrumb-element></li>
+    </ol>
+  </div>
+</div>
+</div>
+<div id="tree-sidebar" data-ng-controller="TreeCtrl">
+    <div class="scrollable">
+      <ul class="tree">
+         <li data-ng-repeat="node in tree" tree-node></li>
+      </ul>
+  </div>
+</div>
+<div id="content" data-ng-controller="PropertiesCtrl"> 
+  <div class="scrollable">
+    <div id="first-load" data-ng-show="!_first_load">
+      <span class="glyphicon glyphicon-refresh"></span>
+      <p class="lead">Loading...</p>
+    </div>    
+    <table class="table table-striped table-bordered table-condensed table-hover" data-ng-hide="hasProperties() || !_first_load">
+        <thead>
+            <th>Property name</th>
+            <th>Property value</th>
+        </thead>
+        <tbody>
+            <tr data-ng-repeat="(name,value) in properties | orderBy:'name'">
+              <td data-ng-bind="name"></td>
+              <td property-value></td>
+            </tr>
+        </tbody>
+    </table>
+  </div>
+</div>
+</div>
+</div>
+{% endblock content %}
+{% block javascript %}
+  <script src="/components/angular/angular.min.js"></script>
+  <script src="/components/lodash/dist/lodash.min.js"></script>
+  <script src="/components/restangular/dist/restangular.min.js"></script>
+
+  <script src="/assets/js/browser/app.js"></script>
+  <script src="/assets/js/browser/service/recursionHelper.js"></script>
+  <script src="/assets/js/browser/service/locationProvider.js"></script>
+  <script src="/assets/js/browser/service/api.js"></script>
+  <script src="/assets/js/browser/controller/tree.js"></script>
+  <script src="/assets/js/browser/controller/properties.js"></script>
+  <script src="/assets/js/browser/controller/breadcrumb.js"></script>
+  <script src="/assets/js/browser/directive/breadcrumbElement.js"></script>
+  <script src="/assets/js/browser/directive/propertyValue.js"></script>
+  <script src="/assets/js/browser/directive/treeNode.js"></script>
+{% endblock javascript %}

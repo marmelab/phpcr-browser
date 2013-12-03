@@ -1,0 +1,161 @@
+body {
+  padding-top: 70px;
+}
+
+/* Adapted from http://jsfiddle.net/Fh47n/ */
+.tree li {
+    margin: 0px 0;
+    list-style-type: none;
+    position: relative;
+    margin-left: -15px;
+}
+
+.tree li::before{
+    content: '';
+    position: absolute; 
+    top: 0;
+    width: 1px; 
+    height: 100%;
+    right: auto; 
+    left: -20px;
+    border-left: 1px solid #ccc;
+    bottom: 50px;
+}
+.tree li::after{
+    content: '';
+    position: absolute; 
+    top: 10px; 
+    width: 20px; 
+    height: 20px;
+    right: auto; 
+    left: -20px;
+    border-top: 1px solid #ccc;
+}
+.tree li a{
+    display: inline-block;
+    /*border: 1px solid #ccc;*/
+    padding: 2px 2px;
+    text-decoration: none;
+    color: #666;
+    font-family: arial, verdana, tahoma;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.tree li .active{
+  color:#ff7373;
+}
+
+.tree li a.active:hover{
+  color:#ff7373;
+  text-decoration: none;
+}
+
+.tree li .glyphicon-folder-open, .glyphicon-folder-close{  
+    cursor: pointer;
+}
+
+/*Remove connectors before root*/
+.tree > ul > li::before, .tree > ul > li::after{
+    border: 0;
+}
+/*Remove connectors after last child*/
+.tree li:last-child::before{ 
+      height: 10px;
+}
+
+/*Time for some hover effects*/
+/*We will apply the hover effect the the lineage of the element also*/
+.tree li a:hover, .tree li a:hover+ul li a {
+    text-decoration: underline;
+}
+/*Connector styles on hover*/
+.tree li a:hover+ul li::after, 
+.tree li a:hover+ul li::before, 
+.tree li a:hover+ul::before, 
+.tree li a:hover+ul ul::before{
+    border-color:  #94a0b4;
+}
+
+div#tree-sidebar{
+  padding: 10px;
+  padding-bottom: 0px;
+  border: 1px solid #ccc;
+  background: #fff;
+  position: fixed;
+  top: 120px;
+  left: 0px;
+  bottom: 0px;
+  width: 32%;
+  -webkit-user-select: none;  
+  -moz-user-select: none;    
+  -ms-user-select: none;      
+  user-select: none;
+  cursor: default;
+}
+div#content{
+  background-color: #eeeeee;
+  padding: 5px;
+  padding-bottom: 0px;
+  border-top: 1px solid #ccc;
+  position: fixed;
+  top: 120px;
+  bottom:0px;
+  margin-left: 32%;
+  width:68%;
+  -moz-box-shadow: inset 1px 1px 30px -10px #656565;
+  -webkit-box-shadow: inset 1px 1px 30px -10px #656565;
+  -o-box-shadow: inset 1px 1px 30px -10px #656565;
+  box-shadow: inset 1px 1px 30px -10px #656565;
+  filter:progid:DXImageTransform.Microsoft.Shadow(color=#656565, Direction=134, Strength=30);
+}
+
+div#content table{
+  background-color: #fff;
+  margin-bottom: 5px;
+}
+
+div.scrollable {
+  overflow: scroll;
+  
+  height: 100%;
+}
+
+div#first-load{
+  text-align: center;
+  font-size: 50pt;
+  padding-top: 100px;
+}
+
+.breadcrumb{
+  display:inline-block;
+  background: transparent;
+  padding: 0px;
+  margin: 0px;
+}
+
+.breadcrumb li a{
+  padding: 8px 8px;
+  padding-bottom: 10px;
+  background: #eee;
+}
+
+.breadcrumb li:first-child{
+  padding-left: 6px;
+}
+
+.breadcrumb li:last-child{
+  padding-right: 6px;
+}
+
+.breadcrumb li a{
+  color: #aaa;
+}
+
+.navbar-inverse .navbar-brand{
+  color: #fff;
+}
+
+.panel, .btn{
+  border-radius: 0px;
+}

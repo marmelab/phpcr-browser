@@ -1,0 +1,11 @@
+{
+  "name": "marmelab/phpcr-browser",
+  "version": "0.1",
+  "dependencies": {
+    "bootstrap": "3.0.2",
+    "html5shiv": "3.7.0",
+    "respond": "master",
+    "angular": "1.2.3",
+    "restangular": "1.1.8"
+  }
+}

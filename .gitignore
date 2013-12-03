@@ -1,0 +1,4 @@
+web/components/
+vendor/
+config/dev.yml
+config/prod.yml

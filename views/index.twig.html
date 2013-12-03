@@ -1,0 +1,41 @@
+{% extends 'layout.twig.html' %}
+
+{% block content %}
+<div class="container">
+	<div class="row">
+		<div class="col-lg-12">
+			<ol class="breadcrumb">
+				<li>
+					 <span class="glyphicon glyphicon-map-marker"></span>
+					 <a href="{{ path('browser.repositories') }}">Home</a>
+				</li>
+			</ol>
+		</div>
+	</div>
+	<div class="row">
+		<h1 class="text-center">Repositories</h1>
+		<hr/>
+	</div>
+	<div class="row">
+	{% for repository in repositories %}
+		<div class="col-lg-4">
+			<div class="panel panel-default">
+			  <div class="panel-heading">
+			  	<span class="glyphicon glyphicon-hdd"></span> Repository ({{ repository.factoryAlias }})
+			  </div>
+			  <div class="panel-body">
+			    <p class="lead text-center">
+			    	{{ repository.name }}
+			    </p>
+			  </div>
+			  <div class="panel-footer">
+			  	<a href="{{ path('browser.workspaces', { 'repository': repository.name } ) }}" class="btn btn-primary btn-block"> 
+			  		<span class="glyphicon glyphicon-log-in"></span> Open
+			  	</a>
+			  </div>
+			</div>
+		</div>
+	{% endfor %}
+	</div>
+</div>
+{% endblock content %}

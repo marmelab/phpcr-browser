@@ -1,0 +1,17 @@
+{
+    "name": "marmelab/phpcr-browser",
+    "description": "PHPCR Browser provides web interface to explore PHPCR repositories.",
+    "version": "0.1",
+    "require": {
+        "silex/silex": "dev-master",
+        "symfony/yaml": "dev-master",
+        "twig/twig": "dev-master",
+        "symfony/twig-bridge": "2.3.*",
+        "jackalope/jackalope-jackrabbit": "dev-master",
+        "igorw/config-service-provider": "~1.2"
+    },
+
+    "autoload": {
+        "psr-0": {"PHPCRBrowser\\": "src/"}
+    }
+}

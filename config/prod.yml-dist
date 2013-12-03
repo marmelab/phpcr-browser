@@ -1,0 +1,7 @@
+phpcr_repositories:
+    'Repository test':
+        factory: jackalope.jackrabbit
+        parameters:
+            jackalope.jackrabbit_uri: 'http://localhost:8080/server'
+            credentials.username: admin
+            credentials.password: admin
