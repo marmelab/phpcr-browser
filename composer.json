@@ -1,6 +1,7 @@
 {
     "name": "marmelab/phpcr-browser",
     "description": "PHPCR Browser provides web interface to explore PHPCR repositories.",
+    "license": "MIT",
     "version": "0.1",
     "require": {
         "silex/silex": "dev-master",
