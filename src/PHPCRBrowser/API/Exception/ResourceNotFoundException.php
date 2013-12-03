@@ -10,7 +10,7 @@
 namespace PHPCRBrowser\API\Exception;
 
 /**
- * The ResourceNotFoundException is thrown when a resource is not available througt the API
+ * The ResourceNotFoundException is thrown when a resource is not available through the API
  *
  * @author  Robin Bressan <robin@bmarmelab.comn>
  *

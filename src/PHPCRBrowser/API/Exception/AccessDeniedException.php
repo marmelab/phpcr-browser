@@ -10,7 +10,7 @@
 namespace PHPCRBrowser\API\Exception;
 
 /**
- * The AccessDeniedException is thrown when a resource is not available througt the API because of invalid credentials
+ * The AccessDeniedException is thrown when a resource is not available through the API because of invalid credentials
  *
  * @author  Robin Bressan <robin@bmarmelab.comn>
  *

@@ -44,7 +44,7 @@ class RepositoryCollection implements \IteratorAggregate
     /**
      * Add a Repository to the collection
      *
-     * @param Repository $repostory The repository
+     * @param Repository $repository The repository
      *
      * @return RepositoryCollection $this The used collection
      *
@@ -63,7 +63,7 @@ class RepositoryCollection implements \IteratorAggregate
      *
      * @return boolean Returns true in case of success
      *
-     * @thrown DomainException if the repository does not exist in the collection
+     * @throws RepositoryCollectionUnknownKeyException if the repository does not exist in the collection
      *
      * @api
      */
@@ -83,9 +83,9 @@ class RepositoryCollection implements \IteratorAggregate
      *
      * @param string $name The name of the repository
      *
-     * @return Repository The found reopsitory
+     * @return Repository The found repository
      *
-     * @thrown DomainException if the repository does not exist in the collection
+     * @throws RepositoryCollectionUnknownKeyException if the repository does not exist in the collection
      *
      * @api
      */
