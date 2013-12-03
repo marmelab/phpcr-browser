@@ -27,7 +27,7 @@ class Repository
     private $repository;
 
     /**
-     * Factory class used to instanciate the PHPCR Repository
+     * Factory class used to instantiate the PHPCR Repository
      *
      * @var string $factoryClass The factory class
      */
@@ -44,7 +44,7 @@ class Repository
      * Repository constructor
      *
      * @param string $name         Repository's name
-     * @param string $factoryClass The factory class needed to instanciate our PHPCR respository
+     * @param string $factoryClass The factory class needed to instantiate our PHPCR repository
      * @param string $factoryAlias The factory alias needed for display purposes
      * @param array  $parameters   Parameters of the repository
      *
@@ -131,7 +131,7 @@ class Repository
      * Call bridge with the wrapped PHPCR Repository
      *
      * @param string $funcName Function's name
-     * @param array  $args     Funtion's arguments
+     * @param array  $args     Function's arguments
      */
     public function __call($funcName, $args)
     {

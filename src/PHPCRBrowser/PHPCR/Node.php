@@ -72,7 +72,7 @@ class Node
      * Call bridge with the wrapped PHPCR Node
      *
      * @param string $funcName Function's name
-     * @param array  $args     Funtion's arguments
+     * @param array  $args     Function's arguments
      */
     public function __call($funcName, $args)
     {

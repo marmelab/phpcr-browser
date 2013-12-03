@@ -10,9 +10,9 @@
 namespace PHPCRBrowser\PHPCR;
 
 /**
- * Session is a wrapper for a PHPCR Seesion
+ * Session is a wrapper for a PHPCR Session
  * Helps us to add metadata to it and provides more control possibilities
- * Further it contains our custom Repositorys
+ * Further it contains our custom Repositories
  *
  * @author  Robin Bressan <robin@bmarmelab.comn>
  *
@@ -37,8 +37,8 @@ class Session
     /**
      * Session constructor
      *
-     * @param Repository The repository to log in
-     * @param string $workspace The workspace's name
+     * @param Repository $repository The repository to log in
+     * @param string $workspaceName The workspace's name
      *
      * @api
      */
@@ -91,9 +91,9 @@ class Session
     /**
     * @see \PHPCR\SessionInterface::getNodesByIdentifiers
     */
-    public function getNodesByIndentifiers($ids)
+    public function getNodesByIdentifiers($ids)
     {
-        $nodes = $this->session->getNodesByIndentifiers($ids);
+        $nodes = $this->session->getNodesByIdentifiers($ids);
         foreach ($nodes as $name=>$node) {
             $nodes[$name] = new Node($node);
         }
@@ -121,7 +121,7 @@ class Session
      * Call bridge with the Repository and wrapped PHPCR Session
      *
      * @param string $funcName Function's name
-     * @param array  $args     Funtion's arguments
+     * @param array  $args     Function's arguments
      */
     public function __call($funcName, $args)
     {

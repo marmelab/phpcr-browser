@@ -10,7 +10,7 @@
 namespace PHPCRBrowser\PHPCR\Exception;
 
 /**
- * The RepositoryCollectionUnknownKeyException is thrown when an error occured in a collection
+ * The RepositoryCollectionUnknownKeyException is thrown when an error occurred in a collection
  *
  * @author  Robin Bressan <robin@bmarmelab.comn>
  *
