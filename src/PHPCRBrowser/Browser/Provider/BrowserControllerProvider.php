@@ -59,7 +59,7 @@ class BrowserControllerProvider implements ControllerProviderInterface
             throw new APINotAvailableException('API is not responding');
         }
 
-        return $app['twig']->render('index.twig.html', array(
+        return $app['twig']->render('index.html.twig', array(
             'repositories'  =>  $json
         ));
     }
@@ -80,7 +80,7 @@ class BrowserControllerProvider implements ControllerProviderInterface
             return $app->redirect($app->path('browser.repositories'));
         }
 
-        return $app['twig']->render('repository.twig.html', array(
+        return $app['twig']->render('repository.html.twig', array(
             'repository'    =>  $repository,
             'workspaces'    =>  $json
         ));
@@ -104,7 +104,7 @@ class BrowserControllerProvider implements ControllerProviderInterface
             )));
         }
 
-        return $app['twig']->render('workspace.twig.html', array(
+        return $app['twig']->render('workspace.html.twig', array(
             'workspace'     =>  $workspace,
             'repository'    =>  $repository,
             'currentNode'   =>  $json,
@@ -131,7 +131,7 @@ class BrowserControllerProvider implements ControllerProviderInterface
             )));
         }
 
-        return $app['twig']->render('workspace.twig.html', array(
+        return $app['twig']->render('workspace.html.twig', array(
             'workspace'     =>  $workspace,
             'repository'    =>  $repository,
             'path'          =>  $path,

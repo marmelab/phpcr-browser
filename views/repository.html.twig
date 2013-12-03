@@ -1,4 +1,4 @@
-{% extends 'layout.twig.html' %}
+{% extends 'layout.html.twig' %}
 
 {% block content %}
 <div class="container">
@@ -9,33 +9,34 @@
 					 <span class="glyphicon glyphicon-map-marker"></span>
 					 <a href="{{ path('browser.repositories') }}">Home</a>
 				</li>
+			  	<li>
+			  		<a href="{{ path('browser.workspaces', { 'repository': repository } ) }}">{{ repository }}</a>
+			  	</li>
 			</ol>
 		</div>
 	</div>
 	<div class="row">
-		<h1 class="text-center">Repositories</h1>
+		<h1 class="text-center">{{ repository }}</h1>
 		<hr/>
-	</div>
-	<div class="row">
-	{% for repository in repositories %}
-		<div class="col-lg-4">
+		{% for workspace in workspaces %}
+		<div class="col-lg-3">
 			<div class="panel panel-default">
 			  <div class="panel-heading">
-			  	<span class="glyphicon glyphicon-hdd"></span> Repository ({{ repository.factoryAlias }})
+			  	<span class="glyphicon glyphicon-briefcase"></span> Workspace
 			  </div>
 			  <div class="panel-body">
 			    <p class="lead text-center">
-			    	{{ repository.name }}
+			    	{{ workspace.name }}
 			    </p>
 			  </div>
 			  <div class="panel-footer">
-			  	<a href="{{ path('browser.workspaces', { 'repository': repository.name } ) }}" class="btn btn-primary btn-block"> 
+			  	<a href="{{ path('browser.rootNode', { 'repository': repository, 'workspace': workspace.name } ) }}" class="btn btn-primary btn-block">		
 			  		<span class="glyphicon glyphicon-log-in"></span> Open
 			  	</a>
 			  </div>
 			</div>
 		</div>
-	{% endfor %}
+		{% endfor %}
 	</div>
 </div>
 {% endblock content %}
