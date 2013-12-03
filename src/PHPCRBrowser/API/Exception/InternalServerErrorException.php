@@ -12,7 +12,7 @@ namespace PHPCRBrowser\API\Exception;
 /**
  * The InternalServerErrorException is thrown when an unknown error occurred
  *
- * @author  Robin Bressan <robin@bmarmelab.comn>
+ * @author  Robin Bressan <robin@marmelab.comn>
  *
  * @api
  */

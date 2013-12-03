@@ -24,7 +24,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * Convert a repository name into a session
  *
- * @author  Robin Bressan <robin@bmarmelab.comn>
+ * @author  Robin Bressan <robin@marmelab.comn>
  *
  */
 class RepositoryConverter

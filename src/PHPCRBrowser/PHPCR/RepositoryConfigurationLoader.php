@@ -16,7 +16,7 @@ use PHPCRBrowser\PHPCR\Repository;
  *
  * It wraps them into the custom Repository class to add metadata to it and get better control.
  *
- * @author  Robin Bressan <robin@bmarmelab.comn>
+ * @author  Robin Bressan <robin@marmelab.comn>
  *
  * @api
  */

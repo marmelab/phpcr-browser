@@ -12,7 +12,7 @@ namespace PHPCRBrowser\API\Exception;
 /**
  * The GatewayTimeoutException is thrown when a repository is unavailable
  *
- * @author  Robin Bressan <robin@bmarmelab.comn>
+ * @author  Robin Bressan <robin@marmelab.comn>
  *
  * @api
  */

@@ -19,7 +19,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * Controller provider for API components
  *
- * @author  Robin Bressan <robin@bmarmelab.comn>
+ * @author  Robin Bressan <robin@marmelab.comn>
  *
  */
 class APIControllerProvider implements ControllerProviderInterface

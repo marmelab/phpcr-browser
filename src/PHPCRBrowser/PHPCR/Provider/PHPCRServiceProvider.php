@@ -18,7 +18,7 @@ use PHPCRBrowser\PHPCR\RepositoryCollection;
 /**
  * Service provider for foundation components
  *
- * @author  Robin Bressan <robin@bmarmelab.comn>
+ * @author  Robin Bressan <robin@marmelab.comn>
  *
  */
 class PHPCRServiceProvider implements ServiceProviderInterface

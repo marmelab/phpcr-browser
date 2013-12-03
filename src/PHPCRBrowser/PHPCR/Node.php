@@ -15,7 +15,7 @@ use PHPCR\NodeInterface;
  * Node is a wrapper for a PHPCR Node
  * Helps us to add metadata to it and provides more control possibilities
  *
- * @author  Robin Bressan <robin@bmarmelab.comn>
+ * @author  Robin Bressan <robin@marmelab.comn>
  *
  * @api
  */

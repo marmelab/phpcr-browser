@@ -15,7 +15,7 @@ use Silex\ServiceProviderInterface;
 /**
  * Service provider for browser components
  *
- * @author  Robin Bressan <robin@bmarmelab.comn>
+ * @author  Robin Bressan <robin@marmelab.comn>
  *
  */
 class BrowserServiceProvider implements ServiceProviderInterface

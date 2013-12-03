@@ -12,7 +12,7 @@ namespace PHPCRBrowser\Browser\Exception;
 /**
  * The APINotAvailableException is thrown when the api is offline
  *
- * @author  Robin Bressan <robin@bmarmelab.comn>
+ * @author  Robin Bressan <robin@marmelab.comn>
  *
  * @api
  */

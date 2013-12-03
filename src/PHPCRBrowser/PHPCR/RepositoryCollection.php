@@ -14,7 +14,7 @@ use PHPCRBrowser\PHPCR\Exception\RepositoryCollectionUnknownKeyException;
 /**
  * RepositoryCollection provides collection management for Repository
  *
- * @author  Robin Bressan <robin@bmarmelab.comn>
+ * @author  Robin Bressan <robin@marmelab.comn>
  *
  * @api
  */

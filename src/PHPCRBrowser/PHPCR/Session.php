@@ -14,7 +14,7 @@ namespace PHPCRBrowser\PHPCR;
  * Helps us to add metadata to it and provides more control possibilities
  * Further it contains our custom Repositories
  *
- * @author  Robin Bressan <robin@bmarmelab.comn>
+ * @author  Robin Bressan <robin@marmelab.comn>
  *
  * @api
  */
