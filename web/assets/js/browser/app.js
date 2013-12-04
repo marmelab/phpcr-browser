@@ -37,3 +37,16 @@ app.run(function ($rootScope) {
 app.config(function($locationProvider){
     $locationProvider.html5Mode(true);
 });
+
+app.filter('propertyNameFilter', function() {
+  return function(input, term) {
+    var regex = new RegExp(term, 'i');
+    var obj = {};
+    angular.forEach(input, function(v, i){
+      if(regex.test(i + '')){
+        obj[i]=v;
+      }
+    });
+    return obj;
+  };
+});
