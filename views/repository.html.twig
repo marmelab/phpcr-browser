@@ -1,7 +1,7 @@
 {% extends 'layout.html.twig' %}
 
 {% block content %}
-<div class="container">
+<div style="padding-left: 20px;padding-right:20px;">
 	<div class="row">
 		<div class="col-lg-12">
 			<ol class="breadcrumb">
@@ -15,12 +15,50 @@
 			</ol>
 		</div>
 	</div>
-	<div class="row">
+</div>
+<div id="sidebar">
+	<div class="scrollable">
+		<div class="col-lg-12">
 		<h1 class="text-center">{{ repository }}</h1>
-		<hr/>
+
+		<p class="lead text-center">
+			{{ workspaces | length }} 
+			{% if workspaces | length > 1 %}		
+			workspaces
+			{% else %}
+			workspace
+			{% endif %}
+		</p>
+		<fieldset>
+			<legend>Create a new workspace</legend>
+			<div class="alert alert-sm alert-info">
+				<span class="glyphicon glyphicon-bullhorn"></span> If you choose a source workspace, it will be cloned into the new one.
+			</div>
+			<form action="{{ path('browser.workspaces', { 'repository': repository } ) }}" method="post" role="form">
+				<div class="form-group">
+					<input type="text" name="name" placeholder="Name of the new workspace" class="form-control">
+				</div>
+				<div class="form-group">
+					<select name="srcWorkspace" class="form-control">
+					<option value="-1">Select a source workspace (optional)</option>
+					{% for workspace in workspaces %}
+						<option value="{{ workspace.name}}">{{ workspace.name }}</option>
+					{% endfor %}
+					</select>
+				</div>
+				<div class="form-group">
+					<input type="submit" class="btn btn-primary" value="Create a new workspace">
+				</div>
+			</form>
+		</fieldset>
+	</div>
+	</div>
+</div>
+<div id="content">
+	<div class="scrollable col-lg-12">
 		{% for workspace in workspaces %}
 		<div class="col-lg-3">
-			<div class="panel panel-default">
+			<div class="panel panel-info">
 			  <div class="panel-heading">
 			  	<span class="glyphicon glyphicon-briefcase"></span> Workspace
 			  </div>
@@ -30,13 +68,42 @@
 			    </p>
 			  </div>
 			  <div class="panel-footer">
-			  	<a href="{{ path('browser.rootNode', { 'repository': repository, 'workspace': workspace.name } ) }}" class="btn btn-primary btn-block">		
-			  		<span class="glyphicon glyphicon-log-in"></span> Open
-			  	</a>
+			  	<div class="row">
+			  	<div class="col-lg-8">
+				  	<a href="{{ path('browser.rootNode', { 'repository': repository, 'workspace': workspace.name } ) }}" class="btn btn-primary btn-block">		
+				  		 Open
+				  	</a>
+			  	</div>
+			  	<div class="col-lg-4">
+			  		<a href="#deleteModal{{ workspace.name | url_encode }}" data-toggle="modal" class="btn btn-danger btn-block" title="Delete"><span class="glyphicon glyphicon-trash"></span></a>
+			  	</div>
+			  </div>
 			  </div>
 			</div>
 		</div>
 		{% endfor %}
 	</div>
 </div>
+
+{% for workspace in workspaces %}
+<div class="modal" id="deleteModal{{ workspace.name | url_encode }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal-dialog">
+<div class="modal-content">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title">Delete a workspace</h4>
+  </div>
+  <div class="modal-body">
+  	<div class="alert alert-danger">
+    	<p>If you delete the workspace {{ workspace.name }}, all its data will be definitively erased !</p>
+	</div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+    <button type="button" class="btn btn-danger">Delete</button>
+  </div>
+</div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+{% endfor %}
 {% endblock content %}

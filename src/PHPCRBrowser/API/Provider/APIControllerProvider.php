@@ -10,8 +10,14 @@
 namespace PHPCRBrowser\API\Provider;
 
 use PHPCRBrowser\API\Exception\ResourceNotFoundException;
+use PHPCRBrowser\API\Exception\AccessDeniedException;
+use PHPCRBrowser\API\Exception\NotSupportedOperationException;
+use PHPCRBrowser\API\Exception\InternalServerErrorException;
 use PHPCRBrowser\PHPCR\Node;
 use PHPCRBrowser\PHPCR\Session;
+use PHPCR\UnsupportedRepositoryOperationException;
+use PHPCR\NoSuchWorkspaceException;
+use PHPCR\RepositoryException;
 use Silex\Application;
 use Silex\ControllerProviderInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -37,13 +43,15 @@ class APIControllerProvider implements ControllerProviderInterface
             ->convert('repository', 'phpcr_browser.browser_api.repository_converter:convert');
 
         $controllers->get('/{repository}/{workspace}', array($this, 'getRootNodeAction'))
-            ->convert('repository', 'phpcr_browser.browser_api.repository_converter:convert')
-            ->bind('browser_api.storage');
+            ->convert('repository', 'phpcr_browser.browser_api.repository_converter:convert');
 
         $controllers->get('/{repository}/{workspace}/{path}', array($this, 'getNodeAction'))
             ->assert('path', '.*')
             ->convert('repository', 'phpcr_browser.browser_api.repository_converter:convert')
             ->convert('path', $pathConverter);
+
+         $controllers->post('/{repository}', array($this, 'createWorkspaceAction'))
+            ->convert('repository', 'phpcr_browser.browser_api.repository_converter:convert');
 
         return $controllers;
     }
@@ -67,12 +75,13 @@ class APIControllerProvider implements ControllerProviderInterface
     {
         $data = array();
         foreach ($repository->getWorkspace()->getAccessibleWorkspaceNames() as $workspaceName) {
-            $data[] = array(
+            $data[$workspaceName] = array(
                 'name'  =>  $workspaceName
             );
         }
+        ksort($data);
 
-        return $app->json($data);
+        return $app->json(array_values($data));
     }
 
     public function getRootNodeAction(Session $repository, $workspace, Application $app, Request $request)
@@ -143,6 +152,38 @@ class APIControllerProvider implements ControllerProviderInterface
         $data['nodeProperties'] = $currentNode->getPropertiesToArray();
 
         return $app->json($data);
+    }
+
+    public function createWorkspaceAction(Session $repository, Application $app, Request $request)
+    {
+        $name = $request->request->get('name', null);
+        $srcWorkspace = $request->request->get('srcWorkspace', null);
+
+        $currentWorkspace = $repository->getWorkspace();
+
+        if(is_null($name) || mb_strlen($name) == 0){
+            throw new InternalServerErrorException('Workspace name is empty');
+        }elseif(in_array($name, $currentWorkspace->getAccessibleWorkspaceNames())){
+            throw new InternalServerErrorException(sprintf('Workspace %s already exists', $name));
+        }
+
+        try{
+            $currentWorkspace->createWorkspace($name, $srcWorkspace);
+        }catch(\PHPCR\AccessDeniedException $e){
+            throw new AccessDeniedException('Invalid credentials');
+        }catch(UnsupportedRepositoryOperationException $e){
+            if(is_null($srcWorkspace)){
+                throw new NotSupportedOperationException('Repository does not support workspace creation');
+            }else{
+                throw new NotSupportedOperationException('Repository does not support workspace cloning');
+            }
+        }catch(NoSuchWorkspaceException $e){
+            throw new ResourceNotFoundException('Unknown referenced workspace');
+        }catch(RepositoryException $e){
+            throw new ResourceNotFoundException($e->getMessage());
+        }
+       
+        return $app->json(sprintf('Workspace %s created', $name));
     }
 
 }

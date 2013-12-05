@@ -77,7 +77,7 @@ body {
     border-color:  #94a0b4;
 }
 
-div#tree-sidebar{
+div#sidebar{
   padding: 10px;
   padding-bottom: 0px;
   border: 1px solid #ccc;
@@ -93,10 +93,18 @@ div#tree-sidebar{
   user-select: none;
   cursor: default;
 }
+
+div#sidebar h1{ 
+  font-size: 30px;
+  line-height: 36px;
+  padding: 5px;
+}
+
 div#content{
   background-color: #eeeeee;
   padding: 5px;
   padding-bottom: 0px;
+  padding-top: 10px;
   border-top: 1px solid #ccc;
   position: fixed;
   top: 120px;
@@ -157,5 +165,9 @@ div#first-load{
 }
 
 .panel, .btn{
+  border-radius: 0px;
+}
+
+.modal-content{
   border-radius: 0px;
 }

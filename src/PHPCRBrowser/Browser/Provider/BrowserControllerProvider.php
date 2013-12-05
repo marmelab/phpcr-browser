@@ -46,6 +46,9 @@ class BrowserControllerProvider implements ControllerProviderInterface
             ->convert('path', $pathConverter)        
             ->bind('browser.node');
 
+
+        $controllers->post('/{repository}', array($this, 'createWorkspaceAction'));
+
         return $controllers;
     }
 
@@ -137,6 +140,24 @@ class BrowserControllerProvider implements ControllerProviderInterface
             'path'          =>  $path,
             'currentNode'   =>  $json
         ));
+    }
+
+     public function createWorkspaceAction($repository, Application $app, Request $request)
+    {
+        $apiRequest = Request::create(sprintf('/_api/%s', $repository), 'POST', array(
+            'name'          =>  $request->request->get('name',null),
+            'srcWorkspace'  =>  $request->request->get('srcWorkspace',null) != '-1' ? $request->request->get('srcWorkspace',null) : null
+        ));
+        $response = $app->handle($apiRequest, HttpKernelInterface::SUB_REQUEST, true);
+        $json = json_decode($response->getContent(), true);
+
+        if (!($response->getStatusCode() == 200 && !is_null($json))){
+            $app['session']->getFlashBag()->add('error', $json['message']);
+        }
+
+        return $app->redirect($app->path('browser.workspaces', array(
+            'repository' => $repository
+        )));
     }
 
 }
