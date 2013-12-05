@@ -77,7 +77,7 @@ class RepositoryConfigurationLoader
                     throw new \InvalidArgumentException('An error occurred during repositories parsing : missing parameters');
                 }
 
-                $repos []= new Repository($name, $factories[$repository['factory']]['class'], $repository['factory'], (array) $repository['parameters']);
+                $repos []= new Repository($name, $factories[$repository['factory']]['class'], $repository['factory'], (array) $repository['parameters'], (array) $factories[$repository['factory']]['support']);
             }
 
         } catch (\RuntimeException $e) {

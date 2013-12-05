@@ -205,6 +205,21 @@ div#first-load{
   margin-top: 45px;
 }
 
+#sidebar legend{
+  text-align:left;
+  padding-left: 0px;
+  padding-right: 5px;
+  border:none;
+}
+
+#sidebar fieldset{
+  border-left: 1px solid #ccc;
+  padding-left: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin-top: 50px;
+}
+
 .navbar-default {
   background-color: #dd4814;
   border-color: #bf3e11;

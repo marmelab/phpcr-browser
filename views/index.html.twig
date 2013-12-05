@@ -1,15 +1,14 @@
 {% extends 'layout.html.twig' %}
 
 {% block content %}
-<div class="col-lg-12 btnbar text-center">
-	<span class="lead ">
+<div class="col-lg-12 btnbar">
+	<span class="lead pull-right">
 		{{ repositories | length }} 
 		{% if repositories | length > 1 %}		
 		repositories
 		{% else %}
 		repository
 		{% endif %}
-		configured
 	</span>
 </div>
 <div id="sidebar">
@@ -36,14 +35,15 @@
 		<div class="col-lg-12">
 		{% for repository in repositories %}
 			<div class="col-lg-3">
-				<div class="panel panel-primary">
+				<div class="panel panel-info">
 				  <div class="panel-heading">
-				  	<span class="glyphicon glyphicon-hdd"></span> Repository ({{ repository.factoryAlias }})
+				  	<span class="glyphicon glyphicon-hdd"></span> Repository
 				  </div>
-				  <div class="panel-body">
-				    <p class="lead text-center">
+				  <div class="panel-body text-center">
+				    <p class="lead">
 				    	{{ repository.name }}
 				    </p>
+				    <p>{{ repository.factoryAlias }}</p>
 				  </div>
 				  <div class="panel-footer">
 				  	<a href="{{ path('browser.workspaces', { 'repository': repository.name } ) }}" class="btn btn-primary btn-block">  

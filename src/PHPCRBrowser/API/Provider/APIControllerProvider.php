@@ -76,15 +76,28 @@ class APIControllerProvider implements ControllerProviderInterface
 
     public function getWorkspacesAction(Session $repository, Application $app)
     {
-        $data = array();
+        $repositorySupport = $repository->getSupport();
+        $workspaceSupport = array();
+
+        foreach($repositorySupport as $support){
+            if(substr($support, 0, strlen('workspace.')) == 'workspace.'){
+                $workspaceSupport[] = $support;
+            }
+        }
+
+        $data = array(
+            'workspaces' => array(),
+            'support'    => $workspaceSupport
+        );
+
         foreach ($repository->getWorkspace()->getAccessibleWorkspaceNames() as $workspaceName) {
-            $data[$workspaceName] = array(
-                'name'  =>  $workspaceName
+            $data['workspaces'][$workspaceName] = array(
+                'name'      =>  $workspaceName
             );
         }
-        ksort($data);
-
-        return $app->json(array_values($data));
+        ksort($data['workspaces']);
+        $data['workspaces'] = array_values($data['workspaces']);
+        return $app->json($data);
     }
 
     public function getRootNodeAction(Session $repository, $workspace, Application $app, Request $request)

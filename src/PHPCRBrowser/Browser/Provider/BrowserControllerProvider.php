@@ -89,7 +89,7 @@ class BrowserControllerProvider implements ControllerProviderInterface
 
         return $app['twig']->render('repository.html.twig', array(
             'repository'    =>  $repository,
-            'workspaces'    =>  $json
+            'data'    =>  $json
         ));
     }
 

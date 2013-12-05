@@ -5,37 +5,42 @@
 	<a href="{{ path('browser.repositories') }}" class="btn btn-default">
 		<span class="glyphicon glyphicon-chevron-left"></span> Go Back To Repositories
 	</a>
+
+	<span class="lead pull-right">
+			{{ data.workspaces | length }} 
+			{% if data.workspaces | length > 1 %}		
+			workspaces
+			{% else %}
+			workspace
+			{% endif %}
+	</span>
 </div>
 <div id="sidebar">
 	<div class="scrollable">
 		<div class="col-lg-12">
 		<h1 class="text-center">{{ repository }}</h1>
-
-		<p class="lead text-center">
-			{{ workspaces | length }} 
-			{% if workspaces | length > 1 %}		
-			workspaces
-			{% else %}
-			workspace
-			{% endif %}
-		</p>
+		{% if 'workspace.create' in data.support %}
 		<fieldset>
 			<legend>Create a new workspace</legend>
+			{% if 'workspace.clone' in data.support %}
 			<div class="alert alert-sm alert-info">
 				<span class="glyphicon glyphicon-bullhorn"></span> If you choose a source workspace, it will be cloned into the new one.
 			</div>
+			{% endif %}
 			<form action="{{ path('browser.workspace.create', { 'repository': repository } ) }}" method="post" role="form">
 				<div class="form-group">
 					<input type="text" name="name" placeholder="Name of the new workspace" class="form-control">
 				</div>
+				{% if 'workspace.clone' in data.support %}
 				<div class="form-group">
 					<select name="srcWorkspace" class="form-control">
 					<option value="-1">Select a source workspace (optional)</option>
-					{% for workspace in workspaces %}
+					{% for workspace in data.workspaces %}
 						<option value="{{ workspace.name}}">{{ workspace.name }}</option>
 					{% endfor %}
 					</select>
 				</div>
+				{% endif %}
 				<div class="form-group">
 					<button type="submit" class="btn btn-primary">
 						<span class="glyphicon glyphicon-plus"></span> Create a new workspace
@@ -43,35 +48,36 @@
 				</div>
 			</form>
 		</fieldset>
+		{% endif %}
 	</div>
 	</div>
 </div>
 <div id="content">
 	<div class="scrollable">
 		<div class="col-lg-12">
-		{% for workspace in workspaces %}
+		{% for workspace in data.workspaces %}
 		<div class="col-lg-3">
 			<div class="panel panel-info">
-			  <div class="panel-heading">
-			  	<span class="glyphicon glyphicon-briefcase"></span> Workspace
-			  </div>
-			  <div class="panel-body">
-			    <p class="lead text-center">
-			    	{{ workspace.name }}
-			    </p>
-			  </div>
-			  <div class="panel-footer">
-			  	<div class="row">
-			  	<div class="col-lg-8">
-				  	<a href="{{ path('browser.rootNode', { 'repository': repository, 'workspace': workspace.name } ) }}" class="btn btn-primary btn-block">		
-				  		 Open
-				  	</a>
+				<div class="panel-heading">
+					<span class="glyphicon glyphicon-briefcase"></span> Workspace
+				</div>
+			  	<div class="panel-body">
+			    	<p class="lead text-center">
+			    		{{ workspace.name }}
+			    	</p>
 			  	</div>
-			  	<div class="col-lg-4">
-			  		<a href="#deleteModal{{ workspace.name | url_encode }}" data-toggle="modal" class="btn btn-danger btn-block" title="Delete"><span class="glyphicon glyphicon-trash"></span></a>
-			  	</div>
-			  </div>
-			  </div>
+				<div class="panel-footer">
+					<div class="row">
+						<div class="col-lg-12 text-center">
+					  	<a href="{{ path('browser.rootNode', { 'repository': repository, 'workspace': workspace.name } ) }}" class="btn btn-primary">		
+					  		 Open
+					  	</a>
+							{% if 'workspace.delete' in data.support %}
+							<a href="#deleteModal{{ workspace.name | url_encode }}" data-toggle="modal" class="btn btn-danger" title="Delete"><span class="glyphicon glyphicon-trash"></span></a>
+							{% endif %}
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 		{% endfor %}
@@ -79,7 +85,8 @@
 	</div>
 </div>
 
-{% for workspace in workspaces %}
+{% if 'workspace.delete' in data.support %}
+{% for workspace in data.workspaces %}
 <div class="modal" id="deleteModal{{ workspace.name | url_encode }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 <div class="modal-dialog">
 <div class="modal-content">
@@ -103,4 +110,5 @@
 </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 {% endfor %}
+{% endif %}
 {% endblock content %}
