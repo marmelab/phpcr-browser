@@ -3,25 +3,15 @@
 {% block content %}
 <div ng-app="browserApp">
   <div ng-init="repository='{{ repository }}';workspace='{{ workspace }}';path='{{ path }}';baseUrl='{{ path('browser.repositories') }}'">
-<div style="padding-left: 20px;padding-right:20px;">
-  <div class="row">
-    <div class="col-lg-12" ng-controller="BreadcrumbCtrl">
-     <a href="{{ path('browser.workspaces', { 'repository': repository } ) }}" class="btn btn-primary">
-      <span class="glyphicon glyphicon-circle-arrow-left"></span> Go back to {{ repository }}
-    </a>
-    <a href="{{ path('browser.rootNode', { 'repository': repository, 'workspace': workspace } ) }}" class="btn btn-info">
-      Workspace {{ workspace }}
-    </a>
- 
-    <ol class="breadcrumb">
-      <li data-ng-repeat="b in model.breadcrumb" breadcrumb-element></li>
-    </ol>
-  </div>
-</div>
+<div class="col-lg-12 btnbar">
+  <a href="{{ path('browser.workspaces', { repository: repository }) }}" class="btn btn-default">
+    <span class="glyphicon glyphicon-chevron-left"></span> Go Back To Workspaces
+  </a>
 </div>
 <div id="sidebar" data-ng-controller="TreeCtrl">
+    <h1 class="text-center">{{ workspace }}</h1>
     <div class="scrollable">
-      <ul class="tree">
+      <ul class="tree" id="tree">
          <li data-ng-repeat="node in tree" tree-node></li>
       </ul>
   </div>
@@ -32,22 +22,29 @@
       <span class="glyphicon glyphicon-refresh"></span>
       <p class="lead">Loading...</p>
     </div>  
-    <div data-ng-hide="hasProperties() || !_first_load">
-      <input data-ng-model="search" class="form-control input-sm" placeholder="Search by property name">
-      <br/>
+    <div data-ng-hide="hasProperties() || !_first_load" id="property-search">
+      <div class="col-lg-2">
+        <a href="#" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Add property</a>
+      </div>
+      <div class="input-group col-lg-10">
+        <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
+        <input data-ng-model="search" class="form-control" placeholder="Search by property name">
+      </div>
     </div>  
-    <table class="table table-striped table-bordered table-condensed table-hover" data-ng-hide="hasProperties() || !_first_load">
-        <thead>
-            <th>Property name</th>
-            <th>Property value</th>
-        </thead>
-        <tbody>
-            <tr data-ng-repeat="(name,value) in properties | propertyNameFilter:search | orderBy:'name'">
-              <td data-ng-bind="name"></td>
-              <td property-value></td>
-            </tr>
-        </tbody>
-    </table>
+    <div id="property-content">
+      <table class="table table-striped table-hover" data-ng-hide="hasProperties() || !_first_load">
+          <thead>
+              <th>Property name</th>
+              <th>Property value</th>
+          </thead>
+          <tbody>
+              <tr data-ng-repeat="(name,value) in properties | propertyNameFilter:search | orderBy:'name'">
+                <td data-ng-bind="name"></td>
+                <td property-value></td>
+              </tr>
+          </tbody>
+      </table>
+    </div>
   </div>
 </div>
 </div>

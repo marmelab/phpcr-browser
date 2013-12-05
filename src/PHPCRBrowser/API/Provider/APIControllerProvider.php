@@ -50,7 +50,10 @@ class APIControllerProvider implements ControllerProviderInterface
             ->convert('repository', 'phpcr_browser.browser_api.repository_converter:convert')
             ->convert('path', $pathConverter);
 
-         $controllers->post('/{repository}', array($this, 'createWorkspaceAction'))
+        $controllers->post('/{repository}', array($this, 'createWorkspaceAction'))
+            ->convert('repository', 'phpcr_browser.browser_api.repository_converter:convert');
+
+        $controllers->delete('/{repository}', array($this, 'deleteWorkspaceAction'))
             ->convert('repository', 'phpcr_browser.browser_api.repository_converter:convert');
 
         return $controllers;
@@ -184,6 +187,31 @@ class APIControllerProvider implements ControllerProviderInterface
         }
        
         return $app->json(sprintf('Workspace %s created', $name));
+    }
+
+    public function deleteWorkspaceAction(Session $repository, Application $app, Request $request)
+    {
+        $name = $request->request->get('name', null);
+
+        $currentWorkspace = $repository->getWorkspace();
+
+        if(is_null($name) || mb_strlen($name) == 0){
+            throw new InternalServerErrorException('Workspace name is empty');
+        }
+
+        try{
+            $currentWorkspace->deleteWorkspace($name);
+        }catch(\PHPCR\AccessDeniedException $e){
+            throw new AccessDeniedException('Invalid credentials');
+        }catch(UnsupportedRepositoryOperationException $e){
+            throw new NotSupportedOperationException('Repository does not support workspace deletion. Maybe you should delete its folder.');
+        }catch(NoSuchWorkspaceException $e){
+            throw new ResourceNotFoundException(sprintf('Workspace %s does not exist', $name));
+        }catch(RepositoryException $e){
+            throw new ResourceNotFoundException($e->getMessage());
+        }
+       
+        return $app->json(sprintf('Workspace %s deleted', $name));
     }
 
 }

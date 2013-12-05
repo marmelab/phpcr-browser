@@ -1,20 +1,10 @@
 {% extends 'layout.html.twig' %}
 
 {% block content %}
-<div style="padding-left: 20px;padding-right:20px;">
-	<div class="row">
-		<div class="col-lg-12">
-			<ol class="breadcrumb">
-				<li>
-					 <span class="glyphicon glyphicon-map-marker"></span>
-					 <a href="{{ path('browser.repositories') }}">Home</a>
-				</li>
-			  	<li>
-			  		<a href="{{ path('browser.workspaces', { 'repository': repository } ) }}">{{ repository }}</a>
-			  	</li>
-			</ol>
-		</div>
-	</div>
+<div class="col-lg-12 btnbar">
+	<a href="{{ path('browser.repositories') }}" class="btn btn-default">
+		<span class="glyphicon glyphicon-chevron-left"></span> Go Back To Repositories
+	</a>
 </div>
 <div id="sidebar">
 	<div class="scrollable">
@@ -34,7 +24,7 @@
 			<div class="alert alert-sm alert-info">
 				<span class="glyphicon glyphicon-bullhorn"></span> If you choose a source workspace, it will be cloned into the new one.
 			</div>
-			<form action="{{ path('browser.workspaces', { 'repository': repository } ) }}" method="post" role="form">
+			<form action="{{ path('browser.workspace.create', { 'repository': repository } ) }}" method="post" role="form">
 				<div class="form-group">
 					<input type="text" name="name" placeholder="Name of the new workspace" class="form-control">
 				</div>
@@ -47,7 +37,9 @@
 					</select>
 				</div>
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary" value="Create a new workspace">
+					<button type="submit" class="btn btn-primary">
+						<span class="glyphicon glyphicon-plus"></span> Create a new workspace
+					</button>
 				</div>
 			</form>
 		</fieldset>
@@ -55,7 +47,8 @@
 	</div>
 </div>
 <div id="content">
-	<div class="scrollable col-lg-12">
+	<div class="scrollable">
+		<div class="col-lg-12">
 		{% for workspace in workspaces %}
 		<div class="col-lg-3">
 			<div class="panel panel-info">
@@ -82,6 +75,7 @@
 			</div>
 		</div>
 		{% endfor %}
+		</div>
 	</div>
 </div>
 
@@ -99,8 +93,11 @@
 	</div>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-    <button type="button" class="btn btn-danger">Delete</button>
+  	<form action="{{ path('browser.workspace.delete', { 'repository': repository } ) }}" method="post" role="form">
+  		<input type="hidden" name="name" value="{{ workspace.name }}">
+	    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	    <input type="submit" class="btn btn-danger" value-"Delete">
+	</form>
   </div>
 </div><!-- /.modal-content -->
 </div><!-- /.modal-dialog -->

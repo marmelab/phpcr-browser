@@ -47,7 +47,11 @@ class BrowserControllerProvider implements ControllerProviderInterface
             ->bind('browser.node');
 
 
-        $controllers->post('/{repository}', array($this, 'createWorkspaceAction'));
+        $controllers->post('/_create/{repository}', array($this, 'createWorkspaceAction'))
+            ->bind('browser.workspace.create');
+
+        $controllers->post('/_delete/{repository}', array($this, 'deleteWorkspaceAction'))
+            ->bind('browser.workspace.delete');
 
         return $controllers;
     }
@@ -142,7 +146,7 @@ class BrowserControllerProvider implements ControllerProviderInterface
         ));
     }
 
-     public function createWorkspaceAction($repository, Application $app, Request $request)
+    public function createWorkspaceAction($repository, Application $app, Request $request)
     {
         $apiRequest = Request::create(sprintf('/_api/%s', $repository), 'POST', array(
             'name'          =>  $request->request->get('name',null),
@@ -153,6 +157,27 @@ class BrowserControllerProvider implements ControllerProviderInterface
 
         if (!($response->getStatusCode() == 200 && !is_null($json))){
             $app['session']->getFlashBag()->add('error', $json['message']);
+        }else{
+            $app['session']->getFlashBag()->add('success', $json);
+        }
+
+        return $app->redirect($app->path('browser.workspaces', array(
+            'repository' => $repository
+        )));
+    }
+
+    public function deleteWorkspaceAction($repository, Application $app, Request $request)
+    {
+        $apiRequest = Request::create(sprintf('/_api/%s', $repository), 'DELETE', array(
+            'name'          =>  $request->request->get('name',null)
+        ));
+        $response = $app->handle($apiRequest, HttpKernelInterface::SUB_REQUEST, true);
+        $json = json_decode($response->getContent(), true);
+
+        if (!($response->getStatusCode() == 200 && !is_null($json))){
+            $app['session']->getFlashBag()->add('error', $json['message']);
+        }else{
+            $app['session']->getFlashBag()->add('success', $json);
         }
 
         return $app->redirect($app->path('browser.workspaces', array(

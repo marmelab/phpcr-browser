@@ -1,41 +1,59 @@
 {% extends 'layout.html.twig' %}
 
 {% block content %}
-<div class="container">
-	<div class="row">
+<div class="col-lg-12 btnbar text-center">
+	<span class="lead ">
+		{{ repositories | length }} 
+		{% if repositories | length > 1 %}		
+		repositories
+		{% else %}
+		repository
+		{% endif %}
+		configured
+	</span>
+</div>
+<div id="sidebar">
+	<div class="scrollable">
 		<div class="col-lg-12">
-			<ol class="breadcrumb">
-				<li>
-					 <span class="glyphicon glyphicon-map-marker"></span>
-					 <a href="{{ path('browser.repositories') }}">Home</a>
-				</li>
-			</ol>
+			<h1 class="text-center">localhost</h1>
+			<p class="lead text-center">
+			{{ repositories | length }} 
+			{% if repositories | length > 1 %}		
+			repositories
+			{% else %}
+			repository
+			{% endif %}
+		</p>
+
+		<div class="alert alert-sm alert-info">
+			<span class="glyphicon glyphicon-bullhorn"></span> Go into config/prod.yml to manage your repositories
+		</div>
 		</div>
 	</div>
-	<div class="row">
-		<h1 class="text-center">Repositories</h1>
-		<hr/>
-	</div>
-	<div class="row">
-	{% for repository in repositories %}
-		<div class="col-lg-4">
-			<div class="panel panel-default">
-			  <div class="panel-heading">
-			  	<span class="glyphicon glyphicon-hdd"></span> Repository ({{ repository.factoryAlias }})
-			  </div>
-			  <div class="panel-body">
-			    <p class="lead text-center">
-			    	{{ repository.name }}
-			    </p>
-			  </div>
-			  <div class="panel-footer">
-			  	<a href="{{ path('browser.workspaces', { 'repository': repository.name } ) }}" class="btn btn-primary btn-block"> 
-			  		<span class="glyphicon glyphicon-log-in"></span> Open
-			  	</a>
-			  </div>
+</div>
+<div id="content" class="content-full">
+	<div class="scrollable">
+		<div class="col-lg-12">
+		{% for repository in repositories %}
+			<div class="col-lg-3">
+				<div class="panel panel-primary">
+				  <div class="panel-heading">
+				  	<span class="glyphicon glyphicon-hdd"></span> Repository ({{ repository.factoryAlias }})
+				  </div>
+				  <div class="panel-body">
+				    <p class="lead text-center">
+				    	{{ repository.name }}
+				    </p>
+				  </div>
+				  <div class="panel-footer">
+				  	<a href="{{ path('browser.workspaces', { 'repository': repository.name } ) }}" class="btn btn-primary btn-block">  
+				  		Open
+				  	</a>
+				  </div>
+				</div>
 			</div>
+		{% endfor %}
 		</div>
-	{% endfor %}
 	</div>
 </div>
 {% endblock content %}
