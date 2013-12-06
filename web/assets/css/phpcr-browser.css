@@ -220,6 +220,31 @@ div#first-load{
   margin-top: 50px;
 }
 
+#new-workspace-panel{
+  border-style: dotted!important;
+  border-width: 2px;
+  opacity: 0.7;
+  margin-bottom: 18px;
+}
+
+#new-workspace-panel:hover{
+  opacity: 1.0;
+  border-color: #bce8f1;
+}
+
+#new-workspace-panel:hover .panel-heading {
+  color: #3a87ad;
+  background-color: #d9edf7;
+  border-color: #bce8f1;
+}
+
+#new-repository-panel{
+  border-style: dotted!important;
+  border-width: 2px;
+  opacity: 0.7;
+  margin-bottom: 18px;
+}
+
 .navbar-default {
   background-color: #dd4814;
   border-color: #bf3e11;

@@ -6,7 +6,7 @@ angular.module('browserApp').service('browserAPI', ['$rootScope','Restangular', 
 	/*
 	 * Pointer for API Request on current workspace
 	 */
-    var workspaceURI = Restangular.one($rootScope.repository).one($rootScope.workspace);
+    var workspaceURI = Restangular.one($rootScope.repository,$rootScope.workspace);
 	
 	/**
 	 *	Flag for first page load
@@ -23,6 +23,15 @@ angular.module('browserApp').service('browserAPI', ['$rootScope','Restangular', 
 
 	$rootScope.$on('tree.nodeCollapsed', function(e,node, prevent) {
 		loadNode(node.path, !!prevent || true);
+	});
+
+	$rootScope.$on('property.delete', function(e,path, name) {
+		deleteNodeProperty(path,name);
+	});
+
+
+	$rootScope.$on('property.add', function(e,path, name, value) {
+		addNodeProperty(path,name, value);
 	});
 
 	/*
@@ -97,5 +106,36 @@ angular.module('browserApp').service('browserAPI', ['$rootScope','Restangular', 
 				$rootScope.$broadcast('api.nodeChanged', node);
 			}
 	  	}
+  	}
+
+  	function deleteNodeProperty(path, name){;
+  		var node = $rootScope.findNode(path, $rootScope.tree['/']);
+  		path = path.slice(1,path.length);
+  		workspaceURI.one(path+'@'+name).remove().then(function(response){
+  			node.nodeProperties['_node_prop_'+name] = undefined;
+  			$rootScope.$broadcast('api.nodePropertiesChanged', node);
+  		}, function(response) {
+  			alert('An error occurred during property deletion');
+			console.log("Error with status code", response.status);
+		});
+  	}
+
+  	function addNodeProperty(path, name, value){;
+  		var node = $rootScope.findNode(path, $rootScope.tree['/']);
+  		path = path.slice(1,path.length);
+  		
+  		var property = { 
+  			'name': name,
+  			'value': value
+  		};
+
+  		console.log(property);
+  		workspaceURI.post(path,property).then(function(response){
+  			node.nodeProperties['_node_prop_'+name] = value;
+  			$rootScope.$broadcast('api.nodePropertiesChanged', node);
+  		}, function(response) {
+  			alert('An error occurred during property creation');
+			console.log("Error with status code", response.status);
+		});
   	}
 }]);

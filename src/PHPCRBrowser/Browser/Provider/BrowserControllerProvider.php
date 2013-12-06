@@ -50,7 +50,7 @@ class BrowserControllerProvider implements ControllerProviderInterface
         $controllers->post('/_create/{repository}', array($this, 'createWorkspaceAction'))
             ->bind('browser.workspace.create');
 
-        $controllers->post('/_delete/{repository}', array($this, 'deleteWorkspaceAction'))
+        $controllers->post('/_delete/{repository}/{workspace}', array($this, 'deleteWorkspaceAction'))
             ->bind('browser.workspace.delete');
 
         return $controllers;
@@ -166,10 +166,10 @@ class BrowserControllerProvider implements ControllerProviderInterface
         )));
     }
 
-    public function deleteWorkspaceAction($repository, Application $app, Request $request)
+    public function deleteWorkspaceAction($repository, $workspace, Application $app, Request $request)
     {
         $apiRequest = Request::create(sprintf('/_api/%s', $repository), 'DELETE', array(
-            'name'          =>  $request->request->get('name',null)
+            'name'          =>  $workspace
         ));
         $response = $app->handle($apiRequest, HttpKernelInterface::SUB_REQUEST, true);
         $json = json_decode($response->getContent(), true);

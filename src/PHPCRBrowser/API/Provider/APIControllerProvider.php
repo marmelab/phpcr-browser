@@ -9,15 +9,22 @@
 
 namespace PHPCRBrowser\API\Provider;
 
-use PHPCRBrowser\API\Exception\ResourceNotFoundException;
 use PHPCRBrowser\API\Exception\AccessDeniedException;
-use PHPCRBrowser\API\Exception\NotSupportedOperationException;
 use PHPCRBrowser\API\Exception\InternalServerErrorException;
+use PHPCRBrowser\API\Exception\NotSupportedOperationException;
+use PHPCRBrowser\API\Exception\ResourceConstraintViolationException;
+use PHPCRBrowser\API\Exception\ResourceLockedException;
+use PHPCRBrowser\API\Exception\ResourceNotFoundException;
 use PHPCRBrowser\PHPCR\Node;
 use PHPCRBrowser\PHPCR\Session;
-use PHPCR\UnsupportedRepositoryOperationException;
+use PHPCR\Lock\LockException;
+use PHPCR\NodeType\ConstraintViolationException;
 use PHPCR\NoSuchWorkspaceException;
+use PHPCR\PathNotFoundException;
 use PHPCR\RepositoryException;
+use PHPCR\UnsupportedRepositoryOperationException;
+use PHPCR\ValueFormatException;
+use PHPCR\Version\VersionException;
 use Silex\Application;
 use Silex\ControllerProviderInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -50,11 +57,24 @@ class APIControllerProvider implements ControllerProviderInterface
             ->convert('repository', 'phpcr_browser.browser_api.repository_converter:convert')
             ->convert('path', $pathConverter);
 
+        // Workspace management
         $controllers->post('/{repository}', array($this, 'createWorkspaceAction'))
             ->convert('repository', 'phpcr_browser.browser_api.repository_converter:convert');
 
         $controllers->delete('/{repository}', array($this, 'deleteWorkspaceAction'))
             ->convert('repository', 'phpcr_browser.browser_api.repository_converter:convert');
+
+
+        // Property management
+        $controllers->delete('/{repository}/{workspace}/{path}@{property}', array($this, 'deleteNodePropertyAction'))
+            ->assert('path', '.*')
+            ->convert('repository', 'phpcr_browser.browser_api.repository_converter:convert')
+            ->convert('path', $pathConverter);
+
+        $controllers->post('/{repository}/{workspace}/{path}', array($this, 'addNodePropertyAction'))
+            ->assert('path', '.*')
+            ->convert('repository', 'phpcr_browser.browser_api.repository_converter:convert')
+            ->convert('path', $pathConverter);
 
         return $controllers;
     }
@@ -225,6 +245,67 @@ class APIControllerProvider implements ControllerProviderInterface
         }
        
         return $app->json(sprintf('Workspace %s deleted', $name));
+    }
+
+    public function deleteNodePropertyAction(Session $repository, $workspace, $path, $property, Application $app, Request $request)
+    {
+        if (!$repository->nodeExists($path)) {
+            throw new ResourceNotFoundException('Unknown node');
+        }
+    
+        $currentNode = $repository->getNode($path);
+        $propertyName = $property;
+        try{
+            $property = $currentNode->getProperty($property);
+            $property->remove();
+            $repository->save();
+        }catch(PathNotFoundException $e){
+            throw new ResourceNotFoundException(sprintf('Property %s does not exist', $property));
+        }catch(RepositoryException $e){
+            throw new ResourceNotFoundException($e->getMessage());
+        }catch(\InvalidArgumentException $e){
+            throw new InternalServerErrorException($e->getMessage());
+        }
+       
+        return $app->json(sprintf('Property %s deleted', $propertyName));
+    }
+
+    public function addNodePropertyAction(Session $repository, $workspace, $path, Application $app, Request $request)
+    {
+        if (!$repository->nodeExists($path)) {
+            throw new ResourceNotFoundException('Unknown node');
+        }
+    
+        $currentNode = $repository->getNode($path);
+        var_dump($request->request);
+        $name = $request->request->get('name',null);
+        $value = $request->request->get('value',null);
+        $type = $request->request->get('type',null);
+
+        if(is_null($name) || mb_strlen($name) == 0){
+            throw new InternalServerErrorException('Property name is empty');
+        }
+
+        try{
+            $property = $currentNode->setProperty($name, $value, $type);
+            $repository->save();
+        }catch(UnsupportedRepositoryOperationException $e){
+            throw new NotSupportedOperationException(sprintf('Property %s can not be set with type %s', $property, $type));
+        }catch(ValueFormatException $e){
+            throw new NotSupportedOperationException(sprintf('Property %s has an invalid value', $property));      
+        }catch(LockException $e){
+            throw new ResourceLockedException($sprintf('Property %s is currently locked', $property));
+        }catch(ConstraintViolationException $e){
+            throw new ResourceConstraintViolationException($e->getMessage());
+        }catch(RepositoryException $e){
+            throw new ResourceNotFoundException($e->getMessage());
+        }catch(VersionException $e){
+            throw new InternalServerErrorException($e->getMessage());
+        }catch(\InvalidArgumentException $e){
+            throw new InternalServerErrorException($e->getMessage());
+        }
+       
+        return $app->json(sprintf('Property %s added', $name));
     }
 
 }

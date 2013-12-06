@@ -5,8 +5,7 @@
 	<a href="{{ path('browser.repositories') }}" class="btn btn-default">
 		<span class="glyphicon glyphicon-chevron-left"></span> Go Back To Repositories
 	</a>
-
-	<span class="lead pull-right">
+	<span class="lead pull-right">{{ repository }} : 
 			{{ data.workspaces | length }} 
 			{% if data.workspaces | length > 1 %}		
 			workspaces
@@ -15,48 +14,11 @@
 			{% endif %}
 	</span>
 </div>
-<div id="sidebar">
-	<div class="scrollable">
-		<div class="col-lg-12">
-		<h1 class="text-center">{{ repository }}</h1>
-		{% if 'workspace.create' in data.support %}
-		<fieldset>
-			<legend>Create a new workspace</legend>
-			{% if 'workspace.clone' in data.support %}
-			<div class="alert alert-sm alert-info">
-				<span class="glyphicon glyphicon-bullhorn"></span> If you choose a source workspace, it will be cloned into the new one.
-			</div>
-			{% endif %}
-			<form action="{{ path('browser.workspace.create', { 'repository': repository } ) }}" method="post" role="form">
-				<div class="form-group">
-					<input type="text" name="name" placeholder="Name of the new workspace" class="form-control">
-				</div>
-				{% if 'workspace.clone' in data.support %}
-				<div class="form-group">
-					<select name="srcWorkspace" class="form-control">
-					<option value="-1">Select a source workspace (optional)</option>
-					{% for workspace in data.workspaces %}
-						<option value="{{ workspace.name}}">{{ workspace.name }}</option>
-					{% endfor %}
-					</select>
-				</div>
-				{% endif %}
-				<div class="form-group">
-					<button type="submit" class="btn btn-primary">
-						<span class="glyphicon glyphicon-plus"></span> Create a new workspace
-					</button>
-				</div>
-			</form>
-		</fieldset>
-		{% endif %}
-	</div>
-	</div>
-</div>
-<div id="content">
+<div id="content" class="content-full">
 	<div class="scrollable">
 		<div class="col-lg-12">
 		{% for workspace in data.workspaces %}
-		<div class="col-lg-3">
+		<div class="col-lg-2">
 			<div class="panel panel-info">
 				<div class="panel-heading">
 					<span class="glyphicon glyphicon-briefcase"></span> Workspace
@@ -81,6 +43,29 @@
 			</div>
 		</div>
 		{% endfor %}
+		{% if 'workspace.create' in data.support %}
+		<div class="col-lg-2">
+			<div class="panel panel-default" id="new-workspace-panel">
+				<div class="panel-heading">
+					<span class="glyphicon glyphicon-briefcase"></span> Workspace
+				</div>
+			  	<div class="panel-body">
+			    	<p class="lead text-center">
+			    		New workspace
+			    	</p>
+			  	</div>
+				<div class="panel-footer">
+					<div class="row">
+						<div class="col-lg-12 text-center">
+							<a href="#addWorkspace" data-toggle="modal" class="btn btn-default">		
+								<span class="glyphicon glyphicon-plus"></span> Create
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		{% endif %}
 		</div>
 	</div>
 </div>
@@ -100,8 +85,7 @@
 	</div>
   </div>
   <div class="modal-footer">
-  	<form action="{{ path('browser.workspace.delete', { 'repository': repository } ) }}" method="post" role="form">
-  		<input type="hidden" name="name" value="{{ workspace.name }}">
+  	<form action="{{ path('browser.workspace.delete', { 'repository': repository, 'workspace':workspace.name } ) }}" method="post" role="form">
 	    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 	    <input type="submit" class="btn btn-danger" value-"Delete">
 	</form>
@@ -110,5 +94,45 @@
 </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 {% endfor %}
+{% endif %}
+{% if 'workspace.create' in data.support %}
+<div class="modal" id="addWorkspace" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title">Create a new workspace</h4>
+			</div>
+			<form action="{{ path('browser.workspace.create', { 'repository': repository } ) }}" method="post" role="form">
+				<div class="modal-body">
+					{% if 'workspace.clone' in data.support %}
+					<div class="alert alert-sm alert-info">
+						<span class="glyphicon glyphicon-bullhorn"></span> If you choose a source workspace, it will be cloned into the new one.
+					</div>
+					{% endif %}
+					<div class="form-group">
+						<input type="text" name="name" placeholder="Name of the new workspace" class="form-control">
+					</div>
+					{% if 'workspace.clone' in data.support %}
+					<div class="form-group">
+						<select name="srcWorkspace" class="form-control">
+							<option value="-1">Select a source workspace (optional)</option>
+							{% for workspace in data.workspaces %}
+							<option value="{{ workspace.name}}">{{ workspace.name }}</option>
+							{% endfor %}
+						</select>
+					</div>
+					{% endif %}
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<button type="submit" class="btn btn-primary">
+						<span class="glyphicon glyphicon-plus"></span> Create a new workspace
+					</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
 {% endif %}
 {% endblock content %}
