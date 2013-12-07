@@ -13,6 +13,7 @@ use PHPCRBrowser\API\Exception\ExceptionInterface;
 use PHPCRBrowser\API\Converter\RepositoryConverter;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Service provider for browser components
@@ -31,6 +32,14 @@ class APIServiceProvider implements ServiceProviderInterface
 
     public function boot(Application $app)
     {
+        // To accept json payload
+        $app->before(function (Request $request) {
+            if (0 === strpos($request->headers->get('Content-Type'), 'application/json')) {
+                $data = json_decode($request->getContent(), true);
+                $request->request->replace(is_array($data) ? $data : array());
+            }
+        });
+
         $app->error(function (ExceptionInterface $e) use ($app) {
             return $app->json(
                 ['message' => $e->getMessage()],

@@ -277,7 +277,7 @@ class APIControllerProvider implements ControllerProviderInterface
         }
     
         $currentNode = $repository->getNode($path);
-        var_dump($request->request);
+       
         $name = $request->request->get('name',null);
         $value = $request->request->get('value',null);
         $type = $request->request->get('type',null);

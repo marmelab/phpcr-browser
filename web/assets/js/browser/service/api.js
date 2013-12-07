@@ -129,7 +129,6 @@ angular.module('browserApp').service('browserAPI', ['$rootScope','Restangular', 
   			'value': value
   		};
 
-  		console.log(property);
   		workspaceURI.post(path,property).then(function(response){
   			node.nodeProperties['_node_prop_'+name] = value;
   			$rootScope.$broadcast('api.nodePropertiesChanged', node);

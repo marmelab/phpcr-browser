@@ -42,8 +42,8 @@
               <tr data-ng-repeat="(name,value) in properties | propertyNameFilter:search | orderBy:'name'">
                 <td>
                   <span data-ng-bind="name"></span>
-                 
-                  <a href="#" confirm-click="deleteProperty(name)" confirmation="Are you sure?" title="Delete" class="text-danger">
+                  
+                  <a href="#" confirm-click="deleteProperty(name)" confirmation="Are you sure?" title="Delete" class="text-danger pull-right" data-ng-hide="name.slice(0,4) == 'jcr:'">
                     <span class="glyphicon glyphicon-trash"></span>
                   </a>
                 </td>
@@ -65,9 +65,6 @@
       </div>
       <form action="#" method="post" role="form">
         <div class="modal-body">
-          <div class="alert alert-sm alert-info">
-            <span class="glyphicon glyphicon-bullhorn"></span> You can write JSON in the value field
-          </div>
           <div class="form-group">
             <input type="text" ng-model="newName" placeholder="Name of property" class="form-control">
           </div>

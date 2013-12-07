@@ -199,10 +199,20 @@ div#first-load{
   margin-left:-5px;
   margin-right:-5px;
   border-bottom: 1px solid #ccc;
+  z-index: 3000;
+}
+
+input{
+  border-radius: 0px!important;
+}
+
+.input-group-addon:first-child{
+  border-radius: 0px!important;
 }
 
 #property-content{
   margin-top: 45px;
+  position:relative;
 }
 
 #sidebar legend{

@@ -28,6 +28,8 @@ angular.module('browserApp').controller('PropertiesCtrl', function PropertiesCtr
     }
 
     $scope.addProperty = function(name,value){
+        $scope.newName = undefined;
+        $scope.newValue = undefined;
         $rootScope.$emit('property.add', $rootScope.activeNode.path, name, value);
     }
 });
