@@ -15,7 +15,7 @@ $ composer install
 $ bower update
 ```
 
-Add a VirtualHost to your Apache config, or better, use PHP 5.4 integrated webserver by calling:
+Add a VirtualHost to your Apache config (and add in it 'AllowEncodedSlashes On'), or better, use PHP 5.4 integrated webserver by calling:
 
 ```sh
 $ php -S localhost:8000 -t web

@@ -5,3 +5,7 @@ phpcr_factories:
             - jackalope.jackrabbit_uri
             - credentials.username
             - credentials.password
+        support:
+            - workspace.create
+            - node.property.create
+            - node.property.delete

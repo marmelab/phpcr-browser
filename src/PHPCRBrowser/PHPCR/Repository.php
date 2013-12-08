@@ -50,12 +50,13 @@ class Repository
      *
      * @api
      */
-    public function __construct($name, $factoryClass, $factoryAlias, array $parameters = array())
+    public function __construct($name, $factoryClass, $factoryAlias, array $parameters = array(), array $support = array())
     {
         $this->name = $name;
         $this->factoryClass = $factoryClass;
         $this->factoryAlias = $factoryAlias;
         $this->parameters = $parameters;
+        $this->support = $support;
 
         $this->repository = function () use ($factoryClass, $parameters) {
             $factory = new $factoryClass();
@@ -98,6 +99,18 @@ class Repository
     public function getParameters()
     {
         return $this->parameters;
+    }
+
+     /**
+     * Return the support
+     *
+     * @return string Support of the repository
+     *
+     * @api
+     */
+    public function getSupport()
+    {
+        return $this->support;
     }
 
     /**

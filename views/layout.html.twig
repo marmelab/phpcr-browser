@@ -23,7 +23,7 @@
   <body>
 
     <!-- Fixed navbar -->
-    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
       <div class="container">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -42,10 +42,8 @@
         </div><!--/.nav-collapse -->
       </div>
     </div>
-    
-    <div class="container">
-    {% if app.session.getFlashBag() | length > 0 %}
-    <div class="row">
+      
+      {% if app.session.getFlashBag() | length > 0 %}
       <div class="col-lg-12">
       {% for type,list in app.session.getFlashBag() %}
       {% for message in list %}
@@ -65,16 +63,14 @@
         {% set class = 'info' %}
         {% set icon = 'bullhorn' %}
       {% endif %}
-      <div class="alert alert-{{ class }} alert-dismissable">
+      <div class="alert alert-sm alert-{{ class }} alert-dismissable">
         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
         <span class="glyphicon glyphicon-{{ icon }}"></span> {{ message }}
       </div>
     {% endfor %}
     {% endfor %}
-      </div>
     </div>
     {% endif %}
-    </div>
     {% block content %}{% endblock content %}
     
     <!-- Bootstrap core JavaScript

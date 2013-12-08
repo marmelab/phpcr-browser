@@ -6,7 +6,7 @@ angular.module('browserApp').service('browserAPI', ['$rootScope','Restangular', 
 	/*
 	 * Pointer for API Request on current workspace
 	 */
-    var workspaceURI = Restangular.one($rootScope.repository).one($rootScope.workspace);
+    var workspaceURI = Restangular.one('repositories',$rootScope.repository).one('workspaces',$rootScope.workspace);
 	
 	/**
 	 *	Flag for first page load
@@ -25,6 +25,15 @@ angular.module('browserApp').service('browserAPI', ['$rootScope','Restangular', 
 		loadNode(node.path, !!prevent || true);
 	});
 
+	$rootScope.$on('property.delete', function(e,path, name) {
+		deleteNodeProperty(path,name);
+	});
+
+
+	$rootScope.$on('property.add', function(e,path, name, value) {
+		addNodeProperty(path,name, value);
+	});
+
 	/*
 	 * Perform query on current workspace
 	 */
@@ -33,11 +42,11 @@ angular.module('browserApp').service('browserAPI', ['$rootScope','Restangular', 
 		params = params || {};
 
 		if(path == '/'){
-        	workspaceURI.getList(null,params).then(callback, function(response) {
+        	workspaceURI.getList('nodes',params).then(callback, function(response) {
 			  console.log("Error with status code", response.status);
 			});
 	    }else{
-	        workspaceURI.getList(path.slice(1,path.length), params).then(callback, function(response) {
+	    	workspaceURI.one('nodes',path.slice(1,path.length)).get(params).then(callback, function(response) {
 			  console.log("Error with status code", response.status);
 			});
 	    }
@@ -45,10 +54,10 @@ angular.module('browserApp').service('browserAPI', ['$rootScope','Restangular', 
 	
   	function loadReducedTree(path){
   		query(path, {'reducedTree': true}, function(response){
-  			$rootScope.tree  = { '/' : normalizeTree(response['reducedTree'][0]) };
+  			$rootScope.tree  = { '/' : normalizeTree(response['node']['reducedTree'][0]) };
 			$rootScope._first_load = true;
 			var node = $rootScope.findNode(path, $rootScope.tree['/']);
-			node['nodeProperties'] =  response['nodeProperties'];
+			node['nodeProperties'] =  response['node']['nodeProperties'];
 			node._data_loaded = true;
 			node.collapsed = false;
 			$rootScope.$broadcast('api.nodeChanged', node);
@@ -78,7 +87,7 @@ angular.module('browserApp').service('browserAPI', ['$rootScope','Restangular', 
   			node._data_loading = true;
 	  		query(path, {}, function(response){
 	  			node._data_loading = undefined;
-	            response =  normalizeTree(response);
+	            response =  normalizeTree(response['node']);
 	           
 	            // Let's append the children if not already done on other loading
 	            if(_.size(node['children']) == 0){
@@ -97,5 +106,35 @@ angular.module('browserApp').service('browserAPI', ['$rootScope','Restangular', 
 				$rootScope.$broadcast('api.nodeChanged', node);
 			}
 	  	}
+  	}
+
+  	function deleteNodeProperty(path, name){;
+  		var node = $rootScope.findNode(path, $rootScope.tree['/']);
+  		path = path.slice(1,path.length);
+  		workspaceURI.one('nodes',path+'@'+name).remove().then(function(response){
+  			node.nodeProperties['_node_prop_'+name] = undefined;
+  			$rootScope.$broadcast('api.nodePropertiesChanged', node);
+  		}, function(response) {
+  			alert('An error occurred during property deletion');
+			console.log("Error with status code", response.status);
+		});
+  	}
+
+  	function addNodeProperty(path, name, value){;
+  		var node = $rootScope.findNode(path, $rootScope.tree['/']);
+  		path = path.slice(1,path.length);
+  		
+  		var property = { 
+  			'name': name,
+  			'value': value
+  		};
+
+  		workspaceURI.all('nodes').all(path).post(property).then(function(response){
+  			node.nodeProperties['_node_prop_'+name] = value;
+  			$rootScope.$broadcast('api.nodePropertiesChanged', node);
+  		}, function(response) {
+  			alert('An error occurred during property creation');
+			console.log("Error with status code", response.status);
+		});
   	}
 }]);
