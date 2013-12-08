@@ -41,37 +41,55 @@ class APIControllerProvider implements ControllerProviderInterface
     {
         $controllers = $app['controllers_factory'];
         $pathConverter = function ($path) {
-            return '/'.$path;
+            if(mb_substr($path,0,1) != '/'){
+                return '/'.$path;
+            }else{
+                return $path;
+            }
         };
 
-        $controllers->get('/', array($this, 'getRepositoriesAction'));
+        // Get all repositories
+        $controllers->get('/repositories', array($this, 'getRepositoriesAction'))
+            ->bind('browser.api.repositories');
 
-        $controllers->get('/{repository}', array($this, 'getWorkspacesAction'))
+        // Get a repository
+        $controllers->get('/repositories/{repository}', array($this, 'getRepositoryAction'))
+            ->convert('repository', 'phpcr_browser.browser_api.repository_converter:convert')
+            ->bind('browser.api.repository');
+
+        // Get all workspace in a repository
+        $controllers->get('/repositories/{repository}/workspaces', array($this, 'getWorkspacesAction'))
+            ->convert('repository', 'phpcr_browser.browser_api.repository_converter:convert')
+            ->bind('browser.api.workspaces');
+
+        // Get a workspace
+        $controllers->get('/repositories/{repository}/workspaces/{workspace}', array($this, 'getWorkspaceAction'))
+            ->convert('repository', 'phpcr_browser.browser_api.repository_converter:convert')
+            ->bind('browser.api.workspace');
+
+        // Get a node in a workspace
+        $controllers->get('/repositories/{repository}/workspaces/{workspace}/nodes{path}', array($this, 'getNodeAction'))
+            ->assert('path', '.*')
+            ->convert('repository', 'phpcr_browser.browser_api.repository_converter:convert')
+            ->convert('path', $pathConverter)
+            ->bind('browser.api.node');
+
+        // Add a workspace in a repository
+        $controllers->post('/repositories/{repository}/workspaces', array($this, 'createWorkspaceAction'))
             ->convert('repository', 'phpcr_browser.browser_api.repository_converter:convert');
 
-        $controllers->get('/{repository}/{workspace}', array($this, 'getRootNodeAction'))
+        // Delete a workspace from a repository
+        $controllers->delete('/repositories/{repository}/workspaces/{workspace}', array($this, 'deleteWorkspaceAction'))
             ->convert('repository', 'phpcr_browser.browser_api.repository_converter:convert');
 
-        $controllers->get('/{repository}/{workspace}/{path}', array($this, 'getNodeAction'))
+         // Add a property in a node
+        $controllers->post('/repositories/{repository}/workspaces/{workspace}/nodes{path}', array($this, 'addNodePropertyAction'))
             ->assert('path', '.*')
             ->convert('repository', 'phpcr_browser.browser_api.repository_converter:convert')
             ->convert('path', $pathConverter);
 
-        // Workspace management
-        $controllers->post('/{repository}', array($this, 'createWorkspaceAction'))
-            ->convert('repository', 'phpcr_browser.browser_api.repository_converter:convert');
-
-        $controllers->delete('/{repository}', array($this, 'deleteWorkspaceAction'))
-            ->convert('repository', 'phpcr_browser.browser_api.repository_converter:convert');
-
-
-        // Property management
-        $controllers->delete('/{repository}/{workspace}/{path}@{property}', array($this, 'deleteNodePropertyAction'))
-            ->assert('path', '.*')
-            ->convert('repository', 'phpcr_browser.browser_api.repository_converter:convert')
-            ->convert('path', $pathConverter);
-
-        $controllers->post('/{repository}/{workspace}/{path}', array($this, 'addNodePropertyAction'))
+        // Delete a property from a node
+        $controllers->delete('/repositories/{repository}/workspaces/{workspace}/nodes{path}@{property}', array($this, 'deleteNodePropertyAction'))
             ->assert('path', '.*')
             ->convert('repository', 'phpcr_browser.browser_api.repository_converter:convert')
             ->convert('path', $pathConverter);
@@ -82,15 +100,37 @@ class APIControllerProvider implements ControllerProviderInterface
     public function getRepositoriesAction(Application $app)
     {
         $repositories = $app['phpcr_browser.phpcr.repositories']->getAll();
-        $data = array();
+        $data = array(
+            'repositories'  =>  array(),
+            'link'      =>  array(
+                'self'  =>  $app->path('browser.api.repositories')
+            )
+        );
 
         foreach ($repositories as $repository) {
-            $data[] = array(
+            $data['repositories'][] = array(
                 'name'          =>  $repository->getName(),
                 'factoryAlias'  =>  $repository->getFactoryAlias()
             );
         }
 
+        return $app->json($data);
+    }
+
+    public function getRepositoryAction(Session $repository, Application $app)
+    {
+        $data = array(
+            'repository'    =>  array(
+                'name'          =>  $repository->getName(),
+                'factoryAlias'  =>  $repository->getFactoryAlias()
+            ),
+            'link'          =>  array(
+                'self'      =>  $app->path('browser.api.repositories'),
+                'workspaces'=>  $app->path('browser.api.workspaces',array(
+                    'repository'    =>  $repository->getName()
+                ))
+            )
+        );
         return $app->json($data);
     }
 
@@ -107,7 +147,12 @@ class APIControllerProvider implements ControllerProviderInterface
 
         $data = array(
             'workspaces' => array(),
-            'support'    => $workspaceSupport
+            'support'    => $workspaceSupport,
+            'link'      =>  array(
+                'self'  =>  $app->path('browser.api.workspaces',array(
+                    'repository'    =>  $repository->getName()
+                ))
+            )
         );
 
         foreach ($repository->getWorkspace()->getAccessibleWorkspaceNames() as $workspaceName) {
@@ -120,36 +165,32 @@ class APIControllerProvider implements ControllerProviderInterface
         return $app->json($data);
     }
 
-    public function getRootNodeAction(Session $repository, $workspace, Application $app, Request $request)
+    public function getWorkspaceAction(Session $repository, $workspace, Application $app)
     {
-        $data = array();
-        $currentNode = $repository->getRootNode();
+        $repositorySupport = $repository->getSupport();
+        $workspaceSupport = array();
 
-        if($request->query->has('reducedTree')){
-            $data['reducedTree'] = Node::getReducedTree($currentNode);
+        foreach($repositorySupport as $support){
+            if(substr($support, 0, strlen('workspace.')) == 'workspace.'){
+                $workspaceSupport[] = $support;
+            }
         }
 
-        $data['name'] = '/';
-        $data['path'] = $currentNode->getPath();
-        $data['repository'] = $repository->getName();
-        $data['workspace'] = $workspace;
-        $data['children'] = array();
-
-        foreach ($currentNode->getNodes() as $node) {
-            $data['children'][] = array(
-                'name'          =>  $node->getName(),
-                'path'          =>  $node->getPath(),
-                'children'      =>  array(),
-                'hasChildren'   =>  (count($node->getNodes()) > 0)
-            );
-        }
-
-        $data['hasChildren'] = (count($data['children']) > 0);
-
-        if ($currentNode->getPath() != $repository->getRootNode()->getPath()) {
-            $data['parent'] = $currentNode->getParent()->getName();
-        }
-        $data['nodeProperties'] = $currentNode->getPropertiesToArray();
+        $data = array(
+            'workspace' => array(
+                'name'  =>  $workspace
+            ),
+            'support'    => $workspaceSupport,
+            'link'      =>  array(
+                'self'  =>  $app->path('browser.api.workspaces',array(
+                    'repository'    =>  $repository->getName()
+                )),
+                'nodes' =>  $app->path('browser.api.rootNode',array(
+                    'repository'    =>  $repository->getName(),
+                    'workspace'     =>  $workspace
+                ))
+            )
+        );
 
         return $app->json($data);
     }
@@ -159,20 +200,41 @@ class APIControllerProvider implements ControllerProviderInterface
         if (!$repository->nodeExists($path)) {
             throw new ResourceNotFoundException('Unknown node');
         }
-        $data = array();
+
+        $repositorySupport = $repository->getSupport();
+        $nodeSupport = array();
+
+        foreach($repositorySupport as $support){
+            if(substr($support, 0, strlen('node.')) == 'node.'){
+                $nodeSupport[] = $support;
+            }
+        }
+
+        $data = array(
+            'support'   =>  $nodeSupport,
+            'node'      =>  array(),
+            'link'      =>  array(
+                'self'  =>  $app->path('browser.api.node',array(
+                    'repository'    =>  $repository->getName(),
+                    'workspace'     =>  $workspace,
+                    'path'          =>  $path
+                ))
+            )
+        );
+
         $currentNode = $repository->getNode($path);
 
         if($request->query->has('reducedTree')){
-            $data['reducedTree'] = Node::getReducedTree($currentNode);
+            $data['node']['reducedTree'] = Node::getReducedTree($currentNode);
         }
 
-        $data['name'] = $currentNode->getName();
-        $data['path'] = $currentNode->getPath();
-        $data['repository'] = $repository->getName();
-        $data['workspace'] = $workspace;
-        $data['children'] = array();
+        $data['node']['name'] = $currentNode->getName();
+        $data['node']['path'] = $currentNode->getPath();
+        $data['node']['repository'] = $repository->getName();
+        $data['node']['workspace'] = $workspace;
+        $data['node']['children'] = array();
         foreach ($currentNode->getNodes() as $node) {
-            $data['children'][] = array(
+            $data['node']['children'][] = array(
                 'name'          =>  $node->getName(),
                 'path'          =>  $node->getPath(),
                 'children'      =>  array(),
@@ -180,12 +242,12 @@ class APIControllerProvider implements ControllerProviderInterface
             );
         }
 
-        $data['hasChildren'] = (count($data['children']) > 0);
+        $data['node']['hasChildren'] = (count($data['node']['children']) > 0);
 
         if ($currentNode->getPath() != $repository->getRootNode()->getPath()) {
-            $data['parent'] = $currentNode->getParent()->getName();
+            $data['node']['parent'] = $currentNode->getParent()->getName();
         }
-        $data['nodeProperties'] = $currentNode->getPropertiesToArray();
+        $data['node']['nodeProperties'] = $currentNode->getPropertiesToArray();
 
         return $app->json($data);
     }
@@ -222,29 +284,27 @@ class APIControllerProvider implements ControllerProviderInterface
         return $app->json(sprintf('Workspace %s created', $name));
     }
 
-    public function deleteWorkspaceAction(Session $repository, Application $app, Request $request)
+    public function deleteWorkspaceAction(Session $repository, $workspace, Application $app, Request $request)
     {
-        $name = $request->request->get('name', null);
-
         $currentWorkspace = $repository->getWorkspace();
 
-        if(is_null($name) || mb_strlen($name) == 0){
+        if(is_null($workspace) || mb_strlen($workspace) == 0){
             throw new InternalServerErrorException('Workspace name is empty');
         }
 
         try{
-            $currentWorkspace->deleteWorkspace($name);
+            $currentWorkspace->deleteWorkspace($workspace);
         }catch(\PHPCR\AccessDeniedException $e){
             throw new AccessDeniedException('Invalid credentials');
         }catch(UnsupportedRepositoryOperationException $e){
             throw new NotSupportedOperationException('Repository does not support workspace deletion. Maybe you should delete its folder.');
         }catch(NoSuchWorkspaceException $e){
-            throw new ResourceNotFoundException(sprintf('Workspace %s does not exist', $name));
+            throw new ResourceNotFoundException(sprintf('Workspace %s does not exist', $workspace));
         }catch(RepositoryException $e){
             throw new ResourceNotFoundException($e->getMessage());
         }
        
-        return $app->json(sprintf('Workspace %s deleted', $name));
+        return $app->json(sprintf('Workspace %s deleted', $workspace));
     }
 
     public function deleteNodePropertyAction(Session $repository, $workspace, $path, $property, Application $app, Request $request)

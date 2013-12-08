@@ -7,3 +7,5 @@ phpcr_factories:
             - credentials.password
         support:
             - workspace.create
+            - node.property.create
+            - node.property.delete
