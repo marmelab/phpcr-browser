@@ -47,7 +47,7 @@ class BrowserControllerProvider implements ControllerProviderInterface
             ->bind('browser.node');
 
 
-        $controllers->post('/_create/{repository}', array($this, 'createWorkspaceAction'))
+        $controllers->post('/{repository}', array($this, 'createWorkspaceAction'))
             ->bind('browser.workspace.create');
 
         $controllers->post('/_delete/{repository}/{workspace}', array($this, 'deleteWorkspaceAction'))
