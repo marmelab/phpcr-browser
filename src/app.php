@@ -37,7 +37,7 @@ $app->register(new APIServiceProvider(),array(
 		// A closure to delay the read of the configuration because it is not loaded yet
 		return $app['phpcr_repositories']; 
 	}),
-	'phpcr_api.mount_prefix'	=>	'/_api'
+	'phpcr_api.mount_prefix'	=>	'/api'
 ));
 $app->mount('/browser',new BrowserControllerProvider());
 

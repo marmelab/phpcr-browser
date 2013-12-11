@@ -2,7 +2,7 @@ angular.module('browserApp').service('browserAPI', ['$rootScope','Restangular', 
 	/*
 	 * Restangular init
 	 */
-	Restangular.setBaseUrl('/_api');
+	Restangular.setBaseUrl('/api');
 	/*
 	 * Pointer for API Request on current workspace
 	 */
