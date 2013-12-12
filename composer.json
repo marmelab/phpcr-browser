@@ -16,5 +16,6 @@
     "autoload": {
         "psr-0": {"PHPCRBrowser\\": "src/"}
     },
-    "minimum-stability" : "dev"
+    "minimum-stability" : "dev",
+    "prefer-stable": true
 }
