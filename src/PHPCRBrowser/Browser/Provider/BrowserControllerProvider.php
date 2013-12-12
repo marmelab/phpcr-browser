@@ -46,12 +46,19 @@ class BrowserControllerProvider implements ControllerProviderInterface
             ->convert('path', $pathConverter)        
             ->bind('browser.node');
 
+
+        $controllers->post('/{repository}', array($this, 'createWorkspaceAction'))
+            ->bind('browser.workspace.create');
+
+        $controllers->post('/_delete/{repository}/{workspace}', array($this, 'deleteWorkspaceAction'))
+            ->bind('browser.workspace.delete');
+
         return $controllers;
     }
 
     public function getRepositoriesAction(Application $app, Request $request)
     {
-        $apiRequest = Request::create('/_api/', 'GET');
+        $apiRequest = Request::create('/api/repositories', 'GET');
         $response = $app->handle($apiRequest, HttpKernelInterface::SUB_REQUEST, true);
         $json = json_decode($response->getContent(), true);
 
@@ -60,13 +67,13 @@ class BrowserControllerProvider implements ControllerProviderInterface
         }
 
         return $app['twig']->render('index.html.twig', array(
-            'repositories'  =>  $json
+            'repositories'  =>  $json['repositories']
         ));
     }
 
     public function getWorkspacesAction($repository, Application $app, Request $request)
     {
-        $apiRequest = Request::create(sprintf('/_api/%s', $repository), 'GET');
+        $apiRequest = Request::create(sprintf('/api/repositories/%s/workspaces', $repository), 'GET');
         $response = $app->handle($apiRequest, HttpKernelInterface::SUB_REQUEST, true);
         $json = json_decode($response->getContent(), true);
         
@@ -82,13 +89,13 @@ class BrowserControllerProvider implements ControllerProviderInterface
 
         return $app['twig']->render('repository.html.twig', array(
             'repository'    =>  $repository,
-            'workspaces'    =>  $json
+            'data'    =>  $json
         ));
     }
 
     public function getRootNodeAction($repository, $workspace, Application $app)
     {
-        $apiRequest = Request::create(sprintf('/_api/%s/%s', $repository, $workspace), 'GET');
+        $apiRequest = Request::create(sprintf('/api/repositories/%s/workspaces/%s/nodes', $repository, $workspace), 'GET');
         $response = $app->handle($apiRequest, HttpKernelInterface::SUB_REQUEST, true);
         $json = json_decode($response->getContent(), true);
 
@@ -114,7 +121,7 @@ class BrowserControllerProvider implements ControllerProviderInterface
 
     public function getNodeAction($repository, $workspace, $path, Application $app, Request $request)
     {
-        $apiRequest = Request::create(sprintf('/_api/%s/%s%s', $repository, $workspace, $path), 'GET');
+        $apiRequest = Request::create(sprintf('/api/repositories/%s/workspaces/%s/nodes%s', $repository, $workspace, $path), 'GET');
         $response = $app->handle($apiRequest, HttpKernelInterface::SUB_REQUEST, true);
         $json = json_decode($response->getContent(), true);
 
@@ -137,6 +144,43 @@ class BrowserControllerProvider implements ControllerProviderInterface
             'path'          =>  $path,
             'currentNode'   =>  $json
         ));
+    }
+
+    public function createWorkspaceAction($repository, Application $app, Request $request)
+    {
+        $apiRequest = Request::create(sprintf('/api/repositories/%s/workspaces', $repository), 'POST', array(
+            'name'          =>  $request->request->get('name',null),
+            'srcWorkspace'  =>  $request->request->get('srcWorkspace',null) != '-1' ? $request->request->get('srcWorkspace',null) : null
+        ));
+        $response = $app->handle($apiRequest, HttpKernelInterface::SUB_REQUEST, true);
+        $json = json_decode($response->getContent(), true);
+
+        if (!($response->getStatusCode() == 200 && !is_null($json))){
+            $app['session']->getFlashBag()->add('error', $json['message']);
+        }else{
+            $app['session']->getFlashBag()->add('success', $json);
+        }
+
+        return $app->redirect($app->path('browser.workspaces', array(
+            'repository' => $repository
+        )));
+    }
+
+    public function deleteWorkspaceAction($repository, $workspace, Application $app, Request $request)
+    {
+        $apiRequest = Request::create(sprintf('/api/repositories/%s/workspaces/%s', $repository, $workspace), 'DELETE');
+        $response = $app->handle($apiRequest, HttpKernelInterface::SUB_REQUEST, true);
+        $json = json_decode($response->getContent(), true);
+
+        if (!($response->getStatusCode() == 200 && !is_null($json))){
+            $app['session']->getFlashBag()->add('error', $json['message']);
+        }else{
+            $app['session']->getFlashBag()->add('success', $json);
+        }
+
+        return $app->redirect($app->path('browser.workspaces', array(
+            'repository' => $repository
+        )));
     }
 
 }

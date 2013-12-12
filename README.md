@@ -15,7 +15,7 @@ $ composer install
 $ bower update
 ```
 
-Add a VirtualHost to your Apache config, or better, use PHP 5.4 integrated webserver by calling:
+Add a VirtualHost to your Apache config (and add in it 'AllowEncodedSlashes On'), or better, use PHP 5.4 integrated webserver by calling:
 
 ```sh
 $ php -S localhost:8000 -t web
@@ -36,7 +36,7 @@ phpcr_repositories:
             credentials.password: admin
 ```
 
-The `factory` setting is the type of PHPCR repository you want to browse. See available factories in [config/factories.yml](config/factories.yml).
+The `factory` setting is the type of PHPCR repository you want to browse. See available factories in [marmelab/phpcr-api/config/factories.yml](https://github.com/marmelab/phpcr-api/config/factories.yml).
 
 You can also copy the `config/prod.yml-dist` file as `config/prod.yml` to get this exact configuration.
 

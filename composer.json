@@ -9,10 +9,12 @@
         "twig/twig": "dev-master",
         "symfony/twig-bridge": "2.3.*",
         "jackalope/jackalope-jackrabbit": "dev-master",
-        "igorw/config-service-provider": "~1.2"
+        "igorw/config-service-provider": "~1.2",
+        "marmelab/phpcr-api-silex-provider": "dev-master"
     },
 
     "autoload": {
         "psr-0": {"PHPCRBrowser\\": "src/"}
-    }
+    },
+    "minimum-stability" : "dev"
 }
