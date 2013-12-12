@@ -25,10 +25,10 @@
         </div>  
         <div data-ng-hide="!hasProperties() || !_first_load" id="property-search">
           {% if 'node.property.create' in currentNode.support %}
-          <div class="col-lg-2">
+          <div class="col-sm-2">
             <a href="#addProperty" data-toggle="modal" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Add property</a>
           </div>
-          <div class="input-group col-lg-10">
+          <div class="input-group col-sm-offset-1 col-sm-9">
             <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
             <input data-ng-model="search" class="form-control" placeholder="Search by property name">
           </div>
