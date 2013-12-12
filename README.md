@@ -36,7 +36,7 @@ phpcr_repositories:
             credentials.password: admin
 ```
 
-The `factory` setting is the type of PHPCR repository you want to browse. See available factories in [marmelab/phpcr-api/config/factories.yml](https://github.com/marmelab/phpcr-api/config/factories.yml).
+The `factory` setting is the type of PHPCR repository you want to browse. See available factories in [marmelab/phpcr-api/config/factories.yml](https://github.com/marmelab/phpcr-api/blob/master/config/factories.yml).
 
 You can also copy the `config/prod.yml-dist` file as `config/prod.yml` to get this exact configuration.
 
