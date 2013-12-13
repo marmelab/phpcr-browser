@@ -217,12 +217,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/marmelab/phpcr-api-silex-provider.git",
-                "reference": "a9732deb091140ddf8f639aebf050d9967f60f57"
+                "reference": "d500ca50a37a9b8d8c753d9a70664b36456930a7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/marmelab/phpcr-api-silex-provider/zipball/a9732deb091140ddf8f639aebf050d9967f60f57",
-                "reference": "a9732deb091140ddf8f639aebf050d9967f60f57",
+                "url": "https://api.github.com/repos/marmelab/phpcr-api-silex-provider/zipball/d500ca50a37a9b8d8c753d9a70664b36456930a7",
+                "reference": "d500ca50a37a9b8d8c753d9a70664b36456930a7",
                 "shasum": ""
             },
             "require": {
@@ -240,7 +240,7 @@
                 "MIT"
             ],
             "description": "PHPCR API Silex Provider exposes in REST marmelab/phpcr-api",
-            "time": "2013-12-11 08:38:26"
+            "time": "2013-12-13 07:30:50"
         },
         {
             "name": "phpcr/phpcr",

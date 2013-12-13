@@ -1,27 +1,47 @@
 {% extends 'layout.html.twig' %}
 
+{% block navbar %}
+<ul class="nav navbar-nav">
+	<li>
+	    <a href="{{ path('browser.repositories') }}" class="dropdown-toggle" data-toggle="dropdown">
+	      Repositories <span class="badge"><span class="glyphicon glyphicon-th"></span> {{ repositories | length }}</span>
+	    </a>
+	    <ul class="dropdown-menu large">
+        	{% for _repository in repositories %}
+        	<li>
+        		<a href="{{ path('browser.workspaces', { 'repository': _repository } ) }}" >		
+					<span class="glyphicon glyphicon-th"></span> {{ _repository}}
+				</a>
+			</li>
+			{% endfor %}
+        </ul>
+  	</li>
+ 	<li class="dropdown">
+ 		<a href="{{ path('browser.workspaces', { repository: repository }) }}" class="dropdown-toggle" data-toggle="dropdown">
+	      {{ repository }} <span class="badge"><span class="glyphicon glyphicon-th-list"></span> {{ data.workspaces | length }}</span>
+	    </a>
+        <ul class="dropdown-menu large">
+        	{% for workspace in data.workspaces %}
+        	<li>
+        		<a href="{{ path('browser.rootNode', { 'repository': repository, 'workspace': workspace.name } ) }}" >		
+					<span class="glyphicon glyphicon-th-list"></span> {{ workspace.name }}
+				</a>
+			</li>
+			{% endfor %}
+        </ul>
+    </li>
+</ul>
+{% endblock navbar %}
+
 {% block content %}
-<div class="col-lg-12 btnbar">
-	<a href="{{ path('browser.repositories') }}" class="btn btn-default">
-		<span class="glyphicon glyphicon-chevron-left"></span> Go Back To Repositories
-	</a>
-	<span class="lead pull-right">{{ repository }} : 
-			{{ data.workspaces | length }} 
-			{% if data.workspaces | length > 1 %}		
-			workspaces
-			{% else %}
-			workspace
-			{% endif %}
-	</span>
-</div>
-<div id="content" class="content-full">
+<div id="content" class="content-full-nobar">
 	<div class="scrollable">
 		<div class="col-lg-12">
 		{% for workspace in data.workspaces %}
 		<div class="col-lg-2">
 			<div class="panel panel-info">
 				<div class="panel-heading">
-					<span class="glyphicon glyphicon-briefcase"></span> Workspace
+					<span class="glyphicon glyphicon-th-list"></span> Workspace
 				</div>
 			  	<div class="panel-body">
 			    	<p class="lead text-center">
@@ -47,7 +67,7 @@
 		<div class="col-lg-2">
 			<div class="panel panel-default" id="new-workspace-panel">
 				<div class="panel-heading">
-					<span class="glyphicon glyphicon-briefcase"></span> Workspace
+					<span class="glyphicon glyphicon-th-list"></span> Workspace
 				</div>
 			  	<div class="panel-body">
 			    	<p class="lead text-center">

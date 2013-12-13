@@ -1,14 +1,83 @@
 {% extends 'layout.html.twig' %}
 
+{% block navbar %}
+<ul class="nav navbar-nav">
+  <li>
+      <a href="{{ path('browser.repositories') }}" class="dropdown-toggle" data-toggle="dropdown">
+        Repositories <span class="badge"><span class="glyphicon glyphicon-th"></span> {{ repositories | length }}</span>
+      </a>
+      <ul class="dropdown-menu large">
+          <li role="presentation" class="dropdown-header">All the configured repositories</li>
+          {% for _repository in repositories %}
+          <li>
+            <a href="{{ path('browser.workspaces', { 'repository': _repository } ) }}" >   
+            <span class="glyphicon glyphicon-th"></span> {{ _repository }}
+            </a>
+          </li>
+          {% endfor %}
+        </ul>
+    </li>
+  <li class="dropdown">
+    <a href="{{ path('browser.workspaces', { repository: repository }) }}" class="dropdown-toggle" data-toggle="dropdown">
+        {{ repository }} <span class="badge"><span class="glyphicon glyphicon-th-list"></span> {{ workspaces | length }}</span>
+      </a>
+        <ul class="dropdown-menu large">
+          <li role="presentation" class="dropdown-header">Workspaces of {{ repository }}</li>
+          {% for workspace in workspaces %}
+          <li>
+            <a href="{{ path('browser.rootNode', { 'repository': repository, 'workspace': workspace } ) }}" >    
+            <span class="glyphicon glyphicon-th-list"></span> {{ workspace }}
+            </a>
+        </li>
+        {% endfor %}
+        <li class="divider"></li>
+        <li>
+          <a href="{{ path('browser.workspaces', { repository: repository }) }}">
+            <span class="glyphicon glyphicon-th"></span> Go back to {{ repository }}
+          </a>
+        </li>
+      </ul>
+    </li>
+  <li class="active">
+    <a href="{{ path('browser.rootNode', { 'repository': repository, 'workspace': workspace } ) }}">
+      <span class="glyphicon glyphicon-th-list"></span> {{ workspace }}
+    </a>
+  </li>
+{% endblock navbar %}
+
 {% block content %}
 <div ng-app="browserApp">
   <div ng-init="repository='{{ repository }}';workspace='{{ workspace }}';path='{{ path }}';baseUrl='{{ path('browser.repositories') }}'">
-    <div class="col-lg-12 btnbar">
-      <a href="{{ path('browser.workspaces', { repository: repository }) }}" class="btn btn-default">
-        <span class="glyphicon glyphicon-chevron-left"></span> Go Back To Workspaces
-      </a>
-      <span class="lead pull-right">{{ repository }} / {{ workspace }}
-      </span>
+    <div class="col-lg-12 btnbar" data-ng-controller="BreadcrumbCtrl">
+      <div class="btn-toolbar" role="toolbar">
+        <div class="btn-group">
+          <a href="{{ path('browser.workspaces', { repository: repository }) }}" class="btn btn-info">
+            <span class="glyphicon glyphicon-th"></span>
+          </a>
+      </div>
+      <div class="btn-group">
+        <a href="{{ path('browser.rootNode', { 'repository': repository, 'workspace': workspace } ) }}" class="btn btn-default">/</a>
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+          <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu">
+          <li><a href="#development" data-toggle="modal"><span class="glyphicon glyphicon-plus"></span> Add child</a></li>
+        </ul>
+      </div>
+      <div class="btn-group" data-ng-repeat="item in breadcrumb">
+        {% raw %}<a data-ng-href="{{baseUrl+repository+'/'+workspace+item.path}}" class="btn btn-default" data-ng-bind="item.name"></a>{% endraw %}
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+          <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu">
+          <li role="presentation" class="dropdown-header">What do you want to do ?</li>
+          <li><a href="#development" data-toggle="modal"><span class="glyphicon glyphicon-plus"></span> Add child</a></li>
+          <li><a href="#development" data-toggle="modal"><span class="glyphicon glyphicon-pencil"></span> Rename</a></li>
+          <li class="divider"></li>
+          <li><a href="#development" data-toggle="modal"><span class="glyphicon glyphicon-trash"></span> Delete</a></li>
+        </ul>
+      </div>
+      </div>
     </div>
     <div id="sidebar" data-ng-controller="TreeCtrl">
         <div class="scrollable">
@@ -44,18 +113,26 @@
               <thead>
                   <th>Property name</th>
                   <th>Property value</th>
+                  <th></th>
               </thead>
               <tbody>
-                  <tr data-ng-repeat="(name,value) in properties | propertyNameFilter:search | orderBy:'name'">
+                  <tr class="property-item" data-ng-repeat="(name,value) in properties | propertyNameFilter:search | orderBy:'name'">
                     <td>
                       <span data-ng-bind="name"></span>
-                      {% if 'node.property.delete' in currentNode.support %}
-                      <a href="#" confirm-click="deleteProperty(name)" confirmation="Are you sure?" title="Delete" class="text-danger pull-right" data-ng-hide="name.slice(0,4) == 'jcr:'">
-                        <span class="glyphicon glyphicon-trash"></span>
-                      </a>
-                      {% endif %}
                     </td>
                     <td property-value></td>
+                    <td class="property-options">
+                      <div class="btn-group pull-right" data-ng-hide="name.slice(0,4) == 'jcr:'">
+                        <a href="#development" data-toggle="modal" title="Edit">
+                        <span class="glyphicon glyphicon-pencil"></span>
+                        </a>
+                        {% if 'node.property.delete' in currentNode.support %}
+                        <a href="#" confirm-click="deleteProperty(name)" confirmation="Are you sure?" title="Delete">
+                        <span class="glyphicon glyphicon-trash"></span>
+                        </a>
+                        {% endif %}
+                      </div>
+                    </td>
                   </tr>
               </tbody>
           </table>
@@ -95,6 +172,26 @@
     </div>
   </div>
   {% endif %}
+
+  <div class="modal" id="development" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-ng-controller="PropertiesCtrl">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title">This feature is not available yet</h4>
+        </div>
+          <div class="modal-body">
+            <div class="alert alert-info">
+              <span class="glyphicon glyphicon-bullhorn"></span> This feature is planned but not ready for release. Don't worry we are working on it !
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 </div>
 {% endblock content %}
 {% block javascript %}
