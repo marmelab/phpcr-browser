@@ -7,6 +7,7 @@
 	      Repositories <span class="badge"><span class="glyphicon glyphicon-th"></span> {{ repositories | length }}</span>
 	    </a>
 	    <ul class="dropdown-menu large">
+	    	<li role="presentation" class="dropdown-header">All the configured repositories</li>
         	{% for _repository in repositories %}
         	<li>
         		<a href="{{ path('browser.workspaces', { 'repository': _repository } ) }}" >		
@@ -21,6 +22,7 @@
 	      {{ repository }} <span class="badge"><span class="glyphicon glyphicon-th-list"></span> {{ data.workspaces | length }}</span>
 	    </a>
         <ul class="dropdown-menu large">
+        	<li role="presentation" class="dropdown-header">Workspaces of {{ repository }}</li>
         	{% for workspace in data.workspaces %}
         	<li>
         		<a href="{{ path('browser.rootNode', { 'repository': repository, 'workspace': workspace.name } ) }}" >		

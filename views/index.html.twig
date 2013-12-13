@@ -7,6 +7,7 @@
       Repositories <span class="badge"><span class="glyphicon glyphicon-th"></span> {{ repositories | length }}</span>
     </a>
     <ul class="dropdown-menu large">
+    	<li role="presentation" class="dropdown-header">All the configured repositories</li>
     	{% for _repository in repositories %}
     	<li>
     		<a href="{{ path('browser.workspaces', { 'repository': _repository.name } ) }}" >		
