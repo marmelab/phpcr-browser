@@ -1,4 +1,4 @@
-var app = angular.module('browserApp', ['restangular']);
+var app = angular.module('browserApp', ['restangular', 'xeditable']);
 
 app.run(function ($rootScope) {
 	$rootScope.path = '/';
@@ -49,4 +49,8 @@ app.filter('propertyNameFilter', function() {
     });
     return obj;
   };
+});
+
+app.run(function(editableOptions) {
+  editableOptions.theme = 'bs3'; // bootstrap3 theme. Can be also 'bs2', 'default'
 });

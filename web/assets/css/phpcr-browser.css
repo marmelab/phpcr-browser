@@ -192,6 +192,10 @@ div#first-load{
   border-left-width: 8px;
 }
 
+.alert-sm{
+  padding: 5px 3px;
+}
+
 .btnbar{
   margin-top: 5px;
 }
@@ -211,7 +215,7 @@ div#first-load{
 }
 
 .large{
-  width: 150%!important;
+  width: 200%!important;
 }
 
 .nav .dropdown-menu > li > a{
@@ -236,12 +240,13 @@ li.danger a:hover{
   position:absolute;
   top: 0px;
   background-color:#fff;
-  padding: 10px 15px; 
+  padding: 10px 0px; 
   margin-bottom: 20px;
   margin-left:-5px;
   margin-right:-5px;
   border-bottom: 1px solid #ccc;
   z-index: 3000;
+  width:100%;
 }
 
 input{

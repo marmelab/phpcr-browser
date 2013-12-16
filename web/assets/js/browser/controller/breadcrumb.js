@@ -6,22 +6,28 @@ angular.module('browserApp').controller('BreadcrumbCtrl', function TreeCtrl($sco
   	});
 
   	function compileBreadcrumb (node){
-        if(node.path == '/'){
-            $scope.breadcrumb = [];
-        }else{
+        var d = [{ 
+            'name': '/',
+            'path': '',
+            'dropdown': node.path == '/',
+            'class': node.path == '/' ? 'btn-primary' : 'btn-default'
+        }];
+
+        if(node.path != '/'){
             var b = node.path.split('/');
             b.shift();
-            var d = [];
             var path = '';
 
             for(c in b){
                 path += '/' + b[c];
                 d.push({
                     'name': b[c],
-                    'path': path
+                    'path': path,
+                    'dropdown': c == b.length -1,
+                    'class': c == b.length - 1 ? 'btn-success' : 'btn-default'
                 });
             }
-            $scope.breadcrumb = d;
         }
+        $scope.breadcrumb = d;
     }
 });
