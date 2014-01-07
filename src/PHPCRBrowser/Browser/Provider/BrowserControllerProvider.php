@@ -73,7 +73,7 @@ class BrowserControllerProvider implements ControllerProviderInterface
 
     public function getWorkspacesAction($repository, Application $app, Request $request)
     {
-        $apiRequest = Request::create(sprintf('/api/repositories/%s/workspaces', $repository), 'GET');
+        $apiRequest = Request::create(sprintf('/api/repositories/%s/workspaces?repositories', $repository), 'GET');
         $response = $app->handle($apiRequest, HttpKernelInterface::SUB_REQUEST, true);
         $json = json_decode($response->getContent(), true);
         
@@ -88,14 +88,15 @@ class BrowserControllerProvider implements ControllerProviderInterface
         }
 
         return $app['twig']->render('repository.html.twig', array(
+            'repositories'  =>  $json['repositories'],
             'repository'    =>  $repository,
-            'data'    =>  $json
+            'data'          =>  $json
         ));
     }
 
     public function getRootNodeAction($repository, $workspace, Application $app)
     {
-        $apiRequest = Request::create(sprintf('/api/repositories/%s/workspaces/%s/nodes', $repository, $workspace), 'GET');
+        $apiRequest = Request::create(sprintf('/api/repositories/%s/workspaces/%s/nodes?repositories&workspaces', $repository, $workspace), 'GET');
         $response = $app->handle($apiRequest, HttpKernelInterface::SUB_REQUEST, true);
         $json = json_decode($response->getContent(), true);
 
@@ -112,6 +113,8 @@ class BrowserControllerProvider implements ControllerProviderInterface
         }
 
         return $app['twig']->render('workspace.html.twig', array(
+            'repositories'  =>  $json['repositories'],
+            'workspaces'    =>  $json['workspaces'],
             'workspace'     =>  $workspace,
             'repository'    =>  $repository,
             'currentNode'   =>  $json,
@@ -121,7 +124,7 @@ class BrowserControllerProvider implements ControllerProviderInterface
 
     public function getNodeAction($repository, $workspace, $path, Application $app, Request $request)
     {
-        $apiRequest = Request::create(sprintf('/api/repositories/%s/workspaces/%s/nodes%s', $repository, $workspace, $path), 'GET');
+        $apiRequest = Request::create(sprintf('/api/repositories/%s/workspaces/%s/nodes%s?repositories&workspaces', $repository, $workspace, $path), 'GET');
         $response = $app->handle($apiRequest, HttpKernelInterface::SUB_REQUEST, true);
         $json = json_decode($response->getContent(), true);
 
@@ -139,6 +142,8 @@ class BrowserControllerProvider implements ControllerProviderInterface
         }
 
         return $app['twig']->render('workspace.html.twig', array(
+            'repositories'  =>  $json['repositories'],
+            'workspaces'    =>  $json['workspaces'],
             'workspace'     =>  $workspace,
             'repository'    =>  $repository,
             'path'          =>  $path,

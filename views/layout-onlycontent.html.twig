@@ -1,0 +1,43 @@
+{% extends 'layout.html.twig' %}
+{% block layout %}
+<div id="content" class="content-full-nobar">
+  {% if app.session.getFlashBag() | length > 0 %}
+  <div class="row" style="padding-left: 30px;padding-right: 30px;">
+    <div class="col-lg-12">
+      {% for type,list in app.session.getFlashBag() %}
+      {% for message in list %}
+      {% if type == 'error' %}
+      {% set class = 'danger' %}
+      {% set icon = 'remove' %}
+      {% elseif type == 'info' %}
+      {% set class = 'info' %}
+      {% set icon = 'bullhorn' %}
+      {% elseif type == 'warning' %}
+      {% set class = 'warning' %}
+      {% set icon = 'warning-sign' %}
+      {% elseif type == 'success' %}
+      {% set class = 'success' %}
+      {% set icon = 'ok' %}
+      {% else %}
+      {% set class = 'info' %}
+      {% set icon = 'bullhorn' %}
+      {% endif %}
+      <div class="alert alert-sm alert-{{ class }} alert-dismissable">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        <span class="glyphicon glyphicon-{{ icon }}"></span> {{ message }}
+      </div>
+      {% endfor %}
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="scrollable">
+        {% block content %}{% endblock content %}
+      </div>
+    </div>
+  </div>
+</div>
+{% block bottomcontent %}{% endblock bottomcontent %}
+{% endblock layout %}

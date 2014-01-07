@@ -1,5 +1,7 @@
 angular.module('browserApp').controller('PropertiesCtrl', function PropertiesCtrl($scope,$rootScope) {
-	$rootScope.$watch('activeNode', function(){
+	$scope.showAddPropertyForm = false;
+
+    $rootScope.$watch('activeNode', function(){
 		if($rootScope.activeNode !== null){
     		compileProperties($rootScope.activeNode);
     	}
@@ -24,12 +26,29 @@ angular.module('browserApp').controller('PropertiesCtrl', function PropertiesCtr
     }
 
     $scope.deleteProperty = function(name){
+        $rootScope.propertyDeleted = { 'name' : name, 'value' : $rootScope.properties[name], 'path' : $rootScope.activeNode.path }
+        $rootScope.propertyToRestore = true;
         $rootScope.$emit('property.delete', $rootScope.activeNode.path, name);
+    }
+
+    $scope.confirmPropertyDeletion = function(){
+        $rootScope.propertyDeleted = undefined;
+        $rootScope.propertyToRestore = false;
     }
 
     $scope.addProperty = function(name,value){
         $scope.newName = undefined;
         $scope.newValue = undefined;
         $rootScope.$emit('property.add', $rootScope.activeNode.path, name, value);
+    }
+
+    $scope.restoreProperty = function(){
+        $rootScope.propertyToRestore = false;
+        $rootScope.$emit('property.add', $rootScope.propertyDeleted.path, $rootScope.propertyDeleted.name, $rootScope.propertyDeleted.value);
+        $rootScope.propertyDeleted = undefined;
+    }
+
+    $scope.setAddPropertyFormStatus = function(status){
+        $scope.showAddPropertyForm = status;
     }
 });

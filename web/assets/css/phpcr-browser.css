@@ -123,6 +123,12 @@ div.content-full{
   margin-left:0!important;
 }
 
+div.content-full-nobar{
+  width:100%!important;
+  margin-left:0!important;
+  top: 51px!important;
+}
+
 div#content table{
   background-color: #fff;
   margin-bottom: 5px;
@@ -186,20 +192,61 @@ div#first-load{
   border-left-width: 8px;
 }
 
+.alert-sm{
+  padding: 5px 3px;
+}
+
 .btnbar{
   margin-top: 5px;
+}
+
+.badge{
+  background-color: #fff;
+  color: #ae3910;
+}
+
+.dropdown-menu {
+  border-radius: 0px;
+}
+
+.nav .dropdown-menu {
+  width: 100%;
+  min-width: 0;
+}
+
+.large{
+  width: 200%!important;
+}
+
+.nav .dropdown-menu > li > a{
+  padding: 10px 15px;
+}
+
+.nav .dropdown-menu > li > a > .glyphicon{
+  padding-right: 25px;
+}
+
+li.danger a{
+  background-color: #d9534f;
+  color: #fff;
+}
+
+li.danger a:hover{
+  background-color: #d2322d;
+  color: #fff;
 }
 
 #property-search{
   position:absolute;
   top: 0px;
   background-color:#fff;
-  padding: 10px 15px; 
+  padding: 10px 0px; 
   margin-bottom: 20px;
   margin-left:-5px;
   margin-right:-5px;
   border-bottom: 1px solid #ccc;
   z-index: 3000;
+  width:100%;
 }
 
 input{
@@ -213,6 +260,24 @@ input{
 #property-content{
   margin-top: 45px;
   position:relative;
+}
+
+.property-item .property-options .btn-group{
+  visibility: hidden;
+}
+
+.property-item .property-options .btn-group a{
+  color: #bbb;
+}
+
+.property-item .property-options .btn-group a:hover{
+  color: #000;
+  text-decoration: none;
+}
+
+.property-item:hover .property-options .btn-group{
+  visibility: visible;
+  display:block;
 }
 
 #sidebar legend{
