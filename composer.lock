@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "860ff89fcfd099e6255d2c5d45569b71",
+    "hash": "bbc8fff4d040486281bae8ad0f773028",
     "packages": [
         {
             "name": "igorw/config-service-provider",
@@ -64,16 +64,16 @@
         },
         {
             "name": "jackalope/jackalope",
-            "version": "1.0.1",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/jackalope/jackalope.git",
-                "reference": "605a3fb6d83c906d19ad88b2347be9453c96a19f"
+                "reference": "36944d38af2e6fbcca7da2405bd6c0f56818f247"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jackalope/jackalope/zipball/605a3fb6d83c906d19ad88b2347be9453c96a19f",
-                "reference": "605a3fb6d83c906d19ad88b2347be9453c96a19f",
+                "url": "https://api.github.com/repos/jackalope/jackalope/zipball/36944d38af2e6fbcca7da2405bd6c0f56818f247",
+                "reference": "36944d38af2e6fbcca7da2405bd6c0f56818f247",
                 "shasum": ""
             },
             "require": {
@@ -81,7 +81,7 @@
                 "jackalope/jackalope-transport": "*",
                 "php": ">=5.3.2",
                 "phpcr/phpcr": "~2.1.0",
-                "phpcr/phpcr-utils": "~1.0.0"
+                "phpcr/phpcr-utils": "~1.1.0"
             },
             "provide": {
                 "phpcr/phpcr-implementation": "2.1.0"
@@ -89,7 +89,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.0-dev"
+                    "dev-master": "1.1-dev"
                 }
             },
             "autoload": {
@@ -113,7 +113,7 @@
             "keywords": [
                 "phpcr"
             ],
-            "time": "2013-11-06 10:28:46"
+            "time": "2014-01-04 14:34:56"
         },
         {
             "name": "jackalope/jackalope-jackrabbit",
@@ -121,21 +121,21 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/jackalope/jackalope-jackrabbit.git",
-                "reference": "b2c96329fca500f2e83c4e74fffa1b6f97a3f492"
+                "reference": "2a5c82d60b20ac21d00781e55a2a1f14f32fbb6b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jackalope/jackalope-jackrabbit/zipball/b2c96329fca500f2e83c4e74fffa1b6f97a3f492",
-                "reference": "b2c96329fca500f2e83c4e74fffa1b6f97a3f492",
+                "url": "https://api.github.com/repos/jackalope/jackalope-jackrabbit/zipball/2a5c82d60b20ac21d00781e55a2a1f14f32fbb6b",
+                "reference": "2a5c82d60b20ac21d00781e55a2a1f14f32fbb6b",
                 "shasum": ""
             },
             "require": {
                 "ext-curl": "*",
                 "ext-libxml": "*",
-                "jackalope/jackalope": "~1.0.0",
+                "jackalope/jackalope": "~1.1.0",
                 "php": ">=5.3.3",
                 "phpcr/phpcr": "~2.1.0",
-                "phpcr/phpcr-utils": "~1.0.0"
+                "phpcr/phpcr-utils": "~1.1.0"
             },
             "provide": {
                 "jackalope/jackalope-transport": "1.0.0"
@@ -151,7 +151,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.0-dev"
+                    "dev-master": "1.1-dev"
                 }
             },
             "autoload": {
@@ -177,7 +177,7 @@
                 "phpcr",
                 "transport implementation"
             ],
-            "time": "2013-11-01 09:24:00"
+            "time": "2014-01-05 13:11:56"
         },
         {
             "name": "marmelab/phpcr-api",
@@ -185,12 +185,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/marmelab/phpcr-api.git",
-                "reference": "0c4739da066733bbd0b8b4227e9c1a61d1e854b8"
+                "reference": "810e4bee593124253a53a49e54dcafc83ac7f693"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/marmelab/phpcr-api/zipball/0c4739da066733bbd0b8b4227e9c1a61d1e854b8",
-                "reference": "0c4739da066733bbd0b8b4227e9c1a61d1e854b8",
+                "url": "https://api.github.com/repos/marmelab/phpcr-api/zipball/810e4bee593124253a53a49e54dcafc83ac7f693",
+                "reference": "810e4bee593124253a53a49e54dcafc83ac7f693",
                 "shasum": ""
             },
             "require": {
@@ -209,7 +209,7 @@
                 "MIT"
             ],
             "description": "PHPCR API provides an API to explore PHPCR repositories.",
-            "time": "2013-12-11 08:50:33"
+            "time": "2014-01-07 14:21:51"
         },
         {
             "name": "marmelab/phpcr-api-silex-provider",
@@ -299,16 +299,16 @@
         },
         {
             "name": "phpcr/phpcr-utils",
-            "version": "1.0.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpcr/phpcr-utils.git",
-                "reference": "7920ce3c60cffceb325819bfdf4ebe873df69839"
+                "reference": "988c131d9f92a4d748764302dea358db6e1f1862"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpcr/phpcr-utils/zipball/7920ce3c60cffceb325819bfdf4ebe873df69839",
-                "reference": "7920ce3c60cffceb325819bfdf4ebe873df69839",
+                "url": "https://api.github.com/repos/phpcr/phpcr-utils/zipball/988c131d9f92a4d748764302dea358db6e1f1862",
+                "reference": "988c131d9f92a4d748764302dea358db6e1f1862",
                 "shasum": ""
             },
             "require": {
@@ -319,7 +319,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.0-dev"
+                    "dev-master": "1.1-dev"
                 }
             },
             "autoload": {
@@ -358,7 +358,7 @@
                 "contentrepository",
                 "phpcr"
             ],
-            "time": "2013-10-10 19:46:30"
+            "time": "2013-12-29 00:18:05"
         },
         {
             "name": "pimple/pimple",
@@ -450,12 +450,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/silexphp/Silex.git",
-                "reference": "8c157d158348216ea4c2c520cbc00b245c770e0a"
+                "reference": "a793aa89b356e3605d4fe5b1057e278846d6f505"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/silexphp/Silex/zipball/8c157d158348216ea4c2c520cbc00b245c770e0a",
-                "reference": "8c157d158348216ea4c2c520cbc00b245c770e0a",
+                "url": "https://api.github.com/repos/silexphp/Silex/zipball/a793aa89b356e3605d4fe5b1057e278846d6f505",
+                "reference": "a793aa89b356e3605d4fe5b1057e278846d6f505",
                 "shasum": ""
             },
             "require": {
@@ -526,21 +526,21 @@
             "keywords": [
                 "microframework"
             ],
-            "time": "2013-12-06 10:11:42"
+            "time": "2013-12-31 08:13:35"
         },
         {
             "name": "symfony/console",
-            "version": "v2.4.0",
+            "version": "v2.4.1",
             "target-dir": "Symfony/Component/Console",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Console.git",
-                "reference": "3c1496ae96d24ccc6c340fcc25f71d7a1ab4c12c"
+                "reference": "4c1ed2ff514bd85ee186eebb010ccbdeeab05af7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Console/zipball/3c1496ae96d24ccc6c340fcc25f71d7a1ab4c12c",
-                "reference": "3c1496ae96d24ccc6c340fcc25f71d7a1ab4c12c",
+                "url": "https://api.github.com/repos/symfony/Console/zipball/4c1ed2ff514bd85ee186eebb010ccbdeeab05af7",
+                "reference": "4c1ed2ff514bd85ee186eebb010ccbdeeab05af7",
                 "shasum": ""
             },
             "require": {
@@ -579,21 +579,21 @@
             ],
             "description": "Symfony Console Component",
             "homepage": "http://symfony.com",
-            "time": "2013-11-27 09:10:40"
+            "time": "2014-01-01 08:14:50"
         },
         {
             "name": "symfony/debug",
-            "version": "v2.4.0",
+            "version": "v2.4.1",
             "target-dir": "Symfony/Component/Debug",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Debug.git",
-                "reference": "848565cb83d985eb77dac3f9e4486f3bce92b4a2"
+                "reference": "74110be5ec681a83fc5bd66dd5fd29fe85fe9c1f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Debug/zipball/848565cb83d985eb77dac3f9e4486f3bce92b4a2",
-                "reference": "848565cb83d985eb77dac3f9e4486f3bce92b4a2",
+                "url": "https://api.github.com/repos/symfony/Debug/zipball/74110be5ec681a83fc5bd66dd5fd29fe85fe9c1f",
+                "reference": "74110be5ec681a83fc5bd66dd5fd29fe85fe9c1f",
                 "shasum": ""
             },
             "require": {
@@ -634,21 +634,21 @@
             ],
             "description": "Symfony Debug Component",
             "homepage": "http://symfony.com",
-            "time": "2013-12-03 14:52:22"
+            "time": "2014-01-01 09:02:49"
         },
         {
             "name": "symfony/event-dispatcher",
-            "version": "v2.4.0",
+            "version": "v2.4.1",
             "target-dir": "Symfony/Component/EventDispatcher",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/EventDispatcher.git",
-                "reference": "acd1707236f6eb96fbb8d58f63d289b72ebc2f6e"
+                "reference": "e3ba42f6a70554ed05749e61b829550f6ac33601"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/EventDispatcher/zipball/acd1707236f6eb96fbb8d58f63d289b72ebc2f6e",
-                "reference": "acd1707236f6eb96fbb8d58f63d289b72ebc2f6e",
+                "url": "https://api.github.com/repos/symfony/EventDispatcher/zipball/e3ba42f6a70554ed05749e61b829550f6ac33601",
+                "reference": "e3ba42f6a70554ed05749e61b829550f6ac33601",
                 "shasum": ""
             },
             "require": {
@@ -688,21 +688,21 @@
             ],
             "description": "Symfony EventDispatcher Component",
             "homepage": "http://symfony.com",
-            "time": "2013-12-03 14:52:22"
+            "time": "2013-12-28 08:12:03"
         },
         {
             "name": "symfony/http-foundation",
-            "version": "v2.4.0",
+            "version": "v2.4.1",
             "target-dir": "Symfony/Component/HttpFoundation",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/HttpFoundation.git",
-                "reference": "381245ba3e507a3e9c5b4c2cbf344a312fb6081d"
+                "reference": "6c6b8a7bcd7e2cc920cd6acace563fdbf121d844"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/HttpFoundation/zipball/381245ba3e507a3e9c5b4c2cbf344a312fb6081d",
-                "reference": "381245ba3e507a3e9c5b4c2cbf344a312fb6081d",
+                "url": "https://api.github.com/repos/symfony/HttpFoundation/zipball/6c6b8a7bcd7e2cc920cd6acace563fdbf121d844",
+                "reference": "6c6b8a7bcd7e2cc920cd6acace563fdbf121d844",
                 "shasum": ""
             },
             "require": {
@@ -738,21 +738,21 @@
             ],
             "description": "Symfony HttpFoundation Component",
             "homepage": "http://symfony.com",
-            "time": "2013-11-28 10:27:26"
+            "time": "2014-01-05 02:10:50"
         },
         {
             "name": "symfony/http-kernel",
-            "version": "v2.4.0",
+            "version": "v2.4.1",
             "target-dir": "Symfony/Component/HttpKernel",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/HttpKernel.git",
-                "reference": "e5afbeabef99f916f0e0d76f68a36343aa293387"
+                "reference": "0605eedeb52c4d3a3144128d8336395a57be60d4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/HttpKernel/zipball/e5afbeabef99f916f0e0d76f68a36343aa293387",
-                "reference": "e5afbeabef99f916f0e0d76f68a36343aa293387",
+                "url": "https://api.github.com/repos/symfony/HttpKernel/zipball/0605eedeb52c4d3a3144128d8336395a57be60d4",
+                "reference": "0605eedeb52c4d3a3144128d8336395a57be60d4",
                 "shasum": ""
             },
             "require": {
@@ -809,21 +809,21 @@
             ],
             "description": "Symfony HttpKernel Component",
             "homepage": "http://symfony.com",
-            "time": "2013-12-03 15:23:03"
+            "time": "2014-01-05 02:12:11"
         },
         {
             "name": "symfony/routing",
-            "version": "v2.4.0",
+            "version": "v2.4.1",
             "target-dir": "Symfony/Component/Routing",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Routing.git",
-                "reference": "a7a665e2a0e3a203ca9a690c021066e76295bf6a"
+                "reference": "4abfb500aab8be458c9e3a227ea56b190584f78a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Routing/zipball/a7a665e2a0e3a203ca9a690c021066e76295bf6a",
-                "reference": "a7a665e2a0e3a203ca9a690c021066e76295bf6a",
+                "url": "https://api.github.com/repos/symfony/Routing/zipball/4abfb500aab8be458c9e3a227ea56b190584f78a",
+                "reference": "4abfb500aab8be458c9e3a227ea56b190584f78a",
                 "shasum": ""
             },
             "require": {
@@ -875,21 +875,21 @@
                 "uri",
                 "url"
             ],
-            "time": "2013-11-22 17:42:00"
+            "time": "2014-01-05 02:10:50"
         },
         {
             "name": "symfony/twig-bridge",
-            "version": "v2.3.7",
+            "version": "v2.3.9",
             "target-dir": "Symfony/Bridge/Twig",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/TwigBridge.git",
-                "reference": "d784512e386b3d7ddeb22774e73f9d53f19da01f"
+                "reference": "4223fe0dddf7a29060b2feee0076c01de826e120"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/TwigBridge/zipball/d784512e386b3d7ddeb22774e73f9d53f19da01f",
-                "reference": "d784512e386b3d7ddeb22774e73f9d53f19da01f",
+                "url": "https://api.github.com/repos/symfony/TwigBridge/zipball/4223fe0dddf7a29060b2feee0076c01de826e120",
+                "reference": "4223fe0dddf7a29060b2feee0076c01de826e120",
                 "shasum": ""
             },
             "require": {
@@ -941,7 +941,7 @@
             ],
             "description": "Symfony Twig Bridge",
             "homepage": "http://symfony.com",
-            "time": "2013-09-19 09:45:20"
+            "time": "2013-12-30 21:13:42"
         },
         {
             "name": "symfony/yaml",
@@ -950,12 +950,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Yaml.git",
-                "reference": "1481f096caead542c2dfadd67d9fd6124d97e273"
+                "reference": "c2e065720708d6db30dfba1278b8f53c45dd9fe0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Yaml/zipball/1481f096caead542c2dfadd67d9fd6124d97e273",
-                "reference": "1481f096caead542c2dfadd67d9fd6124d97e273",
+                "url": "https://api.github.com/repos/symfony/Yaml/zipball/c2e065720708d6db30dfba1278b8f53c45dd9fe0",
+                "reference": "c2e065720708d6db30dfba1278b8f53c45dd9fe0",
                 "shasum": ""
             },
             "require": {
@@ -988,7 +988,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "http://symfony.com",
-            "time": "2013-11-26 16:42:52"
+            "time": "2013-12-28 08:12:58"
         },
         {
             "name": "twig/twig",
@@ -996,12 +996,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/fabpot/Twig.git",
-                "reference": "6387fc457792f38189bdd5729b500772bbddfa4d"
+                "reference": "4983af78f7b62a52866e60909768d4bb7d944a9b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fabpot/Twig/zipball/6387fc457792f38189bdd5729b500772bbddfa4d",
-                "reference": "6387fc457792f38189bdd5729b500772bbddfa4d",
+                "url": "https://api.github.com/repos/fabpot/Twig/zipball/4983af78f7b62a52866e60909768d4bb7d944a9b",
+                "reference": "4983af78f7b62a52866e60909768d4bb7d944a9b",
                 "shasum": ""
             },
             "require": {
@@ -1037,7 +1037,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2013-12-10 10:23:00"
+            "time": "2014-01-05 16:48:49"
         }
     ],
     "packages-dev": [
