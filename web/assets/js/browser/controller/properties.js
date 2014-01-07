@@ -1,5 +1,7 @@
 angular.module('browserApp').controller('PropertiesCtrl', function PropertiesCtrl($scope,$rootScope) {
-	$rootScope.$watch('activeNode', function(){
+	$scope.showAddPropertyForm = false;
+
+    $rootScope.$watch('activeNode', function(){
 		if($rootScope.activeNode !== null){
     		compileProperties($rootScope.activeNode);
     	}
@@ -44,5 +46,9 @@ angular.module('browserApp').controller('PropertiesCtrl', function PropertiesCtr
         $rootScope.propertyToRestore = false;
         $rootScope.$emit('property.add', $rootScope.propertyDeleted.path, $rootScope.propertyDeleted.name, $rootScope.propertyDeleted.value);
         $rootScope.propertyDeleted = undefined;
+    }
+
+    $scope.setAddPropertyFormStatus = function(status){
+        $scope.showAddPropertyForm = status;
     }
 });

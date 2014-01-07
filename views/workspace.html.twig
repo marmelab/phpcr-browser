@@ -1,4 +1,4 @@
-{% extends 'layout.html.twig' %}
+{% extends 'layout-contentwithsidebar.html.twig' %}
 
 {% block navbar %}
 <ul class="nav navbar-nav">
@@ -57,16 +57,7 @@
         </div>
       <div class="btn-group" data-ng-repeat="item in breadcrumb">
         {% raw %}<a data-ng-href="{{baseUrl+repository+'/'+workspace+item.path}}" class="btn btn-default" data-ng-bind="item.name"></a>{% endraw %}
-        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-ng-if="item.dropdown">
-          <span class="caret"></span>
-        </button>
-        <ul class="dropdown-menu" role="menu" data-ng-if="item.dropdown">
-          <li role="presentation" class="dropdown-header">What do you want to do ?</li>
-          <li><a href="#development" data-toggle="modal"><span class="glyphicon glyphicon-plus"></span> Add child</a></li>
-          <li><a href="#development" data-toggle="modal"><span class="glyphicon glyphicon-pencil"></span> Rename</a></li>
-          <li class="divider"></li>
-          <li><a href="#development" data-toggle="modal"><span class="glyphicon glyphicon-trash"></span> Delete</a></li>
-        </ul>
+        
       </div>
       </div>
     </div>
@@ -93,7 +84,14 @@
               <thead>
                   <th>Property name</th>
                   <th>Property value</th>
-                  <th></th>
+                  <th>
+                    <a href="#" class="pull-right" data-ng-click="setAddPropertyFormStatus(true)" data-ng-hide="showAddPropertyForm">
+                      <span class="glyphicon glyphicon-plus"></span>
+                    </a>
+                    <a href="#" class="pull-right" data-ng-click="setAddPropertyFormStatus(false)" data-ng-show="showAddPropertyForm">
+                      <span class="glyphicon glyphicon-minus"></span>
+                    </a>
+                  </th>
               </thead>
               <tbody>
                   <tr class="warning" data-ng-show="propertyToRestore" id="restoreAlert">
@@ -107,8 +105,8 @@
                     </td>
                   </tr>
                   {% if 'node.property.create' in currentNode.support %}
-                  <form action="#" method="post" role="form">
-                  <tr class="active">
+                  <tr class="active" data-ng-show="showAddPropertyForm">
+                    <form action="#" method="post" role="form">
                     <td><input type="text" ng-model="newName" class="form-control" placeholder="Enter a name"></td>
                     <td><input type="text" ng-model="newValue" class="form-control" placeholder="Enter a value"></td>
                     <td>
@@ -119,8 +117,8 @@
                         <span class="glyphicon glyphicon-plus"></span> Create
                       </button>
                     </td>
+                    </form>
                   </tr>
-                  </form>
                   {% endif %}
                   <tr class="property-item" data-ng-repeat="(name,value) in properties | propertyNameFilter:search | orderBy:'name'">
                     <td>
@@ -146,26 +144,6 @@
       </div>
     </div>
   </div>
-
-  <div class="modal" id="development" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-ng-controller="PropertiesCtrl">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-          <h4 class="modal-title">This feature is not available yet</h4>
-        </div>
-          <div class="modal-body">
-            <div class="alert alert-info">
-              <span class="glyphicon glyphicon-bullhorn"></span> This feature is planned but not ready for release. Don't worry we are working on it !
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
 </div>
 {% endblock content %}
 {% block javascript %}
@@ -173,7 +151,6 @@
   <script src="/components/lodash/dist/lodash.min.js"></script>
   <script src="/components/restangular/dist/restangular.min.js"></script>
   <script src="/components/angular-xeditable/dist/js/xeditable.min.js"></script>
-
   <script src="/assets/js/browser/app.js"></script>
   <script src="/assets/js/browser/service/recursionHelper.js"></script>
   <script src="/assets/js/browser/service/locationProvider.js"></script>

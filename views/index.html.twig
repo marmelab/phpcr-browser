@@ -1,4 +1,4 @@
-{% extends 'layout.html.twig' %}
+{% extends 'layout-onlycontent.html.twig' %}
 
 {% block navbar %}
 <ul class="nav navbar-nav">
@@ -21,37 +21,6 @@
 {% endblock navbar %}
 
 {% block content %}
-<div class="col-lg-12 btnbar">
-	<span class="lead pull-right">
-		{{ repositories | length }} 
-		{% if repositories | length > 1 %}		
-		repositories
-		{% else %}
-		repository
-		{% endif %}
-	</span>
-</div>
-<div id="sidebar">
-	<div class="scrollable">
-		<div class="col-lg-12">
-			<h1 class="text-center">localhost</h1>
-			<p class="lead text-center">
-			{{ repositories | length }} 
-			{% if repositories | length > 1 %}		
-			repositories
-			{% else %}
-			repository
-			{% endif %}
-		</p>
-
-		<div class="alert alert-sm alert-info">
-			<span class="glyphicon glyphicon-bullhorn"></span> Go into config/prod.yml to manage your repositories
-		</div>
-		</div>
-	</div>
-</div>
-<div id="content" class="content-full-nobar">
-	<div class="scrollable">
 		<div class="col-lg-12">
 		{% for repository in repositories %}
 			<div class="col-lg-3">
@@ -91,6 +60,4 @@
 				</div>
 			</div>
 		</div>
-	</div>
-</div>
 {% endblock content %}
