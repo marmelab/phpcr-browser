@@ -64,7 +64,7 @@
           return workspaces(repositoryName).post({ name: name });
         },
         getNode: function(repositoryName, workspaceName, path) {
-          return node(repositoryName, workspaceName, path).get();
+          return node(repositoryName, workspaceName, path).get({reducedTree: true});
         },
         createNode: function(repositoryName, workspaceName, parentPath, relPath) {
           node(repositoryName, workspaceName, parentPath).post({ relPath: relPath});

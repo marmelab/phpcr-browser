@@ -4,9 +4,23 @@ var app = (function(angular) {
   var app = angular.module('browserApp', ['ngRoute', 'restangular'])
   .config(function($routeProvider, $locationProvider){
     $routeProvider
-      .when('/browser', { templateUrl: 'views/home.html' });
+      .when('/', { templateUrl: '/assets/js/browser/views/repositories.html' })
+      .when('/:repository', { templateUrl: '/assets/js/browser/views/repository.html' })
+      .when('/:repository/:workspace/:path?', { templateUrl: '/assets/js/browser/views/workspace.html' });
 
-    $locationProvider.html5Mode(true);
+    //$locationProvider.html5Mode(true);
+  })
+  .filter('propertyNameFilter', function() {
+    return function(input, term) {
+      var regex = new RegExp(term, 'i');
+      var obj = {};
+      angular.forEach(input, function(v, i){
+        if(regex.test(i + '')){
+          obj[i]=v;
+        }
+      });
+      return obj;
+    };
   })
   .run(function ($rootScope) {
 

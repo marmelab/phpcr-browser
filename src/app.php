@@ -33,19 +33,16 @@ $app->register(new TwigServiceProvider(), array(
 $app->register(new BrowserServiceProvider());
 
 $app->register(new APIServiceProvider(),array(
-	'phpcr_api.repositories_config'	=>	$app->share(function() use($app){ 
+	'phpcr_api.repositories_config'	=>	$app->share(function() use($app){
 		// A closure to delay the read of the configuration because it is not loaded yet
-		return $app['phpcr_repositories']; 
+		return $app['phpcr_repositories'];
 	}),
 	'phpcr_api.mount_prefix'	=>	'/api'
 ));
-$app->mount('/browser',new BrowserControllerProvider());
+//$app->mount('/browser',new BrowserControllerProvider());
 
-$app->get('/', function (Application $app) {
-    return $app->redirect(
-        $app['url_generator']->generate(
-        'browser.repositories'
-    ));
+$app->get('/browser', function (Application $app) {
+    return $app['twig']->render('index.html');
 })->bind('home');
 
 return $app;

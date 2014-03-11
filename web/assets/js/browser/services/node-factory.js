@@ -40,6 +40,10 @@
       return this._parent;
     };
 
+    Node.prototype.getReducedTree = function() {
+      return this._restangular.reducedTree;
+    };
+
     Node.prototype.getChildren = function() {
       var deferred = $q.defer(), self = this;
       if (this._childrenNotCached) {

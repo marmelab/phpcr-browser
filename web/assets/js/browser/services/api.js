@@ -24,15 +24,6 @@
         return deferred.promise;
       };
 
-      this.getNode = function(workspace, path) {
-        var deferred = $q.defer();
-        mbApiFoundation.getNode(workspace.getRepository().getName(), workspace.getName(), path).then(function(data) {
-          if (!mbNodeFactory.accept(data.node)) { return deferred.reject('Invalid response'); }
-          deferred.resolve(mbNodeFactory.build(data.node, workspace, nodeCacheResolver));
-        }, deferred.reject);
-        return deferred.promise;
-      };
-
       var workspaceCacheResolver = function(repository) {
         var deferred = $q.defer(), workspaces = [];
         mbApiFoundation.getWorkspaces(repository.getName()).then(function(data) {
@@ -45,6 +36,15 @@
         return deferred.promise;
       };
 
+      this.getNode = function(workspace, path) {
+        var deferred = $q.defer();
+        mbApiFoundation.getNode(workspace.getRepository().getName(), workspace.getName(), path).then(function(data) {
+          if (!mbNodeFactory.accept(data.node)) { return deferred.reject('Invalid response'); }
+          deferred.resolve(mbNodeFactory.build(data.node, workspace, nodeCacheResolver));
+        }, deferred.reject);
+        return deferred.promise;
+      };
+
       this.getRepository = function(name) {
         var deferred = $q.defer();
         mbApiFoundation.getRepository(name).then(function(data) {
@@ -52,6 +52,21 @@
           deferred.resolve(mbRepositoryFactory.build(data.repository, workspaceCacheResolver));
         }, deferred.reject);
 
+        return deferred.promise;
+      };
+
+      var repositories = [];
+      this.getRepositories = function() {
+        var deferred = $q.defer();
+        if (repositories.length === 0) {
+          mbApiFoundation.getRepositories().then(function(data) {
+            angular.forEach(data.repositories, function(repository) {
+              if (!mbRepositoryFactory.accept(repository)) { return deferred.reject('Invalid response'); }
+              repositories.push(mbRepositoryFactory.build(repository, workspaceCacheResolver));
+            });
+            deferred.resolve(repositories);
+          }, deferred.reject);
+        } else { deferred.resolve(repositories); }
         return deferred.promise;
       };
     }]);

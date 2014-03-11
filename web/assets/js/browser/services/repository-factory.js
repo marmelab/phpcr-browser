@@ -32,6 +32,19 @@
       return deferred.promise;
     };
 
+    Repository.prototype.getWorkspace = function(name) {
+      var deferred = $q.defer();
+      this.getWorkspaces().then(function(workspaces) {
+        angular.forEach(workspaces, function(workspace) {
+          if (workspace.getName() === name) {
+            return deferred.resolve(workspace);
+          }
+        });
+        deferred.reject('Unknown workspace');
+      }, deferred.reject);
+      return deferred.promise;
+    };
+
     return {
       build: function(repository, cacheResolver) {
         return new Repository(repository, cacheResolver);
