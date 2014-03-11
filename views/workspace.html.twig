@@ -10,7 +10,7 @@
           <li role="presentation" class="dropdown-header">All the configured repositories</li>
           {% for _repository in repositories|sort %}
           <li>
-            <a href="{{ path('browser.workspaces', { 'repository': _repository } ) }}" >   
+            <a href="{{ path('browser.workspaces', { 'repository': _repository } ) }}" >
             <span class="glyphicon glyphicon-th"></span> {{ _repository }}
             </a>
           </li>
@@ -25,7 +25,7 @@
           <li role="presentation" class="dropdown-header">Workspaces of {{ repository }}</li>
           {% for workspace in workspaces|sort %}
           <li>
-            <a href="{{ path('browser.rootNode', { 'repository': repository, 'workspace': workspace } ) }}" >    
+            <a href="{{ path('browser.rootNode', { 'repository': repository, 'workspace': workspace } ) }}" >
             <span class="glyphicon glyphicon-th-list"></span> {{ workspace }}
             </a>
         </li>
@@ -57,7 +57,7 @@
         </div>
       <div class="btn-group" data-ng-repeat="item in breadcrumb">
         {% raw %}<a data-ng-href="{{baseUrl+repository+'/'+workspace+item.path}}" class="btn btn-default" data-ng-bind="item.name"></a>{% endraw %}
-        
+
       </div>
       </div>
     </div>
@@ -68,17 +68,17 @@
           </ul>
       </div>
     </div>
-    <div id="content" data-ng-controller="PropertiesCtrl"> 
+    <div id="content" data-ng-controller="PropertiesCtrl">
       <div class="scrollable">
         <div id="first-load" data-ng-show="!_first_load">
           <span class="glyphicon glyphicon-refresh"></span>
           <p class="lead">Loading...</p>
-        </div>  
+        </div>
         <div data-ng-hide="!hasProperties() || !_first_load" id="property-search">
           <div class="input-group col-sm-12">
             <input data-ng-model="search" class="form-control" placeholder="Filter properties by name">
           </div>
-        </div>  
+        </div>
         <div id="property-content">
           <table class="table table-striped table-hover" data-ng-hide="!hasProperties() || !_first_load">
               <thead>
@@ -112,7 +112,7 @@
                     <td>
                       <button type="button" class="btn btn-primary" data-ng-click="addProperty(newName,newValue)" data-ng-show="newName.length > 0 && newValue.length > 0">
                         <span class="glyphicon glyphicon-plus"></span> Create
-                      </button> 
+                      </button>
                       <button type="button" class="btn btn-primary disabled" data-ng-hide="newName.length > 0 && newValue.length > 0">
                         <span class="glyphicon glyphicon-plus"></span> Create
                       </button>
@@ -148,6 +148,7 @@
 {% endblock content %}
 {% block javascript %}
   <script src="/components/angular/angular.min.js"></script>
+  <script src="/components/angular-route/angular-route.min.js"></script>
   <script src="/components/lodash/dist/lodash.min.js"></script>
   <script src="/components/restangular/dist/restangular.min.js"></script>
   <script src="/components/angular-xeditable/dist/js/xeditable.min.js"></script>
@@ -161,4 +162,10 @@
   <script src="/assets/js/browser/directive/breadcrumbElement.js"></script>
   <script src="/assets/js/browser/directive/propertyValue.js"></script>
   <script src="/assets/js/browser/directive/treeNode.js"></script>
+
+  <script src="/assets/js/browser/service/api-foundation.js"></script>
+  <script src="/assets/js/browser/service/api.js"></script>
+  <script src="/assets/js/browser/service/repository-factory.js"></script>
+  <script src="/assets/js/browser/service/workspace-factory.js"></script>
+  <script src="/assets/js/browser/service/node-factory.js"></script>
 {% endblock javascript %}

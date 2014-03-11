@@ -5,7 +5,7 @@
     "license": "MIT",
     "version": "0.1",
     "require": {
-        "silex/silex": "dev-master",
+        "silex/silex": "~1.1.2",
         "symfony/yaml": "dev-master",
         "twig/twig": "dev-master",
         "symfony/twig-bridge": "2.3.*",
