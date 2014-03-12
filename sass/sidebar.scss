@@ -1,0 +1,11 @@
+@import "bootstrap/mixins";
+
+#sidebar {
+    @include make-sm-column(3);
+    overflow: hidden;
+    position: fixed;
+    top: $navbar-height;
+    left: 0;
+    bottom: 0;
+    padding-top: 20px;
+}

@@ -11,12 +11,12 @@
     <title>PHPCR Browser</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="/components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/assets/css/phpcr-browser.css" rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=PT+Sans' rel='stylesheet' type='text/css'>
+    <link href="/assets/css/screen.css" rel="stylesheet">
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
-      <script src="/components/html5shiv/dist/html5shiv.js"></script>
-      <script src="/components/respond/dest/respond.min.js"></script>
+      <script src="/bower_components/html5shiv/dist/html5shiv.js"></script>
+      <script src="/bower_components/respond/dest/respond.min.js"></script>
     <![endif]-->
 
   </head>
@@ -32,7 +32,7 @@
           <span class="icon-bar"></span>
         </button>
         <a class="navbar-brand" href="#/">
-         PHPCR Browser
+        phpcr browser
         </a>
       </div>
       <div class="navbar-collapse collapse" ng-controller="mbNavbarCtrl">
@@ -44,27 +44,20 @@
       </div><!--/.nav-collapse -->
     </div>
 
-    <div ui-view></div>
+    <div ui-view class="container-fluid"></div>
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="/components/jquery/jquery.min.js"></script>
-    <script src="/components/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="/components/angular/angular.min.js"></script>
-    <script src="/components/angular-route/angular-route.min.js"></script>
-    <script src="/components/angular-ui-router/release/angular-ui-router.min.js"></script>
-    <script src="/components/lodash/dist/lodash.min.js"></script>
-    <script src="/components/restangular/dist/restangular.min.js"></script>
-    <script src="/components/angular-xeditable/dist/js/xeditable.min.js"></script>
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="/bower_components/angular/angular.min.js"></script>
+    <script src="/bower_components/angular-route/angular-route.min.js"></script>
+    <script src="/bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+    <script src="/bower_components/lodash/dist/lodash.min.js"></script>
+    <script src="/bower_components/restangular/dist/restangular.min.js"></script>
     <script src="/assets/js/browser/app.js"></script>
-    <script src="/assets/js/browser/services/recursionHelper.js"></script>
-    <script src="/assets/js/browser/controllers/tree.js"></script>
-    <script src="/assets/js/browser/controllers/properties.js"></script>
-    <script src="/assets/js/browser/controllers/breadcrumb.js"></script>
-    <script src="/assets/js/browser/directives/breadcrumbElement.js"></script>
-    <script src="/assets/js/browser/directives/propertyValue.js"></script>
-
+    <script src="/assets/js/browser/services/recursion-helper.js"></script>
     <script src="/assets/js/browser/services/api-foundation.js"></script>
     <script src="/assets/js/browser/services/repository-factory.js"></script>
     <script src="/assets/js/browser/services/workspace-factory.js"></script>
@@ -75,10 +68,13 @@
     <script src="/assets/js/browser/directives/navbar-item.js"></script>
     <script src="/assets/js/browser/directives/tree-node.js"></script>
     <script src="/assets/js/browser/directives/tree.js"></script>
+    <script src="/assets/js/browser/directives/property-value.js"></script>
     <script src="/assets/js/browser/controllers/front.js"></script>
     <script src="/assets/js/browser/controllers/navbar.js"></script>
     <script src="/assets/js/browser/controllers/repository.js"></script>
     <script src="/assets/js/browser/controllers/workspace.js"></script>
+    <script src="/assets/js/browser/controllers/tree.js"></script>
+    <script src="/assets/js/browser/controllers/properties.js"></script>
   </body>
 </html>
 {% endraw %}

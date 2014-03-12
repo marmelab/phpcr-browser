@@ -1,7 +1,7 @@
 (function(app) {
   'use strict';
 
-  app.directive('mbTreeNode', function(RecursionHelper) {
+  app.directive('mbTreeNode', ['mbRecursionHelper', function(RecursionHelper) {
     return {
       restrict: 'A',
       scope: '=',
@@ -13,5 +13,5 @@
         $scope.currentNode = $scope.$parent.currentNode;
       }
     };
-  });
+  }]);
 })(angular.module('browserApp'));

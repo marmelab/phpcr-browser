@@ -1,4 +1,5 @@
-web/components/
+web/bower_components/
 vendor/
 config/dev.yml
 config/prod.yml
+.sass-cache

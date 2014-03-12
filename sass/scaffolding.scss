@@ -1,0 +1,31 @@
+@import 'compass/css3';
+
+body {
+  padding-top: $navbar-height + 10;
+}
+
+div.scrollable {
+  overflow: scroll;
+  height: 100%;
+}
+
+.btn, .panel {
+    @include border-radius(0);
+}
+
+table {
+    thead {
+        border-top: 1px solid #dee3ea;
+        background-color: #eee;
+
+        tr > th {
+            border-bottom: none!important;
+        }
+    }
+
+    tbody {
+        tr:first-child td {
+            border-top: none;
+        }
+    }
+}

@@ -1,5 +1,7 @@
-angular.module('browserApp').directive('propertyValue', function(RecursionHelper) {
+(function(app) {
+  'use strict';
 
+  app.directive('mbPropertyValue', ['mbRecursionHelper', function(RecursionHelper) {
     return {
       restrict: 'A',
       scope: '=',
@@ -8,4 +10,5 @@ angular.module('browserApp').directive('propertyValue', function(RecursionHelper
         return RecursionHelper.compile(element);
       }
     };
-  });
+  }]);
+})(angular.module('browserApp'));
