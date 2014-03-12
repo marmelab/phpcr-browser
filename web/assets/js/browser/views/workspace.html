@@ -1,9 +1,7 @@
 <div ng-controller="mbWorkspaceCtrl">
   <div id="sidebar" data-ng-controller="mbTreeCtrl">
       <div class="scrollable">
-        <ul class="tree" id="tree">
-           <li data-ng-repeat="node in currentNode.getReducedTree()" tree-node></li>
-        </ul>
+        <mb-tree mb-current-node="currentNode"></tree>
     </div>
   </div>
   <div id="content" >

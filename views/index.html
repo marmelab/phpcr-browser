@@ -37,22 +37,22 @@
       </div>
       <div class="navbar-collapse collapse" ng-controller="mbNavbarCtrl">
         <ul class="nav navbar-nav">
-          <li ng-repeat="(key, link) in links">
+          <li ng-repeat="(key, link) in menu.links">
             <a ng-show="link.sublinks !== undefined" class="dropdown-toggle" data-toggle="dropdown">
               {{ link.label }}
-              <ul class="dropdown-menu large">
-                <li ng-repeat="sublink in link.sublinks" ng-class="sublink.class">
-                  <a ng-href="#{{ sublink.href }}">{{ sublink.label }}</a>
-                </li>
-              </ul>
             </a>
+            <ul class="dropdown-menu large">
+              <li ng-repeat="sublink in link.sublinks" ng-class="sublink.class">
+                <a ng-href="#{{ sublink.href }}">{{ sublink.label }}</a>
+              </li>
+            </ul>
             <a ng-href="#{{ link.href }}" ng-hide="link.sublinks !== undefined">{{ link.label }}</a>
           </li>
         </ul>
       </div><!--/.nav-collapse -->
     </div>
 
-    <div ng-view></div>
+    <div ui-view></div>
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
@@ -61,26 +61,27 @@
     <script src="/components/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="/components/angular/angular.min.js"></script>
     <script src="/components/angular-route/angular-route.min.js"></script>
+    <script src="/components/angular-ui-router/release/angular-ui-router.min.js"></script>
     <script src="/components/lodash/dist/lodash.min.js"></script>
     <script src="/components/restangular/dist/restangular.min.js"></script>
     <script src="/components/angular-xeditable/dist/js/xeditable.min.js"></script>
     <script src="/assets/js/browser/app.js"></script>
     <script src="/assets/js/browser/services/recursionHelper.js"></script>
-    <script src="/assets/js/browser/services/locationProvider.js"></script>
-    <script src="/assets/js/browser/services/api.js"></script>
     <script src="/assets/js/browser/controllers/tree.js"></script>
     <script src="/assets/js/browser/controllers/properties.js"></script>
     <script src="/assets/js/browser/controllers/breadcrumb.js"></script>
     <script src="/assets/js/browser/directives/breadcrumbElement.js"></script>
     <script src="/assets/js/browser/directives/propertyValue.js"></script>
-    <script src="/assets/js/browser/directives/treeNode.js"></script>
 
     <script src="/assets/js/browser/services/api-foundation.js"></script>
     <script src="/assets/js/browser/services/api.js"></script>
     <script src="/assets/js/browser/services/repository-factory.js"></script>
     <script src="/assets/js/browser/services/workspace-factory.js"></script>
     <script src="/assets/js/browser/services/node-factory.js"></script>
+    <script src="/assets/js/browser/services/menu.js"></script>
     <script src="/assets/js/browser/services/route-parameters-converter.js"></script>
+    <script src="/assets/js/browser/directives/tree-node.js"></script>
+    <script src="/assets/js/browser/directives/tree.js"></script>
     <script src="/assets/js/browser/controllers/front.js"></script>
     <script src="/assets/js/browser/controllers/navbar.js"></script>
     <script src="/assets/js/browser/controllers/repository.js"></script>

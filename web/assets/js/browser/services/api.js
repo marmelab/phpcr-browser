@@ -3,6 +3,7 @@
 
   app.service('mbApi', ['$q', 'mbApiFoundation','mbRepositoryFactory','mbWorkspaceFactory','mbNodeFactory',
     function($q, mbApiFoundation, mbRepositoryFactory, mbWorkspaceFactory, mbNodeFactory) {
+      var _repositories;
 
       var nodeCacheResolver = function(node) {
         var deferred = $q.defer();
@@ -46,27 +47,35 @@
       };
 
       this.getRepository = function(name) {
-        var deferred = $q.defer();
-        mbApiFoundation.getRepository(name).then(function(data) {
-          if (!mbRepositoryFactory.accept(data.repository)) { return deferred.reject('Invalid response'); }
-          deferred.resolve(mbRepositoryFactory.build(data.repository, workspaceCacheResolver));
-        }, deferred.reject);
+        var deferred = $q.defer(), resolved = false;
+        if (_repositories.length !== undefined) {
+          angular.forEach(_repositories, function(repository) {
+            if (repository.getName() === name) { resolved = true; return deferred.resolve(repository); }
+          });
+        }
 
+        if (!resolved) {
+          mbApiFoundation.getRepository(name).then(function(data) {
+            if (!mbRepositoryFactory.accept(data.repository)) { return deferred.reject('Invalid response'); }
+            deferred.resolve(mbRepositoryFactory.build(data.repository, workspaceCacheResolver));
+          }, deferred.reject);
+        }
         return deferred.promise;
       };
 
-      var repositories = [];
       this.getRepositories = function() {
         var deferred = $q.defer();
-        if (repositories.length === 0) {
+        if (!_repositories) {
+          var repositories = [];
           mbApiFoundation.getRepositories().then(function(data) {
             angular.forEach(data.repositories, function(repository) {
               if (!mbRepositoryFactory.accept(repository)) { return deferred.reject('Invalid response'); }
               repositories.push(mbRepositoryFactory.build(repository, workspaceCacheResolver));
             });
             deferred.resolve(repositories);
+            _repositories = repositories;
           }, deferred.reject);
-        } else { deferred.resolve(repositories); }
+        } else { deferred.resolve(_repositories); }
         return deferred.promise;
       };
     }]);

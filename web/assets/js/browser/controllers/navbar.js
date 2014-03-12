@@ -1,11 +1,7 @@
 (function(angular, app) {
   'use strict';
 
-  app.controller('mbNavbarCtrl', ['$scope', function($scope) {
-    $scope.links = [];
-    $scope.$on('navbar.push', function(e, link) {
-      $scope.links.push(link);
-    });
-
+  app.controller('mbNavbarCtrl', ['$scope', 'mbMenu', function($scope, mbMenu) {
+    $scope.menu = mbMenu.getMenu();
   }]);
 })(angular, angular.module('browserApp'));

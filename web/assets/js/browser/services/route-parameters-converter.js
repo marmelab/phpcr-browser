@@ -1,38 +1,31 @@
 (function(angular, app) {
   'use strict';
 
-  app.service('mbRouteParametersConverter', ['$rootScope', '$routeParams', '$q', 'mbApi',
-    function($rootScope, $routeParams, $q, mbApi) {
-
-    var currentRepository = null;
-
-    this.getCurrentRepository = function() {
-      var deferred = $q.defer();
-      if (currentRepository === null) {
+  app.service('mbRouteParametersConverter', ['$rootScope', '$stateParams', '$q', 'mbApi',
+    function($rootScope, $stateParams, $q, mbApi) {
+      this.getCurrentRepository = function() {
+        var deferred = $q.defer();
         mbApi.getRepositories().then(function(repositories) {
           angular.forEach(repositories, function(repository) {
-            if (repository.getName() === $routeParams.repository) {
-              currentRepository = repository;
+            if (repository.getName() === $stateParams.repository) {
               return deferred.resolve(repository);
             }
           });
           deferred.reject('Unknown repository');
         });
-      } else { deferred.resolve(currentRepository); }
-      return deferred.promise;
-    };
+        return deferred.promise;
+      };
 
-    this.getCurrentWorkspace = function() {
-      return this.getCurrentRepository().then(function(repository) {
-        return repository.getWorkspace($routeParams.workspace);
-      });
-    };
+      this.getCurrentWorkspace = function() {
+        return this.getCurrentRepository().then(function(repository) {
+          return repository.getWorkspace($stateParams.workspace);
+        });
+      };
 
-    this.getCurrentNode = function() {
-      return this.getCurrentWorkspace().then(function(workspace) {
-        return mbApi.getNode(workspace, ($routeParams.path) ? '/' + $routeParams.path : '/');
-      });
-    };
-
-  }]);
+      this.getCurrentNode = function() {
+        return this.getCurrentWorkspace().then(function(workspace) {
+          return mbApi.getNode(workspace, ($stateParams.path) ? '/' + $stateParams.path : '/');
+        });
+      };
+    }]);
 })(angular, angular.module('browserApp'));

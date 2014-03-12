@@ -1,22 +1,13 @@
 (function(app) {
   'use strict';
 
-  app.controller('mbFrontCtrl', ['$scope', 'mbApi', function($scope, mbApi) {
-    mbApi.getRepositories().then(function(repositories) {
-      $scope.repositories = repositories;
-      var link = {
-        label: 'Repositories',
-        sublinks: []
-      };
-
-      angular.forEach($scope.repositories, function(repository) {
-        link.sublinks.push({
-          label: repository.getName(),
-          href: '/' + repository.getName()
-        });
+  app.controller('mbFrontCtrl', ['$scope', 'mbMenu', 'mbApi', function($scope, mbMenu, mbApi) {
+    var retrieveRepositories = function() {
+      mbApi.getRepositories().then(function(repositories) {
+        $scope.repositories = repositories;
       });
+    };
 
-      $scope.$broadcast('navbar.push', link);
-    });
+    retrieveRepositories();
   }]);
 })(angular.module('browserApp'));
