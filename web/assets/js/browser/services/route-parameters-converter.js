@@ -1,19 +1,10 @@
 (function(angular, app) {
   'use strict';
 
-  app.service('mbRouteParametersConverter', ['$rootScope', '$stateParams', '$q', 'mbApi',
-    function($rootScope, $stateParams, $q, mbApi) {
+  app.service('mbRouteParametersConverter', ['$rootScope', '$stateParams', '$q', 'mbObjectMapper',
+    function($rootScope, $stateParams, $q, ObjectMapper) {
       this.getCurrentRepository = function() {
-        var deferred = $q.defer();
-        mbApi.getRepositories().then(function(repositories) {
-          angular.forEach(repositories, function(repository) {
-            if (repository.getName() === $stateParams.repository) {
-              return deferred.resolve(repository);
-            }
-          });
-          deferred.reject('Unknown repository');
-        });
-        return deferred.promise;
+        return ObjectMapper.find('/' + $stateParams.repository);
       };
 
       this.getCurrentWorkspace = function() {
@@ -24,7 +15,8 @@
 
       this.getCurrentNode = function() {
         return this.getCurrentWorkspace().then(function(workspace) {
-          return mbApi.getNode(workspace, ($stateParams.path) ? '/' + $stateParams.path : '/');
+          var path = ($stateParams.path) ? $stateParams.path : '/';
+          return workspace.getNode(path);
         });
       };
     }]);

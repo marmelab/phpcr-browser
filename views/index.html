@@ -37,17 +37,9 @@
       </div>
       <div class="navbar-collapse collapse" ng-controller="mbNavbarCtrl">
         <ul class="nav navbar-nav">
-          <li ng-repeat="(key, link) in menu.links">
-            <a ng-show="link.sublinks !== undefined" class="dropdown-toggle" data-toggle="dropdown">
-              {{ link.label }}
-            </a>
-            <ul class="dropdown-menu large">
-              <li ng-repeat="sublink in link.sublinks" ng-class="sublink.class">
-                <a ng-href="#{{ sublink.href }}">{{ sublink.label }}</a>
-              </li>
-            </ul>
-            <a ng-href="#{{ link.href }}" ng-hide="link.sublinks !== undefined">{{ link.label }}</a>
-          </li>
+          <li mb-navbar-item mb-link="menu.repositories" ng-class="menu.repositories.class"></li>
+          <li mb-navbar-item mb-link="menu.repository" ng-class="menu.repository.class"></li>
+          <li mb-navbar-item mb-link="menu.workspace" ng-class="menu.workspace.class"></li>
         </ul>
       </div><!--/.nav-collapse -->
     </div>
@@ -74,12 +66,13 @@
     <script src="/assets/js/browser/directives/propertyValue.js"></script>
 
     <script src="/assets/js/browser/services/api-foundation.js"></script>
-    <script src="/assets/js/browser/services/api.js"></script>
     <script src="/assets/js/browser/services/repository-factory.js"></script>
     <script src="/assets/js/browser/services/workspace-factory.js"></script>
     <script src="/assets/js/browser/services/node-factory.js"></script>
     <script src="/assets/js/browser/services/menu.js"></script>
     <script src="/assets/js/browser/services/route-parameters-converter.js"></script>
+    <script src="/assets/js/browser/services/object-mapper.js"></script>
+    <script src="/assets/js/browser/directives/navbar-item.js"></script>
     <script src="/assets/js/browser/directives/tree-node.js"></script>
     <script src="/assets/js/browser/directives/tree.js"></script>
     <script src="/assets/js/browser/controllers/front.js"></script>

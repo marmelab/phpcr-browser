@@ -1,7 +1,7 @@
 (function(angular) {
   'use strict';
 
-  var app = angular.module('browserApp', ['ui.router', 'restangular'])
+  angular.module('browserApp', ['ui.router', 'restangular'])
   .config(function($stateProvider, $urlRouterProvider){
     $urlRouterProvider
       .when('', '/')
@@ -17,11 +17,7 @@
         templateUrl: '/assets/js/browser/views/repository.html'
       })
       .state('workspace', {
-        url: '/:repository/{workspace:.+}',
-        templateUrl: '/assets/js/browser/views/workspace.html'
-      })
-      .state('node', {
-        url: '/:repository/:workspace/{path:.*}',
+        url: '/:repository/:workspace{path:(?:/.*)?}',
         templateUrl: '/assets/js/browser/views/workspace.html'
       });
   })
@@ -37,9 +33,5 @@
       return obj;
     };
   })
-  .run(function ($rootScope) {
-
-  });
-
-  return app;
+  .run();
 })(angular);

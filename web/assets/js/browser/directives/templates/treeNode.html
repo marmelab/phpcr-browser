@@ -4,5 +4,5 @@
 <span data-ng-class="node.selected" class="glyphicon glyphicon-file" data-ng-hide="node.hasChildren || node._data_loading" data-ng-click=""></span>
 <a data-ng-class="node.selected" href="#/{{ currentNode.getWorkspace().getRepository().getName() }}/{{ currentNode.getWorkspace().getName() + node.path }}" data-ng-bind="node.name" data-ng-click="collapse(node, true)" id="{{ node.path }}"></a>
 <ul class="tree" ng-if="node.hasChildren && !node.collapsed">
-  <li data-ng-repeat="node in node.children | orderBy:'name'" tree-node></li>
+  <li data-ng-repeat="node in node.children | orderBy:'name'" mb-tree-node></li>
 </ul>

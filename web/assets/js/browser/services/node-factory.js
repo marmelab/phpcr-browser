@@ -1,19 +1,18 @@
 (function(angular, app) {
   'use strict';
 
-  app.factory('mbNodeFactory', ['$q', function($q) {
+  app.factory('mbNodeFactory', ['$q', 'mbApiFoundation', function($q) {
     var proxy = function(parent, children) {
       var result = [];
       angular.forEach(children, function(child) {
-        result.push(new Node(child, parent, parent._workspace, parent._cacheResolver));
+        result.push(new Node(child, parent._workspace, parent._finder));
       });
       return result;
     };
 
-    var Node = function(node, parent, workspace, cacheResolver) {
+    var Node = function(node, workspace, finder) {
       this._restangular = node;
-      this._parent = parent;
-      this._cacheResolver = cacheResolver;
+      this._finder = finder;
       this._children = [];
       this._workspace = workspace;
       this._childrenNotCached = false;
@@ -33,11 +32,17 @@
     };
 
     Node.prototype.getWorkspace = function() {
-      return this.workspace;
+      return this._workspace;
     };
 
     Node.prototype.getParent = function() {
-      return this._parent;
+      var components = this.getPath().split('/');
+      components.pop();
+      return this._finder('/' + this.getWorkspace().getRepository().getName() + '/' + this.getWorkspace().getName() + '/' + components.join('/'));
+    };
+
+    Node.prototype.getProperties = function() {
+      return this._restangular.properties;
     };
 
     Node.prototype.getReducedTree = function() {
@@ -45,22 +50,16 @@
     };
 
     Node.prototype.getChildren = function() {
-      var deferred = $q.defer(), self = this;
-      if (this._childrenNotCached) {
-        this.cacheResolver(this).then(function(children) {
-          self._children = proxy(self, children);
-          self._childrenNotCached = false;
-          deferred.resolve(self._children);
-        }).error(deferred.reject);
-      } else {
-        deferred.resolve(this._children);
-      }
+      var deferred = $q.defer();
+      var me = this._finder('/' + this.getWorkspace().getRepository().getName() + '/' + this.getWorkspace().getName() + this.getPath());
+      this._restangular = me;
+      deferred.resolve(proxy(this, this.restangular.children));
       return deferred.promise;
     };
 
     return {
-      build: function(node, workspace, cacheResolver) {
-        return new Node(node, null, workspace, cacheResolver);
+      build: function(node, workspace, finder) {
+        return new Node(node, workspace, finder);
       },
       accept: function(data) {
         return data.name !== undefined && data.path !== undefined;

@@ -1,11 +1,21 @@
 (function(app) {
   'use strict';
 
-  app.service('mbMenu', ['$rootScope', 'mbRouteParametersConverter', 'mbApi',
-    function($rootScope, mbRouteParametersConverter, mbApi) {
+  app.service('mbMenu', ['$rootScope', 'mbRouteParametersConverter', 'mbObjectMapper',
+    function($rootScope, RouteParametersConverter, ObjectMapper) {
     var menu = {
-      links: [] // Need to be wrapped into an object to keep its reference persistent
+      repositories: null,
+      repository: null,
+      workspace: null
     };
+
+    var resetMenu = function() {
+      menu.repositories = null;
+      menu.repository = null;
+      menu.workspace = null;
+    };
+
+    resetMenu();
 
     this.getMenu = function() {
       return menu;
@@ -13,9 +23,10 @@
 
     var builders = {
       repositories: function(callback) {
-        mbApi.getRepositories().then(function(repositories) {
+        ObjectMapper.find().then(function(repositories) {
           var link = {
             label: 'Repositories',
+            class: 'dropdown',
             sublinks: []
           };
           angular.forEach(repositories, function(repository) {
@@ -29,7 +40,7 @@
       },
 
       repository: ['repositories', function(callback) {
-        mbRouteParametersConverter.getCurrentRepository().then(function(repository) {
+        RouteParametersConverter.getCurrentRepository().then(function(repository) {
           repository.getWorkspaces().then(function(workspaces) {
             var link = {
               label: repository.getName(),
@@ -49,7 +60,7 @@
       }],
 
       workspace: ['repository', function(callback) {
-        mbRouteParametersConverter.getCurrentWorkspace().then(function(workspace) {
+        RouteParametersConverter.getCurrentWorkspace().then(function(workspace) {
           var link = {
             label: workspace.getName(),
             href: '/' + workspace.getRepository().getName() + '/' + workspace.getName()
@@ -59,8 +70,8 @@
         });
       }],
 
-      node: ['repository', function(callback) {
-        mbRouteParametersConverter.getCurrentWorkspace().then(function(workspace) {
+      'workspace.node': ['repository', function(callback) {
+        RouteParametersConverter.getCurrentWorkspace().then(function(workspace) {
           var link = {
             label: workspace.getName(),
             href: '/' + workspace.getRepository().getName() + '/' + workspace.getName()
@@ -71,25 +82,26 @@
       }]
     };
 
-    var runBuilder = function(builder) {
+    var runBuilder = function(name, builder) {
       if (typeof(builder) === 'function') {
         return builder(function(link) {
-          menu.links.push(link);
+          menu[name] = link;
         });
       }
+
       for (var i=0; i<builder.length; i++) {
         if (i < builder.length-1) {
-          runBuilder(builders[builder[i]]);
+          runBuilder(builder[i], builders[builder[i]]);
         } else {
-          runBuilder(builder[i]);
+          runBuilder(name, builder[i]);
         }
       }
     };
 
     $rootScope.$on('$stateChangeSuccess', function(evt, toState){
-      menu.links = [];
+      resetMenu();
       if (builders[toState.name]) {
-        runBuilder(builders[toState.name]);
+        runBuilder(toState.name, builders[toState.name]);
       }
     });
   }]);

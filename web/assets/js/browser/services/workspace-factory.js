@@ -1,13 +1,12 @@
 (function(app) {
   'use strict';
 
-  app.factory('mbWorkspaceFactory', ['$q', function($q) {
+  app.factory('mbWorkspaceFactory', function() {
 
-    var Workspace = function(workspace, repository, cacheResolver) {
+    var Workspace = function(workspace, repository, finder) {
       this._restangular = workspace;
       this._repository = repository;
-      this._rootNode = null;
-      this._cacheResolver = cacheResolver;
+      this._finder = finder;
     };
 
     Workspace.prototype.getName = function() {
@@ -18,26 +17,18 @@
       return this._repository;
     };
 
-    Workspace.prototype.getRootNode = function() {
-      var deferred = $q.defer(), self = this;
-      if (this._rootNode === null) {
-        this._cacheResolver(this).then(function(rootNode) {
-          self._rootNode = rootNode;
-          deferred.resolve(self._rootNode);
-        },deferred.reject);
-      } else {
-        deferred.resolve(this._rootNode);
-      }
-      return deferred.promise;
+    Workspace.prototype.getNode = function(path) {
+      if (!path) { path = '/'; }
+      return this._finder('/' + this.getRepository().getName() + '/' + this.getName() + path);
     };
 
     return {
-      build: function(workspace, repository, cacheResolver) {
-        return new Workspace(workspace, repository, cacheResolver);
+      build: function(workspace, repository, finder) {
+        return new Workspace(workspace, repository, finder);
       },
       accept: function(data) {
         return data.name !== undefined;
       }
     };
-  }]);
+  });
 })(angular.module('browserApp'));

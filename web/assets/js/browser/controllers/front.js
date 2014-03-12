@@ -1,9 +1,9 @@
 (function(app) {
   'use strict';
 
-  app.controller('mbFrontCtrl', ['$scope', 'mbMenu', 'mbApi', function($scope, mbMenu, mbApi) {
+  app.controller('mbFrontCtrl', ['$scope', 'mbObjectMapper', function($scope, ObjectMapper) {
     var retrieveRepositories = function() {
-      mbApi.getRepositories().then(function(repositories) {
+      ObjectMapper.find().then(function(repositories) {
         $scope.repositories = repositories;
       });
     };

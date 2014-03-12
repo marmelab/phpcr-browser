@@ -1,13 +1,13 @@
 (function(app) {
   'use strict';
 
-  app.factory('mbRepositoryFactory', ['$q', function($q) {
+  app.factory('mbRepositoryFactory', function() {
 
-    var Repository = function(repository, cacheResolver) {
+    var Repository = function(repository, finder) {
       this._restangular = repository;
       this._workspacesNotCached = true;
       this._workspaces = [];
-      this._cacheResolver = cacheResolver;
+      this._finder = finder;
     };
 
     Repository.prototype.getName = function() {
@@ -19,39 +19,20 @@
     };
 
     Repository.prototype.getWorkspaces = function() {
-      var deferred = $q.defer(), self = this;
-      if (this._workspacesNotCached) {
-        this._cacheResolver(this).then(function(workspaces) {
-          self._workspaces = workspaces;
-          self._workspacesNotCached = false;
-          deferred.resolve(self._workspaces);
-        },deferred.reject);
-      } else {
-        deferred.resolve(this._workspaces);
-      }
-      return deferred.promise;
+      return this._finder('/' + this.getName() + '/*');
     };
 
     Repository.prototype.getWorkspace = function(name) {
-      var deferred = $q.defer();
-      this.getWorkspaces().then(function(workspaces) {
-        angular.forEach(workspaces, function(workspace) {
-          if (workspace.getName() === name) {
-            return deferred.resolve(workspace);
-          }
-        });
-        deferred.reject('Unknown workspace');
-      }, deferred.reject);
-      return deferred.promise;
+      return this._finder('/' + this.getName() + '/' + name);
     };
 
     return {
-      build: function(repository, cacheResolver) {
-        return new Repository(repository, cacheResolver);
+      build: function(repository, finder) {
+        return new Repository(repository, finder);
       },
       accept: function(data) {
         return data.name !== undefined && data.factoryName !== undefined;
       }
     };
-  }]);
+  });
 })(angular.module('browserApp'));
