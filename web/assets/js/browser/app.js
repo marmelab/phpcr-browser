@@ -21,17 +21,5 @@
         templateUrl: '/assets/js/browser/views/workspace.html'
       });
   })
-  .filter('mbProperty', function() {
-    return function(input, term) {
-      var regex = new RegExp(term, 'i');
-      var obj = [];
-      angular.forEach(input, function(v){
-        if(regex.test(v.name + '')){
-          obj.push(v);
-        }
-      });
-      return obj;
-    };
-  })
   .run();
 })(angular);

@@ -7,13 +7,12 @@
         $scope.search = value;
       });
 
-
       var normalize = function(data) {
         var array = [];
         for (var i in data) {
           if (typeof(data[i]) === 'object') { data[i] = normalize(data[i]); }
           array.push({ name: i, value: data[i] });
-        }console.log(array);
+        }
         return  array;
       };
 

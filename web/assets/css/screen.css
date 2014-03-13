@@ -7882,11 +7882,11 @@ div.scrollable.padding {
 
 /* line 18, ../../../sass/scaffolding.scss */
 .btn, .panel {
-  -webkit-border-radius: 0;
-  -moz-border-radius: 0;
-  -ms-border-radius: 0;
-  -o-border-radius: 0;
-  border-radius: 0;
+  -webkit-border-radius: 0 !important;
+  -moz-border-radius: 0 !important;
+  -ms-border-radius: 0 !important;
+  -o-border-radius: 0 !important;
+  border-radius: 0 !important;
 }
 
 /* line 23, ../../../sass/scaffolding.scss */

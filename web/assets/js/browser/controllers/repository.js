@@ -3,6 +3,9 @@
 
   app.controller('mbRepositoryCtrl', ['$scope', '$log', 'mbRouteParametersConverter',
     function($scope, $log, mbRouteParametersConverter) {
+      $scope.$on('search.change', function(e, value) {
+        $scope.search = value;
+      });
 
       mbRouteParametersConverter.getCurrentRepository().then(function(repository) {
         $scope.repository = repository;

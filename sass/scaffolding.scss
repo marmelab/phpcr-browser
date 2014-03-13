@@ -16,7 +16,7 @@ div.scrollable {
 }
 
 .btn, .panel {
-    @include border-radius(0);
+    @include border-radius(0!important);
 }
 
 table {

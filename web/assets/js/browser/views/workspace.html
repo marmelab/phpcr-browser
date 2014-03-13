@@ -27,7 +27,7 @@
                   </a>
                 </td>
               </tr>
-              <tr class="property-item" data-ng-repeat="property in properties | mbProperty:search | orderBy:'name'">
+              <tr class="property-item" data-ng-repeat="property in properties | mbJaroWinkler:search">
                 <td>
                   {{ property.name }}
                 </td>

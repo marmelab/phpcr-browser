@@ -1,6 +1,6 @@
 <div class="col-lg-12" ng-controller="mbRepositoryCtrl">
-    <div class="col-sm-2" ng-repeat="(key, workspace) in workspaces">
-        <div class="panel panel-info">
+    <div class="col-sm-2" ng-repeat="(key, workspace) in workspaces | mbJaroWinkler:search">
+        <div class="panel panel-default">
             <div class="panel-heading">
                 <span class="glyphicon glyphicon-th-list"></span> Workspace
             </div>
