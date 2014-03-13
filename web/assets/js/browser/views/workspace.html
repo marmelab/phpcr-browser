@@ -1,53 +1,46 @@
 <div ng-controller="mbWorkspaceCtrl">
   <div id="sidebar" data-ng-controller="mbTreeCtrl">
-      <div class="scrollable">
+      <div class="scrollable padding">
         <mb-tree mb-current-node="currentNode"></tree>
     </div>
   </div>
-  <div id="content">
-    <div class="scrollable">
-      <div id="properties-filter">
-        <input data-ng-model="search" class="form-control" placeholder="Filter properties by name">
-      </div>
-        <table class="table table-striped table-hover">
-            <thead>
-                <th>Property name</th>
-                <th>Property value</th>
-                <th>
-                  <a href="#" class="pull-right" data-ng-click="setAddPropertyFormStatus(true)" data-ng-hide="showAddPropertyForm">
-                    <span class="glyphicon glyphicon-plus"></span>
+  <div id="content" ng-controller="mbPropertiesCtrl">
+    <table id="properties-header">
+          <thead>
+              <th>Property name</th>
+              <th>Property value</th>
+              <th>
+              </th>
+          </thead>
+      </table>
+      <div class="scrollable">
+        <table id="properties">
+          <tbody>
+
+              <tr class="warning" data-ng-show="propertyToRestore" id="restoreAlert">
+                <td colspan=2 class="text-warning" style="vertical-align:middle;">
+                  Property <span data-ng-bind="propertyDeleted.name"></span> has been deleted (<a href="#" class="text-warning" data-ng-click="confirmPropertyDeletion()">hide</a>)
+                </td>
+                <td>
+                  <a data-ng-click="restoreProperty()" class="btn btn-warning btn-block">
+                    <span class="glyphicon glyphicon-repeat"></span> Restore
                   </a>
-                  <a href="#" class="pull-right" data-ng-click="setAddPropertyFormStatus(false)" data-ng-show="showAddPropertyForm">
-                    <span class="glyphicon glyphicon-minus"></span>
-                  </a>
-                </th>
-            </thead>
-            <tbody>
-                <tr class="warning" data-ng-show="propertyToRestore" id="restoreAlert">
-                  <td colspan=2 class="text-warning" style="vertical-align:middle;">
-                    Property <span data-ng-bind="propertyDeleted.name"></span> has been deleted (<a href="#" class="text-warning" data-ng-click="confirmPropertyDeletion()">hide</a>)
-                  </td>
-                  <td>
-                    <a data-ng-click="restoreProperty()" class="btn btn-warning btn-block">
-                      <span class="glyphicon glyphicon-repeat"></span> Restore
+                </td>
+              </tr>
+              <tr class="property-item" data-ng-repeat="property in properties | mbProperty:search | orderBy:'name'">
+                <td>
+                  {{ property.name }}
+                </td>
+                <td mb-property-value></td>
+                <td class="property-options">
+                  <div class="btn-group pull-right" data-ng-hide="name.slice(0,4) == 'jcr:'">
+                    <a href="#" title="Edit" ng-click="propertyValueBtnForm.$show()" ng-hide="propertyValueBtnForm.$visible">
+                    <span class="glyphicon glyphicon-pencil"></span>
                     </a>
-                  </td>
-                </tr>
-                <tr class="property-item" data-ng-repeat="(name,value) in currentNode.getProperties() | propertyNameFilter:search | orderBy:'name'">
-                  <td>
-                    <span data-ng-bind="name"></span>
-                  </td>
-                  <td property-value></td>
-                  <td class="property-options">
-                    <div class="btn-group pull-right" data-ng-hide="name.slice(0,4) == 'jcr:'">
-                      <a href="#" title="Edit" ng-click="propertyValueBtnForm.$show()" ng-hide="propertyValueBtnForm.$visible">
-                      <span class="glyphicon glyphicon-pencil"></span>
-                      </a>
-                    </div>
-                  </td>
-                </tr>
-            </tbody>
+                  </div>
+                </td>
+              </tr>
+          </tbody>
         </table>
     </div>
-  </div>
 </div>

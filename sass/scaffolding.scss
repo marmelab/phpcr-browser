@@ -7,6 +7,12 @@ body {
 div.scrollable {
   overflow: scroll;
   height: 100%;
+  position: absolute;
+  top:0;
+
+  &.padding {
+    padding-top: 20px;
+  }
 }
 
 .btn, .panel {
@@ -28,4 +34,8 @@ table {
             border-top: none;
         }
     }
+}
+
+a {
+    cursor: pointer;
 }

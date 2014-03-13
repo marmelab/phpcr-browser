@@ -41,6 +41,12 @@
           <li mb-navbar-item mb-link="menu.repository" ng-class="menu.repository.class"></li>
           <li mb-navbar-item mb-link="menu.workspace" ng-class="menu.workspace.class"></li>
         </ul>
+        <form class="navbar-form navbar-right" id="search" role="search">
+          <div class="form-group right-inner-addon">
+            <span class="glyphicon glyphicon-search"></span>
+            <input type="text" class="form-control" placeholder="Search" ng-model="search">
+          </div>
+        </form>
       </div><!--/.nav-collapse -->
     </div>
 
@@ -65,6 +71,7 @@
     <script src="/assets/js/browser/services/menu.js"></script>
     <script src="/assets/js/browser/services/route-parameters-converter.js"></script>
     <script src="/assets/js/browser/services/object-mapper.js"></script>
+    <script src="/assets/js/browser/services/tree-view.js"></script>
     <script src="/assets/js/browser/directives/navbar-item.js"></script>
     <script src="/assets/js/browser/directives/tree-node.js"></script>
     <script src="/assets/js/browser/directives/tree.js"></script>

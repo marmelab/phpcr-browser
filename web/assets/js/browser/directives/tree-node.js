@@ -10,7 +10,10 @@
         return RecursionHelper.compile(element);
       },
       controller: function($scope) {
-        $scope.currentNode = $scope.$parent.currentNode;
+        $scope.container = $scope.$parent.container;
+        $scope.toggleCollapsed = function(node) {
+          node.collapsed = !node.collapsed;
+        };
       }
     };
   }]);

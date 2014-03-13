@@ -7,7 +7,10 @@
       scope: {
         currentNode: '=mbCurrentNode'
       },
-      templateUrl: '/assets/js/browser/directives/templates/tree.html'
+      templateUrl: '/assets/js/browser/directives/templates/tree.html',
+      controller: function($scope, mbTreeView) {
+        $scope.container = mbTreeView.getTreeContainer();
+      }
     };
   });
 })(angular.module('browserApp'));

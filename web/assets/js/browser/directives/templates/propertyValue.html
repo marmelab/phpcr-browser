@@ -1,13 +1,13 @@
-<span data-ng-if="typeof(value) != 'object'" data-ng-bind="value"></span>
-<table class="table table-striped table-bordered table-condensed table-hover" data-ng-if="typeof(value) == 'object' && !isEmpty(value)">
+<span data-ng-if="typeof(property.value) !== 'object'"> {{ property.value }}</span>
+<table class="table table-bordered table-striped table-hover" data-ng-if="typeof(property.value) == 'object'">
     <thead>
         <th>Property name</th>
         <th>Property value</th>
     </thead>
     <tbody>
-        <tr data-ng-repeat="(name,value) in value | orderBy:'name'">
-          <td data-ng-bind="name"></td>
-          <td property-value></td>
+        <tr data-ng-repeat="property in property.value | orderBy:'name'">
+          <td>{{ property.name }}</td>
+          <td mb-property-value></td>
         </tr>
     </tbody>
 </table>

@@ -98,7 +98,11 @@
       }
     };
 
-    $rootScope.$on('$stateChangeSuccess', function(evt, toState){
+    $rootScope.$on('$stateChangeSuccess', function(evt, toState, toParams, fromState, fromParams){
+      if (toState.name === fromState.name &&
+        toParams.repository === fromParams.repository &&
+        toParams.workspace === fromParams.workspace ) { return; }
+
       resetMenu();
       if (builders[toState.name]) {
         runBuilder(toState.name, builders[toState.name]);

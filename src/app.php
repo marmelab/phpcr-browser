@@ -41,7 +41,7 @@ $app->register(new APIServiceProvider(),array(
 ));
 //$app->mount('/browser',new BrowserControllerProvider());
 
-$app->get('/browser', function (Application $app) {
+$app->get('/browser/', function (Application $app) {
     return $app['twig']->render('index.html');
 })->bind('home');
 

@@ -1,8 +1,8 @@
-<span data-ng-class="node.selected" class="glyphicon glyphicon-refresh" data-ng-show="node._data_loading"></span>
-<span data-ng-class="node.selected" class="glyphicon glyphicon-folder-close" data-ng-show="node.hasChildren && node.collapsed && !node._data_loading" data-ng-click="collapse(node)"></span>
-<span data-ng-class="node.selected" class="glyphicon glyphicon-folder-open" data-ng-show="node.hasChildren && !node.collapsed && !node._data_loading" data-ng-click="collapse(node)"></span>
-<span data-ng-class="node.selected" class="glyphicon glyphicon-file" data-ng-hide="node.hasChildren || node._data_loading" data-ng-click=""></span>
-<a data-ng-class="node.selected" href="#/{{ currentNode.getWorkspace().getRepository().getName() }}/{{ currentNode.getWorkspace().getName() + node.path }}" data-ng-bind="node.name" data-ng-click="collapse(node, true)" id="{{ node.path }}"></a>
+<span ng-class="node.selected" class="glyphicon glyphicon-refresh" ng-show="node.updateInProgress"></span>
+<span ng-class="node.selected" class="glyphicon glyphicon-folder-close" ng-show="node.hasChildren && node.collapsed && !node.updateInProgress" ng-click="toggleCollapsed(node)"></span>
+<span ng-class="node.selected" class="glyphicon glyphicon-folder-open" ng-show="node.hasChildren && !node.collapsed && !node.updateInProgress" ng-click="toggleCollapsed(node)"></span>
+<span ng-class="node.selected" class="glyphicon glyphicon-file" ng-hide="node.hasChildren || node.updateInProgress" ng-click=""></span>
+<a ng-class="node.selected" ng-href="#/{{ container.repository.getName() }}/{{ container.workspace.getName() + node.path }}" ng-bind="node.name" ng-click="toggleCollapsed(node)" id="{{ node.path }}"></a>
 <ul class="tree" ng-if="node.hasChildren && !node.collapsed">
-  <li data-ng-repeat="node in node.children | orderBy:'name'" mb-tree-node></li>
+  <li ng-repeat="node in node.children | orderBy:'name'" mb-tree-node></li>
 </ul>

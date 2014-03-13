@@ -21,13 +21,13 @@
         templateUrl: '/assets/js/browser/views/workspace.html'
       });
   })
-  .filter('propertyNameFilter', function() {
+  .filter('mbProperty', function() {
     return function(input, term) {
       var regex = new RegExp(term, 'i');
-      var obj = {};
-      angular.forEach(input, function(v, i){
-        if(regex.test(i + '')){
-          obj[i]=v;
+      var obj = [];
+      angular.forEach(input, function(v){
+        if(regex.test(v.name + '')){
+          obj.push(v);
         }
       });
       return obj;

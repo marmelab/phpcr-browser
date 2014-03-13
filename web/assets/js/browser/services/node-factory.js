@@ -57,6 +57,10 @@
       return deferred.promise;
     };
 
+    Node.prototype.getRawData = function() {
+      return this._restangular;
+    };
+
     return {
       build: function(node, workspace, finder) {
         return new Node(node, workspace, finder);

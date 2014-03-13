@@ -3,13 +3,13 @@
  * Import this file using the following HTML or equivalent:
  * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
 
-$brand-primary: lighten(#2c3742, 20%);
+$brand-primary: lighten(#dd4814, 20%);
 
 $font-family-base: 'PT Sans', "Helvetica Neue", Helvetica, Arial, sans-serif;
 
 $body-bg: rgb(247, 247, 247);
 
-$navbar-default-bg: #2c3742;
+$navbar-default-bg: #dd4814;
 $navbar-default-link-color: #ffffff;
 $navbar-default-link-hover-bg: darken($navbar-default-bg, 5%);
 $navbar-default-link-hover-color: #ffffff;
@@ -23,3 +23,4 @@ $icon-font-path: '/bower_components/bootstrap/dist/fonts/';
 @import "./sidebar.scss";
 @import "./tree.scss";
 @import "./content.scss";
+@import "./navbar.scss";
