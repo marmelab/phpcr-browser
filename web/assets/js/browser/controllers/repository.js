@@ -1,11 +1,15 @@
 (function(angular, app) {
   'use strict';
 
-  app.controller('mbRepositoryCtrl', ['$scope', '$log', 'mbRouteParametersConverter',
-    function($scope, $log, mbRouteParametersConverter) {
+  app.controller('mbRepositoryCtrl', ['$scope', '$log', '$location','mbRouteParametersConverter',
+    function($scope, $log, $location, mbRouteParametersConverter) {
       $scope.$on('search.change', function(e, value) {
         $scope.search = value;
       });
+
+      $scope.openWorkspace = function(workspace) {
+        $location.path('/' + workspace.getRepository().getName() + '/' + workspace.getName());
+      };
 
       mbRouteParametersConverter.getCurrentRepository().then(function(repository) {
         $scope.repository = repository;

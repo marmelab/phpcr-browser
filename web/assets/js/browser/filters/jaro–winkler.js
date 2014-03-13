@@ -10,7 +10,7 @@
         if (!term) {
           results.push({value: input, score: 1});
         } else {
-          name = input.name ? input.name : name;
+          name = input.name ? input.name : input.getName();
           s1 = term.toLowerCase().match(/.{1,1}/g);
           if (!s1) { s1 = []; }
           s2 = name.toLowerCase().match(/.{1,1}/g);
