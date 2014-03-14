@@ -21,7 +21,7 @@
         templateUrl: '/assets/js/browser/views/workspace.html'
       });
   })
-  .run(['$log', 'toaster', function($log, toaster) {
+  .run(['$rootScope', '$log', 'toaster', function($rootScope, $log, toaster) {
     $log.after('error', function(message) {
       toaster.pop('error', 'An error occured', message);
     });
@@ -33,6 +33,14 @@
     });
     $log.after('warn', function(message) {
       toaster.pop('warning', 'Warning', message);
+    });
+
+    $rootScope.$on('browser.load', function() {
+      $('#overlay').show();
+    });
+
+    $rootScope.$on('browser.loaded', function() {
+      $('#overlay').hide();
     });
   }]);
 })(angular);

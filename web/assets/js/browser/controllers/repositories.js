@@ -10,8 +10,10 @@
         $location.path('/' + repository.getName());
       };
 
+      $scope.$emit('browser.load');
       ObjectMapper.find().then(function(repositories) {
         $scope.repositories = repositories;
+        $scope.$emit('browser.loaded');
       });
     }]);
 })(angular, angular.module('browserApp'));

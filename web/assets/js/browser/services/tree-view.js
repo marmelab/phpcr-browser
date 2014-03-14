@@ -58,15 +58,17 @@
       return tree;
     };
 
-    var initContainer = function() {
+    var initContainer = function(first) {
       RouteParametersConverter.getCurrentNode().then(function(node) {
         container.tree['/'] = normalize(node.getReducedTree()[0]);
         container.workspace = node.getWorkspace();
         container.repository = node.getWorkspace().getRepository();
+        if (first) { $rootScope.$emit('browser.loaded'); }
       });
     };
 
-    initContainer();
+    $rootScope.$emit('browser.load');
+    initContainer(true);
 
     this.getTreeContainer = function() {
       return container;
@@ -74,11 +76,13 @@
 
     $rootScope.$on('$stateChangeStart', function(evt, toState, toParams, fromState, fromParams){
       if (toState.name === 'workspace' && fromState.name !== 'workspace') {
-        initContainer();
+        $rootScope.$emit('browser.load');
+        initContainer(true);
       } else if(toState.name === fromState.name &&
         (toParams.repository !== fromParams.repository ||
         toParams.workspace !== fromParams.workspace)) {
-        initContainer();
+        $rootScope.$emit('browser.load');
+        initContainer(true);
       } else if(toState.name === fromState.name &&
         toState.name === 'workspace' &&
         toParams.repository === fromParams.repository &&

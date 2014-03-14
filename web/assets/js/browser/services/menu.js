@@ -68,17 +68,6 @@
 
           callback(link);
         });
-      }],
-
-      'workspace.node': ['repository', function(callback) {
-        RouteParametersConverter.getCurrentWorkspace().then(function(workspace) {
-          var link = {
-            label: workspace.getName(),
-            href: '/' + workspace.getRepository().getName() + '/' + workspace.getName()
-          };
-
-          callback(link);
-        });
       }]
     };
 

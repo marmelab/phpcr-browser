@@ -1,8 +1,8 @@
-(function(angular, app) {
+(function($, angular, app) {
   'use strict';
 
   app.controller('mbPropertiesCtrl', ['$scope', '$log', '$filter', 'mbRouteParametersConverter',
-    function($scope, $log, $filter, mbRouteParametersConverter) {
+    function($scope, $log, $filter, RouteParametersConverter) {
       $scope.$on('search.change', function(e, value) {
         $scope.search = value;
       });
@@ -28,7 +28,8 @@
         return  array;
       };
 
-      mbRouteParametersConverter.getCurrentNode().then(function(node) {
+
+      RouteParametersConverter.getCurrentNode().then(function(node) {
         $scope.properties = normalize(node.getProperties());
       }, function(err) {
         $log.error(err);
@@ -36,4 +37,4 @@
 
       $scope.typeof = function(o) { return typeof(o); };
     }]);
-})(angular, angular.module('browserApp'));
+})($, angular, angular.module('browserApp'));

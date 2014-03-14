@@ -28,10 +28,12 @@
         });
       };
 
+      $scope.$emit('browser.load');
       mbRouteParametersConverter.getCurrentRepository().then(function(repository) {
         $scope.repository = repository;
         $scope.repository.getWorkspaces().then(function(workspaces) {
           $scope.workspaces = workspaces;
+          $scope.$emit('browser.loaded');
         });
       }, function(err) {
         $log.error(err);

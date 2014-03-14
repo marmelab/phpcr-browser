@@ -45,3 +45,17 @@ table {
 a {
     cursor: pointer;
 }
+
+.overlay{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+  background-color: rgba(0,0,0,0.5); /*dim the background*/
+  text-align: center;
+  padding-top: 300px;
+  font-size: 60pt;
+  color: rgba(0,0,0,0.5);
+}
