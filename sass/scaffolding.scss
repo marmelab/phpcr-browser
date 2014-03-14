@@ -1,5 +1,4 @@
 @import 'compass/css3';
-@import 'bootstrap';
 
 body {
   padding-top: $navbar-height + 10;
@@ -23,6 +22,15 @@ div.scrollable {
 
 .btn, .panel {
     @include border-radius(0!important);
+}
+
+.workspace-input, .workspace-input:focus {
+    border: none;
+    height: 100%;
+    box-shadow: none;
+    font-size: 17pt;
+    margin: 0;
+    padding-bottom: 0;
 }
 
 table {

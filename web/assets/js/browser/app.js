@@ -1,7 +1,7 @@
 (function(angular) {
   'use strict';
 
-  angular.module('browserApp', ['ui.router', 'restangular', 'talker', 'toaster'])
+  angular.module('browserApp', ['ui.router', 'ui.keypress', 'restangular', 'talker', 'toaster'])
   .config(function($stateProvider, $urlRouterProvider){
     $urlRouterProvider
       .when('', '/')

@@ -14,9 +14,14 @@
     <div class="col-sm-2">
         <div class="panel panel-workspace panel-new-workspace">
             <div class="panel-body">
-                <p class="lead text-center">
+                <p class="lead text-center" ng-click="showCreateForm()" ng-hide="displayCreateForm">
                     Create a workspace
                 </p>
+                <form ng-submit="createWorkspace(workspaceName)" ng-if="displayCreateForm">
+                    <p class="text-center">
+                        <input type="text" ng-model="workspaceName" mb-focus-me="displayCreateForm" class="form-control workspace-input" placeholder="Enter a name" ui-keydown="{esc: 'hideCreateForm($event)'}"/>
+                    </p>
+                </form>
             </div>
         </div>
     </div>

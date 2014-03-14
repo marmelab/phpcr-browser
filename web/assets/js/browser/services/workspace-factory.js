@@ -35,6 +35,10 @@
       return ApiFoundation.deleteWorkspace(this.getRepository().getName(), this.getName());
     };
 
+    Workspace.prototype.create = function() {
+      return ApiFoundation.createWorkspace(this.getRepository().getName(), this.getName());
+    };
+
     return {
       build: function(workspace, repository, supportedOperations, finder) {
         return new Workspace(workspace, repository, supportedOperations, finder);

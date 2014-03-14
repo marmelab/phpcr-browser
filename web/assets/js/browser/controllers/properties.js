@@ -13,6 +13,7 @@
             $log.log('Property deleted');
             $scope.properties = normalize($scope.currentNode.getProperties());
           }, function(err) {
+            if (err.status === 423) { return $log.error('You can not delete this property.'); }
             $log.error(err);
           });
         }

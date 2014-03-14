@@ -10,7 +10,8 @@
     "respond": "master",
     "restangular": "1.1.8",
     "talker": "0.1.0",
-    "AngularJS-Toaster": "0.4.5"
+    "AngularJS-Toaster": "0.4.5",
+    "angular-ui-utils": "bower-keypress"
   },
   "resolutions": {
     "angular": "1.2.14"
