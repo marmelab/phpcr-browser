@@ -1,11 +1,11 @@
-<span data-ng-if="typeof(property.value) !== 'object'"> {{ property.value }}</span>
-<table class="table table-bordered table-striped table-hover" data-ng-if="typeof(property.value) == 'object'">
+<span ng-if="typeof(property.value) !== 'object'"> {{ property.value }}</span>
+<table class="table table-bordered table-striped table-hover" ng-if="typeof(property.value) == 'object'">
     <thead>
         <th>Property name</th>
         <th>Property value</th>
     </thead>
     <tbody>
-        <tr data-ng-repeat="property in property.value | orderBy:'name'">
+        <tr ng-repeat="property in property.value | orderBy:'name'">
           <td>{{ property.name }}</td>
           <td mb-property-value></td>
         </tr>

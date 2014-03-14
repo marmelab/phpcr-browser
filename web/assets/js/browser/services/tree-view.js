@@ -31,6 +31,7 @@
         }
       }
 
+      tree.slug = tree.path.replace('/', '_');
       if (tree.children.length > 0) {
         tree.collapsed = false;
       } else {
@@ -42,7 +43,7 @@
 
     var initContainer = function() {
       RouteParametersConverter.getCurrentNode().then(function(node) {
-        container.tree = { '/': normalize(node.getReducedTree()[0]) };
+        container.tree['/'] = normalize(node.getReducedTree()[0]);
         container.workspace = node.getWorkspace();
         container.repository = node.getWorkspace().getRepository();
       });

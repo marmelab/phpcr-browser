@@ -47,7 +47,7 @@
       });
 
       results = results.filter(function(result) {
-        return result.score > 0.4;
+        return result.score > 0.1;
       }).sort(function(a, b){
         return b.score - a.score;
       });

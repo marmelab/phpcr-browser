@@ -1,17 +1,17 @@
 (function(angular, app) {
   'use strict';
 
-  app.controller('mbRepositoriesCtrl', ['$scope', 'mbObjectMapper', function($scope, ObjectMapper) {
+  app.controller('mbRepositoriesCtrl', ['$scope', '$location', 'mbObjectMapper', function($scope, $location, ObjectMapper) {
       $scope.$on('search.change', function(e, value) {
         $scope.search = value;
       });
 
-      var retrieveRepositories = function() {
-        ObjectMapper.find().then(function(repositories) {
-          $scope.repositories = repositories;
-        });
+      $scope.openRepository = function(repository) {
+        $location.path('/' + repository.getName());
       };
 
-      retrieveRepositories();
+      ObjectMapper.find().then(function(repositories) {
+        $scope.repositories = repositories;
+      });
     }]);
 })(angular, angular.module('browserApp'));

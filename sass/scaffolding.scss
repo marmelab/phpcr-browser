@@ -14,23 +14,15 @@ div.scrollable {
   &.padding {
     padding-top: 20px;
   }
+
+  &.scrollable-tree {
+    margin-top: 55px;
+    width: 95%;
+  }
 }
 
 .btn, .panel {
     @include border-radius(0!important);
-}
-
-.panel.panel-workspace {
-    cursor: pointer!important;
-    @extend .panel-default;
-
-    &:hover {
-        @extend .panel-primary;
-    }
-
-    .panel-footer {
-        padding: 0!important;
-    }
 }
 
 table {

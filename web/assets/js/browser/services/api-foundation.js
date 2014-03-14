@@ -42,6 +42,12 @@
         }
         return workspace(repositoryName, workspaceName).one(nodesPrefix, path);
       };
+      var nodeProperty = function(repositoryName, workspaceName, path, propertyName) {
+        if (path.slice(0,1) === '/') {
+          path = path.slice(1);
+        }
+        return workspace(repositoryName, workspaceName).all(nodesPrefix).one(path + '@properties', propertyName);
+      };
 
       return {
         getRepositories: function() {
@@ -63,6 +69,9 @@
         createWorkspace: function(repositoryName, name) {
           return workspaces(repositoryName).post({ name: name });
         },
+        deleteWorkspace: function(repositoryName, name) {
+          return workspace(repositoryName, name).remove();
+        },
         getNode: function(repositoryName, workspaceName, path) {
           return node(repositoryName, workspaceName, path).get({reducedTree: true});
         },
@@ -70,7 +79,7 @@
           node(repositoryName, workspaceName, parentPath).post({ relPath: relPath});
         },
         deleteNode: function(repositoryName, workspaceName, path) {
-          return node(repositoryName, workspaceName, path).delete();
+          return node(repositoryName, workspaceName, path).remove();
         },
         moveNode: function(repositoryName, workspaceName, path, newPath) {
           return node(repositoryName, workspaceName, path).put({
@@ -83,7 +92,10 @@
             method: 'rename',
             newName: newName
           });
-        }
+        },
+        deleteNodeProperty: function(repositoryName, workspaceName, path, propertyName) {
+          return nodeProperty(repositoryName, workspaceName, path, propertyName).remove();
+        },
       };
     }];
   });

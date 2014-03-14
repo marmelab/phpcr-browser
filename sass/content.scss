@@ -2,7 +2,7 @@
 @import "bootstrap/mixins";
 @import "compass/css3";
 
-$scrollable-margin-top: 38px;
+$scrollable-margin-top: 51px;
 
 #content {
     @include make-sm-column(9);
@@ -17,90 +17,4 @@ $scrollable-margin-top: 38px;
     .scrollable {
         margin-top: $scrollable-margin-top;
     }
-}
-table#properties {
-    z-index: 1;
-    @extend .table;
-    @extend .table-striped;
-    @extend .table-hover;
-    table-layout: fixed;
-
-    border: 1px solid #dddddd;
-    margin-bottom: $scrollable-margin-top;
-
-    thead {
-        tr {
-            th:first-child {
-                width: 30%;
-            }
-
-            th:last-child {
-                width: 50px;
-            }
-        }
-    }
-
-    tbody {
-        overflow: auto;
-    }
-
-    tr {
-        &:first-child td {
-            border-top: none;
-        };
-
-        td:first-child {
-            width: 30%;
-        }
-
-        td:nth-child(2) {
-            word-wrap: break-word;
-            vertical-align: middle;
-        }
-
-        td:last-child {
-            text-align: center;
-            border-left: none;
-            width: 50px;
-        }
-    }
-}
-
-table#properties-header {
-    z-index: 2;
-    @extend .table;
-    @extend .table-striped;
-    @extend .table-hover;
-    table-layout: fixed;
-    thead {
-        tr {
-            th:first-child {
-                width: 30%;
-            }
-
-            th:last-child {
-                width: 50px;
-            }
-        }
-    }
-    border: 1px solid #dddddd;
-    margin: 0;
-}
-
-.property-item .property-options .btn-group{
-  visibility: hidden;
-}
-
-.property-item .property-options .btn-group a{
-  color: #bbb;
-}
-
-.property-item .property-options .btn-group a:hover{
-  color: #000;
-  text-decoration: none;
-}
-
-.property-item:hover .property-options .btn-group{
-  visibility: visible;
-  display:block;
 }

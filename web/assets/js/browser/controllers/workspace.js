@@ -7,6 +7,10 @@
         $scope.search = value;
       });
 
+      $scope.delete = function(element) {
+        $scope.$broadcast('drop.delete', element);
+      };
+
       mbRouteParametersConverter.getCurrentNode().then(function(node) {
         $scope.currentNode = node;
       }, function(err) {

@@ -1,17 +1,27 @@
 <div class="col-lg-12" ng-controller="mbRepositoryCtrl">
-    <div class="col-sm-2" ng-repeat="(key, workspace) in workspaces | mbJaroWinkler:search">
+    <div class="col-sm-2" ng-repeat="(key, workspace) in workspaces | mbJaroWinkler:search" draggable id="{{ workspace.getSlug() }}">
         <div class="panel panel-workspace" ng-click="openWorkspace(workspace)">
             <div class="panel-heading">
-                <span class="glyphicon glyphicon-th-list"></span> Workspace
+                Workspace
             </div>
             <div class="panel-body">
                 <p class="lead text-center">
                     {{ workspace.getName() }}
                 </p>
             </div>
-            <div class="panel-footer">
-
+        </div>
+    </div>
+    <div class="col-sm-2">
+        <div class="panel panel-workspace panel-new-workspace">
+            <div class="panel-body">
+                <p class="lead text-center">
+                    Create a workspace
+                </p>
             </div>
         </div>
+    </div>
+    <div class="trash trash-square" droppable drop="deleteWorkspace">
+        <span class="glyphicon glyphicon-trash"></span>
+        <p>Drop to delete</p>
     </div>
 </div>

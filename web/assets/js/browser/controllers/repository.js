@@ -11,6 +11,23 @@
         $location.path('/' + workspace.getRepository().getName() + '/' + workspace.getName());
       };
 
+      $scope.deleteWorkspace = function(element) {
+        angular.forEach($scope.workspaces, function(workspace, k) {
+          if (element.attr('id') === workspace.getSlug()) {
+            if (workspace.getSupportedOperations().indexOf('workspace.delete') !== -1) {
+              workspace.delete().then(function() {
+                delete $scope.workspaces[k];
+              }, function(err) {
+                $log.error(err);
+              });
+            } else {
+              $log.error('This repository does not support workspace deletion');
+            }
+            return;
+          }
+        });
+      };
+
       mbRouteParametersConverter.getCurrentRepository().then(function(repository) {
         $scope.repository = repository;
         $scope.repository.getWorkspaces().then(function(workspaces) {

@@ -8,10 +8,11 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>PHPCR Browser</title>
+    <title>phpcr browser</title>
 
     <!-- Bootstrap core CSS -->
     <link href='http://fonts.googleapis.com/css?family=PT+Sans' rel='stylesheet' type='text/css'>
+    <link href="/bower_components/AngularJS-Toaster/toaster.css" rel="stylesheet">
     <link href="/assets/css/screen.css" rel="stylesheet">
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -50,6 +51,7 @@
       </div><!--/.nav-collapse -->
     </div>
 
+    <toaster-container toaster-options="{'position-class': 'toast-top-right'}"> </toaster-container>
     <div ui-view class="container-fluid"></div>
 
     <!-- Bootstrap core JavaScript
@@ -59,9 +61,13 @@
     <script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="/bower_components/angular/angular.min.js"></script>
     <script src="/bower_components/angular-route/angular-route.min.js"></script>
+    <script src="/bower_components/angular-animate/angular-animate.min.js"></script>
+    <script src="/bower_components/AngularJS-Toaster/toaster.js"></script>
     <script src="/bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
     <script src="/bower_components/lodash/dist/lodash.min.js"></script>
     <script src="/bower_components/restangular/dist/restangular.min.js"></script>
+    <script src="/bower_components/talker/talker-0.1.0.min.js"></script>
+
     <script src="/assets/js/browser/app.js"></script>
     <script src="/assets/js/browser/services/recursion-helper.js"></script>
     <script src="/assets/js/browser/services/api-foundation.js"></script>
@@ -76,6 +82,8 @@
     <script src="/assets/js/browser/directives/tree-node.js"></script>
     <script src="/assets/js/browser/directives/tree.js"></script>
     <script src="/assets/js/browser/directives/property-value.js"></script>
+    <script src="/assets/js/browser/directives/draggable.js"></script>
+    <script src="/assets/js/browser/directives/droppable.js"></script>
     <script src="/assets/js/browser/filters/jaro–winkler.js"></script>
     <script src="/assets/js/browser/controllers/front.js"></script>
     <script src="/assets/js/browser/controllers/navbar.js"></script>

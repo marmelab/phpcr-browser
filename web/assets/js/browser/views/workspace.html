@@ -1,6 +1,10 @@
 <div ng-controller="mbWorkspaceCtrl">
   <div id="sidebar" data-ng-controller="mbTreeCtrl">
-      <div class="scrollable padding">
+      <div class="trash trash-node" droppable drop="delete">
+        <span class="glyphicon glyphicon-trash"></span>
+        <p>Drop to delete</p>
+      </div>
+      <div class="scrollable scrollable-tree padding">
         <mb-tree mb-current-node="currentNode"></tree>
     </div>
   </div>
@@ -9,8 +13,6 @@
           <thead>
               <th>Property name</th>
               <th>Property value</th>
-              <th>
-              </th>
           </thead>
       </table>
       <div class="scrollable">
@@ -27,18 +29,11 @@
                   </a>
                 </td>
               </tr>
-              <tr class="property-item" data-ng-repeat="property in properties | mbJaroWinkler:search">
+              <tr class="property-item" data-ng-repeat="property in properties | mbJaroWinkler:search" id="{{ property.name }}" draggable data-name="{{ property.name }}">
                 <td>
                   {{ property.name }}
                 </td>
                 <td mb-property-value></td>
-                <td class="property-options">
-                  <div class="btn-group pull-right" data-ng-hide="name.slice(0,4) == 'jcr:'">
-                    <a href="#" title="Edit" ng-click="propertyValueBtnForm.$show()" ng-hide="propertyValueBtnForm.$visible">
-                    <span class="glyphicon glyphicon-pencil"></span>
-                    </a>
-                  </div>
-                </td>
               </tr>
           </tbody>
         </table>

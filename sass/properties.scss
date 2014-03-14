@@ -1,0 +1,85 @@
+@import "bootstrap";
+@import "bootstrap/mixins";
+@import "compass/css3";
+
+#properties {
+    z-index: 1;
+    @extend .table;
+    @extend .table-striped;
+    @extend .table-hover;
+    table-layout: fixed;
+
+    border: 1px solid #dddddd;
+    margin-bottom: $scrollable-margin-top;
+
+    thead {
+        tr {
+            th:first-child {
+                width: 30%;
+            }
+        }
+
+        border-bottom: 2px solid #ddd;
+    }
+
+    tbody {
+        overflow: auto;
+    }
+
+    tr {
+        &:first-child td {
+            border-top: none;
+        };
+
+        td:first-child {
+            width: 30%;
+        }
+
+        td:nth-child(2) {
+            word-wrap: break-word;
+            vertical-align: middle;
+        }
+    }
+}
+
+#properties-header {
+    z-index: 2;
+    @extend .table;
+    @extend .table-striped;
+    @extend .table-hover;
+    table-layout: fixed;
+    thead {
+        tr {
+            th {
+                height: 52px;
+                line-height: 50px;
+                padding: 0 5px;
+                font-size: 12pt;
+            }
+
+            th:first-child {
+                width: 30%;
+            }
+        }
+    }
+    border: 1px solid #dddddd;
+    margin: 0;
+}
+
+.property-item .property-options .btn-group{
+  visibility: hidden;
+}
+
+.property-item .property-options .btn-group a{
+  color: #bbb;
+}
+
+.property-item .property-options .btn-group a:hover{
+  color: #000;
+  text-decoration: none;
+}
+
+.property-item:hover .property-options .btn-group{
+  visibility: visible;
+  display:block;
+}

@@ -1,7 +1,7 @@
 (function(angular, app) {
   'use strict';
 
-  app.factory('mbNodeFactory', ['$q', 'mbApiFoundation', function($q) {
+  app.factory('mbNodeFactory', ['$q', 'mbApiFoundation', function($q, ApiFoundation) {
     var proxy = function(parent, children) {
       var result = [];
       angular.forEach(children, function(child) {
@@ -45,6 +45,23 @@
       return this._restangular.properties;
     };
 
+    Node.prototype.deleteProperty = function(name) {
+      var deferred = $q.defer(), self = this;
+      ApiFoundation.deleteNodeProperty(
+        this.getWorkspace().getRepository().getName(),
+        this.getWorkspace().getName(),
+        this.getPath(),
+        name)
+      .then(function(data) {
+        delete self._restangular.properties[name];
+        deferred.resolve(data);
+      }, function(err) {
+        deferred.reject(err);
+      });
+
+      return deferred.promise;
+    };
+
     Node.prototype.getReducedTree = function() {
       return this._restangular.reducedTree;
     };
@@ -59,6 +76,10 @@
 
     Node.prototype.getRawData = function() {
       return this._restangular;
+    };
+
+    Node.prototype.getSlug = function() {
+      return this.getPath().replace('/','_');
     };
 
     return {
