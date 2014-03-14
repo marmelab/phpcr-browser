@@ -1,10 +1,8 @@
 (function(angular, app) {
   'use strict';
 
-  app.controller('mbPropertiesCtrl', ['$scope', '$log', 'mbRouteParametersConverter',
-    function($scope, $log, mbRouteParametersConverter) {
-      var currentNode;
-
+  app.controller('mbPropertiesCtrl', ['$scope', '$log', '$filter', 'mbRouteParametersConverter',
+    function($scope, $log, $filter, mbRouteParametersConverter) {
       $scope.$on('search.change', function(e, value) {
         $scope.search = value;
       });

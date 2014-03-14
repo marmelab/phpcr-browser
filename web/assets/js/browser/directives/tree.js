@@ -8,9 +8,30 @@
         currentNode: '=mbCurrentNode'
       },
       templateUrl: '/assets/js/browser/directives/templates/tree.html',
-      controller: function($scope, mbTreeView) {
-        $scope.container = mbTreeView.getTreeContainer();
-      }
+      controller: ['$scope', '$log', 'mbObjectMapper', 'mbTreeView',
+        function($scope, $log, ObjectMapper, TreeView) {
+          $scope.container = TreeView.getTreeContainer();
+
+          $scope.$on('drop.delete', function(e, element) {
+            if (element.hasClass('node')) {
+              ObjectMapper.find(
+                '/' +
+                $scope.container.repository.getName() + '/' +
+                $scope.container.workspace.getName() +
+                element.data('path'))
+              .then(function(node) {
+                node.delete().then(function() {
+                  $scope.$emit('node.deleted', node.getPath());
+                  $log.log('Node deleted');
+                }, function(err) {
+                  $log.error(err);
+                });
+              }, function(err) {
+                $log.error(err);
+              });
+            }
+          });
+        }]
     };
   });
 })(angular.module('browserApp'));

@@ -1,4 +1,4 @@
-<div class="node" id="{{ node.slug }}" draggable>
+<div class="node" id="{{ node.slug }}" data-path="{{ node.path }}" draggable>
 <span ng-class="node.selected" class="glyphicon glyphicon-refresh" ng-show="node.updateInProgress"></span>
 <span ng-class="node.selected" class="glyphicon glyphicon-folder-close" ng-show="node.hasChildren && node.collapsed && !node.updateInProgress" ng-click="toggleCollapsed(node)"></span>
 <span ng-class="node.selected" class="glyphicon glyphicon-folder-open" ng-show="node.hasChildren && !node.collapsed && !node.updateInProgress" ng-click="toggleCollapsed(node)"></span>
@@ -6,5 +6,5 @@
 <a ng-class="node.selected" ng-bind="node.name" ng-click="toggleCollapsed(node)" id="{{ node.path }}" class="node"></a>
 </div>
 <ul class="tree" ng-if="node.hasChildren && !node.collapsed">
-  <li ng-repeat="node in node.children | orderBy:'name'" mb-tree-node></li>
+  <li ng-repeat="node in node.children | orderBy:'name'" ng-if="node !== undefined" mb-tree-node></li>
 </ul>

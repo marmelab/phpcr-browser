@@ -1,7 +1,8 @@
 (function(angular, app) {
   'use strict';
 
-  app.service('mbTreeView', ['$rootScope', 'mbRouteParametersConverter', function($rootScope, RouteParametersConverter) {
+  app.service('mbTreeView', ['$rootScope', '$location', 'mbRouteParametersConverter',
+    function($rootScope, $location, RouteParametersConverter) {
     var container = {
       tree: {}
     };
@@ -24,10 +25,26 @@
       return search(target, root);
     };
 
+    var deleteNode = function(path) {
+      var parent = path.split('/');
+      parent.pop();
+      parent = parent.join('/');
+      parent = find(parent, container.tree['/']);
+
+      for (var child in parent.children){
+        if (parent.children[child] && parent.children[child].path === path) {
+          if (parent.children.length === 1) { parent.hasChildren = false; }
+          return (parent.children[child] = undefined);
+        }
+      }
+    };
+
     var normalize = function (tree){
       for (var node in tree.children) {
         if (tree.children.hasOwnProperty(node)) {
-          tree.children[node] = normalize(tree.children[node]);
+          if (tree.children[node]) {
+            tree.children[node] = normalize(tree.children[node]);
+          }
         }
       }
 
@@ -61,6 +78,7 @@
       } else if(toState.name === fromState.name &&
         (toParams.repository !== fromParams.repository ||
         toParams.workspace !== fromParams.workspace)) {
+        initContainer();
       } else if(toState.name === fromState.name &&
         toState.name === 'workspace' &&
         toParams.repository === fromParams.repository &&
@@ -76,6 +94,19 @@
             target.updateInProgress = false;
           });
         }
+      }
+    });
+
+    $rootScope.$on('node.deleted', function(e, path) {
+      deleteNode(path);
+      var absolutePath = '/' + container.repository.getName() + '/' + container.workspace.getName() + path;
+
+      // If we are on/in a deleted node we have to go back in hierarchy
+      if (absolutePath === $location.path().slice(0, absolutePath.length)) {
+        var parent = path.split('/');
+        parent.pop();
+        parent = parent.join('/');
+        $location.path('/' + container.repository.getName() + '/' + container.workspace.getName() + parent);
       }
     });
   }]);

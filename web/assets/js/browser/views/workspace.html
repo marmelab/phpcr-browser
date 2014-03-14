@@ -18,17 +18,6 @@
       <div class="scrollable">
         <table id="properties">
           <tbody>
-
-              <tr class="warning" data-ng-show="propertyToRestore" id="restoreAlert">
-                <td colspan=2 class="text-warning" style="vertical-align:middle;">
-                  Property <span data-ng-bind="propertyDeleted.name"></span> has been deleted (<a href="#" class="text-warning" data-ng-click="confirmPropertyDeletion()">hide</a>)
-                </td>
-                <td>
-                  <a data-ng-click="restoreProperty()" class="btn btn-warning btn-block">
-                    <span class="glyphicon glyphicon-repeat"></span> Restore
-                  </a>
-                </td>
-              </tr>
               <tr class="property-item" data-ng-repeat="property in properties | mbJaroWinkler:search" id="{{ property.name }}" draggable data-name="{{ property.name }}">
                 <td>
                   {{ property.name }}
