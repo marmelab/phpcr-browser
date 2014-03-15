@@ -1,5 +1,5 @@
 <div ng-controller="mbWorkspaceCtrl">
-  <div id="sidebar" data-ng-controller="mbTreeCtrl">
+  <div id="sidebar">
       <div class="trash trash-node" droppable drop="delete">
         <span class="glyphicon glyphicon-trash"></span>
         <p>Drop to delete</p>
@@ -11,6 +11,7 @@
   <div id="content" ng-controller="mbPropertiesCtrl">
     <table id="properties-header">
           <thead>
+              <th></th>
               <th>Property name</th>
               <th>Property value</th>
           </thead>
@@ -18,7 +19,8 @@
       <div class="scrollable">
         <table id="properties">
           <tbody>
-              <tr class="property-item" data-ng-repeat="property in properties | mbJaroWinkler:search" id="{{ property.name }}" draggable data-name="{{ property.name }}">
+              <tr class="property-item" data-ng-repeat="property in properties | mbJaroWinkler:search" id="{{ property.name }}" draggable data-name="{{ property.name }}" ng-class="{ 'no-draggable': !currentNode.getWorkspace().getRepository().supports('node.property.delete') }">
+                <td><span class="fa fa-bars" title="Drag me to delete me"></span></td>
                 <td>
                   {{ property.name }}
                 </td>

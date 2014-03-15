@@ -5,7 +5,7 @@
         <th>Property value</th>
     </thead>
     <tbody>
-        <tr ng-repeat="property in property.value | orderBy:'name'">
+        <tr ng-repeat="property in property.value | orderBy:'name'" class="property-item">
           <td>{{ property.name }}</td>
           <td mb-property-value></td>
         </tr>

@@ -45,20 +45,54 @@
       return this._restangular.properties;
     };
 
-    Node.prototype.deleteProperty = function(name) {
+    Node.prototype.deleteProperty = function(name, path, type) {
       var deferred = $q.defer(), self = this;
-      ApiFoundation.deleteNodeProperty(
-        this.getWorkspace().getRepository().getName(),
-        this.getWorkspace().getName(),
-        this.getPath(),
-        name)
-      .then(function(data) {
-        delete self._restangular.properties[name];
-        deferred.resolve(data);
-      }, function(err) {
-        deferred.reject(err);
-      });
 
+      if (path) {
+        path = path.split('@@');
+        if (path[0] !== name) {
+          deferred.reject('Incorrect subpath');
+        } else {
+          var property = this.getProperties()[name].value;
+
+          var remove = function(property, path) {
+            if (path.length === 1) {
+              return (delete property[path[0]]);
+            }
+            for (var key in property) {
+              if (key === path[0]) {
+                path.shift();
+                return remove(property[key], path);
+              }
+            }
+          };
+
+          remove(property, path);
+          ApiFoundation.updateNodeProperty(
+            this.getWorkspace().getRepository().getName(),
+            this.getWorkspace().getName(),
+            this.getPath(),
+            name, property, type)
+          .then(function(data) {
+            self._restangular.properties[name] = property;
+            deferred.resolve(data);
+          }, function(err) {
+            deferred.reject(err);
+          });
+        }
+      } else {
+        ApiFoundation.deleteNodeProperty(
+          this.getWorkspace().getRepository().getName(),
+          this.getWorkspace().getName(),
+          this.getPath(),
+          name)
+        .then(function(data) {
+          delete self._restangular.properties[name];
+          deferred.resolve(data);
+        }, function(err) {
+          deferred.reject(err);
+        });
+      }
       return deferred.promise;
     };
 

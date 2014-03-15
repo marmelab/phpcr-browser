@@ -9,22 +9,44 @@
 
       $scope.$on('drop.delete', function(e, element) {
         if (element.hasClass('property-item')) {
-          $scope.currentNode.deleteProperty(element.data('name')).then(function() {
-            $log.log('Property deleted');
-            $scope.properties = normalize($scope.currentNode.getProperties());
-          }, function(err) {
-            if (err.status === 423) { return $log.error('You can not delete this property.'); }
-            $log.error(err);
-          });
+          $scope.deleteProperty(element.data('name'));
         }
       });
 
-      var normalize = function(data) {
+      $scope.deleteProperty = function(name, path, type) {
+        $scope.currentNode.deleteProperty(name, path, type).then(function() {
+          $log.log('Property deleted');
+          $scope.properties = normalize($scope.currentNode.getProperties());
+        }, function(err) {
+          if (err.status === 423) { return $log.warn(err, 'You can not delete this property. It is locked.'); }
+          $log.error(err);
+        });
+      };
+
+      var normalize = function(data, parent, parentType) {
         var array = [];
         for (var i in data) {
           if (!data) { continue; }
-          if (typeof(data[i]) === 'object') { data[i] = normalize(data[i]); }
-          array.push({ name: i, value: data[i] });
+          var value, type, path;
+          if (parent && typeof(data[i]) === 'object') {
+            type = parentType;
+            value = normalize(data[i], i, parentType);
+            path = parent + '@@' + i;
+          } else if (!parent && typeof(data[i].value) === 'object') {
+            type = data[i].type;
+            value = normalize(data[i].value, i, data[i].type);
+            path = '@@';
+          } else if (parent) {
+            type = parentType;
+            value = data[i];
+            path = parent + '@@' + i;
+          } else {
+            type = data[i].type;
+            value = data[i].value;
+            path = '@@';
+          }
+
+          array.push({ name: i, value: value, type: type, path: path});
         }
         return  array;
       };

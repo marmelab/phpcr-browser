@@ -11,7 +11,7 @@
             var repositories = [];
             angular.forEach(data.repositories, function(repository) {
               if (!RepositoryFactory.accept(repository)) { return deferred.reject('Invalid response'); }
-              repositories.push(RepositoryFactory.build(repository));
+              repositories.push(RepositoryFactory.build(repository, self.find));
             });
             deferred.resolve(repositories);
           }, deferred.reject);
@@ -35,7 +35,7 @@
                 var workspaces = [];
                 angular.forEach(data.workspaces, function(workspace) {
                   if (!WorkspaceFactory.accept(workspace)) { return deferred.reject('Invalid response'); }
-                  workspaces.push(WorkspaceFactory.build(workspace, repository, data.support, self.find));
+                  workspaces.push(WorkspaceFactory.build(workspace, repository, self.find));
                 });
                 deferred.resolve(workspaces);
               }, deferred.reject);
@@ -43,7 +43,7 @@
               // Workspace
               ApiFoundation.getWorkspace(components[0], components[1]).then(function(data) {
                 if (!WorkspaceFactory.accept(data.workspace)) { return deferred.reject('Invalid response'); }
-                deferred.resolve(WorkspaceFactory.build(data.workspace, repository, data.support, self.find));
+                deferred.resolve(WorkspaceFactory.build(data.workspace, repository, self.find));
               }, deferred.reject);
             }
           }, deferred.reject);

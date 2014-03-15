@@ -18,6 +18,14 @@
       return this._restangular.factoryName;
     };
 
+    Repository.prototype.getSupportedOperations = function() {
+      return this._restangular.support;
+    };
+
+    Repository.prototype.supports = function(operation) {
+      return this.getSupportedOperations().indexOf(operation) !== -1;
+    };
+
     Repository.prototype.getWorkspaces = function() {
       return this._finder('/' + this.getName() + '/*');
     };

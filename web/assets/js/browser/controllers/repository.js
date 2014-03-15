@@ -24,15 +24,15 @@
       $scope.deleteWorkspace = function(element) {
         angular.forEach($scope.workspaces, function(workspace, k) {
           if (element.attr('id') === workspace.getSlug()) {
-            if (workspace.getSupportedOperations().indexOf('workspace.delete') !== -1) {
+            if (workspace.getRepository().supports('workspace.delete')) {
               workspace.delete().then(function() {
                 $log.log('Workspace deleted');
                 delete $scope.workspaces[k];
               }, function(err) {
-                $log.error(err);
+                $log.error(err, 'An error occurred, please retry.');
               });
             } else {
-              $log.error('This repository does not support workspace deletion');
+              $log.error('This repository does not support workspace deletion.');
             }
             return;
           }
@@ -40,16 +40,21 @@
       };
 
       $scope.createWorkspace = function(workspaceName) {
-        var workspace = WorkspaceFactory.build({ name: workspaceName }, $scope.repository);
-        workspace.create().then(function() {
-          $scope.repository.getWorkspaces().then(function(workspaces) {
-            $scope.workspaces = workspaces;
-            $log.log('Workspace created');
-            $scope.displayCreateForm = false;
+        if ($scope.repository.supports('workspace.create')) {
+          var workspace = WorkspaceFactory.build({ name: workspaceName }, $scope.repository);
+          workspace.create().then(function() {
+            $scope.repository.getWorkspaces().then(function(workspaces) {
+              $scope.workspaces = workspaces;
+              $log.log('Workspace created');
+              $scope.displayCreateForm = false;
+            });
+          }, function(err) {
+            if (err.status) { return $log.error(err, 'An error occurred, please retry.'); }
+            $log.error(err);
           });
-        }, function(err) {
-          $log.error(err);
-        });
+        } else {
+          $log.error('This repository does not support workspace creation.');
+        }
       };
 
       $scope.$emit('browser.load');
@@ -58,9 +63,11 @@
         $scope.repository.getWorkspaces().then(function(workspaces) {
           $scope.workspaces = workspaces;
           $scope.$emit('browser.loaded');
+        }, function(err) {
+          $log.error(err, 'An error occurred, please retry.');
         });
       }, function(err) {
-        $log.error(err);
+        $log.error(err, 'An error occurred, please retry.');
       });
     }]);
 })(angular, angular.module('browserApp'));

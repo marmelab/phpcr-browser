@@ -13,8 +13,12 @@
 
     thead {
         tr {
-            th:first-child {
+            th:nth-child(2) {
                 width: 30%;
+            }
+
+            th:first-child {
+                width: 30px;
             }
         }
 
@@ -26,17 +30,41 @@
     }
 
     tr {
+        cursor: pointer;
+
         &:first-child td {
             border-top: none;
         };
 
-        td:first-child {
+        td:nth-child(2) {
             width: 30%;
+            vertical-align: middle;
         }
 
-        td:nth-child(2) {
+        td:last-child {
             word-wrap: break-word;
             vertical-align: middle;
+        }
+
+        td:first-child {
+            width: 30px;
+            text-align: center;
+            vertical-align: middle;
+        }
+    }
+
+    table {
+        table-layout: fixed;
+        tr {
+            th:first-child {
+                width: 25%;
+                vertical-align: middle;
+            }
+
+            td:first-child {
+                width: 25%;
+                vertical-align: middle;
+            }
         }
     }
 }
@@ -56,8 +84,12 @@
                 font-size: 12pt;
             }
 
-            th:first-child {
+            th:nth-child(2) {
                 width: 30%;
+            }
+
+            th:first-child {
+                width: 30px;
             }
         }
     }

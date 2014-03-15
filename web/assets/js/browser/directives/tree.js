@@ -24,7 +24,7 @@
                   $scope.$emit('node.deleted', node.getPath());
                   $log.log('Node deleted');
                 }, function(err) {
-                  if (err.status === 423) { return $log.error('You can not delete this node.'); }
+                  if (err.status === 423) { return $log.warn('You can not delete this node. It is locked.'); }
                   $log.error(err);
                 });
               }, function(err) {
