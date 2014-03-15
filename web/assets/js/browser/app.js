@@ -1,7 +1,7 @@
 (function(angular) {
   'use strict';
 
-  angular.module('browserApp', ['ui.router', 'ui.keypress', 'restangular', 'talker', 'toaster'])
+  angular.module('browserApp', ['ui.router', 'ui.keypress', 'restangular', 'talker', 'toaster', 'xeditable'])
   .config(function($stateProvider, $urlRouterProvider, RestangularProvider){
     RestangularProvider.setDefaultHttpFields({cache: true});
     $urlRouterProvider
@@ -22,30 +22,36 @@
         templateUrl: '/assets/js/browser/views/workspace.html'
       });
   })
-  .run(['$rootScope', '$log', 'toaster', function($rootScope, $log, toaster) {
-    $log.after('error', function(message, toast) {
+  .run(['$rootScope', '$log', 'toaster', 'editableOptions', function($rootScope, $log, toaster, editableOptions) {
+    editableOptions.theme = 'bs3';
+
+    $log.before('error', function(message, toast) {
       if (toast) { message = toast; }
       toaster.pop('error', 'An error occured', message);
     });
-    $log.after('log', function(message, toast) {
+    $log.before('log', function(message, toast) {
       if (toast) { message = toast; }
       toaster.pop('success', 'Success', message);
     });
-    $log.after('info', function(message, toast) {
+    $log.before('info', function(message, toast) {
       if (toast) { message = toast; }
       toaster.pop('note', 'Information', message);
     });
-    $log.after('warn', function(message, toast) {
+    $log.before('warn', function(message, toast) {
       if (toast) { message = toast; }
       toaster.pop('warning', 'Warning', message);
     });
 
+    $log.decorate(function(message) {
+      return [message]; // To remove toast in the log
+    });
+
     $rootScope.$on('browser.load', function() {
-      $('#overlay').show();
+      angular.element('#overlay').show();
     });
 
     $rootScope.$on('browser.loaded', function() {
-      $('#overlay').hide();
+      angular.element('#overlay').hide();
     });
   }]);
 })(angular);

@@ -1,4 +1,4 @@
-<span ng-if="typeof(property.value) !== 'object'"> {{ property.value }}</span>
+<span ng-if="typeof(property.value) !== 'object'" editable-text="property.value" buttons="no"> {{ property.value }}</span>
 <table class="table table-bordered table-striped table-hover" ng-if="typeof(property.value) == 'object'">
     <thead>
         <th>Property name</th>

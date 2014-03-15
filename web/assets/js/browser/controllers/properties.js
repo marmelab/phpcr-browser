@@ -25,7 +25,6 @@
       $scope.deleteProperty = function(name) {
         var temp = { name: name, value: angular.copy(rawProperties[name].value), type: rawProperties[name].type };
 
-
         $scope.currentNode.deleteProperty(name).then(function() {
           $scope.backup = temp;
           $timeout(function() {

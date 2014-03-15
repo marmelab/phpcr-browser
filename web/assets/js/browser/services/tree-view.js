@@ -1,8 +1,8 @@
 (function(angular, app) {
   'use strict';
 
-  app.service('mbTreeView', ['$rootScope', '$location', 'mbRouteParametersConverter',
-    function($rootScope, $location, RouteParametersConverter) {
+  app.service('mbTreeView', ['$rootScope', '$location', 'mbObjectMapper', 'mbRouteParametersConverter',
+    function($rootScope, $location, ObjectMapper, RouteParametersConverter) {
     var container = {
       tree: {}
     };
@@ -11,7 +11,9 @@
       function search(target, tree){
         if(target.length > 0){
           for (var child in tree.children){
-            if (tree.children.hasOwnProperty(child) && target[0] === tree.children[child].name){
+            if (tree.children.hasOwnProperty(child) &&
+                tree.children[child] &&
+                target[0] === tree.children[child].name){
               target.shift();
               return search(target,tree.children[child]);
             }
@@ -70,10 +72,6 @@
     $rootScope.$emit('browser.load');
     initContainer(true);
 
-    this.getTreeContainer = function() {
-      return container;
-    };
-
     $rootScope.$on('$stateChangeSuccess', function(evt, toState, toParams, fromState, fromParams){
       if (toState.name === 'workspace' && fromState.name !== 'workspace') {
         $rootScope.$emit('browser.load');
@@ -112,6 +110,29 @@
         parent = parent.join('/');
         $location.path('/' + container.repository.getName() + '/' + container.workspace.getName() + parent);
       }
+    });
+
+    this.getTreeContainer = function() {
+      return container;
+    };
+
+    $rootScope.$on('node.moved', function(e, data) {
+      var parent = data.from.split('/');
+      parent.pop();
+      parent = parent.join('/');
+      parent = find(parent, container.tree['/']);
+      parent.updateInProgress = true;
+      ObjectMapper.find('/' + container.repository.getName() + '/' + container.workspace.getName() + parent.path).then(function(node) {
+        parent.children = normalize(node.getRawData()).children;
+        parent.updateInProgress = false;
+      });
+
+      var target = find(data.to, container.tree['/']);
+      target.updateInProgress = true;
+      ObjectMapper.find('/' + container.repository.getName() + '/' + container.workspace.getName() + target.path).then(function(node) {
+        target.children = normalize(node.getRawData()).children;
+        target.updateInProgress = false;
+      });
     });
   }]);
 })(angular, angular.module('browserApp'));

@@ -104,6 +104,10 @@
       return ApiFoundation.deleteNode(this.getWorkspace().getRepository().getName(), this.getWorkspace().getName(), this.getPath());
     };
 
+    Node.prototype.move = function(path) {
+      return ApiFoundation.moveNode(this.getWorkspace().getRepository().getName(), this.getWorkspace().getName(), this.getPath(), path + '/' + this.getName());
+    };
+
     return {
       build: function(node, workspace, finder) {
         return new Node(node, workspace, finder);
