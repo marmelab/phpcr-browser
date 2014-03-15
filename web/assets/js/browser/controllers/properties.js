@@ -1,11 +1,20 @@
 (function($, angular, app) {
   'use strict';
 
-  app.controller('mbPropertiesCtrl', ['$scope', '$log', '$filter', 'mbRouteParametersConverter',
-    function($scope, $log, $filter, RouteParametersConverter) {
+  app.controller('mbPropertiesCtrl', ['$scope', '$log', '$filter', '$timeout', '$location', 'mbRouteParametersConverter',
+    function($scope, $log, $filter, $timeout, $location, RouteParametersConverter) {
+      var rawProperties;
+      $scope.displayCreateForm = false;
+
       $scope.$on('search.change', function(e, value) {
         $scope.search = value;
       });
+
+      $scope.toggleCreateForm = function() {
+        $scope.displayCreateForm = !$scope.displayCreateForm;
+      };
+
+      $scope.backup = null;
 
       $scope.$on('drop.delete', function(e, element) {
         if (element.hasClass('property-item')) {
@@ -13,14 +22,46 @@
         }
       });
 
-      $scope.deleteProperty = function(name, path, type) {
-        $scope.currentNode.deleteProperty(name, path, type).then(function() {
+      $scope.deleteProperty = function(name) {
+        var temp = { name: name, value: angular.copy(rawProperties[name].value), type: rawProperties[name].type };
+
+
+        $scope.currentNode.deleteProperty(name).then(function() {
+          $scope.backup = temp;
+          $timeout(function() {
+            $scope.backup = null;
+          }, 10000);
+
           $log.log('Property deleted');
           $scope.properties = normalize($scope.currentNode.getProperties());
+          $location.hash('restore');
         }, function(err) {
           if (err.status === 423) { return $log.warn(err, 'You can not delete this property. It is locked.'); }
           $log.error(err);
         });
+      };
+
+      $scope.createProperty = function(name, value, type, restored) {
+        if (!restored) {
+          if (!name || name.length === 0) {
+            return $log.error('Name is empty');
+          } else if (!value || value.length === 0) {
+            return $log.error('Value is empty');
+          }
+        }
+
+        $scope.currentNode.createProperty(name, value).then(function() {
+          if (restored) { $log.log('Property restored'); $scope.backup = null; } else { $log.log('Property created'); }
+          $scope.properties = normalize($scope.currentNode.getProperties());
+          $scope.name = $scope.value = undefined;
+          $scope.displayCreateForm = false;
+        }, function(err) {
+          $log.error(err);
+        });
+      };
+
+      $scope.restoreProperty = function() {
+        $scope.createProperty($scope.backup.name, $scope.backup.value, $scope.backup.type, true);
       };
 
       var normalize = function(data, parent, parentType) {
@@ -53,7 +94,8 @@
 
 
       RouteParametersConverter.getCurrentNode().then(function(node) {
-        $scope.properties = normalize(node.getProperties());
+        rawProperties = $scope.currentNode.getProperties();
+        $scope.properties = normalize(rawProperties);
       }, function(err) {
         $log.error(err);
       });

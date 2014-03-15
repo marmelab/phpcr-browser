@@ -95,6 +95,12 @@
             newName: newName
           });
         },
+        createNodeProperty: function(repositoryName, workspaceName, path, propertyName, propertyValue, propertyType) {
+          if (propertyType) {
+            return nodeProperties(repositoryName, workspaceName, path).post({ name: propertyName, value: propertyValue, type: propertyType });
+          }
+          return nodeProperties(repositoryName, workspaceName, path).post({ name: propertyName, value: propertyValue });
+        },
         deleteNodeProperty: function(repositoryName, workspaceName, path, propertyName) {
           return nodeProperty(repositoryName, workspaceName, path, propertyName).remove();
         },

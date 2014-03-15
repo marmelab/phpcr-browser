@@ -20,7 +20,7 @@ div.scrollable {
   }
 }
 
-.btn, .panel {
+.btn, .panel, input.form-control {
     @include border-radius(0!important);
 }
 

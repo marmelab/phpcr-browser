@@ -11,21 +11,46 @@
   <div id="content" ng-controller="mbPropertiesCtrl">
     <table id="properties-header">
           <thead>
+            <tr>
               <th></th>
               <th>Property name</th>
-              <th>Property value</th>
+              <th>
+                Property value
+                <a class="pull-right" style="margin-right: 10px;" ng-click="toggleCreateForm()">
+                  <i class="fa fa-plus" ng-show="!displayCreateForm"></i>
+                  <i class="fa fa-minus" ng-show="displayCreateForm"></i>
+                </a>
+              </th>
+            </tr>
           </thead>
       </table>
       <div class="scrollable">
         <table id="properties">
           <tbody>
-              <tr class="property-item" data-ng-repeat="property in properties | mbJaroWinkler:search" id="{{ property.name }}" draggable data-name="{{ property.name }}" ng-class="{ 'no-draggable': !currentNode.getWorkspace().getRepository().supports('node.property.delete') }">
-                <td><span class="fa fa-bars" title="Drag me to delete me"></span></td>
-                <td>
-                  {{ property.name }}
-                </td>
-                <td mb-property-value></td>
-              </tr>
+            <tr ng-show="displayCreateForm" class="info">
+              <td></td>
+              <td>
+                <input type="text" ng-model="name" mb-focus-me="displayCreateForm" class="form-control" placeholder="Enter a name" ui-keypress="{ enter: 'createProperty(name, value)' }" ui-keydown="{ esc: 'toggleCreateForm()' }">
+              </td>
+              <td>
+                <input type="text" ng-model="value" class="form-control" placeholder="Enter a value" ui-keypress="{ enter: 'createProperty(name, value)' }" ui-keydown="{ esc: 'toggleCreateForm()' }">
+              </td>
+            </tr>
+            <tr ng-show="backup !== null" class="warning">
+              <td></td>
+              <td>
+                Do you want to restore {{ backup.name }} ?
+              </td>
+              <td><a ng-click="restoreProperty()" id="restore">Yes</a> <a ng-click="backup=null">No</a></td>
+            </tr>
+            </tr>
+            <tr class="property-item" data-ng-repeat="property in properties | mbJaroWinkler:search" id="{{ property.name }}" draggable data-name="{{ property.name }}" ng-class="{ 'no-draggable': !currentNode.getWorkspace().getRepository().supports('node.property.delete') }">
+              <td><span class="fa fa-bars" title="Drag me to delete me"></span></td>
+              <td>
+                {{ property.name }}
+              </td>
+              <td mb-property-value></td>
+            </tr>
           </tbody>
         </table>
     </div>
