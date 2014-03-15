@@ -1,7 +1,7 @@
 <div class="node" id="{{ node.slug }}" data-path="{{ node.path }}" draggable ng-class="{ 'no-draggable': (node.path === '/' || ( container.repository.support('node.move') &&  container.repository.support('node.delete'))) }">
-<span ng-class="node.selected" class="glyphicon glyphicon-refresh" ng-show="node.updateInProgress"></span>
-<span ng-class="node.selected" class="glyphicon glyphicon-folder-close" ng-show="node.hasChildren && node.collapsed && !node.updateInProgress" ng-click="toggleCollapsed(node)"></span>
-<span ng-class="node.selected" class="glyphicon glyphicon-folder-open" ng-show="node.hasChildren && !node.collapsed && !node.updateInProgress" ng-click="toggleCollapsed(node)"></span>
+<span ng-class="node.selected" class="glyphicon glyphicon-refresh" ng-if="node.updateInProgress"></span>
+<span ng-class="node.selected" class="glyphicon glyphicon-folder-close" ng-if="node.hasChildren && node.collapsed && !node.updateInProgress" ng-click="toggleCollapsed(node)"></span>
+<span ng-class="node.selected" class="glyphicon glyphicon-folder-open" ng-if="node.hasChildren && !node.collapsed && !node.updateInProgress" ng-click="toggleCollapsed(node)"></span>
 <span ng-class="node.selected" class="glyphicon glyphicon-file" ng-hide="node.hasChildren || node.updateInProgress" ng-click=""></span>
 <a ng-class="node.selected" ng-bind="node.name" ng-click="toggleCollapsed(node)" id="{{ node.path }}" class="node"></a>
 </div>

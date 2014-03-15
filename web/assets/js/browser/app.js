@@ -4,7 +4,6 @@
   angular.module('browserApp', ['ui.router', 'ui.keypress', 'restangular', 'talker', 'toaster'])
   .config(function($stateProvider, $urlRouterProvider, RestangularProvider){
     RestangularProvider.setDefaultHttpFields({cache: true});
-
     $urlRouterProvider
       .when('', '/')
       .otherwise('/');

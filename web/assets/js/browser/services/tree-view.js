@@ -74,7 +74,7 @@
       return container;
     };
 
-    $rootScope.$on('$stateChangeStart', function(evt, toState, toParams, fromState, fromParams){
+    $rootScope.$on('$stateChangeSuccess', function(evt, toState, toParams, fromState, fromParams){
       if (toState.name === 'workspace' && fromState.name !== 'workspace') {
         $rootScope.$emit('browser.load');
         initContainer(true);
