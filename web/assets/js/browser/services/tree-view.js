@@ -1,8 +1,8 @@
 (function(angular, app) {
   'use strict';
 
-  app.service('mbTreeView', ['$rootScope', '$location', '$log', 'mbObjectMapper', 'mbRouteParametersConverter',
-    function($rootScope, $location, $log, ObjectMapper, RouteParametersConverter) {
+  app.service('mbTreeView', ['$rootScope', '$location', '$log', '$anchorScroll', 'mbObjectMapper', 'mbRouteParametersConverter',
+    function($rootScope, $location, $log, $anchorScroll, ObjectMapper, RouteParametersConverter) {
     var container = {
       tree: {}
     };
@@ -60,44 +60,54 @@
       return tree;
     };
 
-    var initContainer = function(first) {
+    var initContainer = function(callback) {
       RouteParametersConverter.getCurrentNode().then(function(node) {
         container.tree['/'] = normalize(node.getReducedTree()[0]);
         container.workspace = node.getWorkspace();
         container.repository = node.getWorkspace().getRepository();
-        $location.hash(node.getSlug());
-        if (first) { $rootScope.$emit('browser.loaded'); }
+        container.find = find;
+        // $location.hash(node.getSlug());
+        // $anchorScroll();
+        $rootScope.$emit('browser.loaded');
+        if (callback) { callback(node); }
       });
     };
 
     $rootScope.$emit('browser.load');
-    initContainer(true);
+    initContainer();
 
     $rootScope.$on('$stateChangeSuccess', function(evt, toState, toParams, fromState, fromParams){
       if (toState.name === 'workspace' && fromState.name !== 'workspace') {
         $rootScope.$emit('browser.load');
-        initContainer(true);
+        initContainer();
       } else if(toState.name === fromState.name &&
         (toParams.repository !== fromParams.repository ||
         toParams.workspace !== fromParams.workspace)) {
         $rootScope.$emit('browser.load');
-        initContainer(true);
+        initContainer();
       } else if(toState.name === fromState.name &&
         toState.name === 'workspace' &&
         toParams.repository === fromParams.repository &&
         toParams.workspace === fromParams.workspace &&
         toParams.path !== fromParams.path) {
-        var target = find(toParams.path, container.tree['/']);
-        if (!target.collapsed) {
-          target.updateInProgress = true;
-          RouteParametersConverter.getCurrentNode().then(function(node) {
-            target.children = normalize(node.getRawData()).children;
-            target.updateInProgress = false;
-          }, function(err) {
-            $log.error(err, null, false);
-            target.updateInProgress = false;
-          });
-        }
+
+        var currentNodeLoader = function() {
+          var target = find(toParams.path, container.tree['/']);
+          if (!target.collapsed) {
+            target.updateInProgress = true;
+            RouteParametersConverter.getCurrentNode().then(function(node) {
+              target.children = normalize(node.getRawData()).children;
+              target.updateInProgress = false;
+            }, function(err) {
+              $log.error(err, null, false);
+              target.updateInProgress = false;
+            });
+          }
+        };
+
+        if (!container.tree['/']) { return initContainer(currentNodeLoader); }  // Happens when last state was an invalid path, so the tree is not in cache
+
+        currentNodeLoader();
       }
     });
 
@@ -149,7 +159,7 @@
             targetPath.shift();
           }
           node.path = data.to;
-          $location.path('/' + container.repository.getName() + '/' + container.workspace.getName() + node.path);
+          $location.path('/' + container.repository.getName() + '/' + container.workspace.getName() + target.path + '/' + node.name);
           $log.log('Node moved.');
           return;
         }

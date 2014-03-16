@@ -8,8 +8,6 @@
  */
 
 use Igorw\Silex\ConfigServiceProvider;
-use PHPCRBrowser\Browser\Provider\BrowserControllerProvider;
-use PHPCRBrowser\Browser\Provider\BrowserServiceProvider;
 use Silex\Application;
 use Silex\Application\UrlGeneratorTrait;
 use Silex\Provider\TwigServiceProvider;
@@ -24,13 +22,11 @@ class PHPCRBrowserApplication extends Application
 
 $app = new PHPCRBrowserApplication();
 
-$app->register(new SessionServiceProvider());
+//$app->register(new SessionServiceProvider());
 $app->register(new UrlGeneratorServiceProvider());
 $app->register(new TwigServiceProvider(), array(
     'twig.path' => __DIR__.'/../views',
 ));
-
-$app->register(new BrowserServiceProvider());
 
 $app->register(new APIServiceProvider(),array(
 	'phpcr_api.repositories_config'	=>	$app->share(function() use($app){
@@ -39,7 +35,6 @@ $app->register(new APIServiceProvider(),array(
 	}),
 	'phpcr_api.mount_prefix'	=>	'/api'
 ));
-//$app->mount('/browser',new BrowserControllerProvider());
 
 $app->get('/browser/', function (Application $app) {
     return $app['twig']->render('index.html');

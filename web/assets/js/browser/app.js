@@ -2,7 +2,7 @@
   'use strict';
 
   angular.module('browserApp', ['ui.router', 'ui.keypress', 'restangular', 'talker', 'toaster', 'xeditable'])
-  .config(function($stateProvider, $urlRouterProvider, RestangularProvider){
+  .config(function($stateProvider, $urlRouterProvider, $anchorScrollProvider, RestangularProvider){
     RestangularProvider.setDefaultHttpFields({cache: true});
     $urlRouterProvider
       .when('', '/')

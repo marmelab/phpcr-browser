@@ -44,6 +44,7 @@
               $log.warn('Unauthorized move.');
               return;
             }
+            $scope.container.find(element.data('path'), $scope.container.tree['/']).updateInProgress = true;
             ObjectMapper.find('/' + $scope.container.repository.getName() +
               '/' + $scope.container.workspace.getName() +
               elementDropped.data('path')).then(function(nodeDropped) {

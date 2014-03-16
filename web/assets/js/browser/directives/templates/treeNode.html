@@ -1,4 +1,4 @@
-<div class="node" id="{{ node.slug }}" data-path="{{ node.path }}" draggable droppable drop="moveNode" ng-class="{ 'no-draggable': (node.path === '/' || ( container.repository.support('node.move') &&  container.repository.support('node.delete'))) }">
+<div class="node" id="{{ node.slug }}" data-path="{{ node.path }}" draggable="{{ !(node.path === '/' || ( container.repository.support('node.move') &&  container.repository.support('node.delete'))) }}" droppable drop="moveNode">
 <i ng-class="node.selected" class="fa fa-refresh fa-spin" ng-show="node.updateInProgress"></i>
 <span ng-class="node.selected" class="glyphicon glyphicon-folder-close" ng-show="node.hasChildren && node.collapsed && !node.updateInProgress" ng-click="toggleCollapsed(node)"></span>
 <span ng-class="node.selected" class="glyphicon glyphicon-folder-open" ng-show="node.hasChildren && !node.collapsed && !node.updateInProgress" ng-click="toggleCollapsed(node)"></span>
