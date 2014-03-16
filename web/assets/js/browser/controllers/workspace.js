@@ -14,6 +14,7 @@
       mbRouteParametersConverter.getCurrentNode().then(function(node) {
         $scope.currentNode = node;
       }, function(err) {
+        if (err.data && err.data.message) { return $log.error(err, err.data.message); }
         $log.error(err);
       });
     }]);

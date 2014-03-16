@@ -1,8 +1,8 @@
 (function($, angular, app) {
   'use strict';
 
-  app.controller('mbPropertiesCtrl', ['$scope', '$log', '$filter', '$timeout', '$location', 'mbRouteParametersConverter',
-    function($scope, $log, $filter, $timeout, $location, RouteParametersConverter) {
+  app.controller('mbPropertiesCtrl', ['$scope', '$log', '$filter', '$timeout', '$location',
+    function($scope, $log, $filter, $timeout, $location) {
       var rawProperties;
       $scope.displayCreateForm = false;
 
@@ -55,6 +55,7 @@
           $scope.name = $scope.value = undefined;
           $scope.displayCreateForm = false;
         }, function(err) {
+          if (err.data && err.data.message) { return $log.error(err, err.data.message); }
           $log.error(err);
         });
       };
@@ -92,11 +93,11 @@
       };
 
 
-      RouteParametersConverter.getCurrentNode().then(function(node) {
-        rawProperties = $scope.currentNode.getProperties();
-        $scope.properties = normalize(rawProperties);
-      }, function(err) {
-        $log.error(err);
+      $scope.$watch('currentNode', function(node) {
+        if (node) {
+          rawProperties = node.getProperties();
+          $scope.properties = normalize(rawProperties);
+        }
       });
 
       $scope.typeof = function(o) { return typeof(o); };

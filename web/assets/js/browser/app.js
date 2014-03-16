@@ -25,21 +25,33 @@
   .run(['$rootScope', '$log', 'toaster', 'editableOptions', function($rootScope, $log, toaster, editableOptions) {
     editableOptions.theme = 'bs3';
 
-    $log.before('error', function(message, toast) {
-      if (toast) { message = toast; }
-      toaster.pop('error', 'An error occured', message);
+    $log.before('error', function(message, toast, display) {
+      display = display === undefined ? true : display;
+      if (display) {
+        if (toast) { message = toast; }
+        toaster.pop('error', 'An error occured', message);
+      }
     });
-    $log.before('log', function(message, toast) {
-      if (toast) { message = toast; }
-      toaster.pop('success', 'Success', message);
+    $log.before('log', function(message, toast, display) {
+      display = display === undefined ? true : display;
+      if (display) {
+        if (toast) { message = toast; }
+        toaster.pop('success', 'Success', message);
+      }
     });
-    $log.before('info', function(message, toast) {
-      if (toast) { message = toast; }
-      toaster.pop('note', 'Information', message);
+    $log.before('info', function(message, toast, display) {
+      display = display === undefined ? true : display;
+      if (display) {
+        if (toast) { message = toast; }
+        toaster.pop('note', 'Information', message);
+      }
     });
-    $log.before('warn', function(message, toast) {
-      if (toast) { message = toast; }
-      toaster.pop('warning', 'Warning', message);
+    $log.before('warn', function(message, toast, display) {
+      display = display === undefined ? true : display;
+      if (display) {
+        if (toast) { message = toast; }
+        toaster.pop('warning', 'Warning', message, display);
+      }
     });
 
     $log.decorate(function(message) {

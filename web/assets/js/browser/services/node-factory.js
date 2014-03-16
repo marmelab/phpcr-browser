@@ -97,7 +97,7 @@
     };
 
     Node.prototype.getSlug = function() {
-      return this.getPath().replace('/','_');
+      return this.getPath().split('/').join('_');
     };
 
     Node.prototype.delete = function() {
@@ -106,6 +106,10 @@
 
     Node.prototype.move = function(path) {
       return ApiFoundation.moveNode(this.getWorkspace().getRepository().getName(), this.getWorkspace().getName(), this.getPath(), path + '/' + this.getName());
+    };
+
+    Node.prototype.hasChildren = function() {
+      return this._restangular.hasChildren;
     };
 
     return {

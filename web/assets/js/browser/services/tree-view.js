@@ -1,8 +1,8 @@
 (function(angular, app) {
   'use strict';
 
-  app.service('mbTreeView', ['$rootScope', '$location', 'mbObjectMapper', 'mbRouteParametersConverter',
-    function($rootScope, $location, ObjectMapper, RouteParametersConverter) {
+  app.service('mbTreeView', ['$rootScope', '$location', '$log', 'mbObjectMapper', 'mbRouteParametersConverter',
+    function($rootScope, $location, $log, ObjectMapper, RouteParametersConverter) {
     var container = {
       tree: {}
     };
@@ -65,6 +65,7 @@
         container.tree['/'] = normalize(node.getReducedTree()[0]);
         container.workspace = node.getWorkspace();
         container.repository = node.getWorkspace().getRepository();
+        $location.hash(node.getSlug());
         if (first) { $rootScope.$emit('browser.loaded'); }
       });
     };
@@ -92,7 +93,8 @@
           RouteParametersConverter.getCurrentNode().then(function(node) {
             target.children = normalize(node.getRawData()).children;
             target.updateInProgress = false;
-          }, function() {
+          }, function(err) {
+            $log.error(err, null, false);
             target.updateInProgress = false;
           });
         }
@@ -122,16 +124,35 @@
       parent = parent.join('/');
       parent = find(parent, container.tree['/']);
       parent.updateInProgress = true;
-      ObjectMapper.find('/' + container.repository.getName() + '/' + container.workspace.getName() + parent.path).then(function(node) {
-        parent.children = normalize(node.getRawData()).children;
-        parent.updateInProgress = false;
-      });
 
       var target = find(data.to, container.tree['/']);
       target.updateInProgress = true;
-      ObjectMapper.find('/' + container.repository.getName() + '/' + container.workspace.getName() + target.path).then(function(node) {
-        target.children = normalize(node.getRawData()).children;
-        target.updateInProgress = false;
+      target.hasChildren = true;
+
+      var node = find(data.from, container.tree['/']);
+      target.children.push(node);
+
+      var parentChildrenCount = parent.children.length;
+
+      angular.forEach(parent.children, function(children, k) {
+        if (children.path === data.from) {
+          parent.children.splice(k,1);
+          if (parentChildrenCount === 1) { parent.hasChildren = true;}
+          target.updateInProgress = false;
+          parent.updateInProgress = false;
+          var targetPath = target.path.split('/');
+          var root = container.tree['/'];
+          targetPath.shift();
+          while (targetPath.length > 0) {
+            root = find('/'+ targetPath[0], root);
+            root.collapsed = false;
+            targetPath.shift();
+          }
+          node.path = data.to;
+          $location.path('/' + container.repository.getName() + '/' + container.workspace.getName() + node.path);
+          $log.log('Node moved.');
+          return;
+        }
       });
     });
   }]);
