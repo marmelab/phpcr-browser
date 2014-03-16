@@ -12,6 +12,7 @@
 
     var Node = function(node, workspace, finder) {
       this._restangular = node;
+      this.__restangular = angular.copy(this._restangular); // To prevent reference interference
       this._finder = finder;
       this._children = [];
       this._workspace = workspace;
@@ -43,6 +44,40 @@
 
     Node.prototype.getProperties = function() {
       return this._restangular.properties;
+    };
+
+    Node.prototype.setProperty = function(name, value, type) {
+      var deferred = $q.defer(), self = this;
+      if (this.getProperties()[name] === undefined) {
+        deferred.reject('Unknown property');
+      } else {
+        type = (type !== undefined) ? type : self.getProperties()[name].type;
+        try {
+          value = (typeof(value) === 'object') ? JSON.stringify(value) : value;
+        } catch (e) {}
+        ApiFoundation.updateNodeProperty(
+          self.getWorkspace().getRepository().getName(),
+          self.getWorkspace().getName(),
+          self.getPath(),
+          name,
+          value,
+          type)
+        .then(function(data) {
+            try {
+              self.getProperties()[name].value = JSON.parse(value);
+            } catch (e) {
+              self.getProperties()[name].value = value;
+            }
+            self.getProperties()[name].type = type;
+            self.__restangular.properties[name].type = type;
+            deferred.resolve(data);
+          }, function(err) {
+            self._restangular.properties[name] = angular.copy(self.__restangular.properties[name]);
+            deferred.reject(err);
+          });
+      }
+
+      return deferred.promise;
     };
 
     Node.prototype.deleteProperty = function(name) {

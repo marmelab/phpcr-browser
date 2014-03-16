@@ -14,7 +14,11 @@
     thead {
         tr {
             th:nth-child(2) {
-                width: 30%;
+                width: 25%;
+            }
+
+            th:nth-child(3) {
+                width: 15%;
             }
 
             th:first-child {
@@ -37,7 +41,12 @@
         };
 
         td:nth-child(2) {
-            width: 30%;
+            width: 25%;
+            vertical-align: middle;
+        }
+
+        td:nth-child(3) {
+            width: 15%;
             vertical-align: middle;
         }
 

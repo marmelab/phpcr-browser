@@ -1,6 +1,6 @@
 <?php
 
-ini_set('date.timezone', 'UTC');
+error_reporting(0);
 
 use Igorw\Silex\ConfigServiceProvider;
 

@@ -40,4 +40,13 @@ $app->get('/browser/', function (Application $app) {
     return $app['twig']->render('index.html');
 })->bind('home');
 
+$app->error(function (\Exception $e) use ($app) {
+    return $app['twig']->render(
+        'error.html.twig',
+        array(
+            'message'   =>  $e->getMessage(),
+            'code'      =>  $e->getCode()
+        )
+    );
+});
 return $app;

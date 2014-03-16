@@ -14,6 +14,7 @@
             <tr>
               <th></th>
               <th>Property name</th>
+              <th>Property type</th>
               <th>
                 Property value
                 <a class="pull-right" style="margin-right: 10px;" ng-click="toggleCreateForm()">
@@ -30,10 +31,15 @@
             <tr ng-show="displayCreateForm" class="info">
               <td></td>
               <td>
-                <input type="text" ng-model="name" mb-focus-me="displayCreateForm" class="form-control" placeholder="Enter a name" ui-keypress="{ enter: 'createProperty(name, value)' }" ui-keydown="{ esc: 'toggleCreateForm()' }">
+                <input type="text" ng-model="name" mb-focus-me="displayCreateForm" class="form-control" placeholder="Enter a name" ui-keypress="{ enter: 'createProperty(name, value, type.value)' }" ui-keydown="{ esc: 'toggleCreateForm()' }">
               </td>
               <td>
-                <input type="text" ng-model="value" class="form-control" placeholder="Enter a value" ui-keypress="{ enter: 'createProperty(name, value)' }" ui-keydown="{ esc: 'toggleCreateForm()' }">
+                <select ng-model="type" class="form-control" ng-options="type.name for type in types">
+                  <option value="">Type</option>
+                </select>
+              </td>
+              <td>
+                <input type="text" ng-model="value" class="form-control" placeholder="Enter a value" ui-keypress="{ enter: 'createProperty(name, value, type.value)' }" ui-keydown="{ esc: 'toggleCreateForm()' }">
               </td>
             </tr>
             <tr ng-show="backup !== null" class="warning">
@@ -46,9 +52,8 @@
             </tr>
             <tr class="property-item" data-ng-repeat="property in properties | mbJaroWinkler:search" id="{{ property.name }}" draggable="{{ currentNode.getWorkspace().getRepository().supports('node.property.delete') }}" data-name="{{ property.name }}">
               <td><span class="fa fa-bars" title="Drag me to delete me"></span></td>
-              <td>
-                {{ property.name }}
-              </td>
+              <td>{{ property.name }}</td>
+              <td><span title="Property type" editable-select="property.type" buttons="no" e-style="margin-top: 5px;" e-ng-options="type.name for type in types" onbeforesave="updateProperty(property.name, property.value, $data.value)" class="label label-info">{{ typeLabel(property.type) }}</span></td>
               <td mb-property-value></td>
             </tr>
           </tbody>

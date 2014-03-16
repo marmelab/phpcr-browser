@@ -1,4 +1,4 @@
-(function($, angular, app) {
+(function(angular, app) {
   'use strict';
 
   app.controller('mbPropertiesCtrl', ['$scope', '$log', '$filter', '$timeout', '$location',
@@ -21,6 +21,27 @@
           $scope.deleteProperty(element.data('name'));
         }
       });
+
+      $scope.types = [
+        { name: 'undefined', value: 0},
+        { name: 'String', value: 1},
+        { name: 'Binary', value: 2},
+        { name: 'Long', value: 3},
+        { name: 'Double', value: 4},
+        { name: 'Date', value: 5},
+        { name: 'Boolean', value: 6},
+        { name: 'Name', value: 7},
+        { name: 'Path', value: 8},
+        { name: 'Reference', value: 9},
+        { name: 'WeakReference', value: 10},
+        { name: 'URI', value: 11},
+        { name: 'Decimal', value: 12},
+      ];
+
+      $scope.typeLabel = function(value) {
+        if ($scope.types[value]) { return $scope.types[value].name; }
+        return 'undefined';
+      };
 
       $scope.deleteProperty = function(name) {
         var temp = { name: name, value: angular.copy(rawProperties[name].value), type: rawProperties[name].type };
@@ -92,6 +113,16 @@
         return  array;
       };
 
+      $scope.updateProperty = function(name, value, type) {
+        $scope.currentNode.setProperty(name, value, type).then(function(){
+          $log.log('Property updated.');
+        }, function(err) {
+          rawProperties = $scope.currentNode.getProperties();
+          $scope.properties = normalize(rawProperties);
+          if (err.data && err.data.message) { return $log.error(err, err.data.message); }
+          $log.error(err);
+        });
+      };
 
       $scope.$watch('currentNode', function(node) {
         if (node) {
@@ -102,4 +133,4 @@
 
       $scope.typeof = function(o) { return typeof(o); };
     }]);
-})($, angular, angular.module('browserApp'));
+})(angular, angular.module('browserApp'));
