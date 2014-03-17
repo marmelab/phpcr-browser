@@ -1,8 +1,8 @@
 (function(angular, app) {
   'use strict';
 
-  app.controller('mbPropertiesCtrl', ['$scope', '$log', '$filter', '$timeout', '$location',
-    function($scope, $log, $filter, $timeout, $location) {
+  app.controller('mbPropertiesCtrl', ['$scope', '$log', '$filter', '$timeout', '$location', 'mbJsonPatch',
+    function($scope, $log, $filter, $timeout, $location, JsonPatch) {
       var rawProperties;
       $scope.displayCreateForm = false;
 
@@ -85,42 +85,57 @@
         $scope.createProperty($scope.backup.name, $scope.backup.value, $scope.backup.type, true);
       };
 
-      var normalize = function(data, parent, parentType) {
+      var normalize = function(data, parent, parentType, parentName) {
         var array = [];
+        var separator = '/';
         for (var i in data) {
           if (!data) { continue; }
-          var value, type, path;
+          var value, type, path, pname;
           if (parent && typeof(data[i]) === 'object') {
             type = parentType;
-            value = normalize(data[i], i, parentType);
-            path = parent + '@@' + i;
+            value = normalize(data[i], i, parentType, parentName);
+            path = parent + separator + i;
+            pname = parentName;
           } else if (!parent && typeof(data[i].value) === 'object') {
             type = data[i].type;
-            value = normalize(data[i].value, i, data[i].type);
-            path = '@@';
+            value = normalize(data[i].value, i, data[i].type, i);
+            path = separator;
+            parentName = i;
           } else if (parent) {
             type = parentType;
             value = data[i];
-            path = parent + '@@' + i;
+            path = parent + separator + i;
+            pname = parentName;
           } else {
             type = data[i].type;
             value = data[i].value;
-            path = '@@';
+            path = separator;
+            pname = i;
           }
-
-          array.push({ name: i, value: value, type: type, path: path});
+          path = path.split(separator);
+          path.shift();
+          path = separator + path.join(separator);
+          array.push({ name: i, value: value, type: type, path: path, parentName: pname});
         }
         return  array;
       };
 
-      $scope.updateProperty = function(name, value, type) {
-        $scope.currentNode.setProperty(name, value, type).then(function(){
-          $log.log('Property updated.');
-        }, function(err) {
-          rawProperties = $scope.currentNode.getProperties();
-          $scope.properties = normalize(rawProperties);
-          if (err.data && err.data.message) { return $log.error(err, err.data.message); }
-          $log.error(err);
+      $scope.updateProperty = function(name, value, type, path) {
+        console.log(arguments);
+        var patch = [{ 'op': 'replace', 'path': path, 'value': value }];
+        JsonPatch.then(function(jsonpatch) {console.log(path);
+          if (path && path !== '/') {
+            value = jsonpatch.apply_patch($scope.currentNode.getProperties()[name].value, patch);
+            console.log(value);
+          }
+          $scope.currentNode.setProperty(name, value, type).then(function(){
+            $log.log('Property updated.');
+          }, function(err) {
+            rawProperties = $scope.currentNode.getProperties();
+            $scope.properties = normalize(rawProperties);
+            if (err.data && err.data.message) { return $log.error(err, err.data.message); }
+            $log.error(err);
+          });
         });
       };
 

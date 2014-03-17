@@ -64,9 +64,11 @@
           $scope.workspaces = workspaces;
           $scope.$emit('browser.loaded');
         }, function(err) {
+          if (err.data && err.data.message) { return $log.error(err, err.data.message); }
           $log.error(err, 'An error occurred, please retry.');
         });
       }, function(err) {
+        if (err.data && err.data.message) { return $log.error(err, err.data.message); }
         $log.error(err, 'An error occurred, please retry.');
       });
     }]);

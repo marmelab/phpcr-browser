@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "67bd71d723d31ddda75332e02fc43247",
+    "hash": "1dfede9524e438a60267b4d5c712cd4d",
     "packages": [
         {
             "name": "igorw/config-service-provider",
@@ -218,12 +218,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/marmelab/phpcr-api-silex-provider.git",
-                "reference": "4f60bd7aae0a19c460145a55c38fc84b2a74ff2d"
+                "reference": "6d407abcd1030df45f0a0a4e5b74212eb63ae62c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/marmelab/phpcr-api-silex-provider/zipball/4f60bd7aae0a19c460145a55c38fc84b2a74ff2d",
-                "reference": "4f60bd7aae0a19c460145a55c38fc84b2a74ff2d",
+                "url": "https://api.github.com/repos/marmelab/phpcr-api-silex-provider/zipball/6d407abcd1030df45f0a0a4e5b74212eb63ae62c",
+                "reference": "6d407abcd1030df45f0a0a4e5b74212eb63ae62c",
                 "shasum": ""
             },
             "require": {
@@ -242,7 +242,7 @@
                 "MIT"
             ],
             "description": "PHPCR API Silex Provider exposes in REST marmelab/phpcr-api",
-            "time": "2014-03-15 21:07:19"
+            "time": "2014-03-17 08:49:36"
         },
         {
             "name": "phpcr/phpcr",

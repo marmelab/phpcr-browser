@@ -1,5 +1,4 @@
-<span ng-if="typeof(property.value) !== 'object' && property.path !== '@@'"> {{ property.value }}</span>
-<span ng-if="typeof(property.value) !== 'object' && property.path === '@@'" editable-text="property.value" onbeforesave="updateProperty(property.name, $data)" e-style="width:100%" buttons="no"> {{ property.value }}</span>
+<span ng-if="typeof(property.value) !== 'object'" editable-text="property.value" onbeforesave="updateProperty(property.parentName, $data, property.type, property.path)" e-style="width:100%" buttons="no"> {{ property.value }}</span>
 <table class="table table-bordered table-striped table-hover" ng-if="typeof(property.value) == 'object'">
     <thead>
         <th>Property name</th>

@@ -61,7 +61,8 @@
           self.getPath(),
           name,
           value,
-          type)
+          type,
+          {cache: false})
         .then(function(data) {
             try {
               self.getProperties()[name].value = JSON.parse(value);
@@ -87,7 +88,8 @@
         this.getWorkspace().getRepository().getName(),
         this.getWorkspace().getName(),
         this.getPath(),
-        name)
+        name,
+        {cache: false})
       .then(function(data) {
         delete self._restangular.properties[name];
         deferred.resolve(data);
@@ -105,7 +107,8 @@
         this.getPath(),
         name,
         value,
-        type)
+        type,
+        {cache: false})
       .then(function(data) {
         self._restangular.properties[name] = { value: value, type: type };
         deferred.resolve(data);
@@ -136,14 +139,14 @@
     };
 
     Node.prototype.delete = function() {
-      return ApiFoundation.deleteNode(this.getWorkspace().getRepository().getName(), this.getWorkspace().getName(), this.getPath());
+      return ApiFoundation.deleteNode(this.getWorkspace().getRepository().getName(), this.getWorkspace().getName(), this.getPath(), {cache: false});
     };
 
     Node.prototype.move = function(path) {
       if (path !== '/') {
-        return ApiFoundation.moveNode(this.getWorkspace().getRepository().getName(), this.getWorkspace().getName(), this.getPath(), path + '/' + this.getName());
+        return ApiFoundation.moveNode(this.getWorkspace().getRepository().getName(), this.getWorkspace().getName(), this.getPath(), path + '/' + this.getName(), {cache: false});
       } else {
-        return ApiFoundation.moveNode(this.getWorkspace().getRepository().getName(), this.getWorkspace().getName(), this.getPath(), path + this.getName());
+        return ApiFoundation.moveNode(this.getWorkspace().getRepository().getName(), this.getWorkspace().getName(), this.getPath(), path + this.getName(), {cache: false});
       }
     };
 
