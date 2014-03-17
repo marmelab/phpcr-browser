@@ -105,7 +105,7 @@
           }
         };
 
-        if (!container.tree['/']) { return initContainer(currentNodeLoader); }  // Happens when last state was an invalid path, so the tree is not in cache
+        if (!container.tree['/']) { return initContainer(currentNodeLoader); }  // Happens when last state was an invalid path, so the tree is not in cach
 
         currentNodeLoader();
       }
@@ -159,7 +159,11 @@
             targetPath.shift();
           }
           node.path = data.to;
-          $location.path('/' + container.repository.getName() + '/' + container.workspace.getName() + target.path + '/' + node.name);
+          if ( target.path !== '/') {
+            $location.path('/' + container.repository.getName() + '/' + container.workspace.getName() + target.path + '/' + node.name);
+          } else {
+            $location.path('/' + container.repository.getName() + '/' + container.workspace.getName() + target.path + node.name);
+          }
           $log.log('Node moved.');
           return;
         }

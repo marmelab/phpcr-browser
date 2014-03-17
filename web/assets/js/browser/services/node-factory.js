@@ -140,7 +140,11 @@
     };
 
     Node.prototype.move = function(path) {
-      return ApiFoundation.moveNode(this.getWorkspace().getRepository().getName(), this.getWorkspace().getName(), this.getPath(), path + '/' + this.getName());
+      if (path !== '/') {
+        return ApiFoundation.moveNode(this.getWorkspace().getRepository().getName(), this.getWorkspace().getName(), this.getPath(), path + '/' + this.getName());
+      } else {
+        return ApiFoundation.moveNode(this.getWorkspace().getRepository().getName(), this.getWorkspace().getName(), this.getPath(), path + this.getName());
+      }
     };
 
     Node.prototype.hasChildren = function() {
