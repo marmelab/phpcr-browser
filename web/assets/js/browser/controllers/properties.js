@@ -80,7 +80,12 @@
           path.pop();
           path = path.join('/');
           var datum = {};
-          datum[name] = value;
+          try {
+            datum[name] = JSON.parse(value);
+          } catch (e) {
+            datum[name] = value;
+          }
+
           return rawProperties[type].insert(path, datum).then(function() {
             reloadProperties();
             $log.log('Property created.');
