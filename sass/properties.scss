@@ -77,6 +77,20 @@
 
             td {
                 text-align: left!important;
+
+                .glyphicon {
+                    display: none;
+                }
+
+                &:hover {
+                   .glyphicon {
+                        display: inherit;
+                    }
+                }
+
+                a:hover {
+                    text-decoration: none;
+                }
             }
         }
     }
@@ -132,5 +146,9 @@
   display:block;
 }
 
-.scrollable-properties {
+.property-input {
+    min-height: 20px;
+    min-width: 100px;
+    display: inline-block;
+    margin: 0;
 }

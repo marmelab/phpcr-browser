@@ -68,17 +68,30 @@
         }, $log.error);
       };
 
-      $scope.createProperty = function(name, value, type, restored) {
-        if (!restored) {
-          if (!name || name.length === 0) {
-            return $log.error('Name is empty');
-          } else if (!value || value.length === 0) {
-            return $log.error('Value is empty');
-          }
+      $scope.createProperty = function(name, value, type, path) {
+        if (!name || name.length === 0) {
+          return $log.error('Name is empty');
+        } else if (!value || value.length === 0) {
+          return $log.error('Value is empty');
+        }
+
+        if (path) {
+          path = path.split('/');
+          path.pop();
+          path = path.join('/');
+          var datum = {};
+          datum[name] = value;
+          return rawProperties[type].insert(path, datum).then(function() {
+            reloadProperties();
+            $log.log('Property created.');
+          }, function(err) {
+            if (err.data && err.data.message) { return $log.error(err, err.data.message); }
+            $log.error(err);
+          });
         }
 
         $scope.currentNode.createProperty(name, value).then(function() {
-          if (restored) { $log.log('Property restored'); $scope.backup = null; } else { $log.log('Property created'); }
+          $log.log('Property created');
           reloadProperties();
           $scope.name = $scope.value = undefined;
           $scope.displayCreateForm = false;
@@ -92,6 +105,7 @@
         if ($scope.backup.path && $scope.backup.path !== '/') {
           return rawProperties[$scope.backup.name].insert($scope.backup.path, $scope.backup.value).then(function() {
             reloadProperties();
+            $scope.backup = null;
             $log.log('Property restored.');
           }, function(err) {
             if (err.data && err.data.message) { return $log.error(err, err.data.message); }
