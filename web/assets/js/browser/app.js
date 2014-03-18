@@ -22,7 +22,7 @@
         templateUrl: '/assets/js/browser/views/workspace.html'
       });
   })
-  .run(['$rootScope', '$log', 'toaster', 'editableOptions', function($rootScope, $log, toaster, editableOptions) {
+  .run(['$rootScope', '$log', 'toaster', 'editableOptions', 'mbEventBridge', function($rootScope, $log, toaster, editableOptions) {
     editableOptions.theme = 'bs3';
 
     $log.before('error', function(message, toast, display) {
@@ -56,14 +56,6 @@
 
     $log.decorate(function(message) {
       return [message]; // To remove toast in the log
-    });
-
-    $rootScope.$on('browser.load', function() {
-      angular.element('#overlay').show();
-    });
-
-    $rootScope.$on('browser.loaded', function() {
-      angular.element('#overlay').hide();
     });
   }]);
 })(angular);

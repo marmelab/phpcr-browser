@@ -66,13 +66,17 @@
         table-layout: fixed;
         tr {
             th:first-child {
-                width: 25%;
+                width: 20%;
                 vertical-align: middle;
             }
 
             td:first-child {
-                width: 25%;
+                width: 20%;
                 vertical-align: middle;
+            }
+
+            td {
+                text-align: left!important;
             }
         }
     }
@@ -94,7 +98,11 @@
             }
 
             th:nth-child(2) {
-                width: 30%;
+                width: 25%;
+            }
+
+            th:nth-child(3) {
+                width: 15%;
             }
 
             th:first-child {
@@ -122,4 +130,7 @@
 .property-item:hover .property-options .btn-group{
   visibility: visible;
   display:block;
+}
+
+.scrollable-properties {
 }

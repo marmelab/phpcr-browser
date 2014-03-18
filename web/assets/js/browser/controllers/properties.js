@@ -1,8 +1,8 @@
 (function(angular, app) {
   'use strict';
 
-  app.controller('mbPropertiesCtrl', ['$scope', '$log', '$filter', '$timeout', '$location', 'mbJsonPatch',
-    function($scope, $log, $filter, $timeout, $location, JsonPatch) {
+  app.controller('mbPropertiesCtrl', ['$scope', '$log', '$filter', '$timeout', '$location',
+    function($scope, $log, $filter, $timeout, $location) {
       var rawProperties;
       $scope.displayCreateForm = false;
 
@@ -43,22 +43,29 @@
         return 'undefined';
       };
 
-      $scope.deleteProperty = function(name) {
-        var temp = { name: name, value: angular.copy(rawProperties[name].value), type: rawProperties[name].type };
+      var reloadProperties = function() {
+        rawProperties = $scope.currentNode.getProperties();
+        $scope.properties = normalize(rawProperties);
+      };
 
-        $scope.currentNode.deleteProperty(name).then(function() {
-          $scope.backup = temp;
-          $timeout(function() {
-            $scope.backup = null;
-          }, 10000);
+      $scope.deleteProperty = function(name, path) {
+        rawProperties[name].getValue(path).then(function(value) {
+          var temp = { name: name, value: angular.copy(value), path: path, type: rawProperties[name].getType() };
 
-          $log.log('Property deleted');
-          $scope.properties = normalize($scope.currentNode.getProperties());
-          $location.hash('restore');
-        }, function(err) {
-          if (err.status === 423) { return $log.warn(err, 'You can not delete this property. It is locked.'); }
-          $log.error(err);
-        });
+          rawProperties[name].delete(path).then(function() {
+            reloadProperties();
+            $scope.backup = temp;
+            $timeout(function() {
+              $scope.backup = null;
+            }, 10000);
+            $location.hash('restore');
+            $log.log('Property deleted.');
+          }, function(err) {
+            if (err.status === 423) { return $log.warn(err, 'You can not delete this property. It is locked.'); }
+            else if (err.data && err.data.message) { return $log.error(err, err.data.message); }
+            $log.error(err);
+          });
+        }, $log.error);
       };
 
       $scope.createProperty = function(name, value, type, restored) {
@@ -72,7 +79,7 @@
 
         $scope.currentNode.createProperty(name, value).then(function() {
           if (restored) { $log.log('Property restored'); $scope.backup = null; } else { $log.log('Property created'); }
-          $scope.properties = normalize($scope.currentNode.getProperties());
+          reloadProperties();
           $scope.name = $scope.value = undefined;
           $scope.displayCreateForm = false;
         }, function(err) {
@@ -82,67 +89,73 @@
       };
 
       $scope.restoreProperty = function() {
+        if ($scope.backup.path && $scope.backup.path !== '/') {
+          return rawProperties[$scope.backup.name].insert($scope.backup.path, $scope.backup.value).then(function() {
+            reloadProperties();
+            $log.log('Property restored.');
+          }, function(err) {
+            if (err.data && err.data.message) { return $log.error(err, err.data.message); }
+            $log.error(err);
+          });
+        }
+
         $scope.createProperty($scope.backup.name, $scope.backup.value, $scope.backup.type, true);
       };
 
-      var normalize = function(data, parent, parentType, parentName) {
+      var normalize = function(data, path, parentName) {
         var array = [];
-        var separator = '/';
+
+        if (typeof(data) !== 'object') {
+          return data;
+        }
+
         for (var i in data) {
+          var datum;
           if (!data) { continue; }
-          var value, type, path, pname;
-          if (parent && typeof(data[i]) === 'object') {
-            type = parentType;
-            value = normalize(data[i], i, parentType, parentName);
-            path = parent + separator + i;
-            pname = parentName;
-          } else if (!parent && typeof(data[i].value) === 'object') {
-            type = data[i].type;
-            value = normalize(data[i].value, i, data[i].type, i);
-            path = separator;
-            parentName = i;
-          } else if (parent) {
-            type = parentType;
-            value = data[i];
-            path = parent + separator + i;
-            pname = parentName;
+          if (!path) {
+            datum = {
+              name: i,
+              value: normalize(data[i]._property.value, '/', i),
+              type: data[i].getType(),
+              path: '/'
+            };
           } else {
-            type = data[i].type;
-            value = data[i].value;
-            path = separator;
-            pname = i;
+            // Subproperty
+            datum = {
+              name: i,
+              value: normalize(data[i], path + '/' + i, parentName),
+              path: (path === '/') ? path + i : path + '/' + i,
+              parentName: parentName
+            };
           }
-          path = path.split(separator);
-          path.shift();
-          path = separator + path.join(separator);
-          array.push({ name: i, value: value, type: type, path: path, parentName: pname});
+          array.push(datum);
         }
         return  array;
       };
 
-      $scope.updateProperty = function(name, value, type, path) {
-        console.log(arguments);
-        var patch = [{ 'op': 'replace', 'path': path, 'value': value }];
-        JsonPatch.then(function(jsonpatch) {console.log(path);
-          if (path && path !== '/') {
-            value = jsonpatch.apply_patch($scope.currentNode.getProperties()[name].value, patch);
-            console.log(value);
-          }
-          $scope.currentNode.setProperty(name, value, type).then(function(){
-            $log.log('Property updated.');
-          }, function(err) {
-            rawProperties = $scope.currentNode.getProperties();
-            $scope.properties = normalize(rawProperties);
-            if (err.data && err.data.message) { return $log.error(err, err.data.message); }
-            $log.error(err);
-          });
+      $scope.updateProperty = function(name, value, path) {
+        rawProperties[name].update(path, value).then(function() {
+          reloadProperties();
+          $log.log('Property updated.');
+        }, function(err) {
+          if (err.data && err.data.message) { return $log.error(err, err.data.message); }
+          $log.error(err);
+        });
+      };
+
+      $scope.updatePropertyType = function(name, type) {
+        rawProperties[name].setType(type).then(function() {
+          reloadProperties();
+          $log.log('Property updated.');
+        }, function(err) {
+          if (err.data && err.data.message) { return $log.error(err, err.data.message); }
+          $log.error(err);
         });
       };
 
       $scope.$watch('currentNode', function(node) {
         if (node) {
-          rawProperties = node.getProperties();
-          $scope.properties = normalize(rawProperties);
+          reloadProperties();
         }
       });
 

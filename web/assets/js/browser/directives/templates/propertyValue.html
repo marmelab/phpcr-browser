@@ -1,8 +1,10 @@
-<span ng-if="typeof(property.value) !== 'object'" editable-text="property.value" onbeforesave="updateProperty(property.parentName, $data, property.type, property.path)" e-style="width:100%" buttons="no"> {{ property.value }}</span>
+<span ng-if="typeof(property.value) !== 'object' && property.parentName" editable-text="property.value" onbeforesave="updateProperty(property.parentName, $data, property.path)" e-style="width:100%" buttons="no"> {{ property.value }}</span>
+<span ng-if="typeof(property.value) !== 'object' && !property.parentName" editable-text="property.value" onbeforesave="updateProperty(property.name, $data, property.path)" e-style="width:100%" buttons="no"> {{ property.value }}</span>
+<a class="text-danger pull-right" ng-if="property.parentName" ng-click="deleteProperty(property.parentName, property.path)"><glyphicon icon="trash"></glyphicon></a>
 <table class="table table-bordered table-striped table-hover" ng-if="typeof(property.value) == 'object'">
     <thead>
-        <th>Property name</th>
-        <th>Property value</th>
+        <th>Name</th>
+        <th>Value</th>
     </thead>
     <tbody>
         <tr ng-repeat="property in property.value | orderBy:'name'" class="property-item">

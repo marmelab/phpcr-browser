@@ -26,8 +26,8 @@
       return this.getSupportedOperations().indexOf(operation) !== -1;
     };
 
-    Repository.prototype.getWorkspaces = function() {
-      return this._finder('/' + this.getName() + '/*');
+    Repository.prototype.getWorkspaces = function(config) {
+      return this._finder('/' + this.getName() + '/*', config);
     };
 
     Repository.prototype.getWorkspace = function(name) {

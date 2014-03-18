@@ -1,9 +1,41 @@
-<div class="node" id="{{ node.slug }}" data-path="{{ node.path }}" draggable="{{ !(node.path === '/' || ( container.repository.support('node.move') &&  container.repository.support('node.delete'))) }}" droppable drop="moveNode">
-<i ng-class="node.selected" class="fa fa-refresh fa-spin" ng-show="node.updateInProgress"></i>
-<span ng-class="node.selected" class="glyphicon glyphicon-folder-close" ng-show="node.hasChildren && node.collapsed && !node.updateInProgress" ng-click="toggleCollapsed(node)"></span>
-<span ng-class="node.selected" class="glyphicon glyphicon-folder-open" ng-show="node.hasChildren && !node.collapsed && !node.updateInProgress" ng-click="toggleCollapsed(node)"></span>
-<span ng-class="node.selected" class="glyphicon glyphicon-file" ng-hide="node.hasChildren || node.updateInProgress" ng-click=""></span>
-<a ng-class="node.selected" ng-bind="node.name" ng-click="toggleCollapsed(node)" id="{{ node.path.split('/').join('_') }}" class="node"></a>
+<div
+    class="node"
+    id="{{ node.slug }}"
+    data-path="{{ node.path }}"
+    draggable="{{ !(node.path === '/' || ( container.repository.support('node.move') &&  container.repository.support('node.delete'))) }}"
+    droppable drop="moveNode">
+
+    <font-awesome
+        icon="refresh spin"
+        ng-class="node.selected"
+        ng-show="node.updateInProgress">
+    </font-awesome>
+    <glyphicon
+        icon="folder-close"
+        ng-class="node.selected"
+        ng-show="node.hasChildren && node.collapsed && !node.updateInProgress"
+        ng-click="toggleCollapsed(node)">
+    </glyphicon>
+    <glyphicon
+        icon="folder-open"
+        ng-class="node.selected"
+        ng-show="node.hasChildren && !node.collapsed && !node.updateInProgress"
+        ng-click="toggleCollapsed(node)">
+    </glyphicon>
+    <glyphicon
+        icon="file"
+        ng-class="node.selected"
+        ng-hide="node.hasChildren || node.updateInProgress"
+        ng-click="">
+    </glyphicon>
+
+    <a
+        ng-class="node.selected"
+        ng-click="toggleCollapsed(node)"
+        id="{{ node.path.split('/').join('_') }}"
+        class="node">
+        {{ node.name }}
+    </a>
 </div>
 <ul class="tree" ng-show="node.hasChildren && !node.collapsed">
   <li ng-repeat="node in node.children | orderBy:'name'" ng-if="node !== undefined" mb-tree-node></li>

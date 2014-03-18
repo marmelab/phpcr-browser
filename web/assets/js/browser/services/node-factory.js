@@ -1,7 +1,7 @@
 (function(angular, app) {
   'use strict';
 
-  app.factory('mbNodeFactory', ['$q', 'mbApiFoundation', function($q, ApiFoundation) {
+  app.factory('mbNodeFactory', ['$q', 'mbApiFoundation', 'mbSmartProperty', function($q, ApiFoundation, SmartProperty) {
     var proxy = function(parent, children) {
       var result = [];
       angular.forEach(children, function(child) {
@@ -12,7 +12,6 @@
 
     var Node = function(node, workspace, finder) {
       this._restangular = node;
-      this.__restangular = angular.copy(this._restangular); // To prevent reference interference
       this._finder = finder;
       this._children = [];
       this._workspace = workspace;
@@ -21,6 +20,14 @@
         this._childrenNotCached = true;
       } else {
         this._children = proxy(this, this._restangular.children);
+      }
+
+      this._properties = {};
+      for (var p in this._restangular.properties) {
+        this._restangular.properties[p].name = p;
+        if (SmartProperty.accept(this._restangular.properties[p])) {
+          this._properties[p] = SmartProperty.build(this._restangular.properties[p], this);
+        }
       }
     };
 
@@ -43,7 +50,7 @@
     };
 
     Node.prototype.getProperties = function() {
-      return this._restangular.properties;
+      return this._properties;
     };
 
     Node.prototype.setProperty = function(name, value, type) {
@@ -51,7 +58,6 @@
       if (this.getProperties()[name] === undefined) {
         deferred.reject('Unknown property');
       } else {
-        type = (type !== undefined) ? type : self.getProperties()[name].type;
         try {
           value = (typeof(value) === 'object') ? JSON.stringify(value) : value;
         } catch (e) {}
@@ -63,19 +69,7 @@
           value,
           type,
           {cache: false})
-        .then(function(data) {
-            try {
-              self.getProperties()[name].value = JSON.parse(value);
-            } catch (e) {
-              self.getProperties()[name].value = value;
-            }
-            self.getProperties()[name].type = type;
-            self.__restangular.properties[name].type = type;
-            deferred.resolve(data);
-          }, function(err) {
-            self._restangular.properties[name] = angular.copy(self.__restangular.properties[name]);
-            deferred.reject(err);
-          });
+        .then(deferred.resolve, deferred.reject);
       }
 
       return deferred.promise;
@@ -91,7 +85,7 @@
         name,
         {cache: false})
       .then(function(data) {
-        delete self._restangular.properties[name];
+        delete self._properties[name];
         deferred.resolve(data);
       }, function(err) {
         deferred.reject(err);
@@ -110,7 +104,7 @@
         type,
         {cache: false})
       .then(function(data) {
-        self._restangular.properties[name] = { value: value, type: type };
+        self._properties[name] = SmartProperty.build({ name: name, value: value, type: type });
         deferred.resolve(data);
       }, function(err) {
         deferred.reject(err);

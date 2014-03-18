@@ -1,31 +1,28 @@
 <div ng-controller="mbWorkspaceCtrl">
   <div id="sidebar">
-      <div class="trash trash-node" droppable drop="delete">
-        <span class="glyphicon glyphicon-trash"></span>
-        <p>Drop to delete</p>
-      </div>
-      <div class="scrollable scrollable-tree padding">
-        <mb-tree mb-current-node="currentNode"></tree>
+      <mb-scrollable class="scrollable-tree">
+        <mb-tree mb-current-node="currentNode"></mb-tree>
+      </mb-scrollable>
     </div>
-  </div>
   <div id="content" ng-controller="mbPropertiesCtrl">
     <table id="properties-header">
           <thead>
             <tr>
               <th></th>
-              <th>Property name</th>
-              <th>Property type</th>
+              <th>Name</th>
+              <th>Type</th>
               <th>
-                Property value
+                Value
                 <a class="pull-right" style="margin-right: 10px;" ng-click="toggleCreateForm()">
                   <i class="fa fa-plus" ng-show="!displayCreateForm"></i>
                   <i class="fa fa-minus" ng-show="displayCreateForm"></i>
+                  Add property
                 </a>
               </th>
             </tr>
           </thead>
       </table>
-      <div class="scrollable">
+      <mb-scrollable class="scrollable-properties">
         <table id="properties">
           <tbody>
             <tr ng-show="displayCreateForm" class="info">
@@ -54,10 +51,11 @@
             <tr class="property-item" data-ng-repeat="property in properties | mbJaroWinkler:search" id="{{ property.name }}" draggable="{{ currentNode.getWorkspace().getRepository().supports('node.property.delete') }}" data-name="{{ property.name }}">
               <td><span class="fa fa-bars" title="Drag me to delete me"></span></td>
               <td>{{ property.name }}</td>
-              <td><span title="Property type" editable-select="property.type" buttons="no" e-style="margin-top: 5px;" e-ng-options="type.name for type in types" onbeforesave="updateProperty(property.name, property.value, $data.value)" class="label label-info">{{ typeLabel(property.type) }}</span></td>
+              <td><span title="Property type" editable-select="property.type" buttons="no" e-style="margin-top: 5px;" e-ng-options="type.name for type in types" onbeforesave="updatePropertyType(property.name, $data.value)" class="label label-info">{{ typeLabel(property.type) }}</span></td>
               <td mb-property-value></td>
             </tr>
           </tbody>
         </table>
-    </div>
+    </mb-scrollable>
+    <mb-dropper drop="delete"></mb-dropper>
 </div>

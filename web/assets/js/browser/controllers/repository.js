@@ -41,15 +41,18 @@
 
       $scope.createWorkspace = function(workspaceName) {
         if ($scope.repository.supports('workspace.create')) {
+          if (!workspaceName || workspaceName.trim().length === 0) {
+            return $log.error('Name is empty.');
+          }
           var workspace = WorkspaceFactory.build({ name: workspaceName }, $scope.repository);
           workspace.create().then(function() {
-            $scope.repository.getWorkspaces().then(function(workspaces) {
+            $scope.repository.getWorkspaces({cache: false}).then(function(workspaces) {
               $scope.workspaces = workspaces;
               $log.log('Workspace created');
               $scope.displayCreateForm = false;
             });
           }, function(err) {
-            if (err.status) { return $log.error(err, 'An error occurred, please retry.'); }
+            if (err.data && err.data.message) { return $log.error(err, err.data.message); }
             $log.error(err);
           });
         } else {

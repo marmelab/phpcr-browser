@@ -4,21 +4,6 @@ body {
   padding-top: $navbar-height + 10;
 }
 
-div.scrollable {
-  overflow: scroll;
-  height: 100%;
-  position: absolute;
-  top:0;
-
-  &.padding {
-    padding-top: 20px;
-  }
-
-  &.scrollable-tree {
-    margin-top: 55px;
-    width: 95%;
-  }
-}
 
 .btn, .panel, input.form-control {
     @include border-radius(0!important);
