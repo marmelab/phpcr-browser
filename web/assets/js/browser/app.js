@@ -1,8 +1,9 @@
 (function(angular) {
   'use strict';
 
-  angular.module('browserApp', ['ui.router', 'restangular', 'talker', 'toaster'])
-  .config(function($stateProvider, $urlRouterProvider){
+  angular.module('browserApp', ['ui.router', 'ui.keypress', 'restangular', 'talker', 'toaster', 'xeditable'])
+  .config(function($stateProvider, $urlRouterProvider, $anchorScrollProvider, RestangularProvider){
+    RestangularProvider.setDefaultHttpFields({cache: true});
     $urlRouterProvider
       .when('', '/')
       .otherwise('/');
@@ -21,18 +22,40 @@
         templateUrl: '/assets/js/browser/views/workspace.html'
       });
   })
-  .run(['$log', 'toaster', function($log, toaster) {
-    $log.after('error', function(message) {
-      toaster.pop('error', 'An error occured', message);
+  .run(['$rootScope', '$log', 'toaster', 'editableOptions', 'mbEventBridge', function($rootScope, $log, toaster, editableOptions) {
+    editableOptions.theme = 'bs3';
+
+    $log.before('error', function(message, toast, display) {
+      display = display === undefined ? true : display;
+      if (display) {
+        if (toast) { message = toast; }
+        toaster.pop('error', 'An error occured', message);
+      }
     });
-    $log.after('log', function(message) {
-      toaster.pop('success', 'Success', message);
+    $log.before('log', function(message, toast, display) {
+      display = display === undefined ? true : display;
+      if (display) {
+        if (toast) { message = toast; }
+        toaster.pop('success', 'Success', message);
+      }
     });
-    $log.after('info', function(message) {
-      toaster.pop('note', 'Information', message);
+    $log.before('info', function(message, toast, display) {
+      display = display === undefined ? true : display;
+      if (display) {
+        if (toast) { message = toast; }
+        toaster.pop('note', 'Information', message);
+      }
     });
-    $log.after('warn', function(message) {
-      toaster.pop('warning', 'Warning', message);
+    $log.before('warn', function(message, toast, display) {
+      display = display === undefined ? true : display;
+      if (display) {
+        if (toast) { message = toast; }
+        toaster.pop('warning', 'Warning', message, display);
+      }
+    });
+
+    $log.decorate(function(message) {
+      return [message]; // To remove toast in the log
     });
   }]);
 })(angular);

@@ -1,5 +1,4 @@
 @import 'compass/css3';
-@import 'bootstrap';
 
 .drag {
     opacity: 0.5;
@@ -13,13 +12,12 @@
 
     td {
         background-color: $brand-primary!important;
-        color: #ffffff;
     }
 }
 
 .over {
     border-color: $brand-primary!important;
-
+    color: $brand-primary!important;
     &.node {
         border: none;
         color: $brand-primary;
@@ -28,50 +26,4 @@
 
 ul.over {
     background-color: $brand-primary;
-}
-
-.trash {
-    position: relative;
-    border: 2px dotted #dddddd;
-    background-color: #eeeeee;
-    color: #dddddd;
-    font-size: 30px;
-    p {
-        position: absolute;
-        bottom: 0;
-        font-size: 14pt;
-        line-height: 30px;
-        text-align: center;
-        width: 100%;
-    }
-
-    &.trash-square {
-        width: 150px;
-        height: 150px;
-        line-height: 150px;
-        position: fixed;
-        bottom: 5px;
-        right: 5px;
-        text-align: center;
-    }
-
-    &.trash-node {
-        height: 50px;
-        line-height: 50px;
-        position: absolute;
-        top: 3px;
-        left: 2px;
-        right: 2px;
-
-        .glyphicon {
-            margin-left: 20px;
-            font-size: 18pt;
-        }
-
-        p {
-            font-size: 14pt;
-            text-align: center;
-            width: 100%;
-        }
-    }
 }

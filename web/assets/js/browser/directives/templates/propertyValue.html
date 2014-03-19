@@ -1,11 +1,27 @@
-<span ng-if="typeof(property.value) !== 'object'"> {{ property.value }}</span>
+<span ng-if="typeof(property.value) !== 'object' && property.parentName" editable-text="property.value" onbeforesave="updateProperty(property.parentName, $data, property.path)" e-style="width:100%" buttons="no" class="property-input"> {{ property.value }}</span>
+<span ng-if="typeof(property.value) !== 'object' && !property.parentName" editable-text="property.value" onbeforesave="updateProperty(property.name, $data, property.path)" e-style="width:100%" buttons="no" class="property-input"> {{ property.value }}</span>
+<a class="text-danger pull-right" ng-if="property.parentName" ng-click="deleteProperty(property.parentName, property.path)"><glyphicon icon="trash"></glyphicon></a>
 <table class="table table-bordered table-striped table-hover" ng-if="typeof(property.value) == 'object'">
     <thead>
-        <th>Property name</th>
-        <th>Property value</th>
+        <th>Name</th>
+        <th>
+            Value
+            <a class="pull-right" style="margin-right: 10px;" ng-click="displaySubCreateForm = !displaySubCreateForm">
+              <i class="fa fa-plus" ng-show="!displaySubCreateForm"></i>
+              <i class="fa fa-minus" ng-show="displaySubCreateForm"></i>
+            </a>
+        </th>
     </thead>
     <tbody>
-        <tr ng-repeat="property in property.value | orderBy:'name'">
+        <tr ng-show="displaySubCreateForm">
+            <td>
+                <input type="text" ng-model="name" class="form-control" placeholder="Enter a name" ui-keypress="{ enter: 'createProperty(name, value, type.value)' }" ui-keydown="{ esc: 'displaySubCreateForm = !displaySubCreateForm' }">
+            </td>
+            <td>
+                <input type="text" ng-model="value" class="form-control" placeholder="Enter a value" ui-keypress="{ enter: 'createProperty(name, value, property.parentName || property.name, property.path)' }" ui-keydown="{ esc: 'displaySubCreateForm = !displaySubCreateForm' }">
+            </td>
+        </tr>
+        <tr ng-repeat="property in property.value | orderBy:'name'" class="property-item">
           <td>{{ property.name }}</td>
           <td mb-property-value></td>
         </tr>

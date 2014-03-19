@@ -1,7 +1,5 @@
 <?php
 
-ini_set('date.timezone', 'UTC');
-
 use Igorw\Silex\ConfigServiceProvider;
 use Symfony\Component\Debug\Debug;
 

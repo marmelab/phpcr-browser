@@ -12,7 +12,9 @@
 
     <!-- Bootstrap core CSS -->
     <link href='http://fonts.googleapis.com/css?family=PT+Sans' rel='stylesheet' type='text/css'>
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
     <link href="/bower_components/AngularJS-Toaster/toaster.css" rel="stylesheet">
+    <link href="/bower_components/angular-xeditable/dist/css/xeditable.css"></link>
     <link href="/assets/css/screen.css" rel="stylesheet">
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -23,20 +25,10 @@
   </head>
 
   <body ng-controller="mbFrontCtrl">
-    <!-- Fixed navbar -->
-    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" href="#/">
-        phpcr browser
-        </a>
-      </div>
-      <div class="navbar-collapse collapse" ng-controller="mbNavbarCtrl">
+    <mb-overlay text="Loading..." show-on="_browser.load" hide-on="_browser.loaded"></mb-overlay>
+
+    <div ng-controller="mbNavbarCtrl">
+      <mb-navbar brand="phpcr-browser">
         <ul class="nav navbar-nav">
           <li mb-navbar-item mb-link="menu.repositories" ng-class="menu.repositories.class"></li>
           <li mb-navbar-item mb-link="menu.repository" ng-class="menu.repository.class"></li>
@@ -44,15 +36,14 @@
         </ul>
         <form class="navbar-form navbar-right" id="search" role="search">
           <div class="form-group right-inner-addon">
-            <span class="glyphicon glyphicon-search"></span>
+            <glyphicon icon="search"></glyphicon>
             <input type="text" class="form-control" placeholder="Search" ng-model="search">
           </div>
         </form>
-      </div><!--/.nav-collapse -->
+      </mb-navbar>
     </div>
-
     <toaster-container toaster-options="{'position-class': 'toast-top-right'}"> </toaster-container>
-    <div ui-view class="container-fluid"></div>
+    <div ui-view autoscroll="false" class="container-fluid"></div>
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
@@ -64,9 +55,11 @@
     <script src="/bower_components/angular-animate/angular-animate.min.js"></script>
     <script src="/bower_components/AngularJS-Toaster/toaster.js"></script>
     <script src="/bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+    <script src="/bower_components/angular-ui-utils/keypress.js"></script>
     <script src="/bower_components/lodash/dist/lodash.min.js"></script>
     <script src="/bower_components/restangular/dist/restangular.min.js"></script>
     <script src="/bower_components/talker/talker-0.1.0.min.js"></script>
+    <script src="/bower_components/angular-xeditable/dist/js/xeditable.min.js"></script>
 
     <script src="/assets/js/browser/app.js"></script>
     <script src="/assets/js/browser/services/recursion-helper.js"></script>
@@ -78,19 +71,29 @@
     <script src="/assets/js/browser/services/route-parameters-converter.js"></script>
     <script src="/assets/js/browser/services/object-mapper.js"></script>
     <script src="/assets/js/browser/services/tree-view.js"></script>
+    <script src="/assets/js/browser/services/json-patch.js"></script>
+    <script src="/assets/js/browser/services/smart-property.js"></script>
+    <script src="/assets/js/browser/services/event-bridge.js"></script>
     <script src="/assets/js/browser/directives/navbar-item.js"></script>
     <script src="/assets/js/browser/directives/tree-node.js"></script>
     <script src="/assets/js/browser/directives/tree.js"></script>
     <script src="/assets/js/browser/directives/property-value.js"></script>
     <script src="/assets/js/browser/directives/draggable.js"></script>
     <script src="/assets/js/browser/directives/droppable.js"></script>
+    <script src="/assets/js/browser/directives/focus-me.js"></script>
+    <script src="/assets/js/browser/directives/ui/glyphicon.js"></script>
+    <script src="/assets/js/browser/directives/ui/font-awesome.js"></script>
+    <script src="/assets/js/browser/directives/ui/scrollable.js"></script>
+    <script src="/assets/js/browser/directives/ui/overlay.js"></script>
+    <script src="/assets/js/browser/directives/ui/navbar.js"></script>
+    <script src="/assets/js/browser/directives/ui/repository.js"></script>
+    <script src="/assets/js/browser/directives/ui/dropper.js"></script>
     <script src="/assets/js/browser/filters/jaro–winkler.js"></script>
     <script src="/assets/js/browser/controllers/front.js"></script>
     <script src="/assets/js/browser/controllers/navbar.js"></script>
     <script src="/assets/js/browser/controllers/repositories.js"></script>
     <script src="/assets/js/browser/controllers/repository.js"></script>
     <script src="/assets/js/browser/controllers/workspace.js"></script>
-    <script src="/assets/js/browser/controllers/tree.js"></script>
     <script src="/assets/js/browser/controllers/properties.js"></script>
   </body>
 </html>

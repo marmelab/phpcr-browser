@@ -1,12 +1,11 @@
 (function(app) {
   'use strict';
 
-  app.factory('mbWorkspaceFactory', ['mbApiFoundation', function(ApiFoundation) {
+  app.factory('mbWorkspaceFactory', ['$q', 'mbApiFoundation', function($q, ApiFoundation) {
 
-    var Workspace = function(workspace, repository, supportedOperations, finder) {
+    var Workspace = function(workspace, repository, finder) {
       this._restangular = workspace;
       this._repository = repository;
-      this._supportedOperations = supportedOperations;
       this._finder = finder;
     };
 
@@ -27,17 +26,23 @@
       return this.getName().replace(' ', '_');
     };
 
-    Workspace.prototype.getSupportedOperations = function() {
-      return this._supportedOperations;
-    };
-
     Workspace.prototype.delete = function() {
       return ApiFoundation.deleteWorkspace(this.getRepository().getName(), this.getName());
     };
 
+    Workspace.prototype.create = function() {
+      if (this.getName().match(/^[a-zA-z][0-9a-zA-z]*$/)) {
+        return ApiFoundation.createWorkspace(this.getRepository().getName(), this.getName());
+      }
+
+      var deferred = $q.defer();
+      deferred.reject('The name is not valid');
+      return deferred.promise;
+    };
+
     return {
-      build: function(workspace, repository, supportedOperations, finder) {
-        return new Workspace(workspace, repository, supportedOperations, finder);
+      build: function(workspace, repository, finder) {
+        return new Workspace(workspace, repository, finder);
       },
       accept: function(data) {
         return data.name !== undefined;

@@ -48,11 +48,11 @@
 
             this.classList.remove('over');
 
-            var element = document.getElementById(e.dataTransfer.getData('Text'));
+            var elementDropped = document.getElementById(e.dataTransfer.getData('Text'));
             //this.appendChild(element);
             // call the drop passed drop function
             scope.$apply(function() {
-              scope.drop(angular.element(element));
+              scope.drop(angular.element(elementDropped), element);
             });
             return false;
           },

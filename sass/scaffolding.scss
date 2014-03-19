@@ -1,28 +1,21 @@
 @import 'compass/css3';
-@import 'bootstrap';
 
 body {
   padding-top: $navbar-height + 10;
 }
 
-div.scrollable {
-  overflow: scroll;
-  height: 100%;
-  position: absolute;
-  top:0;
 
-  &.padding {
-    padding-top: 20px;
-  }
-
-  &.scrollable-tree {
-    margin-top: 55px;
-    width: 95%;
-  }
+.btn, .panel, input.form-control {
+    @include border-radius(0!important);
 }
 
-.btn, .panel {
-    @include border-radius(0!important);
+.workspace-input, .workspace-input:focus {
+    border: none;
+    height: 100%;
+    box-shadow: none;
+    font-size: 17pt;
+    margin: 0;
+    padding-bottom: 0;
 }
 
 table {
@@ -44,4 +37,18 @@ table {
 
 a {
     cursor: pointer;
+}
+
+.overlay{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+  background-color: rgba(0,0,0,0.5); /*dim the background*/
+  text-align: center;
+  padding-top: 300px;
+  font-size: 60pt;
+  color: rgba(0,0,0,0.5);
 }

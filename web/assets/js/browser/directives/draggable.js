@@ -2,31 +2,39 @@
   'use strict';
   // From http://blog.parkji.co.uk/2013/08/11/native-drag-and-drop-in-angularjs.html
   app.directive('draggable', function() {
-    return function(scope, element) {
-      // this gives us the native JS object
-      var el = element[0];
+    return {
+      link: function(scope, element, attrs) {
+        // this gives us the native JS object
 
-      el.draggable = true;
+        if (!attrs.draggable) { return; }
 
-      el.addEventListener(
-        'dragstart',
-        function(e) {
+        var el = element[0];
+
+        el.draggable = true;
+
+        var dragstart  = function(e) {
           e.dataTransfer.effectAllowed = 'move';
           e.dataTransfer.setData('Text', this.id);
           this.classList.add('drag');
           return false;
-        },
-        false
-      );
+        };
+        el.addEventListener(
+          'dragstart',
+          dragstart,
+          false
+        );
 
-      el.addEventListener(
-        'dragend',
-        function() {
+        var dragend = function() {
           this.classList.remove('drag');
           return false;
-        },
-        false
-      );
+        };
+
+        el.addEventListener(
+          'dragend',
+          dragend,
+          false
+        );
+      }
     };
   });
 })(angular.module('browserApp'));

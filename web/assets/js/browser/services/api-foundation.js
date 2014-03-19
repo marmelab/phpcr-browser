@@ -42,6 +42,12 @@
         }
         return workspace(repositoryName, workspaceName).one(nodesPrefix, path);
       };
+      var nodeProperties = function(repositoryName, workspaceName, path) {
+        if (path.slice(0,1) === '/') {
+          path = path.slice(1);
+        }
+        return workspace(repositoryName, workspaceName).all(nodesPrefix).all(path + '@properties');
+      };
       var nodeProperty = function(repositoryName, workspaceName, path, propertyName) {
         if (path.slice(0,1) === '/') {
           path = path.slice(1);
@@ -50,51 +56,70 @@
       };
 
       return {
-        getRepositories: function() {
-          var deferred = $q.defer();
-          deferred.resolve(repositories.getList());
-          return deferred.promise;
+        getRepositories: function(config) {
+          config = config || {};
+          return repositories.withHttpConfig(config).getList();
         },
-        getRepository: function(name) {
-          return repository(name).get();
+        getRepository: function(name, config) {
+          config = config || {};
+          return repository(name).withHttpConfig(config).get();
         },
-        getWorkspaces: function(repositoryName) {
-          var deferred = $q.defer();
-          deferred.resolve(workspaces(repositoryName).getList());
-          return deferred.promise;
+        getWorkspaces: function(repositoryName, config) {
+          config = config || {};
+          return workspaces(repositoryName).withHttpConfig(config).getList();
         },
-        getWorkspace: function(repositoryName, name) {
-          return workspace(repositoryName, name).get();
+        getWorkspace: function(repositoryName, name, config) {
+          config = config || {};
+          return workspace(repositoryName, name).withHttpConfig(config).get();
         },
-        createWorkspace: function(repositoryName, name) {
-          return workspaces(repositoryName).post({ name: name });
+        createWorkspace: function(repositoryName, name, config) {
+          config = config || {};
+          return workspaces(repositoryName).withHttpConfig(config).post({ name: name });
         },
-        deleteWorkspace: function(repositoryName, name) {
-          return workspace(repositoryName, name).remove();
+        deleteWorkspace: function(repositoryName, name, config) {
+          config = config || {};
+          return workspace(repositoryName, name).withHttpConfig(config).remove();
         },
-        getNode: function(repositoryName, workspaceName, path) {
-          return node(repositoryName, workspaceName, path).get({reducedTree: true});
+        getNode: function(repositoryName, workspaceName, path, config) {
+          config = config || {};
+          return node(repositoryName, workspaceName, path).withHttpConfig(config).get({reducedTree: true});
         },
-        createNode: function(repositoryName, workspaceName, parentPath, relPath) {
-          node(repositoryName, workspaceName, parentPath).post({ relPath: relPath});
+        createNode: function(repositoryName, workspaceName, parentPath, relPath, config) {
+          config = config || {};
+          node(repositoryName, workspaceName, parentPath).withHttpConfig(config).post({ relPath: relPath});
         },
-        deleteNode: function(repositoryName, workspaceName, path) {
-          return node(repositoryName, workspaceName, path).remove();
+        deleteNode: function(repositoryName, workspaceName, path, config) {
+          config = config || {};
+          return node(repositoryName, workspaceName, path).withHttpConfig(config).remove();
         },
-        moveNode: function(repositoryName, workspaceName, path, newPath) {
-          return node(repositoryName, workspaceName, path).put({
+        moveNode: function(repositoryName, workspaceName, path, newPath, config) {
+          config = config || {};
+          return node(repositoryName, workspaceName, path).withHttpConfig(config).put({
             method: 'move',
             destAbsPath: newPath
           });
         },
-        renameNode: function(repositoryName, workspaceName, path, newName) {
-          return node(repositoryName, workspaceName, path).put({
+        renameNode: function(repositoryName, workspaceName, path, newName, config) {
+          config = config || {};
+          return node(repositoryName, workspaceName, path).withHttpConfig(config).put({
             method: 'rename',
             newName: newName
           });
         },
-        deleteNodeProperty: function(repositoryName, workspaceName, path, propertyName) {
-          return nodeProperty(repositoryName, workspaceName, path, propertyName).remove();
+        createNodeProperty: function(repositoryName, workspaceName, path, propertyName, propertyValue, propertyType, config) {
+          config = config || {};
+          if (propertyType) {
+            return nodeProperties(repositoryName, workspaceName, path).withHttpConfig(config).post({ name: propertyName, value: propertyValue, type: propertyType });
+          }
+          return nodeProperties(repositoryName, workspaceName, path).withHttpConfig(config).post({ name: propertyName, value: propertyValue });
+        },
+        deleteNodeProperty: function(repositoryName, workspaceName, path, propertyName, config) {
+          config = config || {};
+          return nodeProperty(repositoryName, workspaceName, path, propertyName).withHttpConfig(config).remove();
+        },
+        updateNodeProperty: function(repositoryName, workspaceName, path, propertyName, propertyValue, propertyType, config) {
+          config = config || {};
+          return nodeProperties(repositoryName, workspaceName, path).withHttpConfig(config).post({ name: propertyName, value: propertyValue, type: propertyType });
         },
       };
     }];

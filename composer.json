@@ -3,7 +3,7 @@
     "description": "PHPCR Browser provides web interface to explore PHPCR repositories.",
     "keywords": ["phpcr", "Symfony CMF", "browser"],
     "license": "MIT",
-    "version": "0.1",
+    "version": "1.0",
     "require": {
         "silex/silex": "~1.1.2",
         "symfony/yaml": "dev-master",
@@ -11,7 +11,7 @@
         "symfony/twig-bridge": "2.3.*",
         "jackalope/jackalope-jackrabbit": "dev-master",
         "igorw/config-service-provider": "~1.2",
-        "marmelab/phpcr-api-silex-provider": "dev-node_management"
+        "marmelab/phpcr-api-silex-provider": "dev-master"
     },
 
     "autoload": {
