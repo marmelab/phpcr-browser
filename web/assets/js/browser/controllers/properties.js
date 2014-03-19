@@ -123,7 +123,8 @@
         //   });
         // }
 
-        $scope.createProperty($scope.backup.name, $scope.backup.value, $scope.backup.type, true);
+        $scope.createProperty($scope.backup.name, $scope.backup.value, $scope.backup.type);
+        $scope.backup = null;
       };
 
       var normalize = function(data, path, parentName) {
