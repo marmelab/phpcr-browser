@@ -104,7 +104,7 @@
         type,
         {cache: false})
       .then(function(data) {
-        self._properties[name] = SmartProperty.build({ name: name, value: value, type: type });
+        self._properties[name] = SmartProperty.build({ name: name, value: value, type: type }, self);
         deferred.resolve(data);
       }, function(err) {
         deferred.reject(err);
