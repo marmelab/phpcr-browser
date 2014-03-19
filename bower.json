@@ -12,7 +12,8 @@
     "talker": "0.1.0",
     "AngularJS-Toaster": "0.4.5",
     "angular-ui-utils": "bower-keypress",
-    "angular-xeditable": "~0.1.8"
+    "angular-xeditable": "~0.1.8",
+    "jsonpatch.js": "1.0.0-rc1"
   },
   "resolutions": {
     "angular": "1.2.14"
