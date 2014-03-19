@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "02485055b4f177e61256eec2013c7274",
+    "hash": "2b320e4f4deb116d2307707f5e6893bb",
     "packages": [
         {
             "name": "igorw/config-service-provider",
@@ -1195,9 +1195,9 @@
         "jackalope/jackalope-jackrabbit": 20,
         "marmelab/phpcr-api-silex-provider": 20
     },
-    "platform": [
-
-    ],
+    "platform": {
+        "php": ">=5.4"
+    },
     "platform-dev": [
 
     ]
