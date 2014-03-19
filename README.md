@@ -3,6 +3,8 @@ PHPCR Browser
 
 PHPCR Browser provides web interface to explore PHPCR repositories. The current implementation supports Jackalope Jackrabbit.
 
+You can create/delete a workspace (if supported by the repository), delete/move nodes, add/edit/delete properties.
+
 ![screenshot](http://marmelab.com/phpcr-browser/img/screenshot.png)
 
 Installation
@@ -12,7 +14,7 @@ To install the web application, run the following commands:
 
 ```sh
 $ composer install
-$ bower update
+$ bower install
 ```
 
 Add a VirtualHost to your Apache config (and add in it 'AllowEncodedSlashes On'), or better, use PHP 5.4 integrated webserver by calling:
