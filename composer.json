@@ -11,7 +11,7 @@
         "symfony/twig-bridge": "2.3.*",
         "jackalope/jackalope-jackrabbit": "dev-master",
         "igorw/config-service-provider": "~1.2",
-        "marmelab/phpcr-api-silex-provider": "dev-node_management"
+        "marmelab/phpcr-api-silex-provider": "dev-master"
     },
 
     "autoload": {
