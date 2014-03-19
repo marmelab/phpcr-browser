@@ -1,0 +1,30 @@
+<div ng-controller="mbWorkspaceCtrl">
+  <div id="sidebar" data-ng-controller="mbTreeCtrl">
+      <div class="trash trash-node" droppable drop="delete">
+        <span class="glyphicon glyphicon-trash"></span>
+        <p>Drop to delete</p>
+      </div>
+      <div class="scrollable scrollable-tree padding">
+        <mb-tree mb-current-node="currentNode"></tree>
+    </div>
+  </div>
+  <div id="content" ng-controller="mbPropertiesCtrl">
+    <table id="properties-header">
+          <thead>
+              <th>Property name</th>
+              <th>Property value</th>
+          </thead>
+      </table>
+      <div class="scrollable">
+        <table id="properties">
+          <tbody>
+              <tr class="property-item" data-ng-repeat="property in properties | mbJaroWinkler:search" id="{{ property.name }}" draggable data-name="{{ property.name }}">
+                <td>
+                  {{ property.name }}
+                </td>
+                <td mb-property-value></td>
+              </tr>
+          </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,80 @@
+@import 'compass/css3';
+@import 'bootstrap';
+
+.panel.panel-workspace {
+    cursor: pointer!important;
+    @extend .panel-default;
+
+    &:hover {
+        @extend .panel-primary;
+    }
+
+    .panel-heading {
+        height: 20px;
+        text-align: center;
+        font-size: 10pt;
+        padding: 2px;
+    }
+
+    .panel-body {
+        position: relative;
+
+        p.lead {
+            margin: 0;
+        }
+    }
+
+    .panel-footer {
+        padding: 0!important;
+    }
+
+    &.panel-new-workspace {
+        opacity: 0.7;
+        border-style: dotted;
+        border-width: 2px;
+        padding-top: 9px;
+        padding-bottom: 9px;
+        .panel-body {
+            padding: 0px 7px;
+        }
+    }
+}
+
+.panel.panel-repository {
+    cursor: pointer!important;
+    @extend .panel-default;
+
+    &:hover {
+        @extend .panel-primary;
+    }
+
+    .panel-heading {
+        height: 20px;
+        text-align: center;
+        font-size: 10pt;
+        padding: 2px;
+    }
+
+    .panel-body {
+        position: relative;
+
+        p.lead {
+            margin: 0;
+        }
+    }
+
+    .panel-footer {
+        padding: 0!important;
+    }
+
+    &.panel-new-repository {
+        opacity: 0.7;
+        border-style: dotted;
+        border-width: 2px;
+        padding-top: 9px;
+        padding-bottom: 9px;
+        .panel-body {
+            padding: 0px 7px;
+        }
+    }
+}

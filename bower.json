@@ -2,11 +2,17 @@
   "name": "marmelab/phpcr-browser",
   "version": "0.1",
   "dependencies": {
-    "bootstrap": "3.0.2",
+    "angular": "1.2.14",
+    "angular-route": "~1.2.6",
+    "angular-ui-router": "~0.2.8",
+    "bootstrap": "~3.0.2",
     "html5shiv": "3.7.0",
     "respond": "master",
-    "angular": "1.2.3",
     "restangular": "1.1.8",
-    "angular-xeditable": "0.1.7"
+    "talker": "0.1.0",
+    "AngularJS-Toaster": "0.4.5"
+  },
+  "resolutions": {
+    "angular": "1.2.14"
   }
 }

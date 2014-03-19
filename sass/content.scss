@@ -1,0 +1,20 @@
+@import "bootstrap";
+@import "bootstrap/mixins";
+@import "compass/css3";
+
+$scrollable-margin-top: 51px;
+
+#content {
+    @include make-sm-column(9);
+    position: fixed;
+    top: $navbar-height;
+    right: 0;
+    bottom: 0;
+    max-height: 100%;
+    background-color: #ffffff;
+    padding: 0;
+
+    .scrollable {
+        margin-top: $scrollable-margin-top;
+    }
+}

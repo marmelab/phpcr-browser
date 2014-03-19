@@ -1,56 +1,38 @@
-var app = angular.module('browserApp', ['restangular', 'xeditable']);
+(function(angular) {
+  'use strict';
 
-app.run(function ($rootScope) {
-	$rootScope.path = '/';
-	$rootScope.tree = {};
-	$rootScope.activeNode = null;
-	$rootScope.properties = {};
-	$rootScope.breadcrumb = [];
+  angular.module('browserApp', ['ui.router', 'restangular', 'talker', 'toaster'])
+  .config(function($stateProvider, $urlRouterProvider){
+    $urlRouterProvider
+      .when('', '/')
+      .otherwise('/');
 
-	$rootScope.isEmpty = function(obj){
-        return _.size(obj) == 0;
-    };
-
-    $rootScope.getTypeOf = function(obj){
-        return typeof obj;
-    };
-
-    $rootScope.findNode = function(path, root){
-       	function search(target, tree){
-       	 	if(target.length > 0){
-            	for(child in tree.children){
-                	if (tree.children.hasOwnProperty(child) && ~~child == child && target[0] == tree.children[child].name){
-                    	target.shift();
-                    	return search(target,tree.children[child]);
-                	}
-            	}
-        	}
-        	return tree;
-    	}
-  		
-  		var target = path.split('/');
-  		target.shift();
-  		return search(target, root);
-    }
-});
-
-app.config(function($locationProvider){
-    $locationProvider.html5Mode(true);
-});
-
-app.filter('propertyNameFilter', function() {
-  return function(input, term) {
-    var regex = new RegExp(term, 'i');
-    var obj = {};
-    angular.forEach(input, function(v, i){
-      if(regex.test(i + '')){
-        obj[i]=v;
-      }
+    $stateProvider
+      .state('repositories', {
+        url:'/',
+        templateUrl: '/assets/js/browser/views/repositories.html'
+      })
+      .state('repository', {
+        url: '/:repository',
+        templateUrl: '/assets/js/browser/views/repository.html'
+      })
+      .state('workspace', {
+        url: '/:repository/:workspace{path:(?:/.*)?}',
+        templateUrl: '/assets/js/browser/views/workspace.html'
+      });
+  })
+  .run(['$log', 'toaster', function($log, toaster) {
+    $log.after('error', function(message) {
+      toaster.pop('error', 'An error occured', message);
     });
-    return obj;
-  };
-});
-
-app.run(function(editableOptions) {
-  editableOptions.theme = 'bs3'; // bootstrap3 theme. Can be also 'bs2', 'default'
-});
+    $log.after('log', function(message) {
+      toaster.pop('success', 'Success', message);
+    });
+    $log.after('info', function(message) {
+      toaster.pop('note', 'Information', message);
+    });
+    $log.after('warn', function(message) {
+      toaster.pop('warning', 'Warning', message);
+    });
+  }]);
+})(angular);

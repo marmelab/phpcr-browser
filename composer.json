@@ -5,13 +5,13 @@
     "license": "MIT",
     "version": "0.1",
     "require": {
-        "silex/silex": "dev-master",
+        "silex/silex": "~1.1.2",
         "symfony/yaml": "dev-master",
         "twig/twig": "dev-master",
         "symfony/twig-bridge": "2.3.*",
         "jackalope/jackalope-jackrabbit": "dev-master",
         "igorw/config-service-provider": "~1.2",
-        "marmelab/phpcr-api-silex-provider": "dev-master"
+        "marmelab/phpcr-api-silex-provider": "dev-node_management"
     },
 
     "autoload": {
