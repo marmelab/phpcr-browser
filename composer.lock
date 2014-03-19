@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "1dfede9524e438a60267b4d5c712cd4d",
+    "hash": "02485055b4f177e61256eec2013c7274",
     "packages": [
         {
             "name": "igorw/config-service-provider",
@@ -182,16 +182,16 @@
         },
         {
             "name": "marmelab/phpcr-api",
-            "version": "dev-phpcrbrower_1.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/marmelab/phpcr-api.git",
-                "reference": "29509355f56f0d5e5898f033210c93ee06435e8a"
+                "reference": "0ecfb4b68e66a708e71a4f0e1a8e35b88675c15e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/marmelab/phpcr-api/zipball/29509355f56f0d5e5898f033210c93ee06435e8a",
-                "reference": "29509355f56f0d5e5898f033210c93ee06435e8a",
+                "url": "https://api.github.com/repos/marmelab/phpcr-api/zipball/0ecfb4b68e66a708e71a4f0e1a8e35b88675c15e",
+                "reference": "0ecfb4b68e66a708e71a4f0e1a8e35b88675c15e",
                 "shasum": ""
             },
             "require": {
@@ -210,24 +210,24 @@
                 "MIT"
             ],
             "description": "PHPCR API provides an API to explore PHPCR repositories.",
-            "time": "2014-03-15 21:07:36"
+            "time": "2014-03-19 13:20:05"
         },
         {
             "name": "marmelab/phpcr-api-silex-provider",
-            "version": "dev-node_management",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/marmelab/phpcr-api-silex-provider.git",
-                "reference": "6d407abcd1030df45f0a0a4e5b74212eb63ae62c"
+                "reference": "92d2812d0ea04cdde8b25616cc479b54f2e2f19b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/marmelab/phpcr-api-silex-provider/zipball/6d407abcd1030df45f0a0a4e5b74212eb63ae62c",
-                "reference": "6d407abcd1030df45f0a0a4e5b74212eb63ae62c",
+                "url": "https://api.github.com/repos/marmelab/phpcr-api-silex-provider/zipball/92d2812d0ea04cdde8b25616cc479b54f2e2f19b",
+                "reference": "92d2812d0ea04cdde8b25616cc479b54f2e2f19b",
                 "shasum": ""
             },
             "require": {
-                "marmelab/phpcr-api": "dev-phpcrbrower_1.0",
+                "marmelab/phpcr-api": "dev-master",
                 "silex/silex": "~1.1.2",
                 "symfony/browser-kit": ">=2.3,<2.4-dev"
             },
@@ -242,7 +242,7 @@
                 "MIT"
             ],
             "description": "PHPCR API Silex Provider exposes in REST marmelab/phpcr-api",
-            "time": "2014-03-17 08:49:36"
+            "time": "2014-03-19 13:33:43"
         },
         {
             "name": "phpcr/phpcr",
@@ -1130,12 +1130,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/fabpot/Twig.git",
-                "reference": "8c5844a56fe5cbe13ef3becd9ed9f7b3ade104a2"
+                "reference": "dab8d90755a7c1a54cd20be5098f5b5bf3346d9b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fabpot/Twig/zipball/8c5844a56fe5cbe13ef3becd9ed9f7b3ade104a2",
-                "reference": "8c5844a56fe5cbe13ef3becd9ed9f7b3ade104a2",
+                "url": "https://api.github.com/repos/fabpot/Twig/zipball/dab8d90755a7c1a54cd20be5098f5b5bf3346d9b",
+                "reference": "dab8d90755a7c1a54cd20be5098f5b5bf3346d9b",
                 "shasum": ""
             },
             "require": {
@@ -1179,7 +1179,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2014-02-24 15:39:56"
+            "time": "2014-03-15 10:50:05"
         }
     ],
     "packages-dev": [
