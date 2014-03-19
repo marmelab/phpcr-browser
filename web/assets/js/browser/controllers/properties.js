@@ -54,11 +54,13 @@
 
           rawProperties[name].delete(path).then(function() {
             reloadProperties();
-            $scope.backup = temp;
-            $timeout(function() {
-              $scope.backup = null;
-            }, 10000);
-            $location.hash('restore');
+            if (!(path && path !== '/')) {
+              $scope.backup = temp;
+              $timeout(function() {
+                $scope.backup = null;
+              }, 10000);
+              $location.hash('restore');
+            }
             $log.log('Property deleted.');
           }, function(err) {
             if (err.status === 423) { return $log.warn(err, 'You can not delete this property. It is locked.'); }
@@ -107,16 +109,19 @@
       };
 
       $scope.restoreProperty = function() {
-        if ($scope.backup.path && $scope.backup.path !== '/') {
-          return rawProperties[$scope.backup.name].insert($scope.backup.path, $scope.backup.value).then(function() {
-            reloadProperties();
-            $scope.backup = null;
-            $log.log('Property restored.');
-          }, function(err) {
-            if (err.data && err.data.message) { return $log.error(err, err.data.message); }
-            $log.error(err);
-          });
-        }
+        // if ($scope.backup.path && $scope.backup.path !== '/') {
+        //   $scope.backup.path = $scope.backup.path.split('/');
+        //   $scope.backup.path.pop();
+        //   $scope.backup.path = $scope.backup.path.join('/');
+        //   return rawProperties[$scope.backup.name].insert($scope.backup.path, $scope.backup.value).then(function() {
+        //     reloadProperties();
+        //     $scope.backup = null;
+        //     $log.log('Property restored.');
+        //   }, function(err) {
+        //     if (err.data && err.data.message) { return $log.error(err, err.data.message); }
+        //     $log.error(err);
+        //   });
+        // }
 
         $scope.createProperty($scope.backup.name, $scope.backup.value, $scope.backup.type, true);
       };
