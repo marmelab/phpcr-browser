@@ -1,5 +1,15 @@
-<span ng-if="typeof(property.value) !== 'object' && property.parentName" editable-text="property.value" onbeforesave="updateProperty(property.parentName, $data, property.path)" e-style="width:100%" buttons="no" class="property-input"> {{ property.value }}</span>
-<span ng-if="typeof(property.value) !== 'object' && !property.parentName" editable-text="property.value" onbeforesave="updateProperty(property.name, $data, property.path)" e-style="width:100%" buttons="no" class="property-input"> {{ property.value }}</span>
+<span ng-if="typeof(property.value) !== 'object' && property.parentName && property.type !== 10" editable-text="property.value" onbeforesave="updateProperty(property.parentName, $data, property.path)" e-style="width:100%" buttons="no" class="property-input"> {{ property.value }} {{ property.type }}</span>
+
+<span ng-if="typeof(property.value) !== 'object' && !property.parentName && property.type !== 10" editable-text="property.value" onbeforesave="updateProperty(property.name, $data, property.path)" e-style="width:100%" buttons="no" class="property-input"> {{ property.value }} {{ property.type }}</span>
+
+<span ng-if="typeof(property.value) !== 'object' && property.parentName && property.type === 10">
+    <a href="#/{{ currentNode.getWorkspace().getRepository().getName() }}/{{ currentNode.getWorkspace().getName() }}{{ property.value }}">{{ property.value }}</a>
+</span>
+
+<span ng-if="typeof(property.value) !== 'object' && !property.parentName && property.type === 10">
+    <a href="#/{{ currentNode.getWorkspace().getRepository().getName() }}/{{ currentNode.getWorkspace().getName() }}{{ property.value }}">{{ property.value }}</a>
+</span>
+
 <a class="text-danger pull-right" ng-if="property.parentName" ng-click="deleteProperty(property.parentName, property.path)"><glyphicon icon="trash"></glyphicon></a>
 <table class="table table-bordered table-striped table-hover" ng-if="typeof(property.value) == 'object'">
     <thead>
