@@ -127,7 +127,7 @@
         $scope.backup = null;
       };
 
-      var normalize = function(data, path, parentName) {
+      var normalize = function(data, path, parentName, parentType) {
         var array = [];
 
         if (typeof(data) !== 'object') {
@@ -140,7 +140,7 @@
           if (!path) {
             datum = {
               name: i,
-              value: normalize(data[i]._property.value, '/', i),
+              value: normalize(data[i]._property.value, '/', i, data[i].getType()),
               type: data[i].getType(),
               path: '/'
             };
@@ -148,8 +148,9 @@
             // Subproperty
             datum = {
               name: i,
-              value: normalize(data[i], path + '/' + i, parentName),
+              value: normalize(data[i], path + '/' + i, parentName, parentType),
               path: (path === '/') ? path + i : path + '/' + i,
+              type: parentType,
               parentName: parentName
             };
           }
