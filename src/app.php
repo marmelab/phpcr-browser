@@ -7,7 +7,6 @@
  * file that was distributed with this source code.
  */
 
-use Igorw\Silex\ConfigServiceProvider;
 use Silex\Application;
 use Silex\Application\UrlGeneratorTrait;
 use Silex\Provider\TwigServiceProvider;
