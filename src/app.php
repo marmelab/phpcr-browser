@@ -21,7 +21,6 @@ class PHPCRBrowserApplication extends Application
 
 $app = new PHPCRBrowserApplication();
 
-//$app->register(new SessionServiceProvider());
 $app->register(new UrlGeneratorServiceProvider());
 $app->register(new TwigServiceProvider(), array(
     'twig.path' => __DIR__.'/../views',
