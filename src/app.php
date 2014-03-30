@@ -7,7 +7,6 @@
  * file that was distributed with this source code.
  */
 
-use Igorw\Silex\ConfigServiceProvider;
 use Silex\Application;
 use Silex\Application\UrlGeneratorTrait;
 use Silex\Provider\TwigServiceProvider;
@@ -22,7 +21,6 @@ class PHPCRBrowserApplication extends Application
 
 $app = new PHPCRBrowserApplication();
 
-//$app->register(new SessionServiceProvider());
 $app->register(new UrlGeneratorServiceProvider());
 $app->register(new TwigServiceProvider(), array(
     'twig.path' => __DIR__.'/../views',
