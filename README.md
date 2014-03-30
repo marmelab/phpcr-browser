@@ -17,11 +17,13 @@ $ composer install
 $ bower install
 ```
 
-Add a VirtualHost to your Apache config (and add in it 'AllowEncodedSlashes On'), or better, use PHP 5.4 integrated webserver by calling:
+Add a VirtualHost to your Apache config (and add in it 'AllowEncodedSlashes On'), or use PHP 5.4 integrated webserver by calling:
 
 ```sh
 $ php -S localhost:8000 -t web
 ```
+
+**Known issue**: Node paths containing a period are not working with the PHP integrated webserver as it tries to access a non-existing file instead of PHPCR browser `index.php`.
 
 Configuration
 -------------
