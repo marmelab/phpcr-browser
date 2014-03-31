@@ -84,7 +84,7 @@
     }
 }
 
-li {
+.node {
     .node-add {
         font-size: 6pt;
         visibility: hidden;
@@ -96,7 +96,7 @@ li {
     }
 
     &:hover {
-        > .node > .node-add {
+        .node-add {
             visibility: visible;
         }
     }
