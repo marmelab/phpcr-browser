@@ -144,6 +144,20 @@
       }
     };
 
+    Node.prototype.create = function() {
+      var parentPath = this.getPath();
+      parentPath = parentPath.split('/');
+      parentPath.pop();
+      parentPath = parentPath.join('/');
+
+      return ApiFoundation.createNode(
+        this.getWorkspace().getRepository().getName(),
+        this.getWorkspace().getName(),
+        parentPath,
+        this.getName()
+      );
+    };
+
     Node.prototype.hasChildren = function() {
       return this._restangular.hasChildren;
     };

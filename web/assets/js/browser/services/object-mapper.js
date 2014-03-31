@@ -1,11 +1,12 @@
 (function(angular, app) {
   'use strict';
 
-  app.service('mbObjectMapper', ['$q', 'mbApiFoundation', 'mbRepositoryFactory','mbWorkspaceFactory','mbNodeFactory',
-    function($q, ApiFoundation, RepositoryFactory, WorkspaceFactory, NodeFactory) {
+  app.service('mbObjectMapper', ['$rootScope', '$q', 'mbApiFoundation', 'mbRepositoryFactory','mbWorkspaceFactory','mbNodeFactory',
+    function($rootScope, $q, ApiFoundation, RepositoryFactory, WorkspaceFactory, NodeFactory) {
       var self = this;
       this.find = function(query, config) {
         var deferred = $q.defer();
+
         if (!query) {
           ApiFoundation.getRepositories(config).then(function(data) {
             var repositories = [];
@@ -59,6 +60,7 @@
         } else {
           deferred.reject('Invalid query');
         }
+
         return deferred.promise;
       };
     }]);

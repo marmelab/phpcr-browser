@@ -10,7 +10,7 @@
     <a href="#/{{ currentNode.getWorkspace().getRepository().getName() }}/{{ currentNode.getWorkspace().getName() }}{{ property.value }}">{{ property.value }}</a>
 </span>
 
-<a class="text-danger pull-right" ng-if="property.parentName" ng-click="deleteProperty(property.parentName, property.path)"><glyphicon icon="trash"></glyphicon></a>
+<a class="text-danger pull-right" ng-if="property.parentName" ng-click="deleteProperty(property.parentName, property.path)"><span class="glyphicon glyphicon-trash"></span></a>
 <table class="table table-bordered table-striped table-hover" ng-if="typeof(property.value) == 'object'">
     <thead>
         <th>Name</th>

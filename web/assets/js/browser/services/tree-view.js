@@ -57,17 +57,37 @@
         tree.collapsed = true;
       }
 
+      tree.draggable =
+        (tree.path === '/'||
+        (container.repository.supports('node.move') && container.repository.supports('node.delete')));
+
+      tree.id = tree.path.split('/').join('_');
       return tree;
+    };
+
+    var refresh = function (path) {
+      var target = find(path, container.tree['/']);
+      target.updateInProgress = true;
+      return ObjectMapper.find('/' + container.repository.getName() + '/' + container.workspace.getName() + path, { cache: false }).then(function(node) {
+        var rawData = normalize(node.getRawData());
+        target.children = rawData.children;
+        target.hasChildren = rawData.hasChildren;
+        target.updateInProgress = false;
+        return target;
+      }, function(err) {
+        $log.error(err, null, false);
+        target.updateInProgress = false;
+      });
     };
 
     var initContainer = function(callback) {
       RouteParametersConverter.getCurrentNode().then(function(node) {
-        container.tree['/'] = normalize(node.getReducedTree()[0]);
         container.workspace = node.getWorkspace();
         container.repository = node.getWorkspace().getRepository();
+        container.tree['/'] = normalize(node.getReducedTree()[0]);
         container.find = find;
-        // $location.hash(node.getSlug());
-        // $anchorScroll();
+        container.refresh = refresh;
+
         $rootScope.$emit('browser.loaded');
         if (callback) { callback(node); }
       });
@@ -94,7 +114,6 @@
         var currentNodeLoader = function() {
           var target = find(toParams.path, container.tree['/']);
           if (!target.collapsed) {
-            target.updateInProgress = true;
             RouteParametersConverter.getCurrentNode().then(function(node) {
               target.children = normalize(node.getRawData()).children;
               target.updateInProgress = false;
@@ -102,11 +121,10 @@
               $log.error(err, null, false);
               target.updateInProgress = false;
             });
-          }
+          } else { target.updateInProgress = false; }
         };
 
-        if (!container.tree['/']) { return initContainer(currentNodeLoader); }  // Happens when last state was an invalid path, so the tree is not in cach
-
+        if (!container.tree['/']) { return initContainer(currentNodeLoader); }  // Happens when last state was an invalid path, so the tree is not in cache
         currentNodeLoader();
       }
     });

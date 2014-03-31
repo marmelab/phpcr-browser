@@ -2,41 +2,52 @@
     class="node"
     id="{{ node.slug }}"
     data-path="{{ node.path }}"
-    draggable="{{ !(node.path === '/' || ( container.repository.support('node.move') &&  container.repository.support('node.delete'))) }}"
+    draggable="{{ node.draggable }}"
     droppable drop="moveNode">
 
-    <font-awesome
-        icon="refresh spin"
+    <span class="fa fa-refresh fa-spin"
         ng-class="node.selected"
         ng-show="node.updateInProgress">
-    </font-awesome>
-    <glyphicon
-        icon="folder-close"
+    </span>
+    <span class="glyphicon glyphicon-folder-close"
         ng-class="node.selected"
-        ng-show="node.hasChildren && node.collapsed && !node.updateInProgress"
+        ng-if="node.hasChildren && node.collapsed && !node.updateInProgress"
         ng-click="toggleCollapsed(node)">
-    </glyphicon>
-    <glyphicon
-        icon="folder-open"
+    </span>
+    <span class="glyphicon glyphicon-folder-open"
         ng-class="node.selected"
-        ng-show="node.hasChildren && !node.collapsed && !node.updateInProgress"
+        ng-if="node.hasChildren && !node.collapsed && !node.updateInProgress"
         ng-click="toggleCollapsed(node)">
-    </glyphicon>
-    <glyphicon
-        icon="file"
+    </span>
+    <span class="glyphicon glyphicon-file"
         ng-class="node.selected"
-        ng-hide="node.hasChildren || node.updateInProgress"
+        ng-if="!(node.hasChildren || node.updateInProgress)"
         ng-click="">
-    </glyphicon>
-
+    </span>
     <a
         ng-class="node.selected"
         ng-click="toggleCollapsed(node)"
-        id="{{ node.path.split('/').join('_') }}"
+        id="{{ tree.id }}"
         class="node">
         {{ node.name }}
     </a>
+    <span class="glyphicon glyphicon-plus node-add"
+        ng-if="!node.displayCreateForm"
+        ng-click="toggleCreateForm(node)">
+    </span>
+    <span class="glyphicon glyphicon-minus node-add focus"
+        ng-if="node.displayCreateForm"
+        ng-click="toggleCreateForm(node)">
+    </span>
 </div>
-<ul class="tree" ng-show="node.hasChildren && !node.collapsed">
-  <li ng-repeat="node in node.children | orderBy:'name'" ng-if="node !== undefined" mb-tree-node></li>
+<ul class="tree" ng-if="(node.hasChildren && !node.collapsed) || node.displayCreateForm">
+    <li ng-if="node.displayCreateForm">
+        <div class="node">
+            <span class="glyphicon glyphicon-file"></span>
+            <form ng-submit="createChildNode(node, nodeName)" class="node-create-form">
+                <input type="text" ng-model="nodeName" class="form-control" mb-focus-me="displayCreateForm" ui-keydown="{ esc: 'toggleCreateForm(node)' }" placeholder="Enter a name" required/>
+            </form>
+        </div>
+    </li>
+    <li ng-repeat="node in node.children | orderBy:'name' track by node.path " ng-if="node !== undefined" mb-tree-node></li>
 </ul>
