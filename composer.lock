@@ -186,12 +186,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/marmelab/phpcr-api.git",
-                "reference": "1cb6320cb05d55ed483078fe19943829d821b3e5"
+                "reference": "4647509d647a8f15be9a5325eab5f0794c32c759"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/marmelab/phpcr-api/zipball/1cb6320cb05d55ed483078fe19943829d821b3e5",
-                "reference": "1cb6320cb05d55ed483078fe19943829d821b3e5",
+                "url": "https://api.github.com/repos/marmelab/phpcr-api/zipball/4647509d647a8f15be9a5325eab5f0794c32c759",
+                "reference": "4647509d647a8f15be9a5325eab5f0794c32c759",
                 "shasum": ""
             },
             "require": {
@@ -210,7 +210,7 @@
                 "MIT"
             ],
             "description": "PHPCR API provides an API to explore PHPCR repositories.",
-            "time": "2014-03-25 07:19:34"
+            "time": "2014-03-31 16:15:31"
         },
         {
             "name": "marmelab/phpcr-api-silex-provider",
@@ -218,12 +218,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/marmelab/phpcr-api-silex-provider.git",
-                "reference": "c9de50957f15289a6432a71c00c3c1477b9c71ea"
+                "reference": "f11c8d69b5db9354dcfdc1db876bdf29428c458e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/marmelab/phpcr-api-silex-provider/zipball/c9de50957f15289a6432a71c00c3c1477b9c71ea",
-                "reference": "c9de50957f15289a6432a71c00c3c1477b9c71ea",
+                "url": "https://api.github.com/repos/marmelab/phpcr-api-silex-provider/zipball/f11c8d69b5db9354dcfdc1db876bdf29428c458e",
+                "reference": "f11c8d69b5db9354dcfdc1db876bdf29428c458e",
                 "shasum": ""
             },
             "require": {
@@ -242,7 +242,7 @@
                 "MIT"
             ],
             "description": "PHPCR API Silex Provider exposes in REST marmelab/phpcr-api",
-            "time": "2014-03-25 07:35:35"
+            "time": "2014-03-31 17:24:57"
         },
         {
             "name": "phpcr/phpcr",
