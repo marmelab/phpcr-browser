@@ -27,11 +27,11 @@ $app->register(new TwigServiceProvider(), array(
 ));
 
 $app->register(new APIServiceProvider(),array(
-	'phpcr_api.repositories_config'	=>	$app->share(function() use($app){
-		// A closure to delay the read of the configuration because it is not loaded yet
-		return $app['phpcr_repositories'];
-	}),
-	'phpcr_api.mount_prefix'	=>	'/api'
+    'phpcr_api.repositories_config' => $app->share(function() use($app){
+        // A closure to delay the read of the configuration because it is not loaded yet
+        return $app['phpcr_repositories'];
+    }),
+    'phpcr_api.mount_prefix'        => '/api'
 ));
 
 $app->get('/browser/', function (Application $app) {
