@@ -44,6 +44,8 @@ The `factory` setting is the type of PHPCR repository you want to browse. See av
 
 You can also copy the `config/prod.yml-dist` file as `config/prod.yml` to get this exact configuration.
 
+You can now access the repository by browsing to http://localhost:8000/browser (or equivalent domain as configured in your virtual host).
+
 License
 -------
 
