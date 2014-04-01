@@ -13,10 +13,10 @@
         });
       };
 
-      this.getCurrentNode = function() {
+      this.getCurrentNode = function(reducedTree) {
         return this.getCurrentWorkspace().then(function(workspace) {
           var path = ($stateParams.path) ? $stateParams.path : '/';
-          return workspace.getNode(path);
+          return workspace.getNode(path, reducedTree);
         });
       };
     }]);

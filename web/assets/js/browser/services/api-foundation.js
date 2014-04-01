@@ -102,7 +102,14 @@
         },
         getNode: function(repositoryName, workspaceName, path, config) {
           config = config || {};
-          return node(repositoryName, workspaceName, path).withHttpConfig(config).get({ reducedTree: true });
+          var params;
+          if (config.reducedTree) {
+            params = { reducedTree: true };
+            delete config.reducedTree;
+          } else{
+            params = {};
+          }
+          return node(repositoryName, workspaceName, path).withHttpConfig(config).get(params);
         },
         createNode: function(repositoryName, workspaceName, parentPath, relPath, config) {
           config = config || {};

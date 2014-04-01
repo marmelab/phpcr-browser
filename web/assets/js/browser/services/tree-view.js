@@ -81,7 +81,7 @@
     };
 
     var initContainer = function(callback) {
-      RouteParametersConverter.getCurrentNode().then(function(node) {
+      RouteParametersConverter.getCurrentNode(true).then(function(node) {
         container.workspace = node.getWorkspace();
         container.repository = node.getWorkspace().getRepository();
         container.tree['/'] = normalize(node.getReducedTree()[0]);
