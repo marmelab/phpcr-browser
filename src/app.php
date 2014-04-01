@@ -11,7 +11,6 @@ use Silex\Application;
 use Silex\Application\UrlGeneratorTrait;
 use Silex\Provider\TwigServiceProvider;
 use Silex\Provider\UrlGeneratorServiceProvider;
-use Silex\Provider\SessionServiceProvider;
 use PHPCRAPI\Silex\APIServiceProvider;
 
 class PHPCRBrowserApplication extends Application
