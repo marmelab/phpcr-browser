@@ -41,13 +41,17 @@
         };
 
         td:nth-child(2) {
-            width: 25%;
+            /* Name column */
+            width: 20%;
             vertical-align: middle;
+            text-align: right;
         }
 
-        td:nth-child(3) {
-            width: 15%;
+        td:nth-child(4) {
+            /* Type column */
+            width: 10%;
             vertical-align: middle;
+            text-align: right;
         }
 
         td:last-child {
@@ -98,35 +102,21 @@
 }
 
 #properties-header {
-    z-index: 2;
-    @extend .table;
-    @extend .table-striped;
-    @extend .table-hover;
-    table-layout: fixed;
-    thead {
-        tr {
-            th {
-                height: 37px;
-                line-height: 35px;
-                padding: 0 5px;
-                font-size: 11pt;
-            }
+    height: 37px;
+    line-height: 37px;
+    background-color: #eee;
+    border-left: 1px solid #ddd;
 
-            th:nth-child(2) {
-                width: 25%;
-            }
-
-            th:nth-child(3) {
-                width: 15%;
-            }
-
-            th:first-child {
-                width: 30px;
-            }
-        }
+    .btn {
+        margin-top: 3px;
+        margin-right: 5px;
     }
-    border: 1px solid #dddddd;
-    margin: 0;
+
+    .path {
+        padding-left: 5px;
+        font-size: 10pt;
+        @extend .text-primary;
+    }
 }
 
 .property-item .property-options .btn-group{
