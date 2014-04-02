@@ -2,8 +2,10 @@
   'use strict';
 
   angular.module('browserApp', ['ui.router', 'ui.keypress', 'restangular', 'talker', 'toaster', 'xeditable'])
-  .config(function($stateProvider, $urlRouterProvider, $anchorScrollProvider, RestangularProvider){
+  .value('$anchorScroll', angular.noop)
+  .config(function($stateProvider, $urlRouterProvider, $uiViewScrollProvider, RestangularProvider){
     RestangularProvider.setDefaultHttpFields({cache: true});
+    $uiViewScrollProvider.useAnchorScroll();
     $urlRouterProvider
       .when('', '/')
       .otherwise('/');

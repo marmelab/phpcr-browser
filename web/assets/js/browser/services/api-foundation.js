@@ -27,20 +27,40 @@
       Restangular.setBaseUrl(server);
 
       var repositories = Restangular.all(repositoriesPrefix);
+      var repositoryCache = {};
+      var workspaceCache = {};
+      var nodeCache = {};
+
       var repository = function(repository) {
-        return Restangular.one(repositoriesPrefix, repository);
+        if (!repositoryCache[repository]) {
+          repositoryCache[repository] = Restangular.one(repositoriesPrefix, repository);
+        }
+        return repositoryCache[repository];
       };
       var workspaces = function(repositoryName) {
         return repository(repositoryName).all(workspacesPrefix);
       };
       var workspace = function(repositoryName, name) {
-        return repository(repositoryName).one(workspacesPrefix, name);
+        if (!workspaceCache[repositoryName+'/'+name]) {
+          workspaceCache[repositoryName+'/'+name] = repository(repositoryName).one(workspacesPrefix, name);
+        }
+        return workspaceCache[repositoryName+'/'+name];
       };
+
       var node = function(repositoryName, workspaceName, path) {
+        if (!nodeCache[repositoryName+'/'+workspaceName+path]) {
+          if (path.slice(0,1) === '/') {
+            path = path.slice(1);
+          }
+          nodeCache[repositoryName+'/'+workspaceName+path] = workspace(repositoryName, workspaceName).one(nodesPrefix, path);
+        }
+        return nodeCache[repositoryName+'/'+workspaceName+path];
+      };
+      var nodeCollection = function(repositoryName, workspaceName, path) {
         if (path.slice(0,1) === '/') {
           path = path.slice(1);
         }
-        return workspace(repositoryName, workspaceName).one(nodesPrefix, path);
+        return workspace(repositoryName, workspaceName).all(nodesPrefix).all(path);
       };
       var nodeProperties = function(repositoryName, workspaceName, path) {
         if (path.slice(0,1) === '/') {
@@ -82,11 +102,18 @@
         },
         getNode: function(repositoryName, workspaceName, path, config) {
           config = config || {};
-          return node(repositoryName, workspaceName, path).withHttpConfig(config).get({reducedTree: true});
+          var params;
+          if (config.reducedTree) {
+            params = { reducedTree: true };
+            delete config.reducedTree;
+          } else{
+            params = {};
+          }
+          return node(repositoryName, workspaceName, path).withHttpConfig(config).get(params);
         },
         createNode: function(repositoryName, workspaceName, parentPath, relPath, config) {
           config = config || {};
-          node(repositoryName, workspaceName, parentPath).withHttpConfig(config).post({ relPath: relPath});
+          return nodeCollection(repositoryName, workspaceName, parentPath).withHttpConfig(config).post({ relPath: relPath});
         },
         deleteNode: function(repositoryName, workspaceName, path, config) {
           config = config || {};

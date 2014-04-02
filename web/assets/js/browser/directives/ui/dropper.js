@@ -7,7 +7,7 @@
       transclude: true,
       replace: true,
       scope: '=',
-      template: '<div class="dropper" droppable><glyphicon icon="trash"></glyphicon></div>',
+      template: '<div class="dropper" droppable><span class="glyphicon glyphicon-trash"></span></div>',
     };
   });
 })(angular.module('browserApp'));

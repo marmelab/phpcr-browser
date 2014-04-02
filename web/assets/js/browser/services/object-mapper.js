@@ -6,6 +6,7 @@
       var self = this;
       this.find = function(query, config) {
         var deferred = $q.defer();
+
         if (!query) {
           ApiFoundation.getRepositories(config).then(function(data) {
             var repositories = [];
@@ -59,6 +60,7 @@
         } else {
           deferred.reject('Invalid query');
         }
+
         return deferred.promise;
       };
     }]);

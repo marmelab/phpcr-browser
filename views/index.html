@@ -26,7 +26,6 @@
 
   <body ng-controller="mbFrontCtrl">
     <mb-overlay text="Loading..." show-on="_browser.load" hide-on="_browser.loaded"></mb-overlay>
-
     <div class="navbar navbar-default navbar-fixed-top" role="navigation" ng-controller="mbNavbarCtrl">
       <div class="navbar-header">
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -47,7 +46,7 @@
         </ul>
         <form class="navbar-form navbar-right" id="search" role="search">
           <div class="form-group right-inner-addon">
-            <glyphicon icon="search"></glyphicon>
+            <span class="glyphicon glyphicon-search"></span>
             <input type="text" class="form-control" placeholder="Search" ng-model="search">
           </div>
         </form>
@@ -93,8 +92,6 @@
     <script src="/assets/js/browser/directives/draggable.js"></script>
     <script src="/assets/js/browser/directives/droppable.js"></script>
     <script src="/assets/js/browser/directives/focus-me.js"></script>
-    <script src="/assets/js/browser/directives/ui/glyphicon.js"></script>
-    <script src="/assets/js/browser/directives/ui/font-awesome.js"></script>
     <script src="/assets/js/browser/directives/ui/scrollable.js"></script>
     <script src="/assets/js/browser/directives/ui/overlay.js"></script>
     <script src="/assets/js/browser/directives/ui/repository.js"></script>

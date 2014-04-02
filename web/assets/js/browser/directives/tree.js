@@ -11,7 +11,6 @@
       controller: ['$scope', '$log', 'mbObjectMapper', 'mbTreeView',
         function($scope, $log, ObjectMapper, TreeView) {
           $scope.container = TreeView.getTreeContainer();
-
           $scope.$on('drop.delete', function(e, element) {
             if (element.hasClass('node')) {
               ObjectMapper.find(

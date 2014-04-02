@@ -33,6 +33,10 @@ $app->register(new APIServiceProvider(),array(
     'phpcr_api.mount_prefix'        => '/api'
 ));
 
+$app->get('/', function (Application $app) {
+    return $app->redirect('/browser');
+});
+
 $app->get('/browser/', function (Application $app) {
     return $app['twig']->render('index.html');
 })->bind('home');

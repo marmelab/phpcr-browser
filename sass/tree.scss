@@ -70,8 +70,9 @@
                 }
             }
 
-            .glyphicon-folder-open, .glyphicon-folder-close{
+            .glyphicon-folder-open, .glyphicon-folder-close {
                 cursor: pointer;
+                width: 15px;
             }
         }
     }
@@ -80,6 +81,35 @@
         &::before, &::after{
             border: 0;
         }
+    }
+}
+
+.node {
+    .node-add {
+        font-size: 6pt;
+        visibility: hidden;
+        cursor: pointer;
+
+        &.focus {
+            visibility: visible;
+        }
+    }
+
+    &:hover {
+        .node-add {
+            visibility: visible;
+        }
+    }
+}
+
+.node-create-form {
+    display: inline-block;
+    input {
+        background-color: darken($body-bg, 10%);
+        box-shadow: none;
+        border: none;
+        padding: 0 5px;
+        height: 30px;
     }
 }
 

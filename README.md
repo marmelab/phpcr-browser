@@ -3,7 +3,7 @@ PHPCR Browser
 
 PHPCR Browser provides web interface to explore PHPCR repositories. The current implementation supports Jackalope Jackrabbit.
 
-You can create/delete a workspace (if supported by the repository), delete/move nodes, add/edit/delete properties.
+You can create/delete a workspace (if supported by the repository), add/delete/move nodes, add/edit/delete properties.
 
 ![screenshot](http://marmelab.com/phpcr-browser/img/screenshot.png)
 
