@@ -28,7 +28,7 @@ $ php -S localhost:8000 -t web
 Configuration
 -------------
 
-Create a `config/prod.yml` with the connection settings for the repositories you need to browser. For instance, to use the browser with a local instance of jackrabbit:
+Create a `config/prod.yml` with the connection settings for the repositories you need to browse. For instance, to use the browser with a local instance of jackrabbit:
 
 ```yml
 phpcr_repositories:
