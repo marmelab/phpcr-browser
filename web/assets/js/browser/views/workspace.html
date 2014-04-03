@@ -6,10 +6,23 @@
     </div>
   <div id="content" ng-controller="mbPropertiesCtrl">
       <div id ="properties-header">
-        <span class="path"><span class="glyphicon glyphicon-map-marker"></span> {{ currentNode.getPath() }}</span>
-        <a class="pull-right btn btn-primary btn-sm" ng-class="{ active: displayCreateForm }" ng-click="toggleCreateForm()">
-          <i class="glyphicon glyphicon-plus" ng-show="!displayCreateForm"></i>
-          <i class="glyphicon glyphicon-minus" ng-show="displayCreateForm"></i>
+        <ol class="breadcrumb col-sm-10">
+          <li>
+            <a href="#/{{ currentNode.getWorkspace().getRepository().getName() }}/{{ currentNode.getWorkspace().getName() }}">
+              root
+            </a>
+          </li>
+          <li
+            ng-repeat="(key, n) in breadcrumb"
+            ng-if="n.length > 0">
+            <a href="#/{{ currentNode.getWorkspace().getRepository().getName() }}/{{ currentNode.getWorkspace().getName() }}{{ currentNode.getPath().split('/').slice(0, key + 1).join('/') }}">
+              {{ n }}
+            </a>
+          </li>
+        </ol>
+        <a class="pull-right btn btn-primary btn-sm add-property" ng-class="{ active: displayCreateForm }" ng-click="toggleCreateForm()">
+          <span class="glyphicon glyphicon-plus" ng-show="!displayCreateForm"></span>
+          <span class="glyphicon glyphicon-minus" ng-show="displayCreateForm"></span>
           Add property
         </a>
       </div>
@@ -42,7 +55,7 @@
             <tr class="property-item" data-ng-repeat="property in properties | orderBy:'property.name' | mbJaroWinkler:search" id="{{ property.name }}" draggable="{{ currentNode.getWorkspace().getRepository().supports('node.property.delete') }}" data-name="{{ property.name }}">
               <td><span class="fa fa-bars" title="Drag me to delete me"></span></td>
               <td>
-                <strong>{{ property.name }}</strong>
+                <span class="text-primary">{{ property.name }}</span>
                 <br/>
                 <small><span title="Property type" editable-select="property.type" buttons="no" e-style="margin-top: 5px;" e-ng-options="type.name for type in types" onbeforesave="updatePropertyType(property.name, $data.value)">{{ typeLabel(property.type) }}</span></small>
               </td>

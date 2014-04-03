@@ -70,8 +70,10 @@
     table {
         table-layout: fixed;
         tr {
-            th:first-child {
-                width: 20%;
+            th {
+                height: 25px;
+                padding: 0;
+                font-size: 8pt;
                 vertical-align: middle;
             }
 
@@ -106,16 +108,25 @@
     line-height: 37px;
     background-color: #eee;
     border-left: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
 
-    .btn {
-        margin-top: 3px;
-        margin-right: 5px;
+    .btn.add-property {
+        margin-top: 6px;
+        padding: 2px 5px;
+        position: absolute;
+        right: 5px;
     }
 
-    .path {
-        padding-left: 5px;
+    .breadcrumb {
+        padding: 0;
+        padding-left: 10px;
         font-size: 10pt;
-        @extend .text-primary;
+        line-height: 37px;
+        margin: 0;
+        background-color: transparent;
+        a {
+            color: #000000;
+        }
     }
 }
 

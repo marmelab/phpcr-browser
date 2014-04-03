@@ -11,14 +11,12 @@
 </span>
 
 <a class="text-danger pull-right" ng-if="property.parentName" ng-click="deleteProperty(property.parentName, property.path)"><span class="glyphicon glyphicon-trash"></span></a>
-<table class="table table-bordered table-striped table-hover" ng-if="typeof(property.value) == 'object'">
+<table class="table table-bordered table-striped table-hover" ng-if="typeof(property.value) == 'object' && property.value.length > 0">
     <thead>
-        <th>Name</th>
-        <th>
-            Value
+        <th colspan="2">
             <a class="pull-right" style="margin-right: 10px;" ng-click="displaySubCreateForm = !displaySubCreateForm">
-              <i class="fa fa-plus" ng-show="!displaySubCreateForm"></i>
-              <i class="fa fa-minus" ng-show="displaySubCreateForm"></i>
+              <span class="glyphicon glyphicon-plus" ng-show="!displaySubCreateForm"></span>
+              <span class="glyphicon glyphicon-minus" ng-show="displaySubCreateForm"></span>
             </a>
         </th>
     </thead>

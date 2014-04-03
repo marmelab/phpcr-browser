@@ -22,6 +22,16 @@
         }
       });
 
+      var reloadBreadcrumb = function() {
+        if ($scope.currentNode.getPath() !== '/') {
+          var components = $scope.currentNode.getPath().split('/');
+          components.shift();
+          $scope.breadcrumb = components;
+        } else {
+          $scope.breadcrumb = [];
+        }
+      };
+
       $scope.types = [
         { name: 'undefined', value: 0},
         { name: 'String', value: 1},
@@ -181,6 +191,7 @@
 
       $scope.$watch('currentNode', function(node) {
         if (node) {
+          reloadBreadcrumb();
           reloadProperties();
         }
       });

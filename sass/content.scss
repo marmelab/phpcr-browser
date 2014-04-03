@@ -1,7 +1,7 @@
 @import "bootstrap/mixins";
 @import "compass/css3";
 
-$scrollable-margin-top: 36px;
+$scrollable-margin-top: 37px;
 
 #content {
     @include make-sm-column(9);
