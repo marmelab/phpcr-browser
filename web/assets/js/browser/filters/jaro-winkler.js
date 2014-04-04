@@ -5,6 +5,7 @@
 
     return function(inputs, term) {
       var results = [], name, s1, s2, matchMaxDistance, matchesCount, transpositionCount, p, l, boostThreshold, dj, dw;
+      if (!term || term.trim().length === 0) { return inputs; }
       angular.forEach(inputs, function(input) {
 
         if (!term) {

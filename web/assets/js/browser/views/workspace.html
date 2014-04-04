@@ -63,7 +63,7 @@
               <td><a ng-click="restoreProperty()" id="restore">Yes</a> <a ng-click="backup=null">No</a></td>
             </tr>
             </tr>
-            <tr class="property-item" data-ng-repeat="property in properties | orderBy:'property.name' | mbJaroWinkler:search" id="{{ property.name }}" draggable="{{ currentNode.getWorkspace().getRepository().supports('node.property.delete') }}" data-name="{{ property.name }}">
+            <tr class="property-item" data-ng-repeat="property in properties | mbPropertiesSorter | mbJaroWinkler:search" id="{{ property.name }}" draggable="{{ currentNode.getWorkspace().getRepository().supports('node.property.delete') }}" data-name="{{ property.name }}">
               <td><span class="fa fa-bars" title="Drag me to delete me"></span></td>
               <td>
                 <span class="text-primary">{{ property.name }}</span>
