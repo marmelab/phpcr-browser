@@ -6,7 +6,7 @@
     @extend .table;
     @extend .table-striped;
     @extend .table-hover;
-    table-layout: fixed;
+    /*table-layout: fixed;*/
 
     border: 1px solid #dddddd;
     margin-bottom: $scrollable-margin-top;
@@ -177,4 +177,9 @@
     min-width: 100px;
     display: inline-block;
     margin: 0;
+}
+
+.property-form {
+    position: fixed;
+    top: 87px;
 }
