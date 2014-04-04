@@ -14,7 +14,7 @@
               </a>
             </li>
             <li
-              ng-repeat="(key, n) in breadcrumb"
+              ng-repeat="(key, n) in breadcrumb track by $index"
               ng-if="n.length > 0">
               <a href="#/{{ currentNode.getWorkspace().getRepository().getName() }}/{{ currentNode.getWorkspace().getName() }}{{ currentNode.getPath().split('/').slice(0, key + 2).join('/') }}">
                 {{ n }}
