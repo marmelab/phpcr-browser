@@ -1,6 +1,6 @@
 <div ng-controller="mbWorkspaceCtrl">
   <div id="sidebar">
-      <mb-scrollable class="scrollable-tree">
+      <div class="scrollable scrollable-tree">
         <mb-tree mb-current-node="currentNode"></mb-tree>
       </mb-scrollable>
     </div>
@@ -37,7 +37,7 @@
           </div>
         </div>
       </div>
-      <mb-scrollable class="scrollable-properties">
+      <div class="scrollable scrollable-properties">
         <table id="properties">
           <tbody>
             <tr ng-show="displayCreateForm" class="property-form">
@@ -75,6 +75,6 @@
             </tr>
           </tbody>
         </table>
-    </mb-scrollable>
+    </div>
     <mb-dropper drop="delete"></mb-dropper>
 </div>
