@@ -6,25 +6,29 @@
     </div>
   <div id="content" ng-controller="mbPropertiesCtrl">
       <div id ="properties-header">
-        <ol class="breadcrumb col-sm-10">
-          <li>
-            <a href="#/{{ currentNode.getWorkspace().getRepository().getName() }}/{{ currentNode.getWorkspace().getName() }}">
-              root
-            </a>
-          </li>
-          <li
-            ng-repeat="(key, n) in breadcrumb"
-            ng-if="n.length > 0">
-            <a href="#/{{ currentNode.getWorkspace().getRepository().getName() }}/{{ currentNode.getWorkspace().getName() }}{{ currentNode.getPath().split('/').slice(0, key + 1).join('/') }}">
-              {{ n }}
-            </a>
-          </li>
-        </ol>
-        <a class="pull-right btn btn-primary btn-sm add-property" ng-class="{ active: displayCreateForm }" ng-click="toggleCreateForm()">
-          <span class="glyphicon glyphicon-plus" ng-show="!displayCreateForm"></span>
-          <span class="glyphicon glyphicon-minus" ng-show="displayCreateForm"></span>
-          Add property
-        </a>
+        <div class="col-sm-11">
+          <ol class="breadcrumb">
+            <li>
+              <a href="#/{{ currentNode.getWorkspace().getRepository().getName() }}/{{ currentNode.getWorkspace().getName() }}">
+                root
+              </a>
+            </li>
+            <li
+              ng-repeat="(key, n) in breadcrumb"
+              ng-if="n.length > 0">
+              <a href="#/{{ currentNode.getWorkspace().getRepository().getName() }}/{{ currentNode.getWorkspace().getName() }}{{ currentNode.getPath().split('/').slice(0, key + 2).join('/') }}">
+                {{ n }}
+              </a>
+            </li>
+          </ol>
+        </div>
+        <div class="col-sm-1">
+          <a class="btn btn-primary btn-sm add-property" ng-class="{ active: displayCreateForm }" ng-click="toggleCreateForm()">
+            <span class="glyphicon glyphicon-plus" ng-show="!displayCreateForm"></span>
+            <span class="glyphicon glyphicon-minus" ng-show="displayCreateForm"></span>
+            Add property
+          </a>
+        </div>
       </div>
       <mb-scrollable class="scrollable-properties">
         <table id="properties">
@@ -56,10 +60,11 @@
               <td><span class="fa fa-bars" title="Drag me to delete me"></span></td>
               <td>
                 <span class="text-primary">{{ property.name }}</span>
-                <br/>
+              </td>
+              <td mb-property-value></td>
+              <td>
                 <small><span title="Property type" editable-select="property.type" buttons="no" e-style="margin-top: 5px;" e-ng-options="type.name for type in types" onbeforesave="updatePropertyType(property.name, $data.value)">{{ typeLabel(property.type) }}</span></small>
               </td>
-              <td colspan="2" mb-property-value></td>
             </tr>
           </tbody>
         </table>
