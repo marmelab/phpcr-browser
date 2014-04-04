@@ -6,7 +6,7 @@
     </div>
   <div id="content" ng-controller="mbPropertiesCtrl">
       <div id ="properties-header">
-        <div class="col-sm-11">
+        <div class="col-sm-10">
           <ol class="breadcrumb">
             <li>
               <a href="#/{{ currentNode.getWorkspace().getRepository().getName() }}/{{ currentNode.getWorkspace().getName() }}">
@@ -22,24 +22,31 @@
             </li>
           </ol>
         </div>
-        <div class="col-sm-1">
-          <a class="btn btn-primary btn-sm add-property" ng-class="{ active: displayCreateForm }" ng-click="toggleCreateForm()">
-            <span class="glyphicon glyphicon-plus" ng-show="!displayCreateForm"></span>
-            <span class="glyphicon glyphicon-minus" ng-show="displayCreateForm"></span>
-            Add property
-          </a>
+        <div class="col-sm-2">
+          <div class="toolbar text-right">
+            <a class="btn btn-primary btn-sm" ng-show="!displayCreateForm" ng-class="{ active: displayCreateForm }" ng-click="toggleCreateForm()">
+              <span class="glyphicon glyphicon-plus"></span>
+              Add property
+            </a>
+            <a class="btn btn-default btn-sm validate" ng-click="toggleCreateForm()" ng-show="displayCreateForm">
+              <span class="glyphicon glyphicon-remove"></span> Cancel
+            </a>
+            <a class="btn btn-primary btn-sm validate" ng-click="createProperty(name, value, type.value)" ng-show="displayCreateForm">
+              <span class="glyphicon glyphicon-ok"></span> Save
+            </a>
+          </div>
         </div>
       </div>
       <mb-scrollable class="scrollable-properties">
         <table id="properties">
           <tbody>
-            <tr ng-show="displayCreateForm" class="info">
+            <tr ng-show="displayCreateForm" class="property-form">
               <td></td>
               <td>
                 <input type="text" ng-model="name" mb-focus-me="displayCreateForm" class="form-control" placeholder="Enter a name" ui-keypress="{ enter: 'createProperty(name, value, type.value)' }" ui-keydown="{ esc: 'toggleCreateForm()' }">
               </td>
               <td>
-                <input type="text" ng-model="value" class="form-control" placeholder="Then enter a value and press Enter" ui-keypress="{ enter: 'createProperty(name, value, type.value)' }" ui-keydown="{ esc: 'toggleCreateForm()' }">
+                <input type="text" ng-model="value" class="form-control" placeholder="Enter a value" ui-keypress="{ enter: 'createProperty(name, value, type.value)' }" ui-keydown="{ esc: 'toggleCreateForm()' }">
               </td>
               <td>
                 <select ng-model="type" class="form-control" ng-options="type.name for type in types">

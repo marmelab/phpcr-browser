@@ -38,7 +38,7 @@
 
         &:first-child td {
             border-top: none;
-        };
+        }
 
         td:nth-child(2) {
             /* Name column */
@@ -114,20 +114,15 @@
     }
 }
 
+@include table-row-variant('property-form', #ddd);
+
 #properties-header {
     height: 37px;
     line-height: 37px;
     background-color: #eee;
     border-left: 1px solid #ddd;
     border-bottom: 1px solid #ddd;
-
-    .btn.add-property {
-        margin-top: 6px;
-        padding: 2px 5px;
-        position: absolute;
-        right: 5px;
-    }
-
+    overflow: hidden;
     .breadcrumb {
         padding: 0;
         padding-left: 10px;
@@ -137,12 +132,24 @@
         white-space: nowrap;
         overflow: hidden;
         background-color: transparent;
-        width: inherit;
 
         a {
             color: #000000;
             white-space: nowrap;
             text-overflow: ellipsis;
+        }
+    }
+
+    .toolbar {
+        margin-top: -2px;
+        .btn {
+            padding: 2px 10px;
+        }
+
+        .btn.validate {
+            margin-top: 12px;
+            padding: 4px 10px;
+            padding-top: 3px;
         }
     }
 }
