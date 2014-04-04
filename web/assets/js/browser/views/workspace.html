@@ -1,42 +1,57 @@
 <div ng-controller="mbWorkspaceCtrl">
   <div id="sidebar">
-      <mb-scrollable class="scrollable-tree">
+      <div class="scrollable scrollable-tree">
         <mb-tree mb-current-node="currentNode"></mb-tree>
       </mb-scrollable>
     </div>
   <div id="content" ng-controller="mbPropertiesCtrl">
-    <table id="properties-header">
-          <thead>
-            <tr>
-              <th></th>
-              <th>Name</th>
-              <th>Type</th>
-              <th>
-                Value
-                <a class="pull-right" style="margin-right: 10px;" ng-click="toggleCreateForm()">
-                  <i class="fa fa-plus" ng-show="!displayCreateForm"></i>
-                  <i class="fa fa-minus" ng-show="displayCreateForm"></i>
-                  Add property
-                </a>
-              </th>
-            </tr>
-          </thead>
-      </table>
-      <mb-scrollable class="scrollable-properties">
+      <div id ="properties-header">
+        <div class="col-sm-10">
+          <ol class="breadcrumb">
+            <li>
+              <a href="#/{{ currentNode.getWorkspace().getRepository().getName() }}/{{ currentNode.getWorkspace().getName() }}">
+                root
+              </a>
+            </li>
+            <li
+              ng-repeat="(key, n) in breadcrumb"
+              ng-if="n.length > 0">
+              <a href="#/{{ currentNode.getWorkspace().getRepository().getName() }}/{{ currentNode.getWorkspace().getName() }}{{ currentNode.getPath().split('/').slice(0, key + 2).join('/') }}">
+                {{ n }}
+              </a>
+            </li>
+          </ol>
+        </div>
+        <div class="col-sm-2">
+          <div class="toolbar text-right">
+            <a class="btn btn-primary btn-sm" ng-show="!displayCreateForm" ng-class="{ active: displayCreateForm }" ng-click="toggleCreateForm()">
+              <span class="glyphicon glyphicon-plus"></span>
+              Add property
+            </a>
+            <a class="btn btn-default btn-sm validate" ng-click="toggleCreateForm()" ng-show="displayCreateForm">
+              <span class="glyphicon glyphicon-remove"></span> Cancel
+            </a>
+            <a class="btn btn-primary btn-sm validate" ng-click="createProperty(name, value, type.value)" ng-show="displayCreateForm">
+              <span class="glyphicon glyphicon-ok"></span> Save
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="scrollable scrollable-properties">
         <table id="properties">
           <tbody>
-            <tr ng-show="displayCreateForm" class="info">
+            <tr ng-show="displayCreateForm" class="property-form">
               <td></td>
               <td>
                 <input type="text" ng-model="name" mb-focus-me="displayCreateForm" class="form-control" placeholder="Enter a name" ui-keypress="{ enter: 'createProperty(name, value, type.value)' }" ui-keydown="{ esc: 'toggleCreateForm()' }">
               </td>
               <td>
+                <input type="text" ng-model="value" class="form-control" placeholder="Enter a value" ui-keypress="{ enter: 'createProperty(name, value, type.value)' }" ui-keydown="{ esc: 'toggleCreateForm()' }">
+              </td>
+              <td>
                 <select ng-model="type" class="form-control" ng-options="type.name for type in types">
                   <option value="">Type</option>
                 </select>
-              </td>
-              <td>
-                <input type="text" ng-model="value" class="form-control" placeholder="Enter a value" ui-keypress="{ enter: 'createProperty(name, value, type.value)' }" ui-keydown="{ esc: 'toggleCreateForm()' }">
               </td>
             </tr>
             <tr ng-show="backup !== null" class="warning">
@@ -48,14 +63,18 @@
               <td><a ng-click="restoreProperty()" id="restore">Yes</a> <a ng-click="backup=null">No</a></td>
             </tr>
             </tr>
-            <tr class="property-item" data-ng-repeat="property in properties | mbJaroWinkler:search" id="{{ property.name }}" draggable="{{ currentNode.getWorkspace().getRepository().supports('node.property.delete') }}" data-name="{{ property.name }}">
+            <tr class="property-item" data-ng-repeat="property in properties | orderBy:'property.name' | mbJaroWinkler:search" id="{{ property.name }}" draggable="{{ currentNode.getWorkspace().getRepository().supports('node.property.delete') }}" data-name="{{ property.name }}">
               <td><span class="fa fa-bars" title="Drag me to delete me"></span></td>
-              <td>{{ property.name }}</td>
-              <td><span title="Property type" editable-select="property.type" buttons="no" e-style="margin-top: 5px;" e-ng-options="type.name for type in types" onbeforesave="updatePropertyType(property.name, $data.value)" class="label label-info">{{ typeLabel(property.type) }}</span></td>
+              <td>
+                <span class="text-primary">{{ property.name }}</span>
+              </td>
               <td mb-property-value></td>
+              <td>
+                <small><span title="Property type" editable-select="property.type" buttons="no" e-style="margin-top: 5px;" e-ng-options="type.name for type in types" onbeforesave="updatePropertyType(property.name, $data.value)">{{ typeLabel(property.type) }}</span></small>
+              </td>
             </tr>
           </tbody>
         </table>
-    </mb-scrollable>
+    </div>
     <mb-dropper drop="delete"></mb-dropper>
 </div>
