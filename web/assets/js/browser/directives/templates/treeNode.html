@@ -25,7 +25,7 @@
         ng-click="">
     </span>
     <a
-        ng-class="node.selected"
+        ng-class="{ 'active': (node.path === currentNode.getPath()) }"
         ng-click="toggleCollapsed(node)"
         id="{{ tree.id }}"
         class="node">
