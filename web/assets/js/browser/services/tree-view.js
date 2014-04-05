@@ -1,8 +1,8 @@
-(function(angular, app) {
+(function($, angular, app) {
   'use strict';
 
-  app.service('mbTreeView', ['$rootScope', '$location', '$log', '$anchorScroll', 'mbObjectMapper', 'mbRouteParametersConverter',
-    function($rootScope, $location, $log, $anchorScroll, ObjectMapper, RouteParametersConverter) {
+  app.service('mbTreeView', ['$rootScope', '$location', '$log', '$window', 'mbObjectMapper', 'mbRouteParametersConverter',
+    function($rootScope, $location, $log, $window, ObjectMapper, RouteParametersConverter) {
     var container = {
       tree: {}
     };
@@ -96,6 +96,11 @@
     $rootScope.$emit('browser.load');
     initContainer();
 
+    var scrollTop = 0;
+    $rootScope.$on('$stateChangeSuccess', function(){
+      scrollTop = $('.scrollable-tree').scrollTop();
+    });
+
     $rootScope.$on('$stateChangeSuccess', function(evt, toState, toParams, fromState, fromParams){
       if (toState.name === 'workspace' && fromState.name !== 'workspace') {
         $rootScope.$emit('browser.load');
@@ -113,10 +118,14 @@
 
         var currentNodeLoader = function() {
           var target = find(toParams.path, container.tree['/']);
+
           if (!target.collapsed) {
             RouteParametersConverter.getCurrentNode().then(function(node) {
               target.children = normalize(node.getRawData()).children;
               target.updateInProgress = false;
+              $window.requestAnimFrame(function() {
+                $('.scrollable-tree').scrollTop(scrollTop);
+              });
             }, function(err) {
               $log.error(err, null, false);
               target.updateInProgress = false;
@@ -188,4 +197,4 @@
       });
     });
   }]);
-})(angular, angular.module('browserApp'));
+})($, angular, angular.module('browserApp'));
