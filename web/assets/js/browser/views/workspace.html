@@ -56,11 +56,9 @@
             </tr>
             <tr ng-show="backup !== null" class="warning">
               <td></td>
-              <td>
-                Do you want to restore {{ backup.name }} ?
+              <td colspan="3" style="text-align:left;">
+                Do you want to restore {{ backup.name }} ? <a ng-click="restoreProperty()" id="restore">Yes</a> <a ng-click="backup=null">No</a>
               </td>
-              <td></td>
-              <td><a ng-click="restoreProperty()" id="restore">Yes</a> <a ng-click="backup=null">No</a></td>
             </tr>
             </tr>
             <tr class="property-item" data-ng-repeat="property in properties | mbPropertiesSorter | mbJaroWinkler:search" id="{{ property.name }}" draggable="{{ currentNode.getWorkspace().getRepository().supports('node.property.delete') }}" data-name="{{ property.name }}">

@@ -62,7 +62,7 @@
           for (var p in node.properties) {
             node.properties[p].name = p;
             if (SmartProperty.accept(node.properties[p])) {
-              self._properties[p] = SmartProperty.build(node.properties[p], this);
+              self._properties[p] = SmartProperty.build(node.properties[p], self);
             }
           }
           deferred.resolve(self._properties);

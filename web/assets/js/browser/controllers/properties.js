@@ -1,4 +1,4 @@
-(function(angular, app) {
+(function($, angular, app) {
   'use strict';
 
   app.controller('mbPropertiesCtrl', ['$scope', '$log', '$filter', '$timeout', '$location',
@@ -54,7 +54,8 @@
       };
 
       var reloadProperties = function() {
-        $scope.currentNode.getProperties(false).then(function(rawProperties) {
+        $scope.currentNode.getProperties(false).then(function(properties) {
+          rawProperties = properties;
           $scope.properties = normalize(rawProperties);
         });
       };
@@ -64,6 +65,7 @@
           var temp = { name: name, value: angular.copy(value), path: path, type: rawProperties[name].getType() };
 
           rawProperties[name].delete(path).then(function() {
+            $('.scrollable-properties').scrollTop(0);
             reloadProperties();
             if (!(path && path !== '/')) {
               $scope.backup = temp;
@@ -82,10 +84,12 @@
       };
 
       $scope.createProperty = function(name, value, type, path) {
-        if (!name || name.length === 0) {
-          return $log.error('Name is empty');
-        } else if (!value || value.length === 0) {
-          return $log.error('Value is empty');
+        if (!$scope.backup) {
+          if (!name || name.length === 0) {
+            return $log.error('Name is empty');
+          } else if (!value || value.length === 0) {
+            return $log.error('Value is empty');
+          }
         }
 
         if (path) {
@@ -185,4 +189,4 @@
 
       $scope.typeof = function(o) { return typeof(o); };
     }]);
-})(angular, angular.module('browserApp'));
+})($, angular, angular.module('browserApp'));
