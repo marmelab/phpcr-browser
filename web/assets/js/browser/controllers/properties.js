@@ -1,4 +1,4 @@
-(function(angular, app) {
+(function($, angular, app) {
   'use strict';
 
   app.controller('mbPropertiesCtrl', ['$scope', '$log', '$filter', '$timeout', '$location',
@@ -54,8 +54,10 @@
       };
 
       var reloadProperties = function() {
-        rawProperties = $scope.currentNode.getProperties();
-        $scope.properties = normalize(rawProperties);
+        $scope.currentNode.getProperties(false).then(function(properties) {
+          rawProperties = properties;
+          $scope.properties = normalize(rawProperties);
+        });
       };
 
       $scope.deleteProperty = function(name, path) {
@@ -63,6 +65,7 @@
           var temp = { name: name, value: angular.copy(value), path: path, type: rawProperties[name].getType() };
 
           rawProperties[name].delete(path).then(function() {
+            $('.scrollable-properties').scrollTop(0);
             reloadProperties();
             if (!(path && path !== '/')) {
               $scope.backup = temp;
@@ -81,10 +84,12 @@
       };
 
       $scope.createProperty = function(name, value, type, path) {
-        if (!name || name.length === 0) {
-          return $log.error('Name is empty');
-        } else if (!value || value.length === 0) {
-          return $log.error('Value is empty');
+        if (!$scope.backup) {
+          if (!name || name.length === 0) {
+            return $log.error('Name is empty');
+          } else if (!value || value.length === 0) {
+            return $log.error('Value is empty');
+          }
         }
 
         if (path) {
@@ -119,20 +124,6 @@
       };
 
       $scope.restoreProperty = function() {
-        // if ($scope.backup.path && $scope.backup.path !== '/') {
-        //   $scope.backup.path = $scope.backup.path.split('/');
-        //   $scope.backup.path.pop();
-        //   $scope.backup.path = $scope.backup.path.join('/');
-        //   return rawProperties[$scope.backup.name].insert($scope.backup.path, $scope.backup.value).then(function() {
-        //     reloadProperties();
-        //     $scope.backup = null;
-        //     $log.log('Property restored.');
-        //   }, function(err) {
-        //     if (err.data && err.data.message) { return $log.error(err, err.data.message); }
-        //     $log.error(err);
-        //   });
-        // }
-
         $scope.createProperty($scope.backup.name, $scope.backup.value, $scope.backup.type);
         $scope.backup = null;
       };
@@ -198,4 +189,4 @@
 
       $scope.typeof = function(o) { return typeof(o); };
     }]);
-})(angular, angular.module('browserApp'));
+})($, angular, angular.module('browserApp'));

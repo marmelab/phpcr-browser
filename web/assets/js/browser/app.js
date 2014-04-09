@@ -3,9 +3,8 @@
 
   angular.module('browserApp', ['ui.router', 'ui.keypress', 'restangular', 'talker', 'toaster', 'xeditable'])
   .value('$anchorScroll', angular.noop)
-  .config(function($stateProvider, $urlRouterProvider, $uiViewScrollProvider, RestangularProvider){
+  .config(function($stateProvider, $urlRouterProvider, RestangularProvider){
     RestangularProvider.setDefaultHttpFields({cache: true});
-    $uiViewScrollProvider.useAnchorScroll();
     $urlRouterProvider
       .when('', '/')
       .otherwise('/');
@@ -23,6 +22,23 @@
         url: '/:repository/:workspace{path:(?:/.*)?}',
         templateUrl: '/assets/js/browser/views/workspace.html'
       });
+  })
+  .config(function($provide) {
+    $provide.decorator('$window', ['$delegate', function($delegate) {
+      $delegate.requestAnimFrame = (function(){
+        return (
+            $delegate.requestAnimationFrame       ||
+            $delegate.webkitRequestAnimationFrame ||
+            $delegate.mozRequestAnimationFrame    ||
+            $delegate.oRequestAnimationFrame      ||
+            $delegate.msRequestAnimationFrame     ||
+            function(/* function */ callback){
+              $delegate.setTimeout(callback, 1000 / 60);
+            }
+        );
+      })();
+      return $delegate;
+    }]);
   })
   .run(['$rootScope', '$log', 'toaster', 'editableOptions', 'mbEventBridge', function($rootScope, $log, toaster, editableOptions) {
     editableOptions.theme = 'bs3';

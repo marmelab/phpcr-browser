@@ -12,6 +12,9 @@
 
     td {
         background-color: $brand-primary!important;
+        > span {
+            color: #000000;
+        }
     }
 }
 

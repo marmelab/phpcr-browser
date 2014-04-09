@@ -49,8 +49,28 @@
       return this._finder('/' + this.getWorkspace().getRepository().getName() + '/' + this.getWorkspace().getName() + '/' + components.join('/'));
     };
 
-    Node.prototype.getProperties = function() {
-      return this._properties;
+    Node.prototype.getProperties = function(cache) {
+      var deferred = $q.defer(), self = this;
+      if (cache !==undefined && !cache) {
+        ApiFoundation.getNode(
+          this.getWorkspace().getRepository().getName(),
+          this.getWorkspace().getName(),
+          this.getPath(),
+          {cache: false})
+        .then(function(node) {
+          self._properties = {};
+          for (var p in node.properties) {
+            node.properties[p].name = p;
+            if (SmartProperty.accept(node.properties[p])) {
+              self._properties[p] = SmartProperty.build(node.properties[p], self);
+            }
+          }
+          deferred.resolve(self._properties);
+        }, function(err) {
+          deferred.reject(err);
+        });
+      } else { deferred.resolve(this._properties); }
+      return deferred.promise;
     };
 
     Node.prototype.setProperty = function(name, value, type) {
