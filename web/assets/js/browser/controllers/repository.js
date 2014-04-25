@@ -1,4 +1,12 @@
-(function(angular, app) {
+/* global define */
+/* jshint indent:2 */
+
+define([
+  'app',
+  'angular',
+  'services/workspace-factory',
+  'services/route-parameters-converter'
+], function(app, angular) {
   'use strict';
 
   app.controller('mbRepositoryCtrl', ['$scope', '$log', '$location','mbRouteParametersConverter', 'mbWorkspaceFactory',
@@ -75,4 +83,4 @@
         $log.error(err, 'An error occurred, please retry.');
       });
     }]);
-})(angular, angular.module('browserApp'));
+});

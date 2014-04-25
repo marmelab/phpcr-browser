@@ -1,4 +1,10 @@
-(function(angular, app) {
+/* global define */
+/* jshint indent:2 */
+
+define([
+  'app',
+  'angular'
+], function(app, angular) {
   'use strict';
   // From http://blog.parkji.co.uk/2013/08/11/native-drag-and-drop-in-angularjs.html
   app.directive('droppable', function() {
@@ -61,4 +67,4 @@
       }
     };
   });
-})(angular, angular.module('browserApp'));
+});

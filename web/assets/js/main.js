@@ -1,19 +1,15 @@
-/* global require
-   jshint indent:2
-*/
+/* global require */
+/* jshint indent:2 */
+
 (function() {
   'use strict';
 
-  /**
-   * @see: https://github.com/tnajdek/angular-requirejs-seed
-   */
-  var rootDir = '../../';
   var vendor = function(relPath, uncompressed) {
-    return rootDir + 'bower_components/' + relPath + (!uncompressed ? '.min' : '');
+    return '/bower_components/' + relPath + (!uncompressed ? '.min' : '');
   };
 
   require.config({
-    baseUrl: 'assets/js/browser',
+    baseUrl: '/assets/js/browser',
     paths: {
       // Vendors
       angular:            vendor('angular/angular'),
@@ -21,7 +17,7 @@
       bootstrap:          vendor('bootstrap/dist/js/bootstrap'),
       angularRoute:       vendor('angular-route/angular-route'),
       angularAnimate:     vendor('angular-animate/angular-animate'),
-      angularJSToaster:   vendor('AngularJS-Toaster/toaster'),
+      angularJSToaster:   vendor('AngularJS-Toaster/toaster', true),
       angularUIRouter:    vendor('angular-ui-router/release/angular-ui-router'),
       angularUIKeypress:  vendor('angular-ui-utils/keypress'),
       lodash:             vendor('lodash/dist/lodash'),
@@ -30,13 +26,13 @@
       angularXEditable:   vendor('angular-xeditable/dist/js/xeditable')
     },
     shim: {
-      angular : {'exports' : 'angular'},
+      angular : {'exports' : 'angular', 'deps': ['jquery']},
       angularAnimate: ['angular'],
       angularRoute: ['angular'],
-      angularJSToaster: ['angularAnimate'],
+      angularJSToaster: ['angular', 'angularAnimate'],
       angularUIRouter: ['angular'],
       angularUIKeypress: ['angular'],
-      restangular: ['angular'],
+      restangular: ['angular', 'lodash'],
       talker: ['angular'],
       angularXEditable: ['angular']
     },
@@ -50,7 +46,8 @@
 
   require([
     'angular',
-    'app'
+    'app',
+    'init'
   ], function (angular, app) {
     angular.element().ready(function () {
       angular.resumeBootstrap([app.name]);

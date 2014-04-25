@@ -1,4 +1,9 @@
-(function(angular, app) {
+/* global define */
+/* jshint indent:2 */
+
+define([
+  'app'
+], function(app) {
   'use strict';
 
   app.filter('mbPropertiesSorter', function() {
@@ -27,4 +32,4 @@
       return inputs;
     };
   });
-})(angular, angular.module('browserApp'));
+});

@@ -1,4 +1,10 @@
-(function(app) {
+/* global define */
+/* jshint indent:2 */
+
+define([
+  'app',
+  'services/recursion-helper'
+], function(app) {
   'use strict';
 
   app.directive('mbPropertyValue', ['mbRecursionHelper', function(RecursionHelper) {
@@ -11,4 +17,4 @@
       }
     };
   }]);
-})(angular.module('browserApp'));
+});

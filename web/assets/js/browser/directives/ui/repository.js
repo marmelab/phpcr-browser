@@ -1,4 +1,9 @@
-(function(app) {
+/* global define */
+/* jshint indent:2 */
+
+define([
+  'app'
+], function(app) {
   'use strict';
 
   app.directive('mbRepository', function(){
@@ -13,4 +18,4 @@
       templateUrl: '/assets/js/browser/directives/templates/repository.html'
     };
   });
-})(angular.module('browserApp'));
+});

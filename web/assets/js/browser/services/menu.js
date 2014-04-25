@@ -1,4 +1,11 @@
-(function(app) {
+/* global define */
+/* jshint indent:2 */
+
+define([
+  'app',
+  'services/object-mapper',
+  'services/route-parameters-converter'
+], function(app) {
   'use strict';
 
   app.service('mbMenu', ['$rootScope', 'mbRouteParametersConverter', 'mbObjectMapper',
@@ -98,4 +105,4 @@
       }
     });
   }]);
-})(angular.module('browserApp'));
+});

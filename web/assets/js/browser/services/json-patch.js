@@ -1,4 +1,9 @@
-(function(app) {
+/* global define */
+/* jshint indent:2 */
+
+define([
+  'app'
+], function(app) {
   'use strict';
 
   app.factory('mbJsonPatch', ['$document', '$q', '$rootScope', function ($document, $q, $rootScope) {
@@ -51,4 +56,4 @@
     s.appendChild(scriptTag);
     return defered.promise;
   }]);
-})(angular.module('browserApp'));
+});

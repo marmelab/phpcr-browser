@@ -1,4 +1,9 @@
-(function(app) {
+/* global define */
+/* jshint indent:2 */
+
+define([
+  'app'
+], function(app) {
   'use strict';
   // from http://stackoverflow.com/a/18609594
   app.factory('mbRecursionHelper', ['$compile', function($compile){
@@ -20,4 +25,4 @@
 
     return RecursionHelper;
   }]);
-})(angular.module('browserApp'));
+});

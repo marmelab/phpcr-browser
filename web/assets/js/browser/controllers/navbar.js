@@ -1,4 +1,12 @@
-(function(angular, app) {
+/* global define */
+/* jshint indent:2 */
+
+define([
+  'app',
+  'directives/navbar-item',
+  'filters/jaro-winkler',
+  'services/menu'
+], function(app) {
   'use strict';
 
   app.controller('mbNavbarCtrl', ['$scope', 'mbMenu', function($scope, mbMenu) {
@@ -7,4 +15,4 @@
       $scope.$emit('_search.change', value);
     });
   }]);
-})(angular, angular.module('browserApp'));
+});

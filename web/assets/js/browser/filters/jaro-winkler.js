@@ -1,4 +1,10 @@
-(function(angular, app) {
+/* global define */
+/* jshint indent:2 */
+
+define([
+  'app',
+  'angular'
+], function(app, angular) {
   'use strict';
 
   app.filter('mbJaroWinkler', function() {
@@ -61,4 +67,4 @@
       return obj;
     };
   });
-})(angular, angular.module('browserApp'));
+});

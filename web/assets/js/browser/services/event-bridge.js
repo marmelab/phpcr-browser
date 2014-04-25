@@ -1,4 +1,9 @@
-(function(app) {
+/* global define */
+/* jshint indent:2 */
+
+define([
+  'app'
+], function(app) {
   'use strict';
 
   app.service('mbEventBridge', ['$rootScope', function($rootScope){
@@ -10,4 +15,4 @@
       $rootScope.$broadcast('_browser.loaded');
     });
   }]);
-})(angular.module('browserApp'));
+});

@@ -1,4 +1,10 @@
-(function(app) {
+/* global define */
+/* jshint indent:2 */
+
+define([
+  'app',
+  'services/json-patch',
+], function(app) {
   'use strict';
 
   app.factory('mbSmartProperty', ['$q', 'mbJsonPatch', function($q, JsonPatch) {
@@ -98,4 +104,4 @@
       }
     };
   }]);
-})(angular.module('browserApp'));
+});

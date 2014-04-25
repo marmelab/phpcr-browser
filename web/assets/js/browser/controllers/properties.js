@@ -1,4 +1,11 @@
-(function($, angular, app) {
+/* global define, $ */
+/* jshint indent:2 */
+
+define([
+  'app',
+  'angular',
+  'filters/properties-sorter'
+], function(app, angular) {
   'use strict';
 
   app.controller('mbPropertiesCtrl', ['$scope', '$log', '$filter', '$timeout', '$location',
@@ -189,4 +196,4 @@
 
       $scope.typeof = function(o) { return typeof(o); };
     }]);
-})($, angular, angular.module('browserApp'));
+});

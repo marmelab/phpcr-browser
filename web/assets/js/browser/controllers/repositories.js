@@ -1,4 +1,11 @@
-(function(angular, app) {
+/* global define */
+/* jshint indent:2 */
+
+define([
+  'app',
+  'directives/ui/repository',
+  'services/object-mapper'
+], function(app) {
   'use strict';
 
   app.controller('mbRepositoriesCtrl', ['$scope', '$location', '$log', 'mbObjectMapper',
@@ -19,4 +26,4 @@
         $log.error(err, 'An error occurred, please retry.');
       });
     }]);
-})(angular, angular.module('browserApp'));
+});

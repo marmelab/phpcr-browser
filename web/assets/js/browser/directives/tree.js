@@ -1,4 +1,11 @@
-(function(app) {
+/* global define */
+/* jshint indent:2 */
+
+define([
+  'app',
+  'services/object-mapper',
+  'services/tree-view'
+], function(app) {
   'use strict';
 
   app.directive('mbTree', function() {
@@ -61,4 +68,4 @@
         }]
     };
   });
-})(angular.module('browserApp'));
+});

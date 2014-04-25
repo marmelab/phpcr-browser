@@ -1,4 +1,12 @@
-(function(angular, app) {
+/* global define */
+/* jshint indent:2 */
+
+define([
+  'app',
+  'angular',
+  'services/api-foundation',
+  'services/smart-property'
+], function(app, angular) {
   'use strict';
 
   app.factory('mbNodeFactory', ['$q', 'mbApiFoundation', 'mbSmartProperty', function($q, ApiFoundation, SmartProperty) {
@@ -191,4 +199,4 @@
       }
     };
   }]);
-})(angular, angular.module('browserApp'));
+});
