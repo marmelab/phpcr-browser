@@ -27,6 +27,7 @@
     },
     shim: {
       angular : {'exports' : 'angular', 'deps': ['jquery']},
+      bootstrap: ['jquery'],
       angularAnimate: ['angular'],
       angularRoute: ['angular'],
       angularJSToaster: ['angular', 'angularAnimate'],
@@ -45,10 +46,12 @@
   window.name = 'NG_DEFER_BOOTSTRAP!';
 
   require([
+    'jquery',
+    'bootstrap',
     'angular',
     'app',
     'init'
-  ], function (angular, app) {
+  ], function (jquery, bootstrap, angular, app) {
     angular.element().ready(function () {
       angular.resumeBootstrap([app.name]);
     });
