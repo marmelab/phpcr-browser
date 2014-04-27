@@ -17,17 +17,6 @@ $ composer install
 $ bower install
 ```
 
-Add a VirtualHost to your Apache config (and add in it 'AllowEncodedSlashes On'), or use PHP 5.4 integrated webserver by calling:
-
-```sh
-$ php -S localhost:8000 -t web
-```
-
-**Known issue**: Node paths containing a period are not working with the PHP integrated webserver as it tries to access a non-existing file instead of PHPCR browser `index.php`.
-
-Configuration
--------------
-
 Create a `config/prod.yml` with the connection settings for the repositories you need to browse. For instance, to use the browser with a local instance of jackrabbit:
 
 ```yml
@@ -43,6 +32,18 @@ phpcr_repositories:
 The `factory` setting is the type of PHPCR repository you want to browse. See available factories in [marmelab/phpcr-api/config/factories.yml](https://github.com/marmelab/phpcr-api/blob/master/config/factories.yml).
 
 You can also copy the `config/prod.yml-dist` file as `config/prod.yml` to get this exact configuration.
+
+Copy also the angular app config dist file :
+
+```
+cp web/assets/js/browser/config.js-dist web/assets/js/browser/config.js
+```
+
+Add a VirtualHost to your Apache config (and add in it 'AllowEncodedSlashes On'), or use PHP 5.4 integrated webserver by calling:
+
+```sh
+$ php -S localhost:8000 -t web
+```
 
 You can now access the repository by browsing to http://localhost:8000/browser (or equivalent domain as configured in your virtual host).
 

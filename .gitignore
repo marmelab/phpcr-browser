@@ -2,4 +2,5 @@ web/bower_components/
 vendor/
 config/dev.yml
 config/prod.yml
+web/assets/js/browser/config.js
 .sass-cache

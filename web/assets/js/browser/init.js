@@ -4,13 +4,20 @@
 define([
   'angular',
   'app',
+  'config',
   'controllers/front',
-  'services/event-bridge'
+  'services/event-bridge',
+  'services/api-foundation'
 ], function(angular, app) {
   'use strict';
 
   app.value('$anchorScroll', angular.noop)
-  .config(function($stateProvider, $urlRouterProvider, RestangularProvider){
+  .config(function($stateProvider, $urlRouterProvider, RestangularProvider, mbApiFoundationProvider, Config){
+    mbApiFoundationProvider.setServer(Config.api.server);
+    mbApiFoundationProvider.setRepositoriesPrefix(Config.api.prefixes.repositories);
+    mbApiFoundationProvider.setWorkspacesPrefix(Config.api.prefixes.workspaces);
+    mbApiFoundationProvider.setNodesPrefix(Config.api.prefixes.nodes);
+
     RestangularProvider.setDefaultHttpFields({cache: true});
     $urlRouterProvider
       .when('', '/')
