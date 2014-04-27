@@ -1,0 +1,15 @@
+{
+  "name": "phpcr-browser",
+  "version": "1.0.0",
+  "repository": "https://github.com/marmelab/phpcr-browser",
+  "scripts": {
+      "test": "./node_modules/karma/bin/karma start ./config/karma.conf.js"
+  },
+  "devDependencies": {
+    "phantomjs" : "~1.9",
+    "karma" : "~0.10",
+    "karma-junit-reporter" : "~0.1",
+    "karma-jasmine" : "~0.1",
+    "protractor" : "~0.17.0"
+  }
+}

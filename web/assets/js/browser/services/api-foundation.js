@@ -81,6 +81,18 @@ define([
       };
 
       return {
+        getServer: function() {
+          return server;
+        },
+        getRepositoriesPrefix: function() {
+          return repositoriesPrefix;
+        },
+        getWorkspacesPrefix: function() {
+          return workspacesPrefix;
+        },
+        getNodesPrefix: function() {
+          return nodesPrefix;
+        },
         getRepositories: function(config) {
           config = config || {};
           return repositories.withHttpConfig(config).getList();
