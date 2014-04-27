@@ -5,7 +5,7 @@
   'use strict';
 
   // // we get all the test files automatically
-  var deps = ['domReady', 'angular', 'app', 'init'];
+  var deps = ['domReady', 'jquery', 'bootstrap', 'angular', 'app', 'init'];
   for (var file in window.__karma__.files) {
     if (window.__karma__.files.hasOwnProperty(file)) {
       if (/^\/base\/tests\/(.*)spec\.js$/i.test(file)) {
@@ -35,10 +35,14 @@
       talker:             vendor('talker/talker-0.1.0'),
       angularXEditable:   vendor('angular-xeditable/dist/js/xeditable'),
       angularMocks:       '/base/tests/lib/angular/angular-mocks',
-      domReady:           vendor('requirejs-domready/domReady', true)
+      domReady:           vendor('requirejs-domready/domReady', true),
+      mixins:             '/base/tests/mixins',
+      fixtures:           '/base/tests/fixtures',
+      mocks:              '/base/tests/mocks'
     },
     shim: {
       angular : {'exports' : 'angular', 'deps': ['jquery']},
+      bootstrap: ['jquery'],
       angularMocks: ['angular'],
       angularAnimate: ['angular'],
       angularRoute: ['angular'],

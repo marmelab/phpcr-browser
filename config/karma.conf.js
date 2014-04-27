@@ -13,7 +13,10 @@ module.exports = function (config) {
       {pattern: 'tests/lib/angular/angular-mocks.js', included: false},
       {pattern: 'tests/{spec,unit}/**/*.js', included: false},
       {pattern: 'web/assets/js/browser/views/**/*.html', watched: true, included: false, served: true},
-      'tests/main.js'
+      'tests/main.js',
+      'tests/fixtures.js',
+      'tests/mixins.js',
+      'tests/mocks.js'
     ],
 
     exclude: [
@@ -29,18 +32,7 @@ module.exports = function (config) {
     plugins: [
       'karma-chrome-launcher',
       'karma-jasmine',
-      'karma-requirejs',
-      //'karma-ng-html2js-preprocessor'
-    ],
-
-    preprocessors: {
-      //location of templates
-     // 'app/views/**/*.html': 'html2js'
-    }
-
-    // ngHtml2JsPreprocessor: {
-    //   // strip app from the file path
-    //   //stripPrefix: 'app/'
-    // }
+      'karma-requirejs'
+    ]
   });
 };
