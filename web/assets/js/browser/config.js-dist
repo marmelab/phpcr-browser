@@ -6,7 +6,7 @@ define([
 ], function (app) {
   'use strict';
 
-  app.constant('Config', {
+  app.constant('mbConfig', {
     api: {
       server: '/index.php/api',
       prefixes: {

@@ -12,11 +12,11 @@ define([
   'use strict';
 
   app.value('$anchorScroll', angular.noop)
-  .config(function($stateProvider, $urlRouterProvider, RestangularProvider, mbApiFoundationProvider, Config){
-    mbApiFoundationProvider.setServer(Config.api.server);
-    mbApiFoundationProvider.setRepositoriesPrefix(Config.api.prefixes.repositories);
-    mbApiFoundationProvider.setWorkspacesPrefix(Config.api.prefixes.workspaces);
-    mbApiFoundationProvider.setNodesPrefix(Config.api.prefixes.nodes);
+  .config(function($stateProvider, $urlRouterProvider, RestangularProvider, mbApiFoundationProvider, mbConfig){
+    mbApiFoundationProvider.setServer(mbConfig.api.server);
+    mbApiFoundationProvider.setRepositoriesPrefix(mbConfig.api.prefixes.repositories);
+    mbApiFoundationProvider.setWorkspacesPrefix(mbConfig.api.prefixes.workspaces);
+    mbApiFoundationProvider.setNodesPrefix(mbConfig.api.prefixes.nodes);
 
     RestangularProvider.setDefaultHttpFields({cache: true});
     $urlRouterProvider
