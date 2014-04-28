@@ -83,22 +83,24 @@ define([
 
     Node.prototype.setProperty = function(name, value, type) {
       var deferred = $q.defer(), self = this;
-      if (this.getProperties()[name] === undefined) {
-        deferred.reject('Unknown property');
-      } else {
-        try {
-          value = (typeof(value) === 'object') ? JSON.stringify(value) : value;
-        } catch (e) {}
-        ApiFoundation.updateNodeProperty(
-          self.getWorkspace().getRepository().getName(),
-          self.getWorkspace().getName(),
-          self.getPath(),
-          name,
-          value,
-          type,
-          {cache: false})
-        .then(deferred.resolve, deferred.reject);
-      }
+      this.getProperties().then(function(properties) {
+        if (properties[name] === undefined) {
+          deferred.reject('Unknown property');
+        } else {
+          try {
+            value = (typeof(value) === 'object') ? JSON.stringify(value) : value;
+          } catch (e) {}
+          ApiFoundation.updateNodeProperty(
+            self.getWorkspace().getRepository().getName(),
+            self.getWorkspace().getName(),
+            self.getPath(),
+            name,
+            value,
+            type,
+            {cache: false})
+          .then(deferred.resolve, deferred.reject);
+        }
+      });
 
       return deferred.promise;
     };

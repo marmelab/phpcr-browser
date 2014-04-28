@@ -23,7 +23,8 @@
       lodash:             vendor('lodash/dist/lodash'),
       restangular:        vendor('restangular/dist/restangular'),
       talker:             vendor('talker/talker-0.1.0'),
-      angularXEditable:   vendor('angular-xeditable/dist/js/xeditable')
+      angularXEditable:   vendor('angular-xeditable/dist/js/xeditable'),
+      jsonpatch:          vendor('jsonpatch/jsonpatch')
     },
     shim: {
       angular : {'exports' : 'angular', 'deps': ['jquery']},

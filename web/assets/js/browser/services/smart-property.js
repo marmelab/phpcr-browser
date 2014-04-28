@@ -36,10 +36,8 @@ define([
       if (!path || path === '/') {
         deferred.resolve(this._property.value);
       } else {
-        JsonPatch.then(function(patcher) {
-          var patchedValue = patcher.get(self._property.value, path);
-          deferred.resolve(patchedValue);
-        }, deferred.reject);
+        var patchedValue = JsonPatch.get(self._property.value, path);
+        deferred.resolve(patchedValue);
       }
       return deferred.promise;
     };
@@ -59,10 +57,8 @@ define([
       }
 
       var deferred = $q.defer(), self = this;
-      JsonPatch.then(function(patcher) {
-        var patchedValue = patcher.insert(self._property.value, path, value);
-        self.setValue(patchedValue).then(deferred.resolve, deferred.reject);
-      }, deferred.reject);
+      var patchedValue = JsonPatch.insert(self._property.value, path, value);
+      self.setValue(patchedValue).then(deferred.resolve, deferred.reject);
 
       return deferred.promise;
     };
@@ -73,10 +69,8 @@ define([
       }
 
       var deferred = $q.defer(), self = this;
-      JsonPatch.then(function(patcher) {
-        var patchedValue = patcher.update(self._property.value, path, value);
-        self.setValue(patchedValue).then(deferred.resolve, deferred.reject);
-      }, deferred.reject);
+      var patchedValue = JsonPatch.update(self._property.value, path, value);
+      self.setValue(patchedValue).then(deferred.resolve, deferred.reject);
 
       return deferred.promise;
     };
@@ -87,10 +81,8 @@ define([
       }
 
       var deferred = $q.defer(), self = this;
-      JsonPatch.then(function(patcher) {
-        var patchedValue = patcher.delete(self._property.value, path);
-        self.setValue(patchedValue).then(deferred.resolve, deferred.reject);
-      }, deferred.reject);
+      var patchedValue = JsonPatch.delete(self._property.value, path);
+      self.setValue(patchedValue).then(deferred.resolve, deferred.reject);
 
       return deferred.promise;
     };
