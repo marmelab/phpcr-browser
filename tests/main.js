@@ -34,6 +34,7 @@
       restangular:        vendor('restangular/dist/restangular'),
       talker:             vendor('talker/talker-0.1.0'),
       angularXEditable:   vendor('angular-xeditable/dist/js/xeditable'),
+      jsonpatch:          vendor('jsonpatch/jsonpatch'),
       angularMocks:       '/base/tests/lib/angular/angular-mocks',
       domReady:           vendor('requirejs-domready/domReady', true),
       mixins:             '/base/tests/mixins',
