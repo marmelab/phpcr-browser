@@ -1,4 +1,11 @@
-(function(angular, app) {
+/* global define */
+/* jshint indent:2 */
+
+define([
+  'app',
+  'services/node-factory',
+  'services/recursion-helper'
+], function(app) {
   'use strict';
 
   app.directive('mbTreeNode', ['$log', '$timeout', 'mbRecursionHelper', 'mbNodeFactory',
@@ -65,4 +72,4 @@
       }
     };
   }]);
-})(angular, angular.module('browserApp'));
+});

@@ -13,7 +13,8 @@
     "AngularJS-Toaster": "0.4.5",
     "angular-ui-utils": "bower-keypress",
     "angular-xeditable": "~0.1.8",
-    "jsonpatch": "1.0.0-rc1"
+    "jsonpatch": "1.0.0-rc1",
+    "requirejs": "2.1.11"
   },
   "resolutions": {
     "angular": "1.2.14"

@@ -1,4 +1,12 @@
-(function($, angular, app) {
+/* global define, $ */
+/* jshint indent:2 */
+
+define([
+  'app',
+  'angular',
+  'services/object-mapper',
+  'services/route-parameters-converter'
+], function(app, angular) {
   'use strict';
 
   app.service('mbTreeView', ['$rootScope', '$location', '$log', '$window', 'mbObjectMapper', 'mbRouteParametersConverter',
@@ -197,4 +205,4 @@
       });
     });
   }]);
-})($, angular, angular.module('browserApp'));
+});

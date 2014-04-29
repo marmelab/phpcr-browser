@@ -1,11 +1,16 @@
-(function(app) {
+/* global define */
+/* jshint indent:2 */
+
+define([
+  'app',
+], function(app) {
   'use strict';
 
   app.provider('mbApiFoundation', function() {
-    var server = '/api';
-    var repositoriesPrefix = 'repositories';
-    var workspacesPrefix = 'workspaces';
-    var nodesPrefix = 'nodes';
+    var server,
+        repositoriesPrefix,
+        workspacesPrefix,
+        nodesPrefix;
 
     this.setServer = function(value) {
       server = value;
@@ -151,4 +156,4 @@
       };
     }];
   });
-})(angular.module('browserApp'));
+});

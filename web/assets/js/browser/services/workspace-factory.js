@@ -1,4 +1,10 @@
-(function(app) {
+/* global define */
+/* jshint indent:2 */
+
+define([
+  'app',
+  'services/api-foundation'
+], function(app) {
   'use strict';
 
   app.factory('mbWorkspaceFactory', ['$q', 'mbApiFoundation', function($q, ApiFoundation) {
@@ -50,4 +56,4 @@
       }
     };
   }]);
-})(angular.module('browserApp'));
+});

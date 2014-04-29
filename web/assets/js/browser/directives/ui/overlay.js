@@ -1,4 +1,9 @@
-(function(app) {
+/* global define */
+/* jshint indent:2 */
+
+define([
+  'app'
+], function(app) {
   'use strict';
 
   app.directive('mbOverlay', function(){
@@ -21,4 +26,4 @@
       }
     };
   });
-})(angular.module('browserApp'));
+});

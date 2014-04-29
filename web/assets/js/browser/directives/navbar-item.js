@@ -1,4 +1,9 @@
-(function(app) {
+/* global define */
+/* jshint indent:2 */
+
+define([
+  'app'
+], function(app) {
   'use strict';
 
   app.directive('mbNavbarItem', function() {
@@ -10,4 +15,4 @@
       templateUrl: '/assets/js/browser/directives/templates/navbarItem.html',
     };
   });
-})(angular.module('browserApp'));
+});

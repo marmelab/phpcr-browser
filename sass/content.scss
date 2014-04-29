@@ -15,5 +15,7 @@ $scrollable-margin-top: 37px;
 
     .scrollable {
         margin-top: $scrollable-margin-top;
+        left: 0;
+        right: 0;
     }
 }

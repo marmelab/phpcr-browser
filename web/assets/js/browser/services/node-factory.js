@@ -1,4 +1,12 @@
-(function(angular, app) {
+/* global define */
+/* jshint indent:2 */
+
+define([
+  'app',
+  'angular',
+  'services/api-foundation',
+  'services/smart-property'
+], function(app, angular) {
   'use strict';
 
   app.factory('mbNodeFactory', ['$q', 'mbApiFoundation', 'mbSmartProperty', function($q, ApiFoundation, SmartProperty) {
@@ -75,22 +83,24 @@
 
     Node.prototype.setProperty = function(name, value, type) {
       var deferred = $q.defer(), self = this;
-      if (this.getProperties()[name] === undefined) {
-        deferred.reject('Unknown property');
-      } else {
-        try {
-          value = (typeof(value) === 'object') ? JSON.stringify(value) : value;
-        } catch (e) {}
-        ApiFoundation.updateNodeProperty(
-          self.getWorkspace().getRepository().getName(),
-          self.getWorkspace().getName(),
-          self.getPath(),
-          name,
-          value,
-          type,
-          {cache: false})
-        .then(deferred.resolve, deferred.reject);
-      }
+      this.getProperties().then(function(properties) {
+        if (properties[name] === undefined) {
+          deferred.reject('Unknown property');
+        } else {
+          try {
+            value = (typeof(value) === 'object') ? JSON.stringify(value) : value;
+          } catch (e) {}
+          ApiFoundation.updateNodeProperty(
+            self.getWorkspace().getRepository().getName(),
+            self.getWorkspace().getName(),
+            self.getPath(),
+            name,
+            value,
+            type,
+            {cache: false})
+          .then(deferred.resolve, deferred.reject);
+        }
+      });
 
       return deferred.promise;
     };
@@ -191,4 +201,4 @@
       }
     };
   }]);
-})(angular, angular.module('browserApp'));
+});

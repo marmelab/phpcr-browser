@@ -1,4 +1,13 @@
-(function(angular, app) {
+/* global define */
+/* jshint indent:2 */
+
+define([
+  'app',
+  'directives/property-value',
+  'directives/tree-node',
+  'directives/tree',
+  'services/route-parameters-converter'
+], function(app) {
   'use strict';
 
   app.controller('mbWorkspaceCtrl', ['$scope', '$log', 'mbRouteParametersConverter',
@@ -18,4 +27,4 @@
         $log.error(err);
       });
     }]);
-})(angular, angular.module('browserApp'));
+});

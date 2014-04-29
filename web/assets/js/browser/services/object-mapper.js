@@ -1,4 +1,14 @@
-(function(angular, app) {
+/* global define */
+/* jshint indent:2 */
+
+define([
+  'app',
+  'angular',
+  'services/api-foundation',
+  'services/repository-factory',
+  'services/workspace-factory',
+  'services/node-factory'
+], function(app, angular) {
   'use strict';
 
   app.service('mbObjectMapper', ['$q', 'mbApiFoundation', 'mbRepositoryFactory','mbWorkspaceFactory','mbNodeFactory',
@@ -64,4 +74,4 @@
         return deferred.promise;
       };
     }]);
-})(angular, angular.module('browserApp'));
+});
