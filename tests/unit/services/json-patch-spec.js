@@ -6,7 +6,7 @@ define([
   'angularMocks',
   'app',
   'services/json-patch'
-], function (angular) {
+], function () {
   'use strict';
 
   describe('Service: JsonPatch', function () {

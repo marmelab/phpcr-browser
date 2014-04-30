@@ -7,7 +7,9 @@ define([
   'config',
   'controllers/front',
   'services/event-bridge',
-  'services/api-foundation'
+  'services/api-foundation',
+  'services/menu',
+  'services/menu-builder-factory'
 ], function(angular, app) {
   'use strict';
 
@@ -54,7 +56,7 @@ define([
       return $delegate;
     }]);
   })
-  .run(['$rootScope', '$log', 'toaster', 'editableOptions', 'mbEventBridge', function($rootScope, $log, toaster, editableOptions) {
+  .run(['$rootScope', '$log', 'toaster', 'editableOptions', 'mbEventBridge', 'mbMenu', 'mbMenuBuilderFactory', function($rootScope, $log, toaster, editableOptions, EventBridge, Menu, MenuBuilderFactory) {
     editableOptions.theme = 'bs3';
 
     $log.before('error', function(message, toast, display) {
@@ -89,5 +91,9 @@ define([
     $log.decorate(function(message) {
       return [message]; // To remove toast in the log
     });
+
+    Menu.appendBuilder(MenuBuilderFactory.getRepositoriesBuilder());
+    Menu.appendBuilder(MenuBuilderFactory.getRepositoryBuilder());
+    Menu.appendBuilder(MenuBuilderFactory.getWorkspaceBuilder());
   }]);
 });
