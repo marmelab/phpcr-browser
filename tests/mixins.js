@@ -12,7 +12,16 @@ define('mixins', [], function () {
     return url;
   };
 
+  var buildPromise = function(output) {
+    return {
+      then: function(cb) {
+        cb(output);
+      }
+    };
+  };
+
   return {
-    buildUrl: buildUrl
+    buildUrl: buildUrl,
+    buildPromise: buildPromise
   };
 });
