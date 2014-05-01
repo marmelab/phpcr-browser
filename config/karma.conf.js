@@ -26,13 +26,18 @@ module.exports = function (config) {
 
     autoWatch: false,
     singleRun: true,
-    browsers: ['Chrome'],
+    browsers: ['PhantomJS'],
     colors: true,
 
     plugins: [
       'karma-chrome-launcher',
+      'karma-phantomjs-launcher',
       'karma-jasmine',
       'karma-requirejs'
-    ]
+    ],
+
+    preprocessors: {
+      'web/assets/js/browser/view/**/*.html': 'ng-html2js'
+    }
   });
 };
