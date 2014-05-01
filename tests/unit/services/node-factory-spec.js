@@ -1,4 +1,4 @@
-/*global define,describe,it,beforeEach,module,inject,expect, xit*/
+/*global define,describe,it,beforeEach,module,inject,expect*/
 /* jshint indent:2 */
 
 define([
@@ -16,6 +16,7 @@ define([
         SmartProperty,
         workspace,
         ObjectMapper,
+        $rootScope,
         nodeData = {  name: 'node',
                       path: '/parent/node',
                       hasChildren: true,
@@ -45,7 +46,7 @@ define([
 
     beforeEach(inject(function ($injector) {
       NodeFactory = $injector.get('mbNodeFactory');
-
+      $rootScope = $injector.get('$rootScope');
     }));
 
     it('should accept only valid data', function () {
@@ -173,11 +174,11 @@ define([
       expect(SmartProperty.build.calls.length).toBe(3); // 3 because node returns by the api has 2 properties (see fixture)
     });
 
-    // Skip for now
-    xit('should call updateNodeProperty on ApiFoundation when updateProperty is called', function () {
+    it('should call updateNodeProperty on ApiFoundation when updateProperty is called', function () {
       var node = NodeFactory.build(nodeData, workspace, ObjectMapper.find);
 
       node.setProperty('property', nodeData.properties.property.value, nodeData.properties.property.type);
+      $rootScope.$apply();
       expect(ApiFoundation.updateNodeProperty).toHaveBeenCalledWith(
         workspace.getRepository().getName(),
         workspace.getName(),
@@ -189,7 +190,7 @@ define([
       );
 
       expect(SmartProperty.build).toHaveBeenCalledWith(nodeData.properties.property, node);
-      expect(SmartProperty.build.calls.length).toBe(2);
+      expect(SmartProperty.build.calls.length).toBe(1);
     });
   });
 });

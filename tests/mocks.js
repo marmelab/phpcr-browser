@@ -164,12 +164,24 @@ define('mocks', [
       };
     };
 
+    var buildFactoryMock = function() {
+      return function() {
+        return {
+          build: jasmine.createSpy('build'),
+          accept: jasmine.createSpy('accept').andReturn(true)
+        };
+      };
+    };
+
     return {
       mockServer: mockServer,
       getApiFoundationMock: getApiFoundationMock,
       getRepositoryMock: getRepositoryMock,
       getWorkspaceMock: getWorkspaceMock,
       getObjectMapperMock: getObjectMapperMock,
-      getSmartPropertyMock: getSmartPropertyMock
+      getSmartPropertyMock: getSmartPropertyMock,
+      getRepositoryFactoryMock: buildFactoryMock(),
+      getWorkspaceFactoryMock: buildFactoryMock(),
+      getNodeFactoryMock: buildFactoryMock()
     };
   });
