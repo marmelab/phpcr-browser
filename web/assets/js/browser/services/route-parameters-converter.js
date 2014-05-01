@@ -15,9 +15,11 @@ define([
       };
 
       this.getCurrentWorkspace = function() {
-        return this.getCurrentRepository().then(function(repository) {
-          return repository.getWorkspace($stateParams.workspace);
+        var deferred = $q.defer();
+        this.getCurrentRepository().then(function(repository) {
+          repository.getWorkspace($stateParams.workspace).then(deferred.resolve, deferred.reject);
         });
+        return deferred.promise;
       };
 
       this.getCurrentNode = function(reducedTree) {

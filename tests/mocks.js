@@ -7,8 +7,16 @@ define('mocks', [
     'angular'
   ], function (fixtures, mixins, angular) {
     'use strict';
+    var mockServer,
+        getApiFoundationMock,
+        getRepositoryMock,
+        getWorkspaceMock,
+        getNodeMock,
+        getObjectMapperMock,
+        getSmartPropertyMock;
 
-    var mockServer = function($httpBackend, Config) {
+
+    mockServer = function($httpBackend, Config) {
       var repositoriesUrl = mixins.buildUrl([
         Config.api.server,
         Config.api.prefixes.repositories
@@ -100,7 +108,7 @@ define('mocks', [
         .respond('Property pname deleted');
     };
 
-    var getApiFoundationMock = function() {
+    getApiFoundationMock = function() {
       return {
         getServer: jasmine.createSpy('getServer').andReturn('localhost'),
         getRepositoriesPrefix: jasmine.createSpy('getRepositoriesPrefix').andReturn('repositories'),
@@ -123,30 +131,59 @@ define('mocks', [
       };
     };
 
-    var getRepositoryMock = function() {
+    getRepositoryMock = function() {
       var repository = fixtures.repositories[0];
-
+      var workspace = getWorkspaceMock();
       return {
-        getName: function() { return repository.name; }
+        getName: jasmine.createSpy('getName').andReturn(repository.name),
+        getWorkspace: jasmine.createSpy('getWorkspace').andReturn(mixins.buildPromise(workspace))
       };
     };
 
-    var getWorkspaceMock = function() {
+    getWorkspaceMock = function() {
       var workspace = fixtures.workspaces[0];
-
+      var node = getNodeMock();
       return {
-        getName: function() { return workspace.name; },
-        getRepository: function() { return getRepositoryMock(); }
+        getName: jasmine.createSpy('getName').andReturn(workspace.name),
+        // We don't return repositoryMock to avoid circular dependency
+        getRepository: jasmine.createSpy('getRepository').andReturn({ getName: function() { return fixtures.repositories[0].name; }}),
+        getNode: jasmine.createSpy('getNode').andReturn(mixins.buildPromise(node))
       };
     };
 
-    var getObjectMapperMock = function() {
+    getNodeMock = function() {
+      var node = fixtures.node;
+
       return {
-        find: jasmine.createSpy('find').andReturn(fixtures.node)
+        getName: jasmine.createSpy('getName').andReturn(node.name),
+        // We don't return workspaceMock to avoid circular dependency
+        getWorkspace: jasmine.createSpy('getWorkspace').andReturn({ getName: function() { return fixtures.node.name; }})
       };
     };
 
-    var getSmartPropertyMock = function() {
+    getObjectMapperMock = function() {
+      var repository = getRepositoryMock();
+      var workspace = getWorkspaceMock();
+      var node = getNodeMock();
+      return {
+        find: jasmine.createSpy('find').andCallFake(function(path) {
+          var components = path.split('/');
+          components.shift();
+
+          if (components.length === 0 ) {
+            return mixins.buildPromise([repository]);
+          } else if (components.length === 1) {
+            return mixins.buildPromise(repository);
+          } else if (components.length === 2) {
+            return mixins.buildPromise(workspace);
+          } else {
+            return mixins.buildPromise(node);
+          }
+        })
+      };
+    };
+
+    getSmartPropertyMock = function() {
       return {
         build: jasmine.createSpy('build').andCallFake(function(property, node) {
           return {

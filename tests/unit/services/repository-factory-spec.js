@@ -13,8 +13,7 @@ define([
 
   describe('Service: RepositoryFactory', function () {
     var RepositoryFactory,
-        ObjectMapper,
-        $rootScope;
+        ObjectMapper;
 
     // load the service's module
     beforeEach(module('browserApp'));
@@ -28,7 +27,6 @@ define([
 
     beforeEach(inject(function ($injector) {
       RepositoryFactory = $injector.get('mbRepositoryFactory');
-      $rootScope = $injector.get('$rootScope');
     }));
 
     it('should accept only valid data', function () {
