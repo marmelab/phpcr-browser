@@ -10,7 +10,7 @@ define([
 ], function (mocks) {
   'use strict';
 
-  describe('Service: Menu', function () {
+  describe('Service: ObjectMapper', function () {
     var ObjectMapper,
         ApiFoundation,
         RepositoryFactory,
