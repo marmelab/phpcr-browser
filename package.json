@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "repository": "https://github.com/marmelab/phpcr-browser",
   "scripts": {
-      "test": "./node_modules/karma/bin/karma start ./config/karma.conf.js"
+      "test": "make test"
   },
   "devDependencies": {
     "phantomjs" : "~1.9",
