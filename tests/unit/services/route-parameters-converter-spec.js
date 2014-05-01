@@ -3,7 +3,6 @@
 
 define([
   'mocks',
-  'fixtures',
   'angular',
   'angularMocks',
   'app',
