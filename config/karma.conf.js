@@ -10,7 +10,6 @@ module.exports = function (config) {
     files: [
       {pattern: 'web/bower_components/**/*.js', included: false},
       {pattern: 'web/assets/js/**/*.js', included: false},
-      {pattern: 'tests/lib/angular/angular-mocks.js', included: false},
       {pattern: 'tests/{spec,unit}/**/*.js', included: false},
       {pattern: 'web/assets/js/browser/views/**/*.html', watched: true, included: false, served: true},
       'tests/main.js',
