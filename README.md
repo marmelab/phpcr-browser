@@ -1,5 +1,4 @@
-PHPCR Browser
-=============
+# PHPCR Browser [![Build Status](https://travis-ci.org/marmelab/phpcr-browser.svg?branch=master)](https://travis-ci.org/marmelab/phpcr-browser)
 
 PHPCR Browser provides web interface to explore PHPCR repositories. The current implementation supports Jackalope Jackrabbit.
 
