@@ -195,6 +195,10 @@ define([
       return this._restangular.hasChildren;
     };
 
+    Node.prototype.getFullPath = function() {
+      return this.getWorkspace().getRepository().getName() + '/' + this.getWorkspace().getName() + this.getPath();
+    };
+
     return {
       build: function(node, workspace, finder) {
         return new Node(node, workspace, finder);

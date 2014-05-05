@@ -1,4 +1,4 @@
-/*global define,describe,it,beforeEach,module,inject,expect*/
+/*global define,describe,it,beforeEach,module,inject,expect, jasmine*/
 /* jshint indent:2 */
 
 define([
@@ -41,82 +41,129 @@ define([
 
     it('should add a hasChildren attribute on each node', function () {
       var localTreeData = angular.copy(treeData);
-      var richTree = RichTreeFactory.build(localTreeData, repository);
-      richTree.getTree().find('/').then(function(node) {
-        expect(node.hasChildren).toBe(true);
+      RichTreeFactory.build(localTreeData, repository).then(function(richTree) {
+        richTree.getTree().find('/').then(function(node) {
+          expect(node.hasChildren).toBe(true);
+        });
+        richTree.getTree().find('/child').then(function(node) {
+          expect(node.hasChildren).toBe(true);
+        });
+        richTree.getTree().find('/child/subchild').then(function(node) {
+          expect(node.hasChildren).toBe(false);
+        });
+      }, function() {
+        expect(true).toBe(false); // to trigger an error if needed
       });
-      richTree.getTree().find('/child').then(function(node) {
-        expect(node.hasChildren).toBe(true);
-      });
-      richTree.getTree().find('/child/subchild').then(function(node) {
-        expect(node.hasChildren).toBe(false);
-      });
+
       $rootScope.$apply();
     });
 
     it('should add a draggable attribute on each node except for root', function () {
       var localTreeData = angular.copy(treeData);
-      var richTree = RichTreeFactory.build(localTreeData, repository);
-      richTree.getTree().find('/').then(function(node) {
-        expect(node.draggable).toBeUndefined();
-      });
-      richTree.getTree().find('/child').then(function(node) {
-        expect(node.draggable).toBe(true);
-      });
-      richTree.getTree().find('/child/subchild').then(function(node) {
-        expect(node.draggable).toBe(true);
+      RichTreeFactory.build(localTreeData, repository).then(function(richTree) {
+        richTree.getTree().find('/').then(function(node) {
+          expect(node.draggable).toBeUndefined();
+        });
+        richTree.getTree().find('/child').then(function(node) {
+          expect(node.draggable).toBe(true);
+        });
+        richTree.getTree().find('/child/subchild').then(function(node) {
+          expect(node.draggable).toBe(true);
+        });
+      }, function() {
+        expect(true).toBe(false); // to trigger an error if needed
       });
       $rootScope.$apply();
     });
 
     it('should add a inProgress attribute between pre and post event', function () {
       var localTreeData = angular.copy(treeData);
-      var richTree = RichTreeFactory.build(localTreeData, repository, [
-        {
+
+      var hooks = [ {
           event: TreeFactory.HOOK_PRE_APPEND,
-          callback: function(parentPath, childNode, parent) {
+          callback: jasmine.createSpy('preAppend').andCallFake(function(next, parentPath, childNode, parent) {
             expect(parent.inProgress).toBe(true);
-          }
+            next();
+          })
         },
         {
           event: TreeFactory.HOOK_POST_APPEND,
-          callback: function(parentPath, childNode, parent) {
-            expect(parent.inProgress).toBeUndefined();
-          }
+          callback: jasmine.createSpy('postAppend').andCallFake(function(next, parentPath, childNode, parent) {
+            expect(parent.inProgress).toBe(true);
+            next();
+          })
         },
         {
           event: TreeFactory.HOOK_PRE_REMOVE,
-          callback: function(path, parent) {
+          callback: jasmine.createSpy('preRemove').andCallFake(function(next, path, parent) {
             expect(parent.inProgress).toBe(true);
-          }
+            next();
+          })
         },
         {
           event: TreeFactory.HOOK_POST_REMOVE,
-          callback: function(path, old, parent) {
-            expect(parent.inProgress).toBeUndefined();
-          }
+          callback: jasmine.createSpy('postRemove').andCallFake(function(next, path, old, parent) {
+            expect(parent.inProgress).toBe(true);
+            next();
+          })
         },
         {
           event: TreeFactory.HOOK_PRE_MOVE,
-          callback: function(fromPath, toPath, node) {
+          callback: jasmine.createSpy('preMove').andCallFake(function(next, fromPath, toPath, node) {
             expect(node.inProgress).toBe(true);
-          }
+            next();
+          })
         },
         {
           event: TreeFactory.HOOK_POST_MOVE,
-          callback: function(fromPath, toPath, node) {
-            expect(node.inProgress).toBeUndefined();
-          }
+          callback: jasmine.createSpy('postMove').andCallFake(function(next, fromPath, toPath, node) {
+            expect(node.inProgress).toBe(true);
+            next();
+          })
+        },
+        {
+          event: TreeFactory.HOOK_PRE_REFRESH,
+          callback: jasmine.createSpy('preRefresh').andCallFake(function(next, path, node) {
+            expect(node.inProgress).toBe(true);
+            next();
+          })
+        },
+        {
+          event: TreeFactory.HOOK_POST_REFRESH,
+          callback: jasmine.createSpy('postRefresh').andCallFake(function(next, path, node) {
+            expect(node.inProgress).toBe(true);
+            next();
+          })
         }
-      ]);
+      ];
 
-      richTree.getTree().append('/child', {
-        name: 'subchild2',
-        children: []
+      RichTreeFactory.build(localTreeData, repository, hooks).then(function(richTree) {
+        richTree.getTree().append('/child', {
+          name: 'subchild2',
+          children: []
+        }).then(function() {
+          richTree.getTree().remove('/child/subchild2').finally(function() {
+            expect(hooks[2].callback).toHaveBeenCalled();
+            expect(hooks[3].callback).toHaveBeenCalled();
+          }).then(function() {
+            richTree.getTree().move('/child/subchild', '/').finally(function() {
+              expect(hooks[4].callback).toHaveBeenCalled();
+              expect(hooks[5].callback).toHaveBeenCalled();
+            }).then(function() {
+              richTree.getTree().refresh('/child', { name: 'subchild2' }).then(function(node) {
+                expect(node.inProgress).toBeUndefined();
+                expect(hooks[6].callback).toHaveBeenCalled();
+                expect(hooks[7].callback).toHaveBeenCalled();
+              });
+            });
+          });
+        }).finally(function() {
+          expect(hooks[0].callback).toHaveBeenCalled();
+          expect(hooks[1].callback).toHaveBeenCalled();
+        });
+      }, function() {
+        expect(true).toBe(false); // to trigger an error if needed
       });
-
-      richTree.getTree().remove('/child/subchild2');
-      richTree.getTree().move('/child/subchild', '/');
       $rootScope.$apply();
     });
   });

@@ -9,20 +9,51 @@ define([
 
   app.factory('mbTreeFactory', ['$q', function($q) {
     var decorate = function (tree){
-      for (var node in tree.children) {
-        if (tree.children.hasOwnProperty(node)) {
-          if (tree.path === '/') {
-            node.path = tree.path + node.name;
-          } else {
-            node.path = tree.path + '/' + node.name;
+      var deferred = $q.defer(), self = this;
+
+      var decorateTree = function(tree) {
+        var deferred = $q.defer(), cursor = 0;
+        var next = function(err) {
+          if (err) {
+            return deferred.reject(err);
           }
-          tree.children[node] = decorate.apply(this, [tree.children[node]]);
+          var parent = tree.children[cursor];
+          cursor ++;
+          if (tree.children.length > cursor) {
+            return decorateNode.apply(self, [next, tree.children[cursor], parent]);
+          }
+          deferred.resolve(tree);
+        };
+
+        if (tree.children.length > cursor) {
+          decorateNode.apply(self, [next, tree.children[cursor], tree]);
+        } else {
+          deferred.resolve(tree);
         }
-      }
+        return deferred.promise;
+      };
 
-      this._hook(Tree.HOOK_DECORATE, tree);
+      var decorateNode = function(next, node, parent) {
+        if (parent && parent.path === '/') {
+          node.path = parent.path + node.name;
+        } else if (parent) {
+          node.path = parent.path + '/' + node.name;
+        }
 
-      return tree;
+        decorateTree(node).then(function(node) {
+          self._hook(Tree.HOOK_DECORATE, false, node).then(function() {
+            next();
+          }, next);
+        });
+      };
+
+      decorateNode(function(err) {
+        if (err) {
+          return deferred.reject(err);
+        }
+        deferred.resolve(tree);
+      }, tree);
+      return deferred.promise;
     };
 
     var compact = function(array) {
@@ -43,6 +74,7 @@ define([
     };
 
     var Tree = function(tree, hooks) {
+      var deferred = $q.defer(), self = this;
       this.hooks = {};
 
       if (hooks) {
@@ -50,7 +82,12 @@ define([
           this.registerHook(hooks[i].event, hooks[i].callback);
         }
       }
-      this.tree = { '/': decorate.apply(this, [tree]) };
+
+      decorate.apply(this, [tree]).then(function() {
+        self.tree = { '/': tree };
+        deferred.resolve(self);
+      }, deferred.reject);
+      return deferred.promise;
     };
 
     Tree.HOOK_DECORATE = 1;
@@ -60,6 +97,8 @@ define([
     Tree.HOOK_POST_APPEND = 21;
     Tree.HOOK_PRE_MOVE = 30;
     Tree.HOOK_POST_MOVE = 31;
+    Tree.HOOK_PRE_REFRESH = 40;
+    Tree.HOOK_POST_REFRESH = 41;
 
     Tree.prototype.registerHook = function(event, callback) {
       if (!this.hooks[event]) {
@@ -69,14 +108,33 @@ define([
       this.hooks[event].push(callback);
     };
 
-    Tree.prototype._hook = function(event) {
-      if (this.hooks[event]) {
-        for (var i in this.hooks[event]) {
-          var args = [].slice.apply(arguments);
-          args.shift();
-          this.hooks[event][i].apply(this, args);
+    Tree.prototype._hook = function(event, ignore) {
+      var deferred = $q.defer(), self = this, cursor = 0;
+      if (this.hooks[event] && !ignore) {
+        var args = [].slice.apply(arguments);
+
+        var next = function(err) {
+          if (err) {
+            return deferred.reject(err);
+          }
+
+          cursor++;
+          if (self.hooks[event].length > cursor) {
+            return self.hooks[event][cursor].apply(self, args);
+          }
+          deferred.resolve();
+        };
+
+        args.shift();
+        args[0] = next;
+        if (this.hooks[event].length > cursor) {
+          this.hooks[event][cursor].apply(self, args);
         }
+      } else {
+        deferred.resolve();
       }
+
+      return deferred.promise;
     };
 
     Tree.prototype.getRawTree = function() {
@@ -123,93 +181,110 @@ define([
       return this.find(parentPath(path));
     };
 
-    Tree.prototype.remove = function(path, noHooks) {
+    Tree.prototype.remove = function(path, ignoreHooks) {
       var deferred = $q.defer(), self = this;
-      try {
-        this.find(parentPath(path)).then(function(parent) {
-          if (!noHooks) {
-            self._hook(Tree.HOOK_PRE_REMOVE, path, parent);
-          }
+      this.find(parentPath(path)).then(function(parent) {
+        self._hook(Tree.HOOK_PRE_REMOVE, ignoreHooks, path, parent).then(function() {
           for (var child in parent.children){
             if (parent.children[child] && parent.children[child].path === path) {
               var old = angular.copy(parent.children[child]);
               parent.children[child] = undefined;
               parent.children = compact(parent.children);
-              if (!noHooks) {
-                self._hook(Tree.HOOK_POST_REMOVE, path, old, parent);
-              }
-              deferred.resolve(old);
+
+              self._hook(Tree.HOOK_POST_REMOVE, ignoreHooks, path, old, parent).then(function() {
+                deferred.resolve(old);
+              }, deferred.reject);
+              return;
             }
           }
-        }, function(err) {
-          if (!noHooks) {
-            self._hook(Tree.HOOK_POST_REMOVE, path, undefined);
-          }
+
+          self._hook(Tree.HOOK_POST_REMOVE, ignoreHooks, path, undefined).then(function() {
+            deferred.reject('Unknown node');
+          }, deferred.reject);
+
+        }, deferred.reject);
+      }, function(err) {console.log(self.tree['/'].children);
+        self._hook(Tree.HOOK_POST_REMOVE, ignoreHooks, path, undefined).then(function() {
           deferred.reject(err);
-        });
-      } catch (e) {
-        deferred.reject(e);
-      }
+        }, deferred.reject);
+      });
 
       return deferred.promise;
     };
 
-    Tree.prototype.append = function(parentPath, childNode, noHooks) {
+    Tree.prototype.append = function(parentPath, childNode, ignoreHooks) {
       var deferred = $q.defer(), self = this;
-      try {
-        this.find(parentPath, this.tree['/']).then(function(parent) {
-          if (!noHooks) {
-            self._hook(Tree.HOOK_PRE_APPEND, parentPath, childNode, parent);
-          }
-
+      this.find(parentPath, this.tree['/']).then(function(parent) {
+        self._hook(Tree.HOOK_PRE_APPEND, ignoreHooks, parentPath, childNode, parent).then(function() {
           if (parent.path === '/') {
             childNode.path = parent.path + childNode.name;
           } else {
             childNode.path = parent.path + '/' + childNode.name;
           }
 
-          parent.children.push(decorate.apply(self, [childNode]));
-          if (!noHooks) {
-            self._hook(Tree.HOOK_POST_APPEND, parentPath, childNode, parent);
-          }
-          deferred.resolve(childNode);
-        }, function(err) {
-          if (!noHooks) {
-            self._hook(Tree.HOOK_POST_APPEND, parentPath, undefined);
-          }
-          deferred.reject(err);
-        });
-      } catch (e) {
-        deferred.reject(e);
-      }
+          decorate.apply(self, [childNode]).then(function(childNode) {
+            parent.children.push(childNode);
 
+            self._hook(Tree.HOOK_POST_APPEND, ignoreHooks, parentPath, childNode, parent).then(function() {
+              deferred.resolve(childNode);
+            }, deferred.reject);
+          }, deferred.reject);
+
+        }, deferred.reject);
+      }, function(err) {
+        self._hook(Tree.HOOK_POST_APPEND, ignoreHooks, parentPath, undefined).then(function() {
+          deferred.reject(err);
+        }, deferred.reject);
+      });
       return deferred.promise;
     };
 
     Tree.prototype.move = function(fromPath, toPath) {
       var deferred = $q.defer(), self = this;
-      try {
-        this.find(fromPath).then(function(node) {
-          self._hook(Tree.HOOK_PRE_MOVE, fromPath, toPath, node);
+      this.find(fromPath).then(function(node) {
+        self._hook(Tree.HOOK_PRE_MOVE, false, fromPath, toPath, node).then(function() {
           self.remove(fromPath, true).then(function(node) {
             self.append(toPath, node, true).then(function(node) {
-              self._hook(Tree.HOOK_POST_MOVE, fromPath, toPath, node);
-              deferred.resolve(node);
+              self._hook(Tree.HOOK_POST_MOVE, false, fromPath, toPath, node).then(function() {
+                deferred.resolve(node);
+              }, deferred.reject);
             }, function(err) {
-              self._hook(Tree.HOOK_POST_MOVE, fromPath, toPath, undefined);
-              deferred.reject(err);
+              self._hook(Tree.HOOK_POST_MOVE, false, fromPath, toPath, undefined).then(function() {
+                deferred.reject(err);
+              }, deferred.reject);
             });
           }, function(err) {
-            self._hook(Tree.HOOK_POST_MOVE, fromPath, toPath, undefined);
-            deferred.reject(err);
+            self._hook(Tree.HOOK_POST_MOVE, false, fromPath, toPath, undefined).then(function() {
+              deferred.reject(err);
+            }, deferred.reject);
           });
-        }, function(err) {
-          self._hook(Tree.HOOK_POST_MOVE, fromPath, toPath, undefined);
+        }, deferred.reject);
+      }, function(err) {
+        self._hook(Tree.HOOK_POST_MOVE, false, fromPath, toPath, undefined).then(function() {
           deferred.reject(err);
-        });
-      } catch (e) {
-        deferred.reject(e);
-      }
+        }, deferred.reject);
+      });
+      return deferred.promise;
+    };
+
+    Tree.prototype.refresh = function(path, data) {
+      var deferred = $q.defer(), self = this;
+      this.find(path).then(function(node) {
+        self._hook(Tree.HOOK_PRE_REFRESH, false, path, node, data).then(function() {
+          for (var i in data) {
+            if (data.hasOwnProperty(i)) {
+              node[i] = data[i];
+            }
+          }
+          self._hook(Tree.HOOK_POST_REFRESH, false, path, node, data).then(function() {
+            deferred.resolve(node);
+          }, deferred.reject);
+        }, deferred.reject);
+      }, function(err) {
+        self._hook(Tree.HOOK_POST_REFRESH, false, path, undefined).then(function() {
+          deferred.reject(err);
+        }, deferred.reject);
+      });
       return deferred.promise;
     };
 
@@ -226,7 +301,9 @@ define([
       HOOK_PRE_APPEND: Tree.HOOK_PRE_APPEND,
       HOOK_POST_APPEND: Tree.HOOK_POST_APPEND,
       HOOK_PRE_MOVE: Tree.HOOK_PRE_MOVE,
-      HOOK_POST_MOVE: Tree.HOOK_POST_MOVE
+      HOOK_POST_MOVE: Tree.HOOK_POST_MOVE,
+      HOOK_PRE_REFRESH: Tree.HOOK_PRE_REFRESH,
+      HOOK_POST_REFRESH: Tree.HOOK_POST_REFRESH
     };
   }]);
 });

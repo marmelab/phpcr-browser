@@ -242,6 +242,15 @@ define('mocks', [
       };
     };
 
+    var buildFactoryWithPromiseMock = function() {
+      return function() {
+        return {
+          build: jasmine.createSpy('build').andReturn(mixins.buildPromise({})),
+          accept: jasmine.createSpy('accept').andReturn(true)
+        };
+      };
+    };
+
     return {
       mockServer: mockServer,
       getApiFoundationMock: getApiFoundationMock,
@@ -252,7 +261,7 @@ define('mocks', [
       getSmartPropertyMock: getSmartPropertyMock,
       getRepositoryFactoryMock: buildFactoryMock(),
       getWorkspaceFactoryMock: buildFactoryMock(),
-      getRichTreeFactoryMock: buildFactoryMock(),
+      getRichTreeFactoryMock: buildFactoryWithPromiseMock(),
       getNodeFactoryMock: buildFactoryMock(),
       getJsonPatchMock: getJsonPatchMock,
       getRouteParametersConverterMock: getRouteParametersConverterMock

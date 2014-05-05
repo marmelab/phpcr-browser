@@ -37,57 +37,131 @@ define([
       var self = this;
       hooks = hooks || [];
 
-      this.tree = TreeFactory.build(tree, [
-        {
-          event: TreeFactory.HOOK_DECORATE,
-          callback: function(node) {
-            hasChildren(node, true);
-            isCollapsed(node);
-            isDraggable(node, self.repository);
+      var richTreeHooks = {
+        decorate: [
+          {
+            event: TreeFactory.HOOK_DECORATE,
+            callback: function(next, node) {
+              if (!node) {
+                return next();
+              }
+
+              hasChildren(node, true);
+              isCollapsed(node);
+              isDraggable(node, self.repository);
+              next();
+            }
           }
-        },
-        {
-          event: TreeFactory.HOOK_POST_APPEND,
-          callback: function(parentPath, childNode, parent) {
-            hasChildren(parent);
-            delete parent.inProgress;
+        ],
+        pre: [
+          {
+            event: TreeFactory.HOOK_PRE_APPEND,
+            callback: function(next, parentPath, childNode, parent) {
+              if (!parent) {
+                return next();
+              }
+
+              parent.inProgress = true;
+              next();
+            }
+          },
+          {
+            event: TreeFactory.HOOK_PRE_REMOVE,
+            callback: function(next, path, parent) {
+              if (!parent) {
+                return next();
+              }
+
+              parent.inProgress = true;
+              next();
+            }
+          },
+          {
+            event: TreeFactory.HOOK_PRE_MOVE,
+            callback: function(next, fromPath, toPath, node) {
+              if (!node) {
+                return next();
+              }
+
+              node.inProgress = true;
+              next();
+            }
+          },
+          {
+            event: TreeFactory.HOOK_PRE_REFRESH,
+            callback: function(next, path, node) {
+              if (!node) {
+                return next();
+              }
+
+              node.inProgress = true;
+              next();
+            }
           }
-        },
-        {
-          event: TreeFactory.HOOK_POST_REMOVE,
-          callback: function(path, old, parent) {
-            hasChildren(parent);
-            delete parent.inProgress;
-          }
-        },
-        {
-          event: TreeFactory.HOOK_POST_MOVE,
-          callback: function(fromPath, toPath, node) {
-            this.findParent(node.path).then(function(parent) {
+        ],
+        post: [
+          {
+            event: TreeFactory.HOOK_POST_APPEND,
+            callback: function(next, parentPath, childNode, parent) {
+              if (!parent) {
+                return next();
+              }
+
               hasChildren(parent);
-            });
-            delete node.inProgress;
+              delete parent.inProgress;
+              next();
+            }
+          },
+          {
+            event: TreeFactory.HOOK_POST_REMOVE,
+            callback: function(next, path, old, parent) {
+              if (!parent) {
+                return next();
+              }
+
+              hasChildren(parent);
+              delete parent.inProgress;
+              next();
+            }
+          },
+          {
+            event: TreeFactory.HOOK_POST_MOVE,
+            callback: function(next, fromPath, toPath, node) {
+              if (!node) {
+                return next();
+              }
+
+              this.findParent(node.path).then(function(parent) {
+                hasChildren(parent);
+                delete node.inProgress;
+                next();
+              });
+            }
+          },
+          {
+            event: TreeFactory.HOOK_POST_REFRESH,
+            callback: function(next, path, node) {
+              if (!node) {
+                return next();
+              }
+
+              hasChildren(node, true);
+              delete node.inProgress;
+              next();
+            }
           }
-        },
-        {
-          event: TreeFactory.HOOK_PRE_APPEND,
-          callback: function(parentPath, childNode, parent) {
-            parent.inProgress = true;
-          }
-        },
-        {
-          event: TreeFactory.HOOK_PRE_REMOVE,
-          callback: function(path, parent) {
-            parent.inProgress = true;
-          }
-        },
-        {
-          event: TreeFactory.HOOK_PRE_MOVE,
-          callback: function(fromPath, toPath, node) {
-            node.inProgress = true;
-          }
-        }
-      ].concat(hooks));
+        ]
+      };
+
+      hooks = richTreeHooks.decorate
+                .concat(richTreeHooks.pre)
+                .concat(hooks)
+                .concat(richTreeHooks.post);
+
+      return TreeFactory.build(tree, hooks).then(function(tree) {
+        self.tree = tree;
+        return self;
+      });
     };
 
     RichTree.prototype.getTree = function() {

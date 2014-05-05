@@ -4,18 +4,43 @@
 define([
   'app',
   'services/rich-tree-factory',
+  'services/tree-factory',
   'services/route-parameters-converter'
 ], function(app) {
   'use strict';
 
-  app.factory('mbTreeCache', ['$q', '$window', '$rootScope', 'mbRichTreeFactory', 'mbRouteParametersConverter', function($q, $window, $rootScope, RichTreeFactory, RouteParametersConverter) {
+  app.factory('mbTreeCache', ['$q', '$window', '$rootScope', 'mbRichTreeFactory', 'mbTreeFactory', 'mbRouteParametersConverter', 'mbObjectMapper',
+    function($q, $window, $rootScope, RichTreeFactory, TreeFactory, RouteParametersConverter, ObjectMapper) {
     var cache = {},
-        deferred = $q.defer();
+        deferred = $q.defer(),
+        repository,
+        workspace;
+    var hooks = [
+      {
+        event: TreeFactory.HOOK_PRE_REFRESH,
+        callback: function(next, path, node) {
+          ObjectMapper.find(repository.getName() + '/' + workspace.getName() + path).then(function(_node) {
+            _node.getChildren().then(function(children) {
+              node.children = children;
+              next();
+            });
+          });
+        }
+      }
+    ];
 
     RouteParametersConverter.getCurrentNode(true).then(function(node) {
-      cache.richTree = RichTreeFactory.build(node.getReducedTree()[0], node.getWorkspace().getRepository());
-      $rootScope.$emit('browser.loaded');
-      deferred.resolve(cache.richTree);
+      repository = node.getWorkspace().getRepository();
+      workspace = node.getWorkspace();
+      RichTreeFactory.build(
+        node.getReducedTree()[0],
+        repository,
+        hooks
+      ).then(function(richTree) {
+        cache.richTree = richTree;
+        $rootScope.$emit('browser.loaded');
+        deferred.resolve(cache.richTree);
+      });
     });
 
     var getRichTree = function() {
@@ -38,19 +63,14 @@ define([
         getRichTree().then(function(richTree) {
           var target = richTree.getTree().find(toParams.path);
           if (!target.collapsed) {
-            RouteParametersConverter.getCurrentNode().then(function(node) {
-              richTree.getTree().findParent(toParams.path).then(function(parent) {
-                richTree.getTree().remove(node.getPath()).then(function() {
-                  richTree.getTree().append(parent.path, node.getRawData());
-                });
-              });
+            richTree.getTree().refresh(toParams.path, { collapsed: true} ).then(function() {
 
-              $window.requestAnimFrame(function() {
-                $('.scrollable-tree').scrollTop(scrollTop);
-              });
-            }, function(err) {
-              //$log.error(err, null, false);
             });
+              //});
+
+              // $window.requestAnimFrame(function() {
+              //   $('.scrollable-tree').scrollTop(scrollTop);
+              // });
           }
         });
       }
