@@ -8,8 +8,8 @@ define([
 ], function(app) {
   'use strict';
 
-  app.directive('mbTreeNode', ['$log', '$timeout', 'mbRecursionHelper', 'mbNodeFactory',
-    function($log, $timeout, RecursionHelper, NodeFactory) {
+  app.directive('mbTreeNode', ['$log', '$timeout', 'mbRecursionHelper', 'mbNodeFactory', 'mbTreeCache',
+    function($log, $timeout, RecursionHelper, NodeFactory, TreeCache) {
     return {
       restrict: 'A',
       scope: '=',
@@ -21,18 +21,12 @@ define([
         $scope.container = $scope.$parent.container;
         $scope.order = 'name';
 
-        $scope.toggleCollapsed = function(node) {
-          node.collapsed = !node.collapsed;
-          if (!node.collapsed && $location.path() !== '/' + $scope.container.repository.getName() + '/' + $scope.container.workspace.getName() + node.path) {
-            $scope.node.updateInProgress = true;
-            $timeout(function() { // Timeout to let time for view udpate by forcing an $apply
-              $scope.openNode(node);
-            }, 50);
-          }
-        };
-
         $scope.openNode = function(node) {
-          $location.path('/' + $scope.container.repository.getName() + '/' + $scope.container.workspace.getName() + node.path);
+          var target = '/' + $scope.container.repository.getName() + '/' + $scope.container.workspace.getName() + node.path;
+          if (target !== $location.path()) {
+            return $location.path('/' + $scope.container.repository.getName() + '/' + $scope.container.workspace.getName() + node.path);
+          }
+          TreeCache.toggleNode(node.path);
         };
 
         $scope.toggleCreateForm = function(node) {

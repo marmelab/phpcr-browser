@@ -1,4 +1,4 @@
-/* global define*/
+/* global define,$*/
 /* jshint indent:2 */
 
 define([
@@ -14,16 +14,20 @@ define([
     var cache = {},
         deferred = $q.defer(),
         repository,
-        workspace;
+        workspace,
+        scrollTop;
+
     var hooks = [
       {
         event: TreeFactory.HOOK_PRE_REFRESH,
         callback: function(next, path, node) {
+          if (!node.collapsed) {
+            return next();
+          }
+
           ObjectMapper.find(repository.getName() + '/' + workspace.getName() + path).then(function(_node) {
-            _node.getChildren().then(function(children) {
-              node.children = children;
-              next();
-            });
+            node.children = _node.getRawData().children;
+            next();
           });
         }
       }
@@ -47,6 +51,16 @@ define([
       return deferred.promise;
     };
 
+    var toggleNode = function(path) {
+      return getRichTree().then(function(richTree) {
+        return richTree.getTree().find(path).then(function(node) {
+          return richTree.getTree().refresh(path, { collapsed: !node.collapsed} ).then(function(node) {
+            return node;
+          });
+        });
+      });
+    };
+
     $rootScope.$on('$stateChangeSuccess', function(evt, toState, toParams, fromState, fromParams){
       if (toState.name === 'workspace' && fromState.name !== 'workspace') {
         $rootScope.$emit('browser.load');
@@ -59,25 +73,25 @@ define([
         toParams.repository === fromParams.repository &&
         toParams.workspace === fromParams.workspace &&
         toParams.path !== fromParams.path) {
-
-        getRichTree().then(function(richTree) {
-          var target = richTree.getTree().find(toParams.path);
-          if (!target.collapsed) {
-            richTree.getTree().refresh(toParams.path, { collapsed: true} ).then(function() {
-
-            });
-              //});
-
-              // $window.requestAnimFrame(function() {
-              //   $('.scrollable-tree').scrollTop(scrollTop);
-              // });
-          }
+        toggleNode(toParams.path).then(function() {
+          $('.scrollable-tree').scrollTop(scrollTop);
         });
       }
     });
 
+    $rootScope.$on('$stateChangeStart', function(evt, toState, toParams, fromState, fromParams){
+      if(toState.name === fromState.name &&
+        toState.name === 'workspace' &&
+        toParams.repository === fromParams.repository &&
+        toParams.workspace === fromParams.workspace &&
+        toParams.path !== fromParams.path) {
+        scrollTop = $('.scrollable-tree').scrollTop();
+      }
+    });
+
     return {
-      getRichTree: getRichTree
+      getRichTree: getRichTree,
+      toggleNode: toggleNode
     };
   }]);
 });

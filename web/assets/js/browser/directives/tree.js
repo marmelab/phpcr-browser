@@ -25,7 +25,6 @@ define([
                 repository: workspace.getRepository(),
                 workspace: workspace
               };
-              console.log(richTree.getTree().getRawTree());
             });
           });
           // $scope.$on('drop.delete', function(e, element) {

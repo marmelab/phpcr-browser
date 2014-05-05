@@ -25,6 +25,10 @@ define([
     };
 
     var isCollapsed = function(node) {
+      if (node.collapsed) {
+        return;
+      }
+
       if (node.hasChildren && node.children.length > 0) {
         node.collapsed = false;
       } else {

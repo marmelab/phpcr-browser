@@ -17,10 +17,10 @@ define([
           if (err) {
             return deferred.reject(err);
           }
-          var parent = tree.children[cursor];
+
           cursor ++;
           if (tree.children.length > cursor) {
-            return decorateNode.apply(self, [next, tree.children[cursor], parent]);
+            return decorateNode.apply(self, [next, tree.children[cursor], tree]);
           }
           deferred.resolve(tree);
         };
@@ -203,7 +203,7 @@ define([
           }, deferred.reject);
 
         }, deferred.reject);
-      }, function(err) {console.log(self.tree['/'].children);
+      }, function(err) {
         self._hook(Tree.HOOK_POST_REMOVE, ignoreHooks, path, undefined).then(function() {
           deferred.reject(err);
         }, deferred.reject);
@@ -276,8 +276,10 @@ define([
               node[i] = data[i];
             }
           }
-          self._hook(Tree.HOOK_POST_REFRESH, false, path, node, data).then(function() {
-            deferred.resolve(node);
+          decorate.apply(self, [node]).then(function(node) {
+            self._hook(Tree.HOOK_POST_REFRESH, false, path, node, data).then(function() {
+              deferred.resolve(node);
+            }, deferred.reject);
           }, deferred.reject);
         }, deferred.reject);
       }, function(err) {
