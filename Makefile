@@ -1,10 +1,18 @@
-#/bin/sh
-FILES := $(ls -1 | awk '{ ORS=" "; print; })
+PATH := ${CURDIR}/node_modules/.bin:${CURDIR}/node_modules/karma/bin:${PATH}
 
-style:  sass/*
-		compass compile -e production --force sass/screen.scss
+compass-compile:
+	compass compile -e production --force sass/screen.scss
 
-test:  .FORCE
-		node_modules/karma/bin/karma start config/karma.conf.js $*
+compass-watch:
+	compass watch sass/screen.scss
 
-.FORCE:
+test:
+	karma start config/karma.conf.js
+
+install:
+	composer install --no-interaction
+	npm install
+	bower install --config.interactive=false
+
+install-test:
+	npm install

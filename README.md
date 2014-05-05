@@ -12,8 +12,7 @@ Installation
 To install the web application, run the following commands:
 
 ```sh
-$ composer install
-$ bower install
+$ make install
 ```
 
 Create a `config/prod.yml` with the connection settings for the repositories you need to browse. For instance, to use the browser with a local instance of jackrabbit:
@@ -49,9 +48,14 @@ You can now access the repository by browsing to http://localhost:8000/browser (
 Tests
 -----
 
-Before running tests, install dependencies by running: `npm install`
+Before running tests, install dependencies by running: `make install-test`
 
 Then run the following command: `make test`
+
+Sass
+----
+
+If you update the sass files, run `make compass-watch` for development. When your work is done, run `make compass-compile`.
 
 License
 -------
