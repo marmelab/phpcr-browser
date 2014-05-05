@@ -50,7 +50,7 @@ You can now access the repository by browsing to http://localhost:8000/browser (
 Tests
 -----
 
-Before running tests, install dependencies by running: `npm start`
+Before running tests, install dependencies by running: `npm install`
 
 Then run the following command: `make test`
 
