@@ -14,7 +14,8 @@ define('mocks', [
         getNodeMock,
         getObjectMapperMock,
         getSmartPropertyMock,
-        getJsonPatchMock;
+        getJsonPatchMock,
+        getRouteParametersConverterMock;
 
 
     mockServer = function($httpBackend, Config) {
@@ -137,7 +138,8 @@ define('mocks', [
       var workspace = getWorkspaceMock();
       return {
         getName: jasmine.createSpy('getName').andReturn(repository.name),
-        getWorkspace: jasmine.createSpy('getWorkspace').andReturn(mixins.buildPromise(workspace))
+        getWorkspace: jasmine.createSpy('getWorkspace').andReturn(mixins.buildPromise(workspace)),
+        supports: jasmine.createSpy('supports').andReturn(true)
       };
     };
 
@@ -158,8 +160,16 @@ define('mocks', [
       return {
         getName: jasmine.createSpy('getName').andReturn(node.name),
         // We don't return workspaceMock to avoid circular dependency
-        getWorkspace: jasmine.createSpy('getWorkspace').andReturn({ getName: function() { return fixtures.node.name; }}),
-        setProperty: jasmine.createSpy('setProperty').andReturn(mixins.buildPromise())
+        getWorkspace: jasmine.createSpy('getWorkspace').andReturn({
+          getName: function() { return fixtures.workspaces[0].name; },
+          getRepository: function() {
+            return {
+              getName: function() { return fixtures.repositories[0].name; }
+            };
+          }
+        }),
+        setProperty: jasmine.createSpy('setProperty').andReturn(mixins.buildPromise()),
+        getReducedTree: jasmine.createSpy('getReducedTree').andReturn(fixtures.node.reducedTree)
       };
     };
 
@@ -212,10 +222,21 @@ define('mocks', [
       };
     };
 
+    getRouteParametersConverterMock = function() {
+      var repository = getRepositoryMock(),
+          workspace = getWorkspaceMock(),
+          node = getNodeMock();
+      return {
+        getCurrentRepository: jasmine.createSpy('getCurrentRepository').andReturn(mixins.buildPromise(repository)),
+        getCurrentWorkspace: jasmine.createSpy('getCurrentWorkspace').andReturn(mixins.buildPromise(workspace)),
+        getCurrentNode: jasmine.createSpy('getCurrentNode').andReturn(mixins.buildPromise(node)),
+      };
+    };
+
     var buildFactoryMock = function() {
       return function() {
         return {
-          build: jasmine.createSpy('build'),
+          build: jasmine.createSpy('build').andReturn({}),
           accept: jasmine.createSpy('accept').andReturn(true)
         };
       };
@@ -231,7 +252,9 @@ define('mocks', [
       getSmartPropertyMock: getSmartPropertyMock,
       getRepositoryFactoryMock: buildFactoryMock(),
       getWorkspaceFactoryMock: buildFactoryMock(),
+      getRichTreeFactoryMock: buildFactoryMock(),
       getNodeFactoryMock: buildFactoryMock(),
-      getJsonPatchMock: getJsonPatchMock
+      getJsonPatchMock: getJsonPatchMock,
+      getRouteParametersConverterMock: getRouteParametersConverterMock
     };
   });

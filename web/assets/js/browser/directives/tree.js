@@ -4,7 +4,8 @@
 define([
   'app',
   'services/object-mapper',
-  'services/tree-view'
+  //'services/tree-view',
+  'services/tree-cache'
 ], function(app) {
   'use strict';
 
@@ -15,56 +16,65 @@ define([
         currentNode: '=mbCurrentNode'
       },
       templateUrl: '/assets/js/browser/directives/templates/tree.html',
-      controller: ['$scope', '$log', 'mbObjectMapper', 'mbTreeView',
-        function($scope, $log, ObjectMapper, TreeView) {
-          $scope.container = TreeView.getTreeContainer();
-          $scope.$on('drop.delete', function(e, element) {
-            if (element.hasClass('node')) {
-              ObjectMapper.find(
-                '/' +
-                $scope.container.repository.getName() + '/' +
-                $scope.container.workspace.getName() +
-                element.data('path'))
-              .then(function(node) {
-                node.delete().then(function() {
-                  $scope.$emit('node.deleted', node.getPath());
-                  $log.log('Node deleted.');
-                }, function(err) {
-                  if (err.status === 423) { return $log.warn('You can not delete this node. It is locked.'); }
-                  if (err.data && err.data.message) { return $log.error(err, err.data.message); }
-                  $log.error(err);
-                });
-              }, function(err) {
-                if (err.data && err.data.message) { return $log.error(err, err.data.message); }
-                $log.error(err);
-              });
-            }
+      controller: ['$scope', '$log', 'mbObjectMapper', 'mbRouteParametersConverter', 'mbTreeCache',
+        function($scope, $log, ObjectMapper, RouteParametersConverter, TreeCache) {
+          TreeCache.getRichTree().then(function(richTree) {
+            RouteParametersConverter.getCurrentWorkspace().then(function(workspace) {
+              $scope.richTree = richTree;
+              $scope.container = {
+                repository: workspace.getRepository(),
+                workspace: workspace
+              };
+              console.log(richTree.getTree().getRawTree());
+            });
           });
+          // $scope.$on('drop.delete', function(e, element) {
+          //   if (element.hasClass('node')) {
+          //     ObjectMapper.find(
+          //       '/' +
+          //       $scope.container.repository.getName() + '/' +
+          //       $scope.container.workspace.getName() +
+          //       element.data('path'))
+          //     .then(function(node) {
+          //       node.delete().then(function() {
+          //         $scope.$emit('node.deleted', node.getPath());
+          //         $log.log('Node deleted.');
+          //       }, function(err) {
+          //         if (err.status === 423) { return $log.warn('You can not delete this node. It is locked.'); }
+          //         if (err.data && err.data.message) { return $log.error(err, err.data.message); }
+          //         $log.error(err);
+          //       });
+          //     }, function(err) {
+          //       if (err.data && err.data.message) { return $log.error(err, err.data.message); }
+          //       $log.error(err);
+          //     });
+          //   }
+          // });
 
-          $scope.moveNode = function(elementDropped, element) {
-            if (!elementDropped.hasClass('node') || !element.hasClass('node')) { return; }
-            var name = elementDropped.data('path').split('/').pop();
-            if (elementDropped.data('path') === element.data('path') ||
-              element.data('path') + '/' + name === elementDropped.data('path')) { return; }
-            else if (element.data('path').slice(0, elementDropped.data('path').length) === elementDropped.data('path')) {
-              $log.warn('Unauthorized move.');
-              return;
-            }
-            $scope.container.find(element.data('path'), $scope.container.tree['/']).updateInProgress = true;
-            ObjectMapper.find('/' + $scope.container.repository.getName() +
-              '/' + $scope.container.workspace.getName() +
-              elementDropped.data('path')).then(function(nodeDropped) {
-                nodeDropped.move(element.data('path')).then(function() {
-                  $scope.$emit('node.moved', { from: elementDropped.data('path'), to: element.data('path')});
-                }, function(err) {
-                  if (err.data && err.data.message) { return $log.error(err, err.data.message); }
-                  $log.error(err);
-                });
-              }, function(err) {
-                if (err.data && err.data.message) { return $log.error(err, err.data.message); }
-                $log.error(err);
-              });
-          };
+          // $scope.moveNode = function(elementDropped, element) {
+          //   if (!elementDropped.hasClass('node') || !element.hasClass('node')) { return; }
+          //   var name = elementDropped.data('path').split('/').pop();
+          //   if (elementDropped.data('path') === element.data('path') ||
+          //     element.data('path') + '/' + name === elementDropped.data('path')) { return; }
+          //   else if (element.data('path').slice(0, elementDropped.data('path').length) === elementDropped.data('path')) {
+          //     $log.warn('Unauthorized move.');
+          //     return;
+          //   }
+          //   $scope.container.find(element.data('path'), $scope.container.tree['/']).updateInProgress = true;
+          //   ObjectMapper.find('/' + $scope.container.repository.getName() +
+          //     '/' + $scope.container.workspace.getName() +
+          //     elementDropped.data('path')).then(function(nodeDropped) {
+          //       nodeDropped.move(element.data('path')).then(function() {
+          //         $scope.$emit('node.moved', { from: elementDropped.data('path'), to: element.data('path')});
+          //       }, function(err) {
+          //         if (err.data && err.data.message) { return $log.error(err, err.data.message); }
+          //         $log.error(err);
+          //       });
+          //     }, function(err) {
+          //       if (err.data && err.data.message) { return $log.error(err, err.data.message); }
+          //       $log.error(err);
+          //     });
+          // };
         }]
     };
   });

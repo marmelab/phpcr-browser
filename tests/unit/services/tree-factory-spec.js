@@ -169,7 +169,7 @@ define([
       });
 
       tree.remove('/child/subchild2').then(function(node) {
-        expect(hooks[0].callback).toHaveBeenCalledWith('/child/subchild2', node);
+        expect(hooks[0].callback).toHaveBeenCalledWith('/child/subchild2', node, localTreeData.children[0]);
       }, function() {
         expect(true).toBe(false); // to trigger an error if needed
       });
