@@ -38,7 +38,7 @@ define([
     };
 
     Workspace.prototype.create = function() {
-      if (this.getName().match(/^[a-zA-z][0-9a-zA-z]*$/)) {
+      if (/^[a-zA-z][0-9a-zA-z]*$/.test(this.getName())) {
         return ApiFoundation.createWorkspace(this.getRepository().getName(), this.getName());
       }
 

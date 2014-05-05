@@ -10,7 +10,6 @@ define([
 
     var Repository = function(repository, finder) {
       this._restangular = repository;
-      this._workspacesNotCached = true;
       this._workspaces = [];
       this._finder = finder;
     };

@@ -14,7 +14,8 @@
     "angular-ui-utils": "bower-keypress",
     "angular-xeditable": "~0.1.8",
     "jsonpatch": "1.0.0-rc1",
-    "requirejs": "2.1.11"
+    "requirejs": "2.1.11",
+    "requirejs-domready": "~2.0.1"
   },
   "resolutions": {
     "angular": "1.2.14"

@@ -10,7 +10,12 @@ define([
   'use strict';
 
   app.controller('mbNavbarCtrl', ['$scope', 'mbMenu', function($scope, mbMenu) {
-    $scope.menu = mbMenu.getMenu();
+    $scope.$watch(function() {
+      return mbMenu.getMenu();
+    }, function(menu) {
+      $scope.menu = menu;
+    });
+
     $scope.$watch('search', function(value) {
       $scope.$emit('_search.change', value);
     });

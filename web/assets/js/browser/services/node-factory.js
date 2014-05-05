@@ -54,6 +54,7 @@ define([
     Node.prototype.getParent = function() {
       var components = this.getPath().split('/');
       components.pop();
+      components.shift();
       return this._finder('/' + this.getWorkspace().getRepository().getName() + '/' + this.getWorkspace().getName() + '/' + components.join('/'));
     };
 
@@ -77,7 +78,9 @@ define([
         }, function(err) {
           deferred.reject(err);
         });
-      } else { deferred.resolve(this._properties); }
+      } else {
+        deferred.resolve(this._properties);
+      }
       return deferred.promise;
     };
 
@@ -150,7 +153,7 @@ define([
       var deferred = $q.defer();
       var me = this._finder('/' + this.getWorkspace().getRepository().getName() + '/' + this.getWorkspace().getName() + this.getPath());
       this._restangular = me;
-      deferred.resolve(proxy(this, this.restangular.children));
+      deferred.resolve(proxy(this, this._restangular.children));
       return deferred.promise;
     };
 
