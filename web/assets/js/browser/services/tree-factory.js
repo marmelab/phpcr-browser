@@ -246,10 +246,11 @@ define([
             childNode.path = parent.path + '/' + childNode.name;
           }
 
-          updatePath(parent.path, childNode);
           if (!childNode.children) {
             childNode.children = [];
           }
+
+          updatePath(parent.path, childNode);
 
           decorate.apply(self, [childNode]).then(function(childNode) {
             parent.children.push(childNode);
