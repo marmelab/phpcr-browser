@@ -9,14 +9,18 @@ define([
 ], function(app) {
   'use strict';
 
-  app.directive('mbTree', ['$log', 'mbRouteParametersConverter', 'mbTreeCache', function($log, RouteParametersConverter, TreeCache) {
-    var richTree,
-        scrollTop,
+  app.directive('mbTree', ['$log', 'mbRouteParametersConverter', 'mbTreeCache', function($log) {
+    var scrollTop,
         deleteNode;
 
     return {
       restrict: 'E',
-      scope: {},
+      scope: {
+        currentNode: '=mbCurrentNode',
+        richTree: '=mbRichTree',
+        repository: '=mbRepository',
+        workspace: '=mbWorkspace'
+      },
       templateUrl: '/assets/js/browser/directives/templates/tree.html',
       controller: ['$scope', function($scope) {
         $scope.$on('node.open.start', function(){
@@ -34,18 +38,9 @@ define([
         });
       }],
       link: function(scope) {
-        TreeCache.getRichTree().then(function(rt) {
-          richTree = rt;
-          RouteParametersConverter.getCurrentWorkspace().then(function(workspace) {
-            scope.repository = workspace.getRepository();
-            scope.workspace = workspace;
-            scope.$emit('browser.loaded');
-          });
-        });
-
         deleteNode = function(element) {
           if (element.hasClass('node')) {
-            richTree.getTree().remove(element.data('path')).then(function() {
+            scope.richTree.getTree().remove(element.data('path')).then(function() {
               $log.log('Node deleted.');
             }, function(err) {
               if (err.status === 423) { return $log.warn('You can not delete this node. It is locked.'); }
@@ -55,13 +50,9 @@ define([
           }
         };
 
-        scope.getRichTree = function() {
-          return richTree;
-        };
-
         scope.toggleNode = function(path) {
-          return richTree.getTree().find(path).then(function(node) {
-            return richTree.getTree().refresh(path, { collapsed: !node.collapsed} ).then(function(node) {
+          return scope.richTree.getTree().find(path).then(function(node) {
+            return scope.richTree.getTree().refresh(path, { collapsed: !node.collapsed} ).then(function(node) {
               return node;
             });
           });
@@ -82,7 +73,7 @@ define([
             return;
           }
 
-          richTree.getTree().move(elementDropped.data('path'), element.data('path')).then(function() {
+          scope.richTree.getTree().move(elementDropped.data('path'), element.data('path')).then(function() {
             scope.$emit('node.moved', { from: elementDropped.data('path'), to: element.data('path')});
           }, function(err) {
             if (err.status === 423) { return $log.warn('You can not move this node. It is locked.'); }

@@ -23,9 +23,8 @@ define([
       return this._repository;
     };
 
-    Workspace.prototype.getNode = function(path, reducedTree) {
+    Workspace.prototype.getNode = function(path, params) {
       if (!path) { path = '/'; }
-      var params = reducedTree !== undefined ? { reducedTree: true } : {};
       return this._finder('/' + this.getRepository().getName() + '/' + this.getName() + path, params);
     };
 

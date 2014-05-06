@@ -34,10 +34,14 @@ define([
     $rootScope.$on('$stateChangeStart', function(evt, toState, toParams, fromState, fromParams){
       if (toState.name === 'workspace' && fromState.name !== 'workspace') {
         $rootScope.$broadcast('workspace.open.start', toParams.repository, toParams.workspace);
-      } else if(toState.name === fromState.name &&
+      } else if(toState.name === 'workspace' && toState.name === fromState.name &&
         (toParams.repository !== fromParams.repository ||
         toParams.workspace !== fromParams.workspace)) {
         $rootScope.$broadcast('workspace.open.start', toParams.repository, toParams.workspace);
+      } else if(toState.name === fromState.name &&
+        (toParams.repository !== fromParams.repository ||
+        toParams.workspace !== fromParams.workspace)) {
+        $rootScope.$broadcast('repository.open.start', toParams.repository, toParams.workspace);
       } else if(toState.name === fromState.name &&
         toState.name === 'workspace' &&
         toParams.repository === fromParams.repository &&

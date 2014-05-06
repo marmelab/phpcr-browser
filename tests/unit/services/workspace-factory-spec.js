@@ -48,7 +48,7 @@ define([
       expect(workspace.getRepository()).toEqual(repository);
       expect(workspace.getSlug()).toBe(workspaceData.name.replace(' ', '_'));
 
-      workspace.getNode('/node', true);
+      workspace.getNode('/node', { reducedTree: true });
       expect(ObjectMapper.find).toHaveBeenCalledWith(
         '/' + repository.getName() + '/' + workspaceData.name + '/node',
         { reducedTree: true }

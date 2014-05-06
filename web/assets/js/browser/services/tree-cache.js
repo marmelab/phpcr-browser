@@ -9,10 +9,10 @@ define([
 ], function(app) {
   'use strict';
 
-  app.factory('mbTreeCache', ['$q', 'mbRichTreeFactory', 'mbTreeFactory', 'mbNodeFactory', 'mbRouteParametersConverter', 'mbObjectMapper',
-    function($q, RichTreeFactory, TreeFactory, NodeFactory, RouteParametersConverter, ObjectMapper) {
+  app.factory('mbTreeCache', ['$q', '$rootScope', 'mbRichTreeFactory', 'mbTreeFactory', 'mbNodeFactory', 'mbRouteParametersConverter', 'mbObjectMapper',
+    function($q, $rootScope, RichTreeFactory, TreeFactory, NodeFactory, RouteParametersConverter, ObjectMapper) {
     var cache = {},
-        deferred = $q.defer(),
+        deferred,
         repository,
         workspace;
 
@@ -60,23 +60,33 @@ define([
       }
     ];
 
-    RouteParametersConverter.getCurrentNode(true).then(function(node) {
-      repository = node.getWorkspace().getRepository();
-      workspace = node.getWorkspace();
-      RichTreeFactory.build(
-        node.getReducedTree()[0],
-        repository,
-        hooks
-      ).then(function(richTree) {
-        cache.richTree = richTree;
-        deferred.resolve(cache.richTree);
+    var buildRichTree = function(deferred) {
+      RouteParametersConverter.getCurrentNode({ reducedTree: true, cache: false }).then(function(node) {
+        repository = node.getWorkspace().getRepository();
+        workspace = node.getWorkspace();
+        RichTreeFactory.build(
+          node.getReducedTree()[0],
+          repository,
+          hooks
+        ).then(function(richTree) {
+          cache.richTree = richTree;
+          deferred.resolve(cache.richTree);
+        });
       });
-    });
+    };
 
     var getRichTree = function() {
+      if (!deferred) {
+        deferred = $q.defer();
+        buildRichTree(deferred);
+      }
       return deferred.promise;
     };
 
+    $rootScope.$on('workspace.open.start', function() {
+      deferred = $q.defer();
+      buildRichTree(deferred);
+    });
 
     return {
       getRichTree: getRichTree

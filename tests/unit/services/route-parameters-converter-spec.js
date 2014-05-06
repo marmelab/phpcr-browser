@@ -58,14 +58,14 @@ define([
       RouteParametersConverter.getCurrentWorkspace();
       $rootScope.$apply(); // Force promises resolving
       expect(ObjectMapper.find).toHaveBeenCalledWith('/test');
-      expect(repository.getWorkspace).toHaveBeenCalledWith('default');
+      expect(repository.getWorkspace).toHaveBeenCalledWith('default', undefined);
     });
 
     it('should call find on ObjectMapper when getCurrentNode is called', function () {
       RouteParametersConverter.getCurrentNode();
       $rootScope.$apply(); // Force promises resolving
       expect(ObjectMapper.find).toHaveBeenCalledWith('/test');
-      expect(repository.getWorkspace).toHaveBeenCalledWith('default');
+      expect(repository.getWorkspace).toHaveBeenCalledWith('default', undefined);
       expect(workspace.getNode).toHaveBeenCalledWith('/node', undefined);
     });
   });
