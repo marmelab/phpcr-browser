@@ -8,25 +8,25 @@ define([
 ], function(app) {
   'use strict';
 
-  app.directive('mbTreeNode', ['$log', '$timeout', 'mbRecursionHelper', 'mbNodeFactory', 'mbTreeCache',
-    function($log, $timeout, RecursionHelper, NodeFactory, TreeCache) {
+  app.directive('mbTreeNode', ['$log', '$timeout', 'mbRecursionHelper', 'mbNodeFactory',
+    function($log, $timeout, RecursionHelper, NodeFactory) {
     return {
       restrict: 'A',
+      require: '^mbTree',
       scope: '=',
       templateUrl: '/assets/js/browser/directives/templates/treeNode.html',
       compile: function (element){
         return RecursionHelper.compile(element);
       },
       controller: function($scope, $location) {
-        $scope.container = $scope.$parent.container;
         $scope.order = 'name';
 
         $scope.openNode = function(node) {
-          var target = '/' + $scope.container.repository.getName() + '/' + $scope.container.workspace.getName() + node.path;
+          var target = '/' + $scope.repository.getName() + '/' + $scope.workspace.getName() + node.path;
           if (target !== $location.path()) {
-            return $location.path('/' + $scope.container.repository.getName() + '/' + $scope.container.workspace.getName() + node.path);
+            return $location.path('/' + $scope.repository.getName() + '/' + $scope.workspace.getName() + node.path);
           }
-          TreeCache.toggleNode(node.path);
+          $scope.toggleNode(node.path);
         };
 
         $scope.toggleCreateForm = function(node) {
@@ -34,7 +34,7 @@ define([
         };
 
         $scope.createChildNode = function(node, nodeName) {
-          if ($scope.container.repository.supports('node.create')) {
+          if ($scope.repository.supports('node.create')) {
             if (!nodeName || nodeName.trim().length === 0) {
               return $log.error('Name is empty.');
             }

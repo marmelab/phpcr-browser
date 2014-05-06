@@ -1,4 +1,4 @@
-/* global define */
+/* global define,$ */
 /* jshint indent:2 */
 
 define([
@@ -9,24 +9,24 @@ define([
 ], function(app) {
   'use strict';
 
-  app.directive('mbTree', function() {
+  app.directive('mbTree', ['mbRouteParametersConverter', 'mbTreeCache', function(RouteParametersConverter, TreeCache) {
+    var richTree, scrollTop;
+
     return {
       restrict: 'E',
-      scope: {
-        currentNode: '=mbCurrentNode'
-      },
+      scope: {},
       templateUrl: '/assets/js/browser/directives/templates/tree.html',
-      controller: ['$scope', '$log', 'mbObjectMapper', 'mbRouteParametersConverter', 'mbTreeCache',
-        function($scope, $log, ObjectMapper, RouteParametersConverter, TreeCache) {
-          TreeCache.getRichTree().then(function(richTree) {
-            RouteParametersConverter.getCurrentWorkspace().then(function(workspace) {
-              $scope.richTree = richTree;
-              $scope.container = {
-                repository: workspace.getRepository(),
-                workspace: workspace
-              };
+      controller: ['$scope', function($scope) {
+          $scope.$on('node.open.start', function(){
+            scrollTop = $('.scrollable-tree').scrollTop();
+          });
+
+          $scope.$on('node.open.success', function(event, repositoryName, workspaceName, nodePath){
+            $scope.toggleNode(nodePath).then(function() {
+              $('.scrollable-tree').scrollTop(scrollTop);
             });
           });
+
           // $scope.$on('drop.delete', function(e, element) {
           //   if (element.hasClass('node')) {
           //     ObjectMapper.find(
@@ -74,7 +74,30 @@ define([
           //       $log.error(err);
           //     });
           // };
-        }]
+        }],
+
+      link: function(scope) {
+        TreeCache.getRichTree().then(function(rt) {
+          richTree = rt;
+          RouteParametersConverter.getCurrentWorkspace().then(function(workspace) {
+            scope.repository = workspace.getRepository();
+            scope.workspace = workspace;
+            scope.$emit('browser.loaded');
+          });
+        });
+
+        scope.getRichTree = function() {
+          return richTree;
+        };
+
+        scope.toggleNode = function(path) {
+          return richTree.getTree().find(path).then(function(node) {
+            return richTree.getTree().refresh(path, { collapsed: !node.collapsed} ).then(function(node) {
+              return node;
+            });
+          });
+        };
+      }
     };
-  });
+  }]);
 });
