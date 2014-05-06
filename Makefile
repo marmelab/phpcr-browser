@@ -19,5 +19,15 @@ ifneq ($(autoconfig), false)
 	cp web/assets/js/browser/config.js-dist web/assets/js/browser/config.js
 endif
 
+install-gaudi:
+	gaudi run composer install
+	gaudi run npm install
+	gaudi run bower install
+ifneq ($(autoconfig), false)
+	cp config/prod.yml-dist config/prod.yml
+	cp web/assets/js/browser/config.js-dist web/assets/js/browser/config.js
+endif
+	gaudi
+
 install-test:
 	npm install
