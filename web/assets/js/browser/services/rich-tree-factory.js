@@ -109,7 +109,10 @@ define([
             event: TreeFactory.HOOK_POST_APPEND,
             callback: function(next, parentPath, childNode, parent) {
               if (!parent) {
-                return next();
+                return this.find(parentPath).then(function(parent) {
+                  delete parent.inProgress;
+                  return next();
+                });
               }
 
               hasChildren(parent);
@@ -121,7 +124,10 @@ define([
             event: TreeFactory.HOOK_POST_REMOVE,
             callback: function(next, path, old, parent) {
               if (!parent) {
-                return next();
+                return this.findParent(path).then(function(parent) {
+                  delete parent.inProgress;
+                  return next();
+                });
               }
 
               hasChildren(parent);
@@ -133,7 +139,10 @@ define([
             event: TreeFactory.HOOK_POST_MOVE,
             callback: function(next, fromPath, toPath, node) {
               if (!node) {
-                return next();
+                return this.find(fromPath).then(function(node) {
+                  delete node.inProgress;
+                  return next();
+                });
               }
               var self = this;
               this.find(toPath).then(function(parent) {
@@ -152,7 +161,10 @@ define([
             event: TreeFactory.HOOK_POST_REFRESH,
             callback: function(next, path, node) {
               if (!node) {
-                return next();
+                return this.find(path).then(function(node) {
+                  delete node.inProgress;
+                  return next();
+                });
               }
 
               hasChildren(node, true);

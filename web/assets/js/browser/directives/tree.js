@@ -8,7 +8,7 @@ define([
 ], function(app) {
   'use strict';
 
-  app.directive('mbTree', ['$log', 'mbRouteParametersConverter', 'mbTreeCache', function($log) {
+  app.directive('mbTree', ['$log', '$location', function($log, $location) {
     var scrollTop,
         deleteNode;
 
@@ -41,6 +41,20 @@ define([
           if (element.hasClass('node')) {
             scope.richTree.getTree().remove(element.data('path')).then(function() {
               $log.log('Node deleted.');
+
+              // If the current was in the deleted hierarchy we display the parent node of the deleted node
+              if ($location.path().substr(
+                  scope.repository.getName().length + 2 +
+                  scope.workspace.getName().length,
+                  element.data('path').length
+                ) === element.data('path')) {
+
+                var parentPath = element.data('path').split('/');
+                parentPath.pop();
+                parentPath = parentPath.join('/');
+
+                $location.path(scope.repository.getName() + '/' + scope.workspace.getName() + parentPath);
+              }
             }, function(err) {
               if (err.status === 423) { return $log.warn('You can not delete this node. It is locked.'); }
               if (err.data && err.data.message) { return $log.error(err, err.data.message); }
