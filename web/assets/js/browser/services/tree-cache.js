@@ -1,4 +1,4 @@
-/* global define,$*/
+/* global define */
 /* jshint indent:2 */
 
 define([

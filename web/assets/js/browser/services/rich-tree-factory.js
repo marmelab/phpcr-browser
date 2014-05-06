@@ -29,11 +29,7 @@ define([
         return;
       }
 
-      if (node.hasChildren && node.children.length > 0) {
-        node.collapsed = false;
-      } else {
-        node.collapsed = true;
-      }
+      node.collapsed = !(node.hasChildren && node.children.length > 0);
     };
 
     var setId = function(node) {
@@ -180,6 +176,10 @@ define([
 
     RichTree.prototype.getTree = function() {
       return this.tree;
+    };
+
+    RichTree.prototype.getRawTree = function() {
+      return this.tree.getRawTree();
     };
 
     return {

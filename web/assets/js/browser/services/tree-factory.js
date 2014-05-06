@@ -1,4 +1,4 @@
-/* global define */
+/*global define*/
 /* jshint indent:2 */
 
 define([
@@ -11,28 +11,37 @@ define([
     var decorate = function (tree){
       var deferred = $q.defer(), self = this;
 
+      // decorate all children of a node
       var decorateTree = function(tree) {
         var deferred = $q.defer(), cursor = 0;
+
+        // this function is give to each node decorator and execute the next one if no error is triggered
         var next = function(err) {
+          // the current listener returned an error, reject the promise and stop the hook listeners chain
           if (err) {
             return deferred.reject(err);
           }
 
+          // all is good to continue we increment the cursor to retrieve the next child
           cursor ++;
           if (tree.children.length > cursor) {
             return decorateNode.apply(self, [next, tree.children[cursor], tree]);
           }
+          // we reach the end of the children, resolve the promise
           deferred.resolve(tree);
         };
 
+        // call the decorator on the first child of the tree
         if (tree.children.length > cursor) {
           decorateNode.apply(self, [next, tree.children[cursor], tree]);
         } else {
           deferred.resolve(tree);
         }
+
         return deferred.promise;
       };
 
+      // decorate a node
       var decorateNode = function(next, node, parent) {
         if (parent && parent.path === '/') {
           node.path = parent.path + node.name;
@@ -40,13 +49,18 @@ define([
           node.path = parent.path + '/' + node.name;
         }
 
-        decorateTree(node).then(function(node) {
+        // if node has children, it is sub tree and we decorate it
+        return decorateTree(node).then(function(node) {
+          // the children are decorated
+          // call all decorate hook listeners
           self._hook(Tree.HOOK_DECORATE, false, node).then(function() {
+            // no error occured, we go to the next node
             next();
           }, next);
         });
       };
 
+      // decorate the node given as argument
       decorateNode(function(err) {
         if (err) {
           return deferred.reject(err);
@@ -73,14 +87,6 @@ define([
       return parent.join('/');
     };
 
-    var reject = function(deferred, self, hooker, args) {
-      return function (err) {
-        hooker.apply(self, args).then(function() {
-          deferred.reject(err);
-        }, deferred.reject);
-      };
-    };
-
     var updatePath = function(parentPath, node) {
       if (parentPath !== '/') {
         node.path = parentPath + '/' + node.name;
@@ -98,7 +104,7 @@ define([
     };
 
     var Tree = function(tree, hooks) {
-      var deferred = $q.defer(), self = this;
+      var self = this;
       this.hooks = {};
 
       if (hooks) {
@@ -107,11 +113,12 @@ define([
         }
       }
 
-      decorate.apply(this, [tree]).then(function() {
+      return decorate.apply(this, [tree]).then(function() {
         self.tree = { '/': tree };
-        deferred.resolve(self);
-      }, deferred.reject);
-      return deferred.promise;
+        return self;
+      }, function(err) {
+        return $q.reject(err);
+      });
     };
 
     Tree.HOOK_DECORATE = 1;
@@ -124,6 +131,9 @@ define([
     Tree.HOOK_PRE_REFRESH = 40;
     Tree.HOOK_POST_REFRESH = 41;
 
+    /**
+     * Register a listener for a hook
+      */
     Tree.prototype.registerHook = function(event, callback) {
       if (!this.hooks[event]) {
         this.hooks[event] = [];
@@ -132,29 +142,41 @@ define([
       this.hooks[event].push(callback);
     };
 
+    /**
+     * Call all listeners for a hook
+     */
     Tree.prototype._hook = function(event, ignore) {
       var deferred = $q.defer(), self = this, cursor = 0;
       if (this.hooks[event] && !ignore) {
         var args = [].slice.apply(arguments);
 
+        // this function is give to each listener and execute the next one if no error is triggered
         var next = function(err) {
+          // the current listener returned an error, reject the promise and stop the hook listeners chain
           if (err) {
             return deferred.reject(err);
           }
 
+          // all is good to continue we increment the cursor to retrieve the next hook listener
           cursor++;
           if (self.hooks[event].length > cursor) {
             return self.hooks[event][cursor].apply(self, args);
           }
+          // we reach the end of the hook listeners chain, resolve the promise
           deferred.resolve();
         };
 
+        // the two first arguments of the _hook method are useless for the hook listeners
+        // we remove the first one and replace the second by the next callback
         args.shift();
         args[0] = next;
+
+        // call the first hook listener of the chain
         if (this.hooks[event].length > cursor) {
           this.hooks[event][cursor].apply(self, args);
         }
       } else {
+        // no hook listeners found
         deferred.resolve();
       }
 
@@ -166,21 +188,28 @@ define([
     };
 
     Tree.prototype.find = function(path, root){
+      // recursive search
       var search = function (target, tree){
         if(target.length > 0){
+          // we did not reach the wanted node
           for (var child in tree.children){
             if (tree.children.hasOwnProperty(child) &&
                 tree.children[child] &&
                 target[0] === tree.children[child].name){
               target.shift();
+              // we found the children which is on the path of the wanted node, we restart a search in it
               return search(target,tree.children[child]);
             }
           }
+          // no node found
           return undefined;
         }
+        // finally found the wanted node
         return tree;
       };
 
+      // build target array
+      // if path is /path/of/node, target will contains ['path', 'of', 'node']
       var target = path.split('/');
       if (path === '/') {
         target = [];
