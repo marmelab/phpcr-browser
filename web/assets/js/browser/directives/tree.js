@@ -86,8 +86,9 @@ define([
             return;
           }
 
-          scope.richTree.getTree().move(elementDropped.data('path'), element.data('path')).then(function() {
+          scope.richTree.getTree().move(elementDropped.data('path'), element.data('path')).then(function(node) {
             scope.$emit('node.moved', { from: elementDropped.data('path'), to: element.data('path')});
+            $location.path(scope.repository.getName() + '/' + scope.workspace.getName() + node.path);
           }, function(err) {
             if (err.status === 423) { return $log.warn('You can not move this node. It is locked.'); }
             if (err.data && err.data.message) { return $log.error(err, err.data.message); }

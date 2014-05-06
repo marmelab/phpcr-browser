@@ -22,15 +22,16 @@ define([
 
       TreeCache.getRichTree().then(function(rt) {
         $scope.richTree = rt;
-        RouteParametersConverter.getCurrentNode().then(function(node) {
+      }).then(function() {
+        return RouteParametersConverter.getCurrentNode().then(function(node) {
           $scope.currentNode = node;
           $scope.repository = node.getWorkspace().getRepository();
           $scope.workspace = node.getWorkspace();
           $scope.$emit('browser.loaded');
-        }, function(err) {
-          if (err.data && err.data.message) { return $log.error(err, err.data.message); }
-          $log.error(err);
         });
+      }, function(err) {
+        if (err.data && err.data.message) { return $log.error(err, err.data.message); }
+        $log.error(err);
       });
     }]);
 });

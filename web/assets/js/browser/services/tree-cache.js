@@ -71,12 +71,12 @@ define([
         ).then(function(richTree) {
           cache.richTree = richTree;
           deferred.resolve(cache.richTree);
-        });
-      });
+        }, deferred.reject);
+      }, deferred.reject);
     };
 
-    var getRichTree = function() {
-      if (!deferred) {
+    var getRichTree = function(forceRebuild) {
+      if (!deferred || forceRebuild) {
         deferred = $q.defer();
         buildRichTree(deferred);
       }
