@@ -46,7 +46,7 @@ define([
               path = node.path + nodeName;
             }
 
-            $scope.getRichTree().getTree().append(node.path, { name: nodeName, path: path }).then(function() {
+            $scope.richTree.getTree().append(node.path, { name: nodeName, path: path }).then(function() {
               node.displayCreateForm = false;
               $log.log('Node created');
             }, function(err) {

@@ -4,7 +4,6 @@
 define([
   'app',
   'services/object-mapper',
-  //'services/tree-view',
   'services/tree-cache'
 ], function(app) {
   'use strict';

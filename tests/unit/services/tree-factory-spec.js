@@ -323,11 +323,7 @@ define([
           expect(hooks[5].callback).toHaveBeenCalledWith(
             jasmine.any(Function),
             '/child',
-            {
-              name: 'subchild2',
-              children: []
-            },
-            localTreeData.children[0]
+            undefined
           );
         });
 
@@ -342,7 +338,7 @@ define([
           expect(hooks[1].callback).toHaveBeenCalledWith(
             jasmine.any(Function),
             '/child',
-            localTreeData
+            undefined
           );
         });
 
@@ -359,7 +355,7 @@ define([
             jasmine.any(Function),
             '/child/subchild',
             '/',
-            localTreeData.children[0].children[0]
+            undefined
           );
         });
 
@@ -375,8 +371,7 @@ define([
           expect(hooks[7].callback).toHaveBeenCalledWith(
             jasmine.any(Function),
             '/child/subchild',
-            localTreeData.children[0].children[0],
-            { name: 'subchild2' }
+            undefined
           );
         });
       }, function() {

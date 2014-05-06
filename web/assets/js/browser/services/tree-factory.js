@@ -205,119 +205,182 @@ define([
       return this.find(parentPath(path));
     };
 
+    /**
+     * Remove a node
+     */
     Tree.prototype.remove = function(path, ignoreHooks) {
-      var deferred = $q.defer(), self = this;
-      this.find(parentPath(path)).then(function(parent) {
-        self._hook(Tree.HOOK_PRE_REMOVE, ignoreHooks, path, parent).then(function() {
-          for (var child in parent.children){
-            if (parent.children[child] && parent.children[child].path === path) {
-              var old = angular.copy(parent.children[child]);
-              parent.children[child] = undefined;
-              parent.children = compact(parent.children);
+      var self = this;
+      // find the parent node of the node to be removed
+      return this.find(parentPath(path)).then(function(parent) {
+        // call execute all preRemove hook listeners
+        return self._hook(Tree.HOOK_PRE_REMOVE, ignoreHooks, path, parent).then(function() {
+          // all listeners worked without error, propagate the parent argument to the next promise
+          return parent;
+        }, function(err) {
+          // an error occured in a listener, terminate the promise chain
+          return $q.reject(err);
+        });
+      }).then(function(parent) {
+        // find the target node in the children of the parent node
+        for (var child in parent.children) {
+          if (parent.children[child] && parent.children[child].path === path) {
+            // found it, let's save a copy to return it
+            var deletedNode = angular.copy(parent.children[child]);
 
-              self._hook(Tree.HOOK_POST_REMOVE, ignoreHooks, path, old, parent).then(function() {
-                deferred.resolve(old);
-              }, deferred.reject);
-              return;
-            }
-          }
+            // delete the node
+            parent.children[child] = undefined;
+            parent.children = compact(parent.children);
 
-          self._hook(Tree.HOOK_POST_REMOVE, ignoreHooks, path, undefined).then(function() {
-            deferred.reject('Unknown node');
-          }, deferred.reject);
-
-        }, reject(deferred, self, self._hook, [Tree.HOOK_POST_REMOVE, ignoreHooks, path, parent]));
-      }, function(err) {
-        self._hook(Tree.HOOK_POST_REMOVE, ignoreHooks, path, undefined).then(function() {
-          deferred.reject(err);
-        }, deferred.reject);
-      });
-
-      return deferred.promise;
-    };
-
-    Tree.prototype.append = function(parentPath, childNode, ignoreHooks) {
-      var deferred = $q.defer(), self = this;
-      this.find(parentPath, this.tree['/']).then(function(parent) {
-        self._hook(Tree.HOOK_PRE_APPEND, ignoreHooks, parentPath, childNode, parent).then(function() {
-          if (parent.path === '/') {
-            childNode.path = parent.path + childNode.name;
-          } else {
-            childNode.path = parent.path + '/' + childNode.name;
-          }
-
-          if (!childNode.children) {
-            childNode.children = [];
-          }
-
-          updatePath(parent.path, childNode);
-
-          decorate.apply(self, [childNode]).then(function(childNode) {
-            parent.children.push(childNode);
-
-            self._hook(Tree.HOOK_POST_APPEND, ignoreHooks, parentPath, childNode, parent).then(function() {
-              deferred.resolve(childNode);
-            }, deferred.reject);
-          }, deferred.reject);
-
-        }, reject(deferred, self, self._hook, [Tree.HOOK_POST_APPEND, ignoreHooks, parentPath, childNode, parent]));
-      }, function(err) {
-        self._hook(Tree.HOOK_POST_APPEND, ignoreHooks, parentPath, undefined).then(function() {
-          deferred.reject(err);
-        }, deferred.reject);
-      });
-      return deferred.promise;
-    };
-
-    Tree.prototype.move = function(fromPath, toPath) {
-      var deferred = $q.defer(), self = this;
-      this.find(fromPath).then(function(node) {
-        self._hook(Tree.HOOK_PRE_MOVE, false, fromPath, toPath, node).then(function() {
-          self.remove(fromPath, true).then(function(node) {
-            self.append(toPath, node, true).then(function(node) {
-              self._hook(Tree.HOOK_POST_MOVE, false, fromPath, toPath, node).then(function() {
-                deferred.resolve(node);
-              }, deferred.reject);
+            // finally, call all postRemove hook listeners
+            return self._hook(Tree.HOOK_POST_REMOVE, ignoreHooks, path, deletedNode, parent).then(function() {
+              return deletedNode;
             }, function(err) {
-              self._hook(Tree.HOOK_POST_MOVE, false, fromPath, toPath, undefined).then(function() {
-                deferred.reject(err);
-              }, deferred.reject);
+              // an error occured in a listener, terminate the promise chain
+              return $q.reject(err);
             });
-          }, function(err) {
-            self._hook(Tree.HOOK_POST_MOVE, false, fromPath, toPath, undefined).then(function() {
-              deferred.reject(err);
-            }, deferred.reject);
-          });
-        }, reject(deferred, self, self._hook, [Tree.HOOK_POST_MOVE, false, fromPath, toPath, node]));
+          }
+        }
+        $q.reject('Unknown node');
       }, function(err) {
-        self._hook(Tree.HOOK_POST_MOVE, false, fromPath, toPath, undefined).then(function() {
-          deferred.reject(err);
-        }, deferred.reject);
+        // an error occured, call all postRemove hook listeners before finishing
+        return self._hook(Tree.HOOK_POST_REMOVE, ignoreHooks, path, undefined).then(function() {
+          return $q.reject(err);
+        }, function(err) {
+          // an error occured in a listener, terminate the promise chain
+          return $q.reject(err);
+        });
       });
-      return deferred.promise;
+    };
+
+    /**
+     * Append a node
+     */
+    Tree.prototype.append = function(parentPath, childNode, ignoreHooks) {
+      var self = this;
+      // find the parent node of the node to be added
+      return this.find(parentPath, this.tree['/']).then(function(parent) {
+        // call execute all preAppend hook listeners
+        return self._hook(Tree.HOOK_PRE_APPEND, ignoreHooks, parentPath, childNode, parent).then(function() {
+            // all listeners worked without error, propagate the parent argument to the next promise
+            return parent;
+          }, function(err) {
+            // an error occured in a listener, terminate the promise chain
+            return $q.reject(err);
+          });
+      }).then(function(parent) {
+        // normalize node data
+        if (parent.path === '/') {
+          childNode.path = parent.path + childNode.name;
+        } else {
+          childNode.path = parent.path + '/' + childNode.name;
+        }
+
+        if (!childNode.children) {
+          childNode.children = [];
+        }
+
+        // update path in children of childNode
+        updatePath(parent.path, childNode);
+
+        // call all decorate hooks listeners
+        return decorate.apply(self, [childNode]).then(function(childNode) {
+          parent.children.push(childNode);
+          return parent;
+        }, function(err) {
+          // an error occured in a listener, terminate the promise chain
+          return $q.reject(err);
+        });
+      }).then(function(parent) {
+        // finally, call all postAppend hook listeners
+        return self._hook(Tree.HOOK_POST_APPEND, ignoreHooks, parentPath, childNode, parent).then(function() {
+          return childNode;
+        }, function(err) {
+          // an error occured in a listener, terminate the promise chain
+          return $q.reject(err);
+        });
+      }, function(err) {
+        // an error occured, call all postAppend hook listeners before finishing
+        return self._hook(Tree.HOOK_POST_APPEND, ignoreHooks, parentPath, undefined).then(function() {
+          return $q.reject(err);
+        }, function(err) {
+          // an error occured in a listener, terminate the promise chain
+          return $q.reject(err);
+        });
+      });
+    };
+
+    /**
+     * Move node
+     */
+    Tree.prototype.move = function(fromPath, toPath) {
+      var self = this;
+      // find the node to be moved
+      return this.find(fromPath).then(function(node) {
+        // call execute all preMove hook listeners
+        return self._hook(Tree.HOOK_PRE_MOVE, false, fromPath, toPath, node);
+      }).then(function() {
+        // remove the node from its current parent
+        return self.remove(fromPath, true);
+      }).then(function(node) {
+        // append the node to the new parent
+        return self.append(toPath, node, true);
+      }).then(function(node) {
+        // call execute all postMove hook listeners
+        return self._hook(Tree.HOOK_POST_MOVE, false, fromPath, toPath, node).then(function() {
+          return node;
+        }, function(err) {
+          // an error occured in a listener, terminate the promise chain
+          return $q.reject(err);
+        });
+      }, function(err) {
+        // an error occured, call all postMove hook listeners before finishing
+        return self._hook(Tree.HOOK_POST_MOVE, false, fromPath, toPath, undefined).then(function() {
+          return $q.reject(err);
+        }, function(err) {
+          // an error occured in a listener, terminate the promise chain
+          return $q.reject(err);
+        });
+      });
     };
 
     Tree.prototype.refresh = function(path, data) {
-      var deferred = $q.defer(), self = this;
-      this.find(path).then(function(node) {
-        self._hook(Tree.HOOK_PRE_REFRESH, false, path, node, data).then(function() {
-          for (var i in data) {
-            if (data.hasOwnProperty(i)) {
-              node[i] = data[i];
-            }
+      var self = this;
+      // find the node to be refreshed
+      return this.find(path).then(function(node) {
+        // call execute all preRefresh hook listeners
+        return self._hook(Tree.HOOK_PRE_REFRESH, false, path, node, data).then(function() {
+          // all listeners worked without error, propagate the node argument to the next promise
+          return node;
+        }, function(err) {
+          // an error occured in a listener, terminate the promise chain
+          return $q.reject(err);
+        });
+      }).then(function(node) {
+        // Refresh node data
+        for (var i in data) {
+          if (data.hasOwnProperty(i)) {
+            node[i] = data[i];
           }
-          decorate.apply(self, [node]).then(function(node) {
-            self._hook(Tree.HOOK_POST_REFRESH, false, path, node, data).then(function() {
-              deferred.resolve(node);
-            }, deferred.reject);
-          }, deferred.reject);
-        }, reject(deferred, self, self._hook, [Tree.HOOK_POST_REFRESH, false, path, node, data]));
+        }
+        // call all decorate hooks listeners
+        return decorate.apply(self, [node]);
+      }).then(function(node) {
+        // finally, call all postRefresh hook listeners
+        return self._hook(Tree.HOOK_POST_REFRESH, false, path, node, data).then(function() {
+          return node;
+        }, function(err) {
+          // an error occured in a listener, terminate the promise chain
+          return $q.reject(err);
+        });
       }, function(err) {
-        self._hook(Tree.HOOK_POST_REFRESH, false, path, undefined).then(function() {
-          deferred.reject(err);
-        }, deferred.reject);
+        // an error occured, call all postRefresh hook listeners before finishing
+        return self._hook(Tree.HOOK_POST_REFRESH, false, path, undefined).then(function() {
+          return $q.reject(err);
+        }, function(err) {
+          // an error occured in a listener, terminate the promise chain
+          return $q.reject(err);
+        });
       });
-      return deferred.promise;
     };
 
     return {
