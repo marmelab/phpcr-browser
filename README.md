@@ -9,12 +9,20 @@ You can create/delete a workspace (if supported by the repository), add/delete/m
 Installation
 ------------
 
-To install the web application, run the following commands:
+To install the web application with the default configuration (see below), run the following command into the browser root dir:
 
 ```sh
 $ make install
 ```
 
+This will do the [Configuration](#Configuration) part for you. If you prefer do it on your own run:
+
+```sh
+$ make install autoconfig=false
+```
+
+Configuration
+-------------
 Create a `config/prod.yml` with the connection settings for the repositories you need to browse. For instance, to use the browser with a local instance of jackrabbit:
 
 ```yml
@@ -36,6 +44,9 @@ Copy also the angular app config dist file :
 ```
 cp web/assets/js/browser/config.js-dist web/assets/js/browser/config.js
 ```
+
+Usage
+-----
 
 Add a VirtualHost to your Apache config (and add in it 'AllowEncodedSlashes On'), or use PHP 5.4 integrated webserver by calling:
 
@@ -62,4 +73,4 @@ License
 
 This application is available under the MIT License, courtesy of [marmelab](http://marmelab.com).
 
-Favicon by [Stephen Hutchings](http://typicons.com/) [Found on iconfinder](https://www.iconfinder.com/icons/216194/eye_icon#size=32)
+Favicon by [Stephen Hutchings](http://typicons.com/) ([Found on iconfinder](https://www.iconfinder.com/icons/216194/eye_icon#size=32))

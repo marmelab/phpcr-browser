@@ -1,5 +1,5 @@
 phpcr_repositories:
-    'Repository test':
+    'My Jackrabbit Repository':
         factory: jackalope.jackrabbit
         parameters:
             jackalope.jackrabbit_uri: 'http://localhost:8080/server'
