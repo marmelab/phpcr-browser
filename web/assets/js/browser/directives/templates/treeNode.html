@@ -1,6 +1,6 @@
 <div
     class="node"
-    id="{{ node.slug }}"
+    id="{{ node.id }}"
     data-path="{{ node.path }}"
     draggable="{{ node.draggable }}"
     droppable drop="moveNode">
@@ -27,7 +27,6 @@
     <a
         ng-class="{ 'active': (node.path === currentNode.getPath()) }"
         ng-click="openNode(node)"
-        id="{{ tree.id }}"
         class="node">
         {{ node.name }}
     </a>

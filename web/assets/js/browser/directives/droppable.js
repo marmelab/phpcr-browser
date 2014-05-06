@@ -55,7 +55,6 @@ define([
             this.classList.remove('over');
 
             var elementDropped = document.getElementById(e.dataTransfer.getData('Text'));
-            //this.appendChild(element);
             // call the drop passed drop function
             scope.$apply(function() {
               scope.drop(angular.element(elementDropped), element);

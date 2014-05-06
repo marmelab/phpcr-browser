@@ -36,6 +36,10 @@ define([
       }
     };
 
+    var setId = function(node) {
+      node.id = node.path.replace('/','_');
+    };
+
     var RichTree = function(tree, repository, hooks) {
       this.repository = repository;
       var self = this;
@@ -53,6 +57,7 @@ define([
               hasChildren(node, true);
               isCollapsed(node);
               isDraggable(node, self.repository);
+              setId(node);
               next();
             }
           }
@@ -134,11 +139,16 @@ define([
               if (!node) {
                 return next();
               }
-
-              this.findParent(node.path).then(function(parent) {
+              var self = this;
+              this.find(toPath).then(function(parent) {
                 hasChildren(parent);
                 delete node.inProgress;
-                next();
+
+                self.findParent(fromPath).then(function(parent) {
+                  hasChildren(parent);
+                  delete node.inProgress;
+                  next();
+                });
               });
             }
           },

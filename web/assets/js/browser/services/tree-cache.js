@@ -9,8 +9,8 @@ define([
 ], function(app) {
   'use strict';
 
-  app.factory('mbTreeCache', ['$q', 'mbRichTreeFactory', 'mbTreeFactory', 'mbRouteParametersConverter', 'mbObjectMapper',
-    function($q, RichTreeFactory, TreeFactory, RouteParametersConverter, ObjectMapper) {
+  app.factory('mbTreeCache', ['$q', 'mbRichTreeFactory', 'mbTreeFactory', 'mbNodeFactory', 'mbRouteParametersConverter', 'mbObjectMapper',
+    function($q, RichTreeFactory, TreeFactory, NodeFactory, RouteParametersConverter, ObjectMapper) {
     var cache = {},
         deferred = $q.defer(),
         repository,
@@ -24,10 +24,38 @@ define([
             return next();
           }
 
-          ObjectMapper.find(repository.getName() + '/' + workspace.getName() + path).then(function(_node) {
+          ObjectMapper.find(repository.getName() + '/' + workspace.getName() + path, { cache: false }).then(function(_node) {
             node.children = _node.getRawData().children;
             next();
-          });
+          }, next);
+        }
+      },
+      {
+        event: TreeFactory.HOOK_PRE_MOVE,
+        callback: function(next, fromPath, toPath) {
+          ObjectMapper.find('/' + repository.getName() + '/' + workspace.getName() + fromPath).then(function(nodeDropped) {
+            nodeDropped.move(toPath).then(function() {
+              next();
+            }, next);
+          }, next);
+        }
+      },
+      {
+        event: TreeFactory.HOOK_PRE_APPEND,
+        callback: function(next, parentPath, childNode) {
+          NodeFactory.build(childNode, workspace).create().then(function() {
+            next();
+          }, next);
+        }
+      },
+      {
+        event: TreeFactory.HOOK_PRE_REMOVE,
+        callback: function(next, path) {
+          ObjectMapper.find('/' + repository.getName() + '/' + workspace.getName() + path).then(function(node) {
+            node.delete().then(function() {
+              next();
+            }, next);
+          }, next);
         }
       }
     ];

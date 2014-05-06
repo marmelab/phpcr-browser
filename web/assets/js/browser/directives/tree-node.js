@@ -8,8 +8,8 @@ define([
 ], function(app) {
   'use strict';
 
-  app.directive('mbTreeNode', ['$log', '$timeout', 'mbRecursionHelper', 'mbNodeFactory',
-    function($log, $timeout, RecursionHelper, NodeFactory) {
+  app.directive('mbTreeNode', ['$log', '$timeout', 'mbRecursionHelper',
+    function($log, $timeout, RecursionHelper) {
     return {
       restrict: 'A',
       require: '^mbTree',
@@ -45,16 +45,10 @@ define([
             } else {
               path = node.path + nodeName;
             }
-            var child = NodeFactory.build({ name: nodeName, path: path }, $scope.container.workspace);
-            child.create().then(function() {
+
+            $scope.getRichTree().getTree().append(node.path, { name: nodeName, path: path }).then(function() {
               node.displayCreateForm = false;
-              $scope.container.refresh(node.path).then(function(node) {
-                node.collapsed = false;
-                $scope.openNode({ path: path });
-                $log.log('Node created');
-              }, function(err) {
-                $log.error(err);
-              });
+              $log.log('Node created');
             }, function(err) {
               if (err.data && err.data.message) { return $log.error(err, err.data.message); }
               $log.error(err);

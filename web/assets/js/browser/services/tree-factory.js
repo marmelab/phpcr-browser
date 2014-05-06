@@ -73,6 +73,30 @@ define([
       return parent.join('/');
     };
 
+    var reject = function(deferred, self, hooker, args) {
+      return function (err) {
+        hooker.apply(self, args).then(function() {
+          deferred.reject(err);
+        }, deferred.reject);
+      };
+    };
+
+    var updatePath = function(parentPath, node) {
+      if (parentPath !== '/') {
+        node.path = parentPath + '/' + node.name;
+      } else {
+        node.path = parentPath + node.name;
+      }
+
+      if (node.children.length > 0) {
+        for (var i in node.children) {
+          if (node.children.hasOwnProperty(i)) {
+            updatePath(node.path, node.children[i]);
+          }
+        }
+      }
+    };
+
     var Tree = function(tree, hooks) {
       var deferred = $q.defer(), self = this;
       this.hooks = {};
@@ -202,7 +226,7 @@ define([
             deferred.reject('Unknown node');
           }, deferred.reject);
 
-        }, deferred.reject);
+        }, reject(deferred, self, self._hook, [Tree.HOOK_POST_REMOVE, ignoreHooks, path, parent]));
       }, function(err) {
         self._hook(Tree.HOOK_POST_REMOVE, ignoreHooks, path, undefined).then(function() {
           deferred.reject(err);
@@ -222,6 +246,11 @@ define([
             childNode.path = parent.path + '/' + childNode.name;
           }
 
+          updatePath(parent.path, childNode);
+          if (!childNode.children) {
+            childNode.children = [];
+          }
+
           decorate.apply(self, [childNode]).then(function(childNode) {
             parent.children.push(childNode);
 
@@ -230,7 +259,7 @@ define([
             }, deferred.reject);
           }, deferred.reject);
 
-        }, deferred.reject);
+        }, reject(deferred, self, self._hook, [Tree.HOOK_POST_APPEND, ignoreHooks, parentPath, childNode, parent]));
       }, function(err) {
         self._hook(Tree.HOOK_POST_APPEND, ignoreHooks, parentPath, undefined).then(function() {
           deferred.reject(err);
@@ -258,7 +287,7 @@ define([
               deferred.reject(err);
             }, deferred.reject);
           });
-        }, deferred.reject);
+        }, reject(deferred, self, self._hook, [Tree.HOOK_POST_MOVE, false, fromPath, toPath, node]));
       }, function(err) {
         self._hook(Tree.HOOK_POST_MOVE, false, fromPath, toPath, undefined).then(function() {
           deferred.reject(err);
@@ -281,7 +310,7 @@ define([
               deferred.resolve(node);
             }, deferred.reject);
           }, deferred.reject);
-        }, deferred.reject);
+        }, reject(deferred, self, self._hook, [Tree.HOOK_POST_REFRESH, false, path, node, data]));
       }, function(err) {
         self._hook(Tree.HOOK_POST_REFRESH, false, path, undefined).then(function() {
           deferred.reject(err);

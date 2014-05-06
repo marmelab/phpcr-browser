@@ -249,5 +249,141 @@ define([
 
       $rootScope.$apply();
     });
+
+    it('should call post hooks when an error occured on pre hooks', function () {
+      var localTreeData = angular.copy(treeData);
+
+      var hooks = [
+        {
+          event: TreeFactory.HOOK_PRE_REMOVE,
+          callback: jasmine.createSpy('preRemove').andCallFake(function(next) {
+            next('err');
+          })
+        },
+        {
+          event: TreeFactory.HOOK_POST_REMOVE,
+          callback: jasmine.createSpy('postRemove').andCallFake(function(next) {
+            next();
+          })
+        },
+        {
+          event: TreeFactory.HOOK_PRE_MOVE,
+          callback: jasmine.createSpy('preMove').andCallFake(function(next) {
+            next('err');
+          })
+        },
+        {
+          event: TreeFactory.HOOK_POST_MOVE,
+          callback: jasmine.createSpy('postMove').andCallFake(function(next) {
+            next();
+          })
+        },
+        {
+          event: TreeFactory.HOOK_PRE_APPEND,
+          callback: jasmine.createSpy('preAppend').andCallFake(function(next) {
+            next('err');
+          })
+        },
+        {
+          event: TreeFactory.HOOK_POST_APPEND,
+          callback: jasmine.createSpy('postAppend').andCallFake(function(next) {
+            next();
+          })
+        },
+        {
+          event: TreeFactory.HOOK_PRE_REFRESH,
+          callback: jasmine.createSpy('preRefresh').andCallFake(function(next) {
+            next('err');
+          })
+        },
+        {
+          event: TreeFactory.HOOK_POST_REFRESH,
+          callback: jasmine.createSpy('postRefresh').andCallFake(function(next) {
+            next();
+          })
+        }
+      ];
+
+      TreeFactory.build(localTreeData, hooks).then(function(tree) {
+        tree.append('/child', {
+          name: 'subchild2',
+          children: []
+        }).then(function() {
+          expect(true).toBe(false); // to trigger an error if needed
+        }, function() {
+          expect(hooks[4].callback).toHaveBeenCalledWith(
+            jasmine.any(Function),
+            '/child',
+            {
+              name: 'subchild2',
+              children: []
+            },
+            localTreeData.children[0]
+          );
+          expect(hooks[5].callback).toHaveBeenCalledWith(
+            jasmine.any(Function),
+            '/child',
+            {
+              name: 'subchild2',
+              children: []
+            },
+            localTreeData.children[0]
+          );
+        });
+
+        tree.remove('/child').then(function() {
+          expect(true).toBe(false); // to trigger an error if needed
+        }, function() {
+          expect(hooks[0].callback).toHaveBeenCalledWith(
+            jasmine.any(Function),
+            '/child',
+            localTreeData
+          );
+          expect(hooks[1].callback).toHaveBeenCalledWith(
+            jasmine.any(Function),
+            '/child',
+            localTreeData
+          );
+        });
+
+        tree.move('/child/subchild', '/').then(function() {
+          expect(true).toBe(false); // to trigger an error if needed
+        }, function() {
+          expect(hooks[2].callback).toHaveBeenCalledWith(
+            jasmine.any(Function),
+            '/child/subchild',
+            '/',
+            localTreeData.children[0].children[0]
+          );
+          expect(hooks[3].callback).toHaveBeenCalledWith(
+            jasmine.any(Function),
+            '/child/subchild',
+            '/',
+            localTreeData.children[0].children[0]
+          );
+        });
+
+        tree.refresh('/child/subchild', { name: 'subchild2' }).then(function() {
+          expect(true).toBe(false); // to trigger an error if needed
+        }, function() {
+          expect(hooks[6].callback).toHaveBeenCalledWith(
+            jasmine.any(Function),
+            '/child/subchild',
+            localTreeData.children[0].children[0],
+            { name: 'subchild2' }
+          );
+          expect(hooks[7].callback).toHaveBeenCalledWith(
+            jasmine.any(Function),
+            '/child/subchild',
+            localTreeData.children[0].children[0],
+            { name: 'subchild2' }
+          );
+        });
+      }, function() {
+        expect(true).toBe(false); // to trigger an error if needed
+      });
+
+      $rootScope.$apply();
+    });
   });
 });
