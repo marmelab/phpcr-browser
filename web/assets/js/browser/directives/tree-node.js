@@ -8,31 +8,25 @@ define([
 ], function(app) {
   'use strict';
 
-  app.directive('mbTreeNode', ['$log', '$timeout', 'mbRecursionHelper', 'mbNodeFactory',
-    function($log, $timeout, RecursionHelper, NodeFactory) {
+  app.directive('mbTreeNode', ['$log', '$timeout', 'mbRecursionHelper',
+    function($log, $timeout, RecursionHelper) {
     return {
       restrict: 'A',
+      require: '^mbTree',
       scope: '=',
       templateUrl: '/assets/js/browser/directives/templates/treeNode.html',
       compile: function (element){
         return RecursionHelper.compile(element);
       },
       controller: function($scope, $location) {
-        $scope.container = $scope.$parent.container;
         $scope.order = 'name';
 
-        $scope.toggleCollapsed = function(node) {
-          node.collapsed = !node.collapsed;
-          if (!node.collapsed && $location.path() !== '/' + $scope.container.repository.getName() + '/' + $scope.container.workspace.getName() + node.path) {
-            $scope.node.updateInProgress = true;
-            $timeout(function() { // Timeout to let time for view udpate by forcing an $apply
-              $scope.openNode(node);
-            }, 50);
-          }
-        };
-
         $scope.openNode = function(node) {
-          $location.path('/' + $scope.container.repository.getName() + '/' + $scope.container.workspace.getName() + node.path);
+          var target = '/' + $scope.repository.getName() + '/' + $scope.workspace.getName() + node.path;
+          if (target !== $location.path()) {
+            return $location.path('/' + $scope.repository.getName() + '/' + $scope.workspace.getName() + node.path);
+          }
+          $scope.toggleNode(node.path);
         };
 
         $scope.toggleCreateForm = function(node) {
@@ -40,7 +34,7 @@ define([
         };
 
         $scope.createChildNode = function(node, nodeName) {
-          if ($scope.container.repository.supports('node.create')) {
+          if ($scope.repository.supports('node.create')) {
             if (!nodeName || nodeName.trim().length === 0) {
               return $log.error('Name is empty.');
             }
@@ -51,16 +45,10 @@ define([
             } else {
               path = node.path + nodeName;
             }
-            var child = NodeFactory.build({ name: nodeName, path: path }, $scope.container.workspace);
-            child.create().then(function() {
+
+            $scope.richTree.getTree().append(node.path, { name: nodeName, path: path }).then(function() {
               node.displayCreateForm = false;
-              $scope.container.refresh(node.path).then(function(node) {
-                node.collapsed = false;
-                $scope.openNode({ path: path });
-                $log.log('Node created');
-              }, function(err) {
-                $log.error(err);
-              });
+              $log.log('Node created');
             }, function(err) {
               if (err.data && err.data.message) { return $log.error(err, err.data.message); }
               $log.error(err);

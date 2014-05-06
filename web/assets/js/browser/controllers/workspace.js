@@ -10,8 +10,8 @@ define([
 ], function(app) {
   'use strict';
 
-  app.controller('mbWorkspaceCtrl', ['$scope', '$log', 'mbRouteParametersConverter',
-    function($scope, $log, mbRouteParametersConverter) {
+  app.controller('mbWorkspaceCtrl', ['$scope', '$log', 'mbRouteParametersConverter', 'mbTreeCache',
+    function($scope, $log, RouteParametersConverter, TreeCache) {
       $scope.$on('search.change', function(e, value) {
         $scope.search = value;
       });
@@ -20,11 +20,17 @@ define([
         $scope.$broadcast('drop.delete', element);
       };
 
-      mbRouteParametersConverter.getCurrentNode().then(function(node) {
-        $scope.currentNode = node;
-      }, function(err) {
-        if (err.data && err.data.message) { return $log.error(err, err.data.message); }
-        $log.error(err);
+      TreeCache.getRichTree().then(function(rt) {
+        $scope.richTree = rt;
+        RouteParametersConverter.getCurrentNode().then(function(node) {
+          $scope.currentNode = node;
+          $scope.repository = node.getWorkspace().getRepository();
+          $scope.workspace = node.getWorkspace();
+          $scope.$emit('browser.loaded');
+        }, function(err) {
+          if (err.data && err.data.message) { return $log.error(err, err.data.message); }
+          $log.error(err);
+        });
       });
     }]);
 });
