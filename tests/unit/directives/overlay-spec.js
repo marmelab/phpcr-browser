@@ -15,7 +15,6 @@ define([
         hideOn = 'hideMeEvent',
         showOn = 'showOnEvent',
         $rootScope,
-        $scope,
         $compile;
 
     // load the directive's module
@@ -28,18 +27,11 @@ define([
 
     beforeEach(function() {
       element = '<mb-overlay text="' + text + '" hide-on="' + hideOn + '" show-on="' + showOn + '"></mb-overlay>';
-
-      $scope = $rootScope.$new();
-      element = $compile(element)($scope);
-      $scope.$digest();
+      element = $compile(element)($rootScope);
+      $rootScope.$digest();
     });
 
-    var $templateCache;
-    beforeEach(inject(function ($injector) {
-      $templateCache = $injector.get('$templateCache');
-    }));
-
-    it('should contains a div with overlay class and the text inside it', function () {
+    it('should contain a div with overlay class and the text inside it', function () {
       expect(element.find('div').hasClass('overlay')).toBe(true);
       expect(element.find('div').html()).toBe(text);
     });
