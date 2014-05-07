@@ -60,32 +60,40 @@ define([
       }
     ];
 
-    var buildRichTree = function(deferred) {
-      RouteParametersConverter.getCurrentNode({ reducedTree: true, cache: false }).then(function(node) {
+    var buildRichTree = function() {
+      // rich tree is not built, retrieve the current node with its reduced tree
+      return RouteParametersConverter.getCurrentNode({ reducedTree: true, cache: false }).then(function(node) {
         repository = node.getWorkspace().getRepository();
         workspace = node.getWorkspace();
-        RichTreeFactory.build(
+        return node;
+      }).then(function(node) {
+        // build the rich tree
+        return RichTreeFactory.build(
           node.getReducedTree()[0],
           repository,
           hooks
-        ).then(function(richTree) {
-          cache.richTree = richTree;
-          deferred.resolve(cache.richTree);
-        }, deferred.reject);
-      }, deferred.reject);
+        );
+      }).then(function(richTree) {
+        // save the bulit rich tree
+        cache.richTree = richTree;
+        return cache.richTree;
+      }, function(err) {
+        return $q.reject(err);
+      });
     };
 
     var getRichTree = function(forceRebuild) {
-      if (!deferred || forceRebuild) {
-        deferred = $q.defer();
-        buildRichTree(deferred);
+      if (cache.richTree && !forceRebuild) {
+        // the rich tree is already build, we return it in a resolved promise
+        return $q.when(cache.richTree);
       }
-      return deferred.promise;
+
+      return buildRichTree();
     };
 
     $rootScope.$on('workspace.open.start', function() {
       deferred = $q.defer();
-      buildRichTree(deferred);
+      delete cache.richTree; // invalidate cache
     });
 
     return {
