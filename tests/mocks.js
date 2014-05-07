@@ -139,7 +139,8 @@ define('mocks', [
       return {
         getName: jasmine.createSpy('getName').andReturn(repository.name),
         getWorkspace: jasmine.createSpy('getWorkspace').andReturn(mixins.buildPromise(workspace)),
-        supports: jasmine.createSpy('supports').andReturn(true)
+        getFactoryName: jasmine.createSpy('getFactoryName').andReturn(repository.factoryName),
+        supports: jasmine.createSpy('supports').andReturn(true),
       };
     };
 
