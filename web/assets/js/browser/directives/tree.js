@@ -8,7 +8,7 @@ define([
 ], function(app) {
   'use strict';
 
-  app.directive('mbTree', ['$log', '$location', function($log, $location) {
+  app.directive('mbTree', ['$log', '$location', '$q', function($log, $location, $q) {
     var scrollTop,
         deleteNode;
 
@@ -64,10 +64,14 @@ define([
         };
 
         scope.toggleNode = function(path) {
+          if (!scope.richTree) {
+            return $q.reject();
+          }
+
           return scope.richTree.getTree().find(path).then(function(node) {
-            return scope.richTree.getTree().refresh(path, { collapsed: !node.collapsed} ).then(function(node) {
-              return node;
-            });
+            return scope.richTree.getTree().refresh(path, { collapsed: !node.collapsed} );
+          }).then(function(node) {
+            return node;
           });
         };
 

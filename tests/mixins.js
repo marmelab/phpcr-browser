@@ -15,7 +15,13 @@ define('mixins', [], function () {
   var buildPromise = function(output) {
     return {
       then: function(cb) {
-        return buildPromise(cb(output));
+        var result = cb(output);
+
+        if (result && result.then) {
+          return result;
+        }
+
+        return buildPromise(result);
       }
     };
   };
