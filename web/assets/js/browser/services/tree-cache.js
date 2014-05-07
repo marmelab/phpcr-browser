@@ -74,7 +74,7 @@ define([
           hooks
         );
       }).then(function(richTree) {
-        // save the bulit rich tree
+        // save the built rich tree
         cache.richTree = richTree;
         return cache.richTree;
       }, function(err) {
@@ -82,8 +82,12 @@ define([
       });
     };
 
-    var getRichTree = function(forceRebuild) {
-      if (cache.richTree && !forceRebuild) {
+    var invalidateRichTreeCache = function() {
+      delete cache.richTree;
+    };
+
+    var getRichTree = function() {
+      if (cache.richTree) {
         // the rich tree is already build, we return it in a resolved promise
         return $q.when(cache.richTree);
       }
@@ -91,13 +95,11 @@ define([
       return buildRichTree();
     };
 
-    $rootScope.$on('workspace.open.start', function() {
-      deferred = $q.defer();
-      delete cache.richTree; // invalidate cache
-    });
+    $rootScope.$on('workspace.open.start', invalidateRichTreeCache);
 
     return {
-      getRichTree: getRichTree
+      getRichTree: getRichTree,
+      invalidateRichTreeCache: invalidateRichTreeCache
     };
   }]);
 });
