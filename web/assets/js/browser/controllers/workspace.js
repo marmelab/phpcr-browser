@@ -30,7 +30,8 @@ define([
         $scope.workspace = node.getWorkspace();
         $scope.$emit('browser.loaded');
       }, function(err) {
-        TreeCache.invalidateRichTreeCache();
+        $scope.$emit('browser.load'); // force display of overlay
+        TreeCache.invalidateRichTreeCache(); // force rebuild of the rich tree
         if (err.data && err.data.message) { return $log.error(err, err.data.message); }
         $log.error(err);
       });
