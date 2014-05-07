@@ -6,7 +6,7 @@ define([
   'angularMocks',
   'app',
   'directives/draggable'
-], function () {
+], function (angular) {
   'use strict';
 
   describe('Directive: Draggable', function () {

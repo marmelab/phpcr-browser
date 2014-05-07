@@ -6,7 +6,7 @@ define([
   'angularMocks',
   'app',
   'directives/droppable'
-], function () {
+], function (angular) {
   'use strict';
 
   describe('Directive: Droppable', function () {

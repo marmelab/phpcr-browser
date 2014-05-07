@@ -9,7 +9,7 @@ define([
 ], function () {
   'use strict';
 
-  describe('Directive: Dropper  ', function () {
+  describe('Directive: Dropper', function () {
     var element,
         drop = 'dropCallback',
         $rootScope,
