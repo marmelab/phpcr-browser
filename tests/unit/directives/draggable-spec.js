@@ -9,7 +9,7 @@ define([
 ], function () {
   'use strict';
 
-  describe('Directive: Draggable  ', function () {
+  describe('Directive: Draggable', function () {
     var element,
         $rootScope,
         $compile;
