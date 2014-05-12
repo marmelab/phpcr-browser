@@ -31,7 +31,7 @@
         </tr>
         <tr ng-repeat="property in property.value track by $index | orderBy:'name'" class="property-item">
           <td>{{ property.name }}</td>
-          <td mb-property-value mb-property="property"></td>
+          <td mb-property-value mb-property="property" mb-create="createProperty" mb-update="updateProperty" mb-delete="deleteProperty"></td>
         </tr>
     </tbody>
 </table>

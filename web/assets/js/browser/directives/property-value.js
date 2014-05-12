@@ -12,7 +12,10 @@ define([
     return {
       restrict: 'A',
       scope: {
-        property: '=mbProperty'
+        property: '=mbProperty',
+        createProperty: '=mbCreate',
+        updateProperty: '=mbUpdate',
+        deleteProperty: '=mbDelete'
       },
       templateUrl: '/assets/js/browser/directives/templates/propertyValue.html',
       compile: function (element){
