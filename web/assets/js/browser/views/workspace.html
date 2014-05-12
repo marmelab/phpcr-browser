@@ -66,7 +66,7 @@
               <td>
                 <span class="text-primary">{{ property.name }}</span>
               </td>
-              <td mb-property-value></td>
+              <td mb-property-value mb-property="property"></td>
               <td>
                 <small><span title="Property type" editable-select="property.type" buttons="no" e-style="margin-top: 5px;" e-ng-options="type.name for type in types" onbeforesave="updatePropertyType(property.name, $data.value)">{{ typeLabel(property.type) }}</span></small>
               </td>
