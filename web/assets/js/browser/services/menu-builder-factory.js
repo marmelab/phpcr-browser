@@ -8,9 +8,17 @@ define([
 ], function(app) {
   'use strict';
 
+  /**
+   * MenuBuilderFactory provides builders for Menu.
+   */
   app.service('mbMenuBuilderFactory', ['mbObjectMapper', 'mbRouteParametersConverter', function(ObjectMapper, RouteParametersConverter) {
 
     var builders = {
+
+      /**
+       * Repositories menu link builder
+       * @param  {Function} callback
+       */
       repositories: function(callback) {
         ObjectMapper.find().then(function(repositories) {
           var link = {
@@ -28,6 +36,10 @@ define([
         });
       },
 
+      /**
+       * Repository menu link builder
+       * @param  {Function} callback
+       */
       repository: ['repositories', function(callback) {
         RouteParametersConverter.getCurrentRepository().then(function(repository) {
           repository.getWorkspaces().then(function(workspaces) {
@@ -48,6 +60,10 @@ define([
         });
       }],
 
+      /**
+       * Workspaces menu link builder
+       * @param  {Function} callback
+       */
       workspace: ['repository', function(callback) {
         RouteParametersConverter.getCurrentWorkspace().then(function(workspace) {
           var link = {
@@ -60,6 +76,11 @@ define([
       }]
     };
 
+    /**
+     * Generate a normalized builder object
+     * @param  {string} name
+     * @return {object}
+     */
     var callbackFactory = function(name) {
       return function() {
         return {
@@ -68,6 +89,7 @@ define([
         };
       };
     };
+
     return {
       getRepositoriesBuilder: callbackFactory('repositories'),
       getRepositoryBuilder: callbackFactory('repository'),
