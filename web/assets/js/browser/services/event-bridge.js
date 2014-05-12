@@ -6,15 +6,28 @@ define([
 ], function(app) {
   'use strict';
 
+  /**
+   * EventBridge is in charge of broadcasting some custom events and forwarding some ones.
+   */
   app.service('mbEventBridge', ['$rootScope', function($rootScope){
+
+    /**
+     * Forward browser.load event
+     */
     $rootScope.$on('browser.load', function() {
       $rootScope.$broadcast('_browser.load');
     });
 
+    /**
+     * Forward browser.loaded event
+     */
     $rootScope.$on('browser.loaded', function() {
       $rootScope.$broadcast('_browser.loaded');
     });
 
+    /**
+     * Broadcast repository.open.success, workspace.open.success, node.open.success events
+     */
     $rootScope.$on('$stateChangeSuccess', function(evt, toState, toParams, fromState, fromParams){
       if (toState.name === 'workspace' && fromState.name !== 'workspace') {
         // open a workspace coming from repositories ou repository route
@@ -39,6 +52,9 @@ define([
       }
     });
 
+    /**
+     * Broadcast repository.open.start, workspace.open.start, node.open.start events
+     */
     $rootScope.$on('$stateChangeStart', function(evt, toState, toParams, fromState, fromParams){
       if (toState.name === 'workspace' && fromState.name !== 'workspace') {
         // open a workspace coming from repositories ou repository route
