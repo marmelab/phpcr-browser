@@ -1,17 +1,17 @@
-<span ng-if="typeof(property.value) !== 'object' && property.parentName && property.type !== 10" editable-text="property.value" onbeforesave="updateProperty(property.parentName, $data, property.path)" e-style="width:100%" buttons="no" class="property-input"> {{ property.value }}</span>
+<span ng-if="!isObject(property.value) && property.parentName && property.type !== 10" editable-text="property.value" onbeforesave="updateProperty(property.parentName, $data, property.path)" e-style="width:100%" buttons="no" class="property-input"> {{ property.value }}</span>
 
-<span ng-if="typeof(property.value) !== 'object' && !property.parentName && property.type !== 10" editable-text="property.value" onbeforesave="updateProperty(property.name, $data, property.path)" e-style="width:100%" buttons="no" class="property-input"> {{ property.value }}</span>
+<span ng-show="!isObject(property.value) && !property.parentName && property.type !== 10" editable-text="property.value" onbeforesave="updateProperty(property.name, $data, property.path)" e-style="width:100%" buttons="no" class="property-input"> {{ property.value }}</span>
 
-<span ng-if="typeof(property.value) !== 'object' && property.parentName && property.type === 10">
+<span ng-if="!isObject(property.value) && property.parentName && property.type === 10">
     <a href="#/{{ currentNode.getWorkspace().getRepository().getName() }}/{{ currentNode.getWorkspace().getName() }}{{ property.value }}">{{ property.value }}</a>
 </span>
 
-<span ng-if="typeof(property.value) !== 'object' && !property.parentName && property.type === 10">
+<span ng-if="!isObject(property.value) && !property.parentName && property.type === 10">
     <a href="#/{{ currentNode.getWorkspace().getRepository().getName() }}/{{ currentNode.getWorkspace().getName() }}{{ property.value }}">{{ property.value }}</a>
 </span>
 
 <a class="text-danger pull-right" ng-if="property.parentName" ng-click="deleteProperty(property.parentName, property.path)"><span class="glyphicon glyphicon-trash"></span></a>
-<table class="table table-bordered table-striped table-hover" ng-if="typeof(property.value) == 'object' && property.value.length > 0">
+<table class="table table-bordered table-striped table-hover" ng-if="isObject(property.value) && property.value.length > 0">
     <thead>
         <th colspan="2">
             <a class="pull-right" style="margin-right: 10px;" ng-click="displaySubCreateForm = !displaySubCreateForm">
@@ -29,7 +29,7 @@
                 <input type="text" ng-model="value" class="form-control" placeholder="Enter a value" ui-keypress="{ enter: 'createProperty(name, value, property.parentName || property.name, property.path)' }" ui-keydown="{ esc: 'displaySubCreateForm = !displaySubCreateForm' }">
             </td>
         </tr>
-        <tr ng-repeat="property in property.value | orderBy:'name'" class="property-item">
+        <tr ng-repeat="property in property.value track by $index | orderBy:'name'" class="property-item">
           <td>{{ property.name }}</td>
           <td mb-property-value mb-property="property"></td>
         </tr>

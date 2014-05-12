@@ -1,4 +1,4 @@
-/*global define,describe,it,beforeEach,module,inject,expect*/
+/*global define,describe,it,beforeEach,module,inject,expect,jasmine*/
 /* jshint indent:2 */
 
 define([
@@ -34,7 +34,7 @@ define([
 
     it('should return a RichTree after called getCurrentNode on RouteParametersConverter', function () {
       TreeCache.getRichTree().then(function(richTree) {
-        expect(richTree).toEqual({});
+        expect(richTree).toEqual({ getRawTree: jasmine.any(Function) });
         expect(RouteParametersConverter.getCurrentNode).toHaveBeenCalled();
       });
       $rootScope.$apply();

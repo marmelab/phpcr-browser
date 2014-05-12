@@ -243,12 +243,20 @@ define('mocks', [
       };
     };
 
-    var buildFactoryWithPromiseMock = function() {
+    var buildFactoryWithPromiseMock = function(object) {
       return function() {
         return {
-          build: jasmine.createSpy('build').andReturn(mixins.buildPromise({})),
+          build: jasmine.createSpy('build').andReturn(mixins.buildPromise(object || {})),
           accept: jasmine.createSpy('accept').andReturn(true)
         };
+      };
+    };
+
+    var getRichTreeMock = function() {
+      return {
+        getRawTree: function() {
+          return fixtures.richTree;
+        }
       };
     };
 
@@ -262,7 +270,8 @@ define('mocks', [
       getSmartPropertyMock: getSmartPropertyMock,
       getRepositoryFactoryMock: buildFactoryMock(),
       getWorkspaceFactoryMock: buildFactoryMock(),
-      getRichTreeFactoryMock: buildFactoryWithPromiseMock(),
+      getRichTreeFactoryMock: buildFactoryWithPromiseMock(getRichTreeMock()),
+      getRichTreeMock: getRichTreeMock,
       getNodeFactoryMock: buildFactoryMock(),
       getJsonPatchMock: getJsonPatchMock,
       getRouteParametersConverterMock: getRouteParametersConverterMock

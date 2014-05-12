@@ -3,8 +3,9 @@
 
 define([
   'app',
+  'angular',
   'services/recursion-helper'
-], function(app) {
+], function(app, angular) {
   'use strict';
 
   app.directive('mbPropertyValue', ['mbRecursionHelper', function(RecursionHelper) {
@@ -16,6 +17,9 @@ define([
       templateUrl: '/assets/js/browser/directives/templates/propertyValue.html',
       compile: function (element){
         return RecursionHelper.compile(element);
+      },
+      controller: function($scope) {
+        $scope.isObject = angular.isObject;
       }
     };
   }]);
