@@ -8,6 +8,9 @@ define([
 ], function(app) {
   'use strict';
 
+  /**
+   * Tree display a tree of nodes.
+   */
   app.directive('mbTree', ['$log', '$location', '$q', function($log, $location, $q) {
     var scrollTop,
         deleteNode;
@@ -37,6 +40,10 @@ define([
         });
       }],
       link: function(scope) {
+        /**
+         * Delete a node in the tree
+         * @param  {object} element
+         */
         deleteNode = function(element) {
           if (element.hasClass('node')) {
             scope.richTree.getTree().remove(element.data('path')).then(function() {
@@ -63,6 +70,11 @@ define([
           }
         };
 
+        /**
+         * Toggle collapsed on a node
+         * @param  {string} path
+         * @return {promise}
+         */
         scope.toggleNode = function(path) {
           if (!scope.richTree) {
             return $q.reject();
@@ -75,6 +87,11 @@ define([
           });
         };
 
+        /**
+         * Move a node in the tree
+         * @param  {object} elementDropped
+         * @param  {object} element
+         */
         scope.moveNode = function(elementDropped, element) {
           if (!elementDropped.hasClass('node') || !element.hasClass('node')) {
             return;
