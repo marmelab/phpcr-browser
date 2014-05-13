@@ -338,7 +338,7 @@ define([
          * @param  {string} path
          * @param  {string} propertyName
          * @param  {mixed} propertyValue
-         * @param  {string} propertyType
+         * @param  {int} propertyType
          * @param  {object} config
          * @return {promise}
          */
@@ -371,7 +371,7 @@ define([
          * @param  {string} path
          * @param  {string} propertyName
          * @param  {mixed} propertyValue
-         * @param  {string} propertyType
+         * @param  {int} propertyType
          * @param  {object} config
          * @return {promise}
          */
