@@ -5,14 +5,14 @@ define([
   'app',
   'angular',
   'services/api-foundation',
-  'services/smart-property'
+  'services/smart-property-factory'
 ], function(app, angular) {
   'use strict';
 
   /**
    * NodeFactory is a factory to build Node object with the raw data returned by the REST API.
    */
-  app.factory('mbNodeFactory', ['$q', 'mbApiFoundation', 'mbSmartProperty', function($q, ApiFoundation, SmartProperty) {
+  app.factory('mbNodeFactory', ['$q', 'mbApiFoundation', 'mbSmartPropertyFactory', function($q, ApiFoundation, SmartPropertyFactory) {
 
     /**
      * Create a Node object for each child of a node
@@ -49,8 +49,8 @@ define([
       this._properties = {};
       for (var p in this._restangular.properties) {
         this._restangular.properties[p].name = p;
-        if (SmartProperty.accept(this._restangular.properties[p])) {
-          this._properties[p] = SmartProperty.build(this._restangular.properties[p], this);
+        if (SmartPropertyFactory.accept(this._restangular.properties[p])) {
+          this._properties[p] = SmartPropertyFactory.build(this._restangular.properties[p], this);
         }
       }
     };
@@ -110,8 +110,8 @@ define([
         self._properties = {};
         for (var p in node.properties) {
           node.properties[p].name = p;
-          if (SmartProperty.accept(node.properties[p])) {
-            self._properties[p] = SmartProperty.build(node.properties[p], self);
+          if (SmartPropertyFactory.accept(node.properties[p])) {
+            self._properties[p] = SmartPropertyFactory.build(node.properties[p], self);
           }
         }
         return self._properties;
@@ -188,7 +188,7 @@ define([
         type,
         {cache: false})
       .then(function(data) {
-        self._properties[name] = SmartProperty.build({ name: name, value: value, type: type }, self);
+        self._properties[name] = SmartPropertyFactory.build({ name: name, value: value, type: type }, self);
         return data;
       }, function(err) {
         return $q.reject(err);
