@@ -289,9 +289,23 @@ define([
     };
 
     return {
+
+      /**
+       * Build a Node object
+       * @param  {object} node
+       * @param  {Workspace} workspace
+       * @param  {Function} finder
+       * @return {Node}
+       */
       build: function(node, workspace, finder) {
         return new Node(node, workspace, finder);
       },
+
+      /**
+       * Test raw data validity
+       * @param  {object} data
+       * @return {boolean}
+       */
       accept: function(data) {
         return data.name !== undefined && data.path !== undefined;
       }
