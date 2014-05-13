@@ -22,6 +22,8 @@ define([
        * @return {promise}
        */
       this.getCurrentRepository = function(params) {
+        var self = this;
+
         if (mutex > 0) {
           var deferred = $q.defer();
           mutexStack.push({
@@ -30,9 +32,14 @@ define([
           });
           return deferred.promise;
         }
-        var self = this;
+
         mutex++;
+
         return ObjectMapper.find('/' + $stateParams.repository, params).then(function(repository) {
+          return repository;
+        }, function(err) {
+          return $q.reject(err);
+        }).finally(function() {
           mutex--;
           if (mutexStack.length > 0) {
             var el = mutexStack.shift();
@@ -40,9 +47,6 @@ define([
               el.deferred.resolve(repository);
             }, el.deferred.reject);
           }
-          return repository;
-        }, function(err) {
-          return $q.reject(err);
         });
       };
 
