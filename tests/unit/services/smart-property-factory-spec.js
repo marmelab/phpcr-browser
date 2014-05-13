@@ -6,12 +6,12 @@ define([
   'angular',
   'angularMocks',
   'app',
-  'services/smart-property'
+  'services/smart-property-factory'
 ], function (mocks, angular) {
   'use strict';
 
-  describe('Service: SmartProperty', function () {
-    var SmartProperty,
+  describe('Service: SmartPropertyFactoryFactory', function () {
+    var SmartPropertyFactory,
         JsonPatch,
         node,
         propertyData = { name: 'property', value: { nested: 'string', array: [0, 4] }, type: 'composite' },
@@ -29,17 +29,17 @@ define([
     });
 
     beforeEach(inject(function ($injector) {
-      SmartProperty = $injector.get('mbSmartProperty');
+      SmartPropertyFactory = $injector.get('mbSmartPropertyFactory');
       $rootScope = $injector.get('$rootScope');
     }));
 
     it('should accept only valid data', function () {
-      expect(SmartProperty.accept(propertyData)).toBe(true);
-      expect(SmartProperty.accept({ name: 'property' })).toBe(false);
+      expect(SmartPropertyFactory.accept(propertyData)).toBe(true);
+      expect(SmartPropertyFactory.accept({ name: 'property' })).toBe(false);
     });
 
     it('should return smart propery data with getter', function () {
-      var property = SmartProperty.build(propertyData, node);
+      var property = SmartPropertyFactory.build(propertyData, node);
       expect(property.getName()).toBe(propertyData.name);
       expect(property.getType()).toBe(propertyData.type);
 
@@ -55,7 +55,7 @@ define([
     });
 
     it('should call setProperty on node when setType is called', function () {
-      var property = SmartProperty.build(angular.copy(propertyData), node);
+      var property = SmartPropertyFactory.build(angular.copy(propertyData), node);
       property.setType('mixed');
       $rootScope.$apply();
 
@@ -67,7 +67,7 @@ define([
     });
 
     it('should call setProperty on node when setValue is called', function () {
-      var property = SmartProperty.build(angular.copy(propertyData), node);
+      var property = SmartPropertyFactory.build(angular.copy(propertyData), node);
       property.setValue('new');
       $rootScope.$apply();
 
@@ -79,7 +79,7 @@ define([
     });
 
     it('should call insert on JsonPatch when insert is called', function () {
-      var property = SmartProperty.build(angular.copy(propertyData), node);
+      var property = SmartPropertyFactory.build(angular.copy(propertyData), node);
       property.insert('/nested', { v: 'new' });
       $rootScope.$apply();
 
@@ -91,7 +91,7 @@ define([
     });
 
     it('should call update on JsonPatch when update is called', function () {
-      var property = SmartProperty.build(angular.copy(propertyData), node);
+      var property = SmartPropertyFactory.build(angular.copy(propertyData), node);
       property.update('/nested', 'updated');
       $rootScope.$apply();
 
@@ -103,7 +103,7 @@ define([
     });
 
     it('should call delete on JsonPatch when delete is called', function () {
-      var property = SmartProperty.build(angular.copy(propertyData), node);
+      var property = SmartPropertyFactory.build(angular.copy(propertyData), node);
       property.delete('/nested');
       $rootScope.$apply();
 

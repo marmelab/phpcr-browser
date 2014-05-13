@@ -13,7 +13,7 @@ define([
   describe('Service: NodeFactory', function () {
     var NodeFactory,
         ApiFoundation,
-        SmartProperty,
+        SmartPropertyFactory,
         workspace,
         ObjectMapper,
         $rootScope,
@@ -34,13 +34,13 @@ define([
     beforeEach(module('browserApp'));
     beforeEach(function() {
       ApiFoundation =  mocks.getApiFoundationMock();
-      SmartProperty = mocks.getSmartPropertyMock();
+      SmartPropertyFactory = mocks.getSmartPropertyFactoryMock();
       workspace = mocks.getWorkspaceMock();
       ObjectMapper = mocks.getObjectMapperMock();
 
       module(function ($provide) {
         $provide.value('mbApiFoundation', ApiFoundation);
-        $provide.value('mbSmartProperty', SmartProperty);
+        $provide.value('mbSmartPropertyFactory', SmartPropertyFactory);
       });
     });
 
@@ -67,9 +67,9 @@ define([
 
     it('should create smart properties', function () {
       var node = NodeFactory.build(nodeData, workspace, ObjectMapper.find);
-      expect(SmartProperty.accept).toHaveBeenCalledWith({ name: 'property', value: nodeData.properties.property.value, type: nodeData.properties.property.type });
-      expect(SmartProperty.build).toHaveBeenCalledWith({ name: 'property', value: nodeData.properties.property.value, type: nodeData.properties.property.type }, node);
-      expect(SmartProperty.build.calls.length).toBe(1);
+      expect(SmartPropertyFactory.accept).toHaveBeenCalledWith({ name: 'property', value: nodeData.properties.property.value, type: nodeData.properties.property.type });
+      expect(SmartPropertyFactory.build).toHaveBeenCalledWith({ name: 'property', value: nodeData.properties.property.value, type: nodeData.properties.property.type }, node);
+      expect(SmartPropertyFactory.build.calls.length).toBe(1);
     });
 
     it('should return node data with getter', function () {
@@ -143,8 +143,8 @@ define([
         {cache: false}
       );
 
-      expect(SmartProperty.build).toHaveBeenCalledWith(property, node);
-      expect(SmartProperty.build.calls.length).toBe(2);
+      expect(SmartPropertyFactory.build).toHaveBeenCalledWith(property, node);
+      expect(SmartPropertyFactory.build.calls.length).toBe(2);
     });
 
     it('should call deleteNodeProperty on ApiFoundation when deleteProperty is called', function () {
@@ -170,8 +170,8 @@ define([
         {cache: false}
       );
 
-      expect(SmartProperty.build).toHaveBeenCalledWith(nodeData.properties.property, node);
-      expect(SmartProperty.build.calls.length).toBe(3); // 3 because node returns by the api has 2 properties (see fixture)
+      expect(SmartPropertyFactory.build).toHaveBeenCalledWith(nodeData.properties.property, node);
+      expect(SmartPropertyFactory.build.calls.length).toBe(3); // 3 because node returns by the api has 2 properties (see fixture)
     });
 
     it('should call updateNodeProperty on ApiFoundation when updateProperty is called', function () {
@@ -189,8 +189,8 @@ define([
         {cache: false}
       );
 
-      expect(SmartProperty.build).toHaveBeenCalledWith(nodeData.properties.property, node);
-      expect(SmartProperty.build.calls.length).toBe(1);
+      expect(SmartPropertyFactory.build).toHaveBeenCalledWith(nodeData.properties.property, node);
+      expect(SmartPropertyFactory.build.calls.length).toBe(1);
     });
   });
 });
