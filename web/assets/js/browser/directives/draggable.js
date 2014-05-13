@@ -8,8 +8,8 @@ define([
   // From http://blog.parkji.co.uk/2013/08/11/native-drag-and-drop-in-angularjs.html
   app.directive('draggable', function() {
     return {
+      restrict: 'A',
       link: function(scope, element, attrs) {
-        // this gives us the native JS object
 
         if (!attrs.draggable) { return; }
 
@@ -23,6 +23,7 @@ define([
           this.classList.add('drag');
           return false;
         };
+
         el.addEventListener(
           'dragstart',
           dragstart,

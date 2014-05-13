@@ -11,7 +11,7 @@ module.exports = function (config) {
       {pattern: 'web/bower_components/**/*.js', included: false},
       {pattern: 'web/assets/js/**/*.js', included: false},
       {pattern: 'tests/{spec,unit}/**/*.js', included: false},
-      {pattern: 'web/assets/js/browser/views/**/*.html', watched: true, included: false, served: true},
+      {pattern: 'web/assets/js/browser/directives/templates/**/*.html', watched: true, included: false, served: true},
       'tests/main.js',
       'tests/fixtures.js',
       'tests/mixins.js',
@@ -32,11 +32,17 @@ module.exports = function (config) {
       'karma-chrome-launcher',
       'karma-phantomjs-launcher',
       'karma-jasmine',
-      'karma-requirejs'
+      'karma-requirejs',
+      'karma-ng-html2js-preprocessor'
     ],
 
     preprocessors: {
-      'web/assets/js/browser/view/**/*.html': 'ng-html2js'
+      'web/assets/js/browser/directives/templates/**/*.html': ['ng-html2js']
+    },
+
+    ngHtml2JsPreprocessor: {
+      // strip this from the file path
+      stripPrefix: 'web',
     }
   });
 };

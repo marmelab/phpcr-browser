@@ -18,6 +18,10 @@
     return '/base/web/bower_components/' + relPath + (!uncompressed ? '.min' : '');
   };
 
+  var directiveTemplate = function(name) {
+    return 'directives/templates/' + name + '.html';
+  };
+
   requirejs({
     baseUrl: '/base/web/assets/js/browser/',
     paths: {
@@ -39,7 +43,12 @@
       domReady:           vendor('requirejs-domready/domReady', true),
       mixins:             '/base/tests/mixins',
       fixtures:           '/base/tests/fixtures',
-      mocks:              '/base/tests/mocks'
+      mocks:              '/base/tests/mocks',
+      'directives/templates/navbarItem':      directiveTemplate('navbarItem'),
+      'directives/templates/propertyValue':   directiveTemplate('propertyValue'),
+      'directives/templates/repository':      directiveTemplate('repository'),
+      'directives/templates/tree':            directiveTemplate('tree'),
+      'directives/templates/treeNode':        directiveTemplate('treeNode')
     },
     shim: {
       angular : {'exports' : 'angular', 'deps': ['jquery']},
@@ -52,7 +61,12 @@
       angularUIKeypress: ['angular'],
       restangular: ['angular', 'lodash'],
       talker: ['angular'],
-      angularXEditable: ['angular']
+      angularXEditable: ['angular'],
+      'directives/templates/navbarItem':  ['angular'],
+      'directives/templates/propertyValue': ['angular'],
+      'directives/templates/repository': ['angular'],
+      'directives/templates/tree': ['angular'],
+      'directives/templates/treeNode': ['angular']
     },
     priority: [
       'angular'

@@ -108,9 +108,27 @@ define('fixtures', [], function () {
     }
   };
 
+  var richTree = {
+    '/': {
+      name: 'root',
+      path: '/',
+      hasChildren: true,
+      collapsed: false,
+      children: [
+        {
+          name: 'child',
+          path: '/child',
+          children: [],
+          hasChildren: false
+        }
+      ]
+    }
+  };
+
   return {
     repositories: repositories,
     workspaces: workspaces,
-    node: node
+    node: node,
+    richTree: richTree
   };
 });
