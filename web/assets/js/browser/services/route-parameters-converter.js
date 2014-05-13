@@ -13,6 +13,8 @@ define([
    */
   app.service('mbRouteParametersConverter', ['$rootScope', '$stateParams', '$q', 'mbObjectMapper',
     function($rootScope, $stateParams, $q, ObjectMapper) {
+      var mutex = 0,
+          mutexStack = [];
 
       /**
        * Get the current repository based on the url
@@ -20,7 +22,28 @@ define([
        * @return {promise}
        */
       this.getCurrentRepository = function(params) {
-        return ObjectMapper.find('/' + $stateParams.repository, params);
+        if (mutex > 0) {
+          var deferred = $q.defer();
+          mutexStack.push({
+            deferred: deferred,
+            params: params
+          });
+          return deferred.promise;
+        }
+        var self = this;
+        mutex++;
+        return ObjectMapper.find('/' + $stateParams.repository, params).then(function(repository) {
+          mutex--;
+          if (mutexStack.length > 0) {
+            var el = mutexStack.shift();
+            self.getCurrentRepository(el.params).then(function(repository) {
+              el.deferred.resolve(repository);
+            }, el.deferred.reject);
+          }
+          return repository;
+        }, function(err) {
+          return $q.reject(err);
+        });
       };
 
       /**
