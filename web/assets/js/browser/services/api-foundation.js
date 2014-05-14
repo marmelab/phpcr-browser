@@ -47,7 +47,7 @@ define([
       nodesPrefix = value;
     };
 
-    this.$get = ['$q', 'Restangular', function($q, Restangular) {
+    this.$get = ['$q', '$cacheFactory', 'Restangular', function($q, $cacheFactory, Restangular) {
       Restangular.setBaseUrl(server);
 
       var repositories    = Restangular.all(repositoriesPrefix);
@@ -189,6 +189,12 @@ define([
          */
         getRepositories: function(config) {
           config = config || {};
+
+          if (config.cache !== undefined && !config.cache) {
+            this.invalidateCacheEntry(repositories.getRequestedUrl());
+            delete config.cache;
+          }
+
           return repositories.withHttpConfig(config).getList();
         },
 
@@ -200,6 +206,12 @@ define([
          */
         getRepository: function(name, config) {
           config = config || {};
+
+          if (config.cache !== undefined && !config.cache) {
+            this.invalidateCacheEntry(repository(name).getRequestedUrl());
+            delete config.cache;
+          }
+
           return repository(name).withHttpConfig(config).get();
         },
 
@@ -211,6 +223,12 @@ define([
          */
         getWorkspaces: function(repositoryName, config) {
           config = config || {};
+
+          if (config.cache !== undefined && !config.cache) {
+            this.invalidateCacheEntry(workspaces(repositoryName).getRequestedUrl());
+            delete config.cache;
+          }
+
           return workspaces(repositoryName).withHttpConfig(config).getList();
         },
 
@@ -223,6 +241,12 @@ define([
          */
         getWorkspace: function(repositoryName, name, config) {
           config = config || {};
+
+          if (config.cache !== undefined && !config.cache) {
+            this.invalidateCacheEntry(workspace(repositoryName, name).getRequestedUrl());
+            delete config.cache;
+          }
+
           return workspace(repositoryName, name).withHttpConfig(config).get();
         },
 
@@ -267,6 +291,12 @@ define([
           } else{
             params = {};
           }
+
+          if (config.cache !== undefined && !config.cache) {
+            this.invalidateCacheEntry(node(repositoryName, workspaceName, path).getRequestedUrl());
+            delete config.cache;
+          }
+
           return node(repositoryName, workspaceName, path).withHttpConfig(config).get(params);
         },
 
@@ -379,6 +409,14 @@ define([
           config = config || {};
           return nodeProperties(repositoryName, workspaceName, path).withHttpConfig(config).post({ name: propertyName, value: propertyValue, type: propertyType });
         },
+
+        /**
+         * Invalidate an entry in the http cache
+         * @param  {string} key
+         */
+        invalidateCacheEntry: function(key) {
+          $cacheFactory.get('$http').remove(key);
+        }
       };
     }];
   });

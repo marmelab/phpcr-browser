@@ -60,8 +60,9 @@ define([
         return 'undefined';
       };
 
-      var reloadProperties = function() {
-        $scope.currentNode.getProperties(false).then(function(properties) {
+      var reloadProperties = function(cache) {
+        cache = cache === undefined ? false : cache;
+        $scope.currentNode.getProperties(cache).then(function(properties) {
           rawProperties = properties;
           $scope.properties = normalize(rawProperties);
         });
@@ -190,7 +191,7 @@ define([
       $scope.$watch('currentNode', function(node) {
         if (node) {
           reloadBreadcrumb();
-          reloadProperties();
+          reloadProperties(true);
         }
       });
 
