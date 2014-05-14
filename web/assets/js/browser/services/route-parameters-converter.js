@@ -39,7 +39,7 @@ define([
           return repository;
         }, function(err) {
           return $q.reject(err);
-        }).finally(function() {
+        })['finally'](function() {
           mutex--;
           if (mutexStack.length > 0) {
             var el = mutexStack.shift();
