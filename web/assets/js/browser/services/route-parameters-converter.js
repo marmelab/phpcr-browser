@@ -23,7 +23,6 @@ define([
        */
       this.getCurrentRepository = function(params) {
         var self = this;
-
         if (mutex > 0) {
           var deferred = $q.defer();
           mutexStack.push({
@@ -34,12 +33,7 @@ define([
         }
 
         mutex++;
-
-        return ObjectMapper.find('/' + $stateParams.repository, params).then(function(repository) {
-          return repository;
-        }, function(err) {
-          return $q.reject(err);
-        })['finally'](function() {
+        return ObjectMapper.find('/' + $stateParams.repository, params)['finally'](function() {
           mutex--;
           if (mutexStack.length > 0) {
             var el = mutexStack.shift();
