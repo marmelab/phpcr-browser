@@ -29,6 +29,11 @@ $ make install-gaudi
 $ make install-gaudi autoconfig=false
 ```
 
+Update
+------
+
+To update the browser do a `git checkout` to the branch you want and `git pull`. Then run `make install autoconfig=false`.
+
 Configuration
 -------------
 Create a `config/prod.yml` with the connection settings for the repositories you need to browse. For instance, to use the browser with a local instance of jackrabbit:
