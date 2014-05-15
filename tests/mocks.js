@@ -13,7 +13,7 @@ define('mocks', [
         getWorkspaceMock,
         getNodeMock,
         getObjectMapperMock,
-        getSmartPropertyMock,
+        getSmartPropertyFactoryMock,
         getJsonPatchMock,
         getRouteParametersConverterMock;
 
@@ -196,7 +196,7 @@ define('mocks', [
       };
     };
 
-    getSmartPropertyMock = function() {
+    getSmartPropertyFactoryMock = function() {
       return {
         build: jasmine.createSpy('build').andCallFake(function(property, node) {
           return {
@@ -267,7 +267,7 @@ define('mocks', [
       getWorkspaceMock: getWorkspaceMock,
       getNodeMock: getNodeMock,
       getObjectMapperMock: getObjectMapperMock,
-      getSmartPropertyMock: getSmartPropertyMock,
+      getSmartPropertyFactoryMock: getSmartPropertyFactoryMock,
       getRepositoryFactoryMock: buildFactoryMock(),
       getWorkspaceFactoryMock: buildFactoryMock(),
       getRichTreeFactoryMock: buildFactoryWithPromiseMock(getRichTreeMock()),

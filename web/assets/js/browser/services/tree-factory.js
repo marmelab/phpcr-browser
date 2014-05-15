@@ -7,11 +7,24 @@ define([
 ], function(app, angular) {
   'use strict';
 
+  /**
+   * TreeFactory is a factory to build Tree which expose append/move/delete/refresh features.
+   */
   app.factory('mbTreeFactory', ['$q', function($q) {
+
+    /**
+     * Decorate a tree and call all listeners for decorate hook
+     * @param  {object} tree
+     * @return {promise}
+     */
     var decorate = function (tree){
       var deferred = $q.defer(), self = this;
 
-      // decorate all children of a node
+      /**
+       * Decorate all children of a node
+       * @param  {object} tree
+       * @return {promise}
+       */
       var decorateTree = function(tree) {
         var deferred = $q.defer(), cursor = 0;
 
@@ -41,7 +54,13 @@ define([
         return deferred.promise;
       };
 
-      // decorate a node
+      /**
+       * Decorate a node
+       * @param  {Function} next
+       * @param  {object}   node
+       * @param  {object}   parent
+       * @return {promise}
+       */
       var decorateNode = function(next, node, parent) {
         if (parent && parent.path === '/') {
           node.path = parent.path + node.name;
@@ -70,6 +89,11 @@ define([
       return deferred.promise;
     };
 
+    /**
+     * Compact an array by removing all undefined lines
+     * @param  {array} array
+     * @return {array}
+     */
     var compact = function(array) {
       var compacted = [];
       array.map(function(value) {
@@ -80,13 +104,22 @@ define([
       return compacted;
     };
 
-
+    /**
+     * Get the parent path of a node
+     * @param  {string} path
+     * @return {string}
+     */
     var parentPath = function(path) {
       var parent = path.split('/');
       parent.pop();
       return parent.join('/');
     };
 
+    /**
+     * Update the path of nodes recursively
+     * @param  {string} parentPath
+     * @param  {object} node
+     */
     var updatePath = function(parentPath, node) {
       if (parentPath !== '/') {
         node.path = parentPath + '/' + node.name;
@@ -103,6 +136,12 @@ define([
       }
     };
 
+    /**
+     * Tree constructor
+     * @param {object} tree
+     * @param {array} hooks
+     * @return {promise}
+     */
     var Tree = function(tree, hooks) {
       var self = this;
       this.hooks = {};
@@ -121,19 +160,22 @@ define([
       });
     };
 
-    Tree.HOOK_DECORATE = 1;
-    Tree.HOOK_PRE_REMOVE = 10;
-    Tree.HOOK_POST_REMOVE = 11;
-    Tree.HOOK_PRE_APPEND = 20;
-    Tree.HOOK_POST_APPEND = 21;
-    Tree.HOOK_PRE_MOVE = 30;
-    Tree.HOOK_POST_MOVE = 31;
-    Tree.HOOK_PRE_REFRESH = 40;
+    // All available hooks
+    Tree.HOOK_DECORATE     = 1;
+    Tree.HOOK_PRE_REMOVE   = 10;
+    Tree.HOOK_POST_REMOVE  = 11;
+    Tree.HOOK_PRE_APPEND   = 20;
+    Tree.HOOK_POST_APPEND  = 21;
+    Tree.HOOK_PRE_MOVE     = 30;
+    Tree.HOOK_POST_MOVE    = 31;
+    Tree.HOOK_PRE_REFRESH  = 40;
     Tree.HOOK_POST_REFRESH = 41;
 
     /**
      * Register a listener for a hook
-      */
+     * @param  {int}   event
+     * @param  {Function} callback
+     */
     Tree.prototype.registerHook = function(event, callback) {
       if (!this.hooks[event]) {
         this.hooks[event] = [];
@@ -144,6 +186,9 @@ define([
 
     /**
      * Call all listeners for a hook
+     * @param  {int} event
+     * @param  {boolean} ignore
+     * @return {promise}
      */
     Tree.prototype._hook = function(event, ignore) {
       var deferred = $q.defer(), self = this, cursor = 0;
@@ -183,12 +228,28 @@ define([
       return deferred.promise;
     };
 
+    /**
+     * Get the raw data of the tree
+     * @return {object}
+     */
     Tree.prototype.getRawTree = function() {
       return this.tree;
     };
 
+    /**
+     * Find a node in the tree
+     * @param  {string} path
+     * @param  {object} root
+     * @return {promise}
+     */
     Tree.prototype.find = function(path, root){
-      // recursive search
+
+      /**
+       * Perform a recursive search
+       * @param  {array} target
+       * @param  {object} tree
+       * @return {mixed}
+       */
       var search = function (target, tree){
         if(target.length > 0){
           // we did not reach the wanted node
@@ -230,12 +291,20 @@ define([
       return deferred.promise;
     };
 
+    /**
+     * Find the parent of a node
+     * @param  {string} path
+     * @return {promise}
+     */
     Tree.prototype.findParent = function(path){
       return this.find(parentPath(path));
     };
 
     /**
-     * Remove a node
+     * Remove a node of the tree
+     * @param  {string} path
+     * @param  {boolean} ignoreHooks
+     * @return {promise}
      */
     Tree.prototype.remove = function(path, ignoreHooks) {
       var self = this;
@@ -282,7 +351,11 @@ define([
     };
 
     /**
-     * Append a node
+     * Append a node to the tree
+     * @param  {string} parentPath
+     * @param  {object} childNode
+     * @param  {boolean} ignoreHooks
+     * @return {promise}
      */
     Tree.prototype.append = function(parentPath, childNode, ignoreHooks) {
       var self = this;
@@ -339,7 +412,10 @@ define([
     };
 
     /**
-     * Move node
+     * Move node in the tree
+     * @param  {string} fromPath
+     * @param  {string} toPath
+     * @return {promise}
      */
     Tree.prototype.move = function(fromPath, toPath) {
       var self = this;
@@ -372,6 +448,12 @@ define([
       });
     };
 
+    /**
+     * Update a node in the tree
+     * @param  {string} path
+     * @param  {object} data
+     * @return {promise}
+     */
     Tree.prototype.refresh = function(path, data) {
       var self = this;
       // find the node to be refreshed
@@ -413,12 +495,26 @@ define([
     };
 
     return {
+
+      /**
+       * Build a Tree object
+       * @param  {object} tree
+       * @param  {array} hooks
+       * @return {promise}
+       */
       build: function(tree, hooks) {
         return new Tree(tree, hooks);
       },
+
+      /**
+       * Test raw data validity
+       * @param  {object} data
+       * @return {boolean}
+       */
       accept: function(data) {
         return data.name !== undefined && data.path !== undefined && data.children !== undefined;
       },
+
       HOOK_DECORATE: Tree.HOOK_DECORATE,
       HOOK_PRE_REMOVE: Tree.HOOK_PRE_REMOVE,
       HOOK_POST_REMOVE: Tree.HOOK_POST_REMOVE,

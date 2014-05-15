@@ -8,6 +8,9 @@ define([
 ], function(app) {
   'use strict';
 
+  /**
+   * TreeNode displays a node of the tree.
+   */
   app.directive('mbTreeNode', ['$log', '$timeout', 'mbRecursionHelper',
     function($log, $timeout, RecursionHelper) {
     return {
@@ -21,6 +24,10 @@ define([
       controller: function($scope, $location) {
         $scope.order = 'name';
 
+        /**
+         * Open a node in the tree
+         * @param  {object} node
+         */
         $scope.openNode = function(node) {
           var target = '/' + $scope.repository.getName() + '/' + $scope.workspace.getName() + node.path;
           if (target !== $location.path()) {
@@ -29,10 +36,19 @@ define([
           $scope.toggleNode(node.path);
         };
 
+        /**
+         * Toggle the add node form
+         * @param  {object} node
+         */
         $scope.toggleCreateForm = function(node) {
           node.displayCreateForm = !node.displayCreateForm;
         };
 
+        /**
+         * Create a child node
+         * @param  {object} node
+         * @param  {string} nodeName
+         */
         $scope.createChildNode = function(node, nodeName) {
           if ($scope.repository.supports('node.create')) {
             if (!nodeName || nodeName.trim().length === 0) {

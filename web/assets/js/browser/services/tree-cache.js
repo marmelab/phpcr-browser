@@ -9,16 +9,25 @@ define([
 ], function(app) {
   'use strict';
 
+  /**
+   * The TreeCache aims to stored a shared RichTree during a session to avoid to always rebuild it.
+   */
   app.factory('mbTreeCache', ['$q', '$rootScope', 'mbRichTreeFactory', 'mbTreeFactory', 'mbNodeFactory', 'mbRouteParametersConverter', 'mbObjectMapper',
     function($q, $rootScope, RichTreeFactory, TreeFactory, NodeFactory, RouteParametersConverter, ObjectMapper) {
     var cache = {},
-        deferred,
         repository,
         workspace;
 
     var hooks = [
       {
         event: TreeFactory.HOOK_PRE_REFRESH,
+
+        /**
+         * Listener on pre refresh hook to perform the refresh over the REST API
+         * @param  {Function} next
+         * @param  {string}   path
+         * @param  {object}   node
+         */
         callback: function(next, path, node) {
           if (!node.collapsed) {
             return next();
@@ -32,6 +41,13 @@ define([
       },
       {
         event: TreeFactory.HOOK_PRE_MOVE,
+
+        /**
+         * Listener on pre move hook to perform the move over the REST API
+         * @param  {Function} next
+         * @param  {string}   fromPath
+         * @param  {string}   toPath
+         */
         callback: function(next, fromPath, toPath) {
           ObjectMapper.find('/' + repository.getName() + '/' + workspace.getName() + fromPath).then(function(nodeDropped) {
             nodeDropped.move(toPath).then(function() {
@@ -42,6 +58,13 @@ define([
       },
       {
         event: TreeFactory.HOOK_PRE_APPEND,
+
+        /**
+         * Listener on pre append hook to perform the append over the REST API
+         * @param  {Function} next
+         * @param  {string}   parentPath
+         * @param  {object}   childNode
+         */
         callback: function(next, parentPath, childNode) {
           NodeFactory.build(childNode, workspace).create().then(function() {
             next();
@@ -50,6 +73,13 @@ define([
       },
       {
         event: TreeFactory.HOOK_PRE_REMOVE,
+
+        /**
+         * Listener on pre remove hook to perform the remove over the REST API
+         * @param  {Function} next
+         * @param  {string}   path
+         * @return {Function}
+         */
         callback: function(next, path) {
           ObjectMapper.find('/' + repository.getName() + '/' + workspace.getName() + path).then(function(node) {
             node.delete().then(function() {
@@ -60,6 +90,10 @@ define([
       }
     ];
 
+    /**
+     * Build a RichTree object based on the current node and cache it
+     * @return {promise}
+     */
     var buildRichTree = function() {
       // rich tree is not built, retrieve the current node with its reduced tree
       return RouteParametersConverter.getCurrentNode({ reducedTree: true, cache: false }).then(function(node) {
@@ -82,10 +116,17 @@ define([
       });
     };
 
+    /**
+     * Invalidate the RichTree in cache to force rebuild
+     */
     var invalidateRichTreeCache = function() {
       delete cache.richTree;
     };
 
+    /**
+     * Get the RichTree stored in the cache
+     * @return {promise}
+     */
     var getRichTree = function() {
       if (cache.richTree) {
         // the rich tree is already build, we return it in a resolved promise
@@ -95,6 +136,9 @@ define([
       return buildRichTree();
     };
 
+    /**
+     * Listener on route change to invalidate the RichTree cache if needed
+     */
     $rootScope.$on('workspace.open.start', invalidateRichTreeCache);
 
     return {

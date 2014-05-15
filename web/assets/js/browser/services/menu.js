@@ -6,21 +6,36 @@ define([
 ], function(app) {
   'use strict';
 
+  /**
+   * Menu provide logic to build the navbar. It uses builders (see MenuBuilderFactory) to generate each link.
+   */
   app.service('mbMenu', ['$rootScope', function($rootScope) {
 
     var menu,
         builders = {};
 
+    /**
+     * Reset the menu container
+     */
     var resetMenu = function() {
       menu = {};
     };
 
     resetMenu();
 
+    /**
+     * Get the menu container
+     * @return {object}
+     */
     var getMenu = function() {
       return menu;
     };
 
+    /**
+     * Run a menu link builder
+     * @param  {name} name
+     * @param  {mixed} builder
+     */
     var runBuilder = function(name, builder) {
       if (typeof(builder) === 'function') {
         return builder(function(link) {
@@ -37,10 +52,18 @@ define([
       }
     };
 
+    /**
+     * Register a menu link builder
+     * @param  {object} builderContainer
+     */
     var appendBuilder = function(builderContainer) {
       builders[builderContainer.name] = builderContainer.builder;
     };
 
+    /**
+     * Compile the menu for a route
+     * @param  {string} routeName
+     */
     var compileMenu = function(routeName) {
       resetMenu();
       if (builders[routeName]) {
@@ -48,6 +71,9 @@ define([
       }
     };
 
+    /**
+     * Route change listener to build automatically the menu
+     */
     $rootScope.$on('$stateChangeSuccess', function(evt, toState, toParams, fromState, fromParams){
       if (toState.name === fromState.name &&
         toParams.repository === fromParams.repository &&
