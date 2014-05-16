@@ -8,6 +8,7 @@ You can create/delete a workspace (if supported by the repository), add/delete/m
 
 Installation
 ------------
+You must have [Composer](https://getcomposer.org/) and [Bower](http://bower.io/) installed globally.
 
 You need to have installed globally [Composer](https://getcomposer.org/) and [Bower](http://bower.io/).
 
