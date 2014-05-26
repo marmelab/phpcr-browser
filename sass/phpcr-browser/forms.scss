@@ -1,0 +1,32 @@
+.workspace-input, .workspace-input:focus {
+  border: none;
+  height: 100%;
+  box-shadow: none;
+  font-size: 17pt;
+  margin: 0;
+  padding-bottom: 0;
+}
+
+.node-create-form {
+  display: inline-block;
+  input {
+    background-color: darken($body-bg, 10%);
+    box-shadow: none;
+    border: none;
+    padding: 0 5px;
+    height: 30px;
+  }
+}
+
+.property-input {
+  min-height: 20px;
+  min-width: 100px;
+  display: inline-block;
+  margin: 0;
+}
+
+.property-form {
+  position: fixed;
+  top: 87px;
+  z-index: 999;
+}

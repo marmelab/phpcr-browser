@@ -1,0 +1,54 @@
+@import 'compass/css3';
+@import "bootstrap/mixins";
+
+body {
+  padding-top: $navbar-height + 10;
+}
+
+.btn, .panel, input.form-control {
+    @include border-radius(0!important);
+}
+
+a {
+    cursor: pointer;
+}
+
+.scrollabe {
+  overflow: scroll;
+  height: 100%;
+  position: absolute;
+  top:0;
+
+  &#scrollable-tree {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    top: 0;
+    width: 95%;
+  }
+}
+
+#sidebar {
+  @include make-sm-column(3);
+  overflow: hidden;
+  position: fixed;
+  top: $navbar-height;
+  left: 0;
+  bottom: 50px;
+}
+
+#content {
+  @include make-sm-column(9);
+  position: fixed;
+  top: $navbar-height;
+  right: 0;
+  bottom: 50px;
+  max-height: 100%;
+  background-color: #ffffff;
+  padding: 0;
+
+  .scrollable {
+    margin-top: $scrollable-margin-top;
+    left: 0;
+    right: 0;
+  }
+}
