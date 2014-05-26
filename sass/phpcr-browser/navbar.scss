@@ -1,7 +1,8 @@
 @import "compass/css3";
 
 #search {
-  margin-right: 20px;
+  margin-right: 0px;
+  padding: 0;
 
   input.form-control {
     @include border-radius(0);
@@ -34,4 +35,10 @@
         padding: 6px 20px;
       }
     }
+}
+
+.github {
+  @extend .lead;
+
+  margin-bottom: 0px;
 }
