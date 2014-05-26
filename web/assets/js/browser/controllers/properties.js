@@ -8,36 +8,11 @@ define([
 ], function(app, angular) {
   'use strict';
 
-  app.controller('mbPropertiesCtrl', ['$scope', '$log', '$filter', '$timeout', '$location',
-    function($scope, $log, $filter, $timeout, $location) {
+  app.controller('mbPropertiesCtrl', ['$scope', '$log', '$filter', '$timeout', '$location', '$q',
+    function($scope, $log, $filter, $timeout, $location, $q) {
       var rawProperties;
+
       $scope.displayCreateForm = false;
-
-      $scope.$on('search.change', function(e, value) {
-        $scope.search = value;
-      });
-
-      $scope.toggleCreateForm = function() {
-        $scope.displayCreateForm = !$scope.displayCreateForm;
-      };
-
-      $scope.backup = null;
-
-      $scope.$on('drop.delete', function(e, element) {
-        if (element.hasClass('property-item')) {
-          $scope.deleteProperty(element.data('name'));
-        }
-      });
-
-      var reloadBreadcrumb = function() {
-        if ($scope.currentNode.getPath() !== '/') {
-          var components = $scope.currentNode.getPath().split('/');
-          components.shift();
-          $scope.breadcrumb = components;
-        } else {
-          $scope.breadcrumb = [];
-        }
-      };
 
       $scope.types = [
         { name: 'undefined', value: 0},
@@ -54,6 +29,95 @@ define([
         { name: 'URI', value: 11},
         { name: 'Decimal', value: 12},
       ];
+
+      var createProperty = function(name, value, type, path) {
+        if (!$scope.backup) {
+          if (!name || name.length === 0) {
+            return $log.error('Name is empty');
+          } else if (!value || value.length === 0) {
+            return $log.error('Value is empty');
+          }
+        }
+
+        if (path) {
+          path = path.split('/');
+          path.pop();
+          path = path.join('/');
+          var datum = {};
+          try {
+            datum[name] = JSON.parse(value);
+          } catch (e) {
+            datum[name] = value;
+          }
+
+          return rawProperties[type].insert(path, datum).then(function() {
+            reloadProperties();
+            $log.log('Property created.');
+          }, function(err) {
+            if (err.data && err.data.message) { return $log.error(err, err.data.message); }
+            $log.error(err);
+          });
+        }
+
+        return $scope.currentNode.createProperty(name, value).then(function() {
+          $log.log('Property created');
+          reloadProperties();
+          $scope.name = $scope.value = undefined;
+          $scope.displayCreateForm = false;
+        }, function(err) {
+          if (err.data && err.data.message) { return $log.error(err, err.data.message); }
+          $log.error(err);
+          return $q.reject(err);
+        });
+      };
+
+      $scope.toggleCreateForm = function() {
+        $scope.displayCreateForm = !$scope.displayCreateForm;
+      };
+
+      $scope.keyBinding = {
+        createForm : {
+          keypress: {
+            enter: function() {
+              var type = $scope.type ? $scope.type.value : $scope.types[0].value;
+              createProperty($scope.name, $scope.value, type.value);
+            }
+          },
+          keydown: {
+            esc: function() {
+              $scope.toggleCreateForm();
+            }
+          }
+        }
+      };
+
+      $scope.$on('search.change', function(e, value) {
+        $scope.search = value;
+      });
+
+      $scope.backup = null;
+
+      $scope.$on('drop.delete', function(e, element) {
+        if (element.hasClass('property-item')) {
+          $scope.deleteProperty(element.data('name'));
+        }
+      });
+
+      var reloadMetadata = function() {
+        $scope.supportsPropertyDelete = $scope.currentNode.getWorkspace().getRepository().supports('node.property.delete');
+      };
+
+      var reloadBreadcrumb = function() {
+        if ($scope.currentNode.getPath() !== '/') {
+          var components = $scope.currentNode.getPath().split('/');
+          components.shift();
+          $scope.breadcrumb = components;
+        } else {
+          $scope.breadcrumb = [];
+        }
+      };
+
+
 
       $scope.typeLabel = function(value) {
         if ($scope.types[value]) { return $scope.types[value].name; }
@@ -91,49 +155,10 @@ define([
         }, $log.error);
       };
 
-      $scope.createProperty = function(name, value, type, path) {
-        if (!$scope.backup) {
-          if (!name || name.length === 0) {
-            return $log.error('Name is empty');
-          } else if (!value || value.length === 0) {
-            return $log.error('Value is empty');
-          }
-        }
-
-        if (path) {
-          path = path.split('/');
-          path.pop();
-          path = path.join('/');
-          var datum = {};
-          try {
-            datum[name] = JSON.parse(value);
-          } catch (e) {
-            datum[name] = value;
-          }
-
-          return rawProperties[type].insert(path, datum).then(function() {
-            reloadProperties();
-            $log.log('Property created.');
-          }, function(err) {
-            if (err.data && err.data.message) { return $log.error(err, err.data.message); }
-            $log.error(err);
-          });
-        }
-
-        $scope.currentNode.createProperty(name, value).then(function() {
-          $log.log('Property created');
-          reloadProperties();
-          $scope.name = $scope.value = undefined;
-          $scope.displayCreateForm = false;
-        }, function(err) {
-          if (err.data && err.data.message) { return $log.error(err, err.data.message); }
-          $log.error(err);
-        });
-      };
-
       $scope.restoreProperty = function() {
-        $scope.createProperty($scope.backup.name, $scope.backup.value, $scope.backup.type);
-        $scope.backup = null;
+        createProperty($scope.backup.name, $scope.backup.value, $scope.backup.type).then(function() {
+          $scope.backup = null;
+        });
       };
 
       var normalize = function(data, path, parentName, parentType) {
@@ -190,6 +215,7 @@ define([
 
       $scope.$watch('currentNode', function(node) {
         if (node) {
+          reloadMetadata();
           reloadBreadcrumb();
           reloadProperties(true);
         }

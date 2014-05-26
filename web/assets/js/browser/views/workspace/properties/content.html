@@ -1,0 +1,34 @@
+<table id="properties">
+  <tbody>
+    <tr ng-show="displayCreateForm" class="property-form">
+      <td></td>
+      <td>
+        <input type="text" ng-model="name" mb-focus-me="displayCreateForm" class="form-control" placeholder="Enter a name" ui-keypress="keyBinding.createForm.keypress" ui-keydown="keyBinding.createForm.keydown">
+      </td>
+      <td>
+        <input type="text" ng-model="value" class="form-control" placeholder="Enter a value" ui-keypress="keyBinding.createForm.keypress" ui-keydown="keyBinding.createForm.keydown">
+      </td>
+      <td>
+        <select ng-model="type" class="form-control" ng-options="type.name for type in types">
+          <option value="">Type</option>
+        </select>
+      </td>
+    </tr>
+    <tr ng-show="backup !== null" class="warning">
+      <td></td>
+      <td colspan="3" style="text-align:left;">
+        Do you want to restore {{ backup.name }} ? <a ng-click="restoreProperty()" id="restore">Yes</a> <a ng-click="backup=null">No</a>
+      </td>
+    </tr>
+    <tr class="property-item" ng-repeat="property in properties | mbPropertiesSorter | mbJaroWinkler:search" id="{{ property.name }}" draggable="supportsPropertyDelete" data-name="{{ property.name }}">
+      <td><span class="fa fa-bars" title="Drag me to delete me"></span></td>
+      <td>
+        <span class="text-primary">{{ property.name }}</span>
+      </td>
+      <td mb-property-value mb-property="property" mb-create="createProperty" mb-update="updateProperty" mb-delete="deleteProperty"></td>
+      <td>
+        <small><span title="Property type" editable-select="property.type" buttons="no" e-style="margin-top: 5px;" e-ng-options="type.name for type in types" onbeforesave="updatePropertyType(property.name, $data.value)">{{ typeLabel(property.type) }}</span></small>
+      </td>
+    </tr>
+  </tbody>
+</table>
