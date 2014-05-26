@@ -5,6 +5,13 @@ body {
   padding-top: $navbar-height + 10;
 }
 
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Roboto'), url(../fonts/Roboto-Regular.ttf) format('woff');
+}
+
 .btn, .panel, input.form-control {
     @include border-radius(0!important);
 }
@@ -18,14 +25,15 @@ a {
   height: 100%;
   position: absolute;
   top:0;
-
-  &#scrollable-tree {
-    padding-top: 10px;
-    padding-bottom: 10px;
-    top: 0;
-    width: 95%;
-  }
 }
+
+.scrollable-tree {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  top: 0;
+  width: 95%;
+}
+
 
 #sidebar {
   @include make-sm-column(3);
