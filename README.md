@@ -4,7 +4,7 @@ PHPCR Browser provides web interface to explore PHPCR repositories. The current 
 
 You can create/delete a workspace (if supported by the repository), add/delete/move nodes, add/edit/delete properties.
 
-![screenshot](http://1.1.1.4/bmi/marmelab.com/images/blog/phpcr-browser-screencast.gif)
+![screenshot](http://marmelab.com/phpcr-browser/img/phpcr-browser-screencast.gif)
 
 Installation
 ------------
