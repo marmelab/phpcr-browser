@@ -4,10 +4,12 @@ PHPCR Browser provides web interface to explore PHPCR repositories. The current 
 
 You can create/delete a workspace (if supported by the repository), add/delete/move nodes, add/edit/delete properties.
 
-![screenshot](http://marmelab.com/phpcr-browser/img/screenshot.png)
+![screenshot](http://1.1.1.4/bmi/marmelab.com/images/blog/phpcr-browser-screencast.gif)
 
 Installation
 ------------
+
+You need to have installed globally [Composer](https://getcomposer.org/) and [Bower](http://bower.io/).
 
 To install the web application with the default configuration (see below), run the following command into the browser root dir:
 
