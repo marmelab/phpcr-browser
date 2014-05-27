@@ -23,10 +23,10 @@
     <tbody>
         <tr ng-show="displaySubCreateForm">
             <td>
-                <input type="text" ng-model="name" class="form-control" placeholder="Enter a name" ui-keypress="{ enter: 'createProperty(name, value, type.value)' }" ui-keydown="{ esc: 'displaySubCreateForm = !displaySubCreateForm' }">
+                <input type="text" ng-model="name" class="form-control" placeholder="{{ 'NODE_ADD_PROPERTY_NAME_PROMPT' | translate }}" ui-keypress="{ enter: 'createProperty(name, value, type.value)' }" ui-keydown="{ esc: 'displaySubCreateForm = !displaySubCreateForm' }">
             </td>
             <td>
-                <input type="text" ng-model="value" class="form-control" placeholder="Enter a value" ui-keypress="{ enter: 'createProperty(name, value, property.parentName || property.name, property.path)' }" ui-keydown="{ esc: 'displaySubCreateForm = !displaySubCreateForm' }">
+                <input type="text" ng-model="value" class="form-control" placeholder="{{ 'NODE_ADD_PROPERTY_VALUE_PROMPT' | translate }}" ui-keypress="{ enter: 'createProperty(name, value, property.parentName || property.name, property.path)' }" ui-keydown="{ esc: 'displaySubCreateForm = !displaySubCreateForm' }">
             </td>
         </tr>
         <tr ng-repeat="property in property.value track by $index | orderBy:'name'" class="property-item">

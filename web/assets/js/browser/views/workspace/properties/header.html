@@ -2,7 +2,7 @@
   <ol class="breadcrumb">
     <li>
       <a href="#/{{ currentNode.getWorkspace().getRepository().getName() }}/{{ currentNode.getWorkspace().getName() }}">
-        root
+         {{ 'TREE_ROOT_NODE_NAME' | translate }}
       </a>
     </li>
     <li
@@ -18,13 +18,13 @@
   <div class="toolbar text-right">
     <a class="btn btn-primary btn-sm" ng-show="!displayCreateForm" ng-class="{ active: displayCreateForm }" ng-click="toggleCreateForm()">
       <span class="glyphicon glyphicon-plus"></span>
-      Add property
+      {{ 'NODE_ADD_PROPERTY_BUTTON' | translate }}
     </a>
     <a class="btn btn-default btn-sm validate" ng-click="toggleCreateForm()" ng-show="displayCreateForm">
-      <span class="glyphicon glyphicon-remove"></span> Cancel
+      <span class="glyphicon glyphicon-remove"></span>  {{ 'NODE_ADD_PROPERTY_CANCEL_BUTTON' | translate }}
     </a>
     <a class="btn btn-primary btn-sm validate" ng-click="createProperty(name, value, type.value)" ng-show="displayCreateForm">
-      <span class="glyphicon glyphicon-ok"></span> Save
+      <span class="glyphicon glyphicon-ok"></span> {{ 'NODE_ADD_PROPERTY_SAVE_BUTTON' | translate }}
     </a>
   </div>
 </div>

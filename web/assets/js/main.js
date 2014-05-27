@@ -24,7 +24,8 @@
       restangular:        vendor('restangular/dist/restangular'),
       talker:             vendor('talker/talker-0.1.0'),
       angularXEditable:   vendor('angular-xeditable/dist/js/xeditable'),
-      jsonpatch:          vendor('jsonpatch/jsonpatch')
+      jsonpatch:          vendor('jsonpatch/jsonpatch'),
+      angularTranslate:   vendor('angular-translate/angular-translate')
     },
     shim: {
       angular : {'exports' : 'angular', 'deps': ['jquery']},
@@ -36,7 +37,8 @@
       angularUIKeypress: ['angular'],
       restangular: ['angular', 'lodash'],
       talker: ['angular'],
-      angularXEditable: ['angular']
+      angularXEditable: ['angular'],
+      angularTranslate: ['angular']
     },
     priority: [
       'angular'

@@ -3,25 +3,25 @@
     <tr ng-show="displayCreateForm" class="property-form">
       <td></td>
       <td>
-        <input type="text" ng-model="name" mb-focus-me="displayCreateForm" class="form-control" placeholder="Enter a name" ui-keypress="keyBinding.createForm.keypress" ui-keydown="keyBinding.createForm.keydown">
+        <input type="text" ng-model="name" mb-focus-me="displayCreateForm" class="form-control" placeholder="{{ 'NODE_ADD_PROPERTY_NAME_PROMPT' | translate }}" ui-keypress="keyBinding.createForm.keypress" ui-keydown="keyBinding.createForm.keydown">
       </td>
       <td>
-        <input type="text" ng-model="value" class="form-control" placeholder="Enter a value" ui-keypress="keyBinding.createForm.keypress" ui-keydown="keyBinding.createForm.keydown">
+        <input type="text" ng-model="value" class="form-control" placeholder="{{ 'NODE_ADD_PROPERTY_VALUE_PROMPT' | translate }}" ui-keypress="keyBinding.createForm.keypress" ui-keydown="keyBinding.createForm.keydown">
       </td>
       <td>
         <select ng-model="type" class="form-control" ng-options="type.name for type in types">
-          <option value="">Type</option>
+          <option value="">{{ 'NODE_ADD_PROPERTY_TYPE_PROMPT' | translate }}</option>
         </select>
       </td>
     </tr>
     <tr ng-show="backup !== null" class="warning">
       <td></td>
       <td colspan="3" style="text-align:left;">
-        Do you want to restore {{ backup.name }} ? <a ng-click="restoreProperty()" id="restore">Yes</a> <a ng-click="backup=null">No</a>
+        {{ 'NODE_RESTORE_PROPERTY_PROMPT' | translate:backup }} <a ng-click="restoreProperty()" id="restore">{{ 'YES' | translate }}</a> <a ng-click="backup=null">{{ 'NO' | translate }}</a>
       </td>
     </tr>
     <tr class="property-item" ng-repeat="property in properties | mbPropertiesSorter | mbJaroWinkler:search" id="{{ property.name }}" draggable="supportsPropertyDelete" data-name="{{ property.name }}">
-      <td><span class="fa fa-bars" title="Drag me to delete me"></span></td>
+      <td><span class="fa fa-bars" title="{{ 'NODE_DRAG_PROPERTY_PROMPT' | translate }}"></span></td>
       <td>
         <span class="text-primary">{{ property.name }}</span>
       </td>

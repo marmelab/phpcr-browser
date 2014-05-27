@@ -8,7 +8,8 @@ define([
   'restangular',
   'talker',
   'angularJSToaster',
-  'angularXEditable'
+  'angularXEditable',
+  'angularTranslate'
 ], function(angular) {
   'use strict';
 
@@ -18,6 +19,7 @@ define([
     'restangular',
     'talker',
     'toaster',
-    'xeditable'
+    'xeditable',
+    'pascalprecht.translate'
   ]);
 });

@@ -4,17 +4,18 @@
 define([
   'angular',
   'app',
+  'locales/en_EN',
   'config',
   'controllers/front',
   'services/event-bridge',
   'services/api-foundation',
   'services/menu',
   'services/menu-builder-factory'
-], function(angular, app) {
+], function(angular, app, localeEN) {
   'use strict';
 
   app.value('$anchorScroll', angular.noop)
-  .config(function($stateProvider, $urlRouterProvider, RestangularProvider, mbApiFoundationProvider, mbConfig){
+  .config(function($stateProvider, $urlRouterProvider, $translateProvider, RestangularProvider, mbApiFoundationProvider, mbConfig){
     mbApiFoundationProvider.setServer(mbConfig.api.server);
     mbApiFoundationProvider.setRepositoriesPrefix(mbConfig.api.prefixes.repositories);
     mbApiFoundationProvider.setWorkspacesPrefix(mbConfig.api.prefixes.workspaces);
@@ -38,6 +39,10 @@ define([
         url: '/:repository/:workspace{path:(?:/.*)?}',
         templateUrl: '/assets/js/browser/views/workspace.html'
       });
+
+    $translateProvider.translations('en', localeEN);
+    $translateProvider.preferredLanguage('en');
+
   })
   .config(function($provide) {
     $provide.decorator('$window', ['$delegate', function($delegate) {
