@@ -12,16 +12,35 @@
       @extend .panel-primary;
     }
 
+    &.repository {
+      height: 110px;
+
+      .panel-body {
+        height: 90px;
+        overflow: auto;
+      }
+    }
+
+    &.workspace {
+      height: 80px;
+
+      .panel-body {
+        height: 60px;
+        overflow: auto;
+      }
+    }
+
     .panel-heading {
       height: 20px;
       text-align: center;
       font-size: 10pt;
-      padding: 2px;
+      padding: 1px;
     }
 
     .panel-body {
       position: relative;
-
+      text-align: center;
+      margin: auto;
       p.lead {
         margin: 0;
       }
