@@ -43,7 +43,29 @@
           <li mb-navbar-item mb-link="menu.workspace" ng-class="menu.workspace.class"></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
-          <li><a href="https://github.com/marmelab/phpcr-browser" title="{{ 'GITHUB' | translate }}" class="github"><span class="fa fa-github"></span></a></li>
+          <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" class="settings"><span class="fa fa-cog"></span></a>
+            <ul class="dropdown-menu">
+              <li class="dropdown-header">Change language</li>
+              <li>
+                <a ng-click="changeLanguage('en')">
+                  <span class="glyphicon glyphicon-ok pull-right" ng-show="isPreferredLanguage('en')"></span>
+                  English
+                </a>
+              </li>
+              <li>
+                <a ng-click="changeLanguage('fr')">
+                  <span class="glyphicon glyphicon-ok pull-right" ng-show="isPreferredLanguage('fr')"></span>
+                  Français
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <a href="https://github.com/marmelab/phpcr-browser" title="{{ 'GITHUB' | translate }}" class="github">
+              <span class="fa fa-github"></span>
+            </a>
+          </li>
         </ul>
         <form class="navbar-form navbar-right" id="search" role="search">
           <div class="form-group right-inner-addon">

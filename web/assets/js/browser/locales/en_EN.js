@@ -11,7 +11,11 @@ define([], function() {
     'SEARCH_PROMPT': 'Search',
     'TOGGLE_NAV': 'Toggle navigation',
     'GITHUB': 'See on GitHub',
-    'ERROR_RETRY': 'An error occurred, please retry',
+    'ERROR_RETRY': 'An error occurred, please retry.',
+    'ERROR': 'Error',
+    'SUCCESS': 'Success',
+    'NOTE': 'Information',
+    'WARNING': 'Warning',
     'REPOSITORY_PANEL_BOX_TITLE': 'Repository',
     'WORKSPACE_PANEL_BOX_TITLE': 'Workspace',
     'WORKSPACE_CREATE_PROMPT': 'Create a workspace',
@@ -33,8 +37,8 @@ define([], function() {
     'NODE_UDPATE_PROPERTY_SUCCESS': 'Property updated',
     'MENU_REPOSITORIES': 'Repositories',
     'WORKSPACE_DELETE_SUCCESS': 'Workspace deleted',
-    'WORKSPACE_CRETE_SUCCESS': 'Workspace created',
+    'WORKSPACE_CREATE_SUCCESS': 'Workspace created',
     'WORKSPACE_CREATE_NAME_EMPTY': 'Name is empty',
-    'WORKSPACE_NOT_SUPPORT_DELETE': 'This repository does not support workspace creation'
+    'WORKSPACE_NOT_SUPPORT_DELETE': 'This repository does not support workspace creation.'
   };
 });

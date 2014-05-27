@@ -31,7 +31,7 @@ define([
         { name: 'Decimal', value: 12},
       ];
 
-      var createProperty = function(name, value, type, path) {
+      $scope.createProperty = function(name, value, type, path) {
         if (!$scope.backup) {
           if (!name || name.length === 0) {
             return $translate('NODE_ADD_PROPERTY_NAME_EMPTY').then($log.error, $log.error);
@@ -81,7 +81,7 @@ define([
           keypress: {
             enter: function() {
               var type = $scope.newProperty.type ? $scope.newProperty.type.value : $scope.types[0].value;
-              createProperty($scope.newProperty.name, $scope.newProperty.value, type.value);
+              $scope.createProperty($scope.newProperty.name, $scope.newProperty.value, type.value);
             }
           },
           keydown: {
@@ -157,7 +157,7 @@ define([
       };
 
       $scope.restoreProperty = function() {
-        createProperty($scope.backup.name, $scope.backup.value, $scope.backup.type).then(function() {
+        $scope.createProperty($scope.backup.name, $scope.backup.value, $scope.backup.type).then(function() {
           $scope.backup = null;
         });
       };

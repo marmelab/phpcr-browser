@@ -9,7 +9,14 @@ define([
 ], function(app) {
   'use strict';
 
-  app.controller('mbNavbarCtrl', ['$scope', 'mbMenu', function($scope, mbMenu) {
+  app.controller('mbNavbarCtrl', ['$scope', '$translate', 'mbMenu', function($scope, $translate, mbMenu) {
+
+    $scope.isPreferredLanguage = function(key) {
+      return $translate.use() === key;
+    };
+
+    $scope.changeLanguage = $translate.use;
+
     $scope.$watch(function() {
       return mbMenu.getMenu();
     }, function(menu) {

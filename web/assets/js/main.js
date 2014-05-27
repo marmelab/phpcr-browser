@@ -15,6 +15,7 @@
       angular:            vendor('angular/angular'),
       jquery:             vendor('jquery/dist/jquery'),
       bootstrap:          vendor('bootstrap/dist/js/bootstrap'),
+      angularCookies:     vendor('angular-cookies/angular-cookies'),
       angularRoute:       vendor('angular-route/angular-route'),
       angularAnimate:     vendor('angular-animate/angular-animate'),
       angularJSToaster:   vendor('AngularJS-Toaster/toaster', true),
@@ -25,11 +26,13 @@
       talker:             vendor('talker/talker-0.1.0'),
       angularXEditable:   vendor('angular-xeditable/dist/js/xeditable'),
       jsonpatch:          vendor('jsonpatch/jsonpatch'),
-      angularTranslate:   vendor('angular-translate/angular-translate')
+      angularTranslate:   vendor('angular-translate/angular-translate'),
+      angularTranslateStorageCookie:   vendor('angular-translate-storage-cookie/angular-translate-storage-cookie')
     },
     shim: {
       angular : {'exports' : 'angular', 'deps': ['jquery']},
       bootstrap: ['jquery'],
+      angularCookies: ['angular'],
       angularAnimate: ['angular'],
       angularRoute: ['angular'],
       angularJSToaster: ['angular', 'angularAnimate'],
@@ -38,7 +41,8 @@
       restangular: ['angular', 'lodash'],
       talker: ['angular'],
       angularXEditable: ['angular'],
-      angularTranslate: ['angular']
+      angularTranslate: ['angular'],
+      angularTranslateStorageCookie: ['angular', 'angularTranslate']
     },
     priority: [
       'angular'

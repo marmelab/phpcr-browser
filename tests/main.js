@@ -5,7 +5,7 @@
   'use strict';
 
   // // we get all the test files automatically
-  var deps = ['domReady', 'jquery', 'bootstrap', 'angular', 'app', 'init'];
+  var deps = ['domReady', 'jquery', 'bootstrap', 'angular', 'angularCookies', 'app', 'init'];
   for (var file in window.__karma__.files) {
     if (window.__karma__.files.hasOwnProperty(file)) {
       if (/^\/base\/tests\/(.*)spec\.js$/i.test(file)) {
@@ -29,6 +29,7 @@
       angular:            vendor('angular/angular'),
       jquery:             vendor('jquery/dist/jquery'),
       bootstrap:          vendor('bootstrap/dist/js/bootstrap'),
+      angularCookies:     vendor('angular-cookies/angular-cookies'),
       angularRoute:       vendor('angular-route/angular-route'),
       angularAnimate:     vendor('angular-animate/angular-animate'),
       angularJSToaster:   vendor('AngularJS-Toaster/toaster', true),
@@ -40,6 +41,7 @@
       angularXEditable:   vendor('angular-xeditable/dist/js/xeditable'),
       jsonpatch:          vendor('jsonpatch/jsonpatch'),
       angularTranslate:   vendor('angular-translate/angular-translate'),
+      angularTranslateStorageCookie:   vendor('angular-translate-storage-cookie/angular-translate-storage-cookie'),
       angularMocks:       vendor('angular-mocks/angular-mocks', true),
       domReady:           vendor('requirejs-domready/domReady', true),
       mixins:             '/base/tests/mixins',
@@ -54,6 +56,7 @@
     shim: {
       angular : {'exports' : 'angular', 'deps': ['jquery']},
       bootstrap: ['jquery'],
+      angularCookies: ['angular'],
       angularMocks: ['angular'],
       angularAnimate: ['angular'],
       angularRoute: ['angular'],
@@ -64,6 +67,7 @@
       talker: ['angular'],
       angularXEditable: ['angular'],
       angularTranslate: ['angular'],
+      angularTranslateStorageCookie: ['angular', 'angularTranslate', 'angularCookies'],
       'directives/templates/navbarItem':  ['angular'],
       'directives/templates/propertyValue': ['angular'],
       'directives/templates/repository': ['angular'],

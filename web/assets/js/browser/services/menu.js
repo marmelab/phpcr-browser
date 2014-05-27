@@ -12,7 +12,8 @@ define([
   app.service('mbMenu', ['$rootScope', function($rootScope) {
 
     var menu,
-        builders = {};
+        builders = {},
+        currentStateName;
 
     /**
      * Reset the menu container
@@ -78,8 +79,15 @@ define([
       if (toState.name === fromState.name &&
         toParams.repository === fromParams.repository &&
         toParams.workspace === fromParams.workspace ) { return; }
-
+      currentStateName = toState.name;
       compileMenu(toState.name);
+    });
+
+    /**
+     * Locale change listener to build automatically the menu
+     */
+    $rootScope.$on('$translateChangeSuccess', function() {
+      compileMenu(currentStateName);
     });
 
     return {

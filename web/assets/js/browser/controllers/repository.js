@@ -30,10 +30,11 @@ define([
       };
 
       $scope.deleteWorkspace = function(element) {
-        angular.forEach($scope.workspaces, function(workspace, k) {
+        for (var k in $scope.workspaces) {
+          var workspace = $scope.workspaces[k];
           if (element.attr('id') === workspace.getSlug()) {
             if (workspace.getRepository().supports('workspace.delete')) {
-              workspace.delete().then(function() {
+              return workspace.delete().then(function() {
                 $translate('WORKSPACE_DELETE_SUCCESS').then($log.log, $log.log).finally(function() {
                   delete $scope.workspaces[k];
                 });
@@ -45,11 +46,10 @@ define([
                 });
               });
             } else {
-              $translate('WORKSPACE_NOT_SUPPORT_DELETE').then($log.error, $log.error);
+              return $translate('WORKSPACE_NOT_SUPPORT_DELETE').then($log.error, $log.error);
             }
-            return;
           }
-        });
+        }
       };
 
       $scope.createWorkspace = function(workspaceName) {

@@ -46,7 +46,6 @@ define([
 
       // div.panel-heading
       expect(element.find('div').find('div').hasClass('panel-heading')).toBe(true);
-      expect(element.find('div').find('div').html().trim()).toBe('Repository');
 
       // div.panel-body.text-center
       expect(element.find('div').find('div').eq(1).hasClass('panel-body')).toBe(true);
