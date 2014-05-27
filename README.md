@@ -86,6 +86,12 @@ Add a VirtualHost to your Apache config (and add in it 'AllowEncodedSlashes On')
 $ php -S localhost:8000 -t web
 ```
 
+Alternatively call:
+
+```sh
+$ bin/run.sh
+```
+
 You can now access the repository by browsing to http://localhost:8000/browser (or equivalent domain as configured in your virtual host).
 
 Tests
