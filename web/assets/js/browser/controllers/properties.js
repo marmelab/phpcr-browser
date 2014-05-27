@@ -8,11 +8,12 @@ define([
 ], function(app, angular) {
   'use strict';
 
-  app.controller('mbPropertiesCtrl', ['$scope', '$log', '$filter', '$timeout', '$location', '$q',
-    function($scope, $log, $filter, $timeout, $location, $q) {
+  app.controller('mbPropertiesCtrl', ['$scope', '$log', '$filter', '$timeout', '$location', '$q', '$translate',
+    function($scope, $log, $filter, $timeout, $location, $q, $translate) {
       var rawProperties;
 
       $scope.displayCreateForm = false;
+      $scope.newProperty = {};
 
       $scope.types = [
         { name: 'undefined', value: 0},
@@ -33,9 +34,9 @@ define([
       var createProperty = function(name, value, type, path) {
         if (!$scope.backup) {
           if (!name || name.length === 0) {
-            return $log.error('Name is empty');
+            return $translate('NODE_ADD_PROPERTY_NAME_EMPTY').then($log.error, $log.error);
           } else if (!value || value.length === 0) {
-            return $log.error('Value is empty');
+            return $translate('NODE_ADD_PROPERTY_VALUE_EMPTY').then($log.error, $log.error);
           }
         }
 
@@ -52,7 +53,7 @@ define([
 
           return rawProperties[type].insert(path, datum).then(function() {
             reloadProperties();
-            $log.log('Property created.');
+            $translate('NODE_ADD_PROPERTY_SUCCESS').then($log.log, $log.log);
           }, function(err) {
             if (err.data && err.data.message) { return $log.error(err, err.data.message); }
             $log.error(err);
@@ -60,7 +61,7 @@ define([
         }
 
         return $scope.currentNode.createProperty(name, value).then(function() {
-          $log.log('Property created');
+          $translate('NODE_ADD_PROPERTY_SUCCESS').then($log.log, $log.log);
           reloadProperties();
           $scope.name = $scope.value = undefined;
           $scope.displayCreateForm = false;
@@ -79,8 +80,8 @@ define([
         createForm : {
           keypress: {
             enter: function() {
-              var type = $scope.type ? $scope.type.value : $scope.types[0].value;
-              createProperty($scope.name, $scope.value, type.value);
+              var type = $scope.newProperty.type ? $scope.newProperty.type.value : $scope.types[0].value;
+              createProperty($scope.newProperty.name, $scope.newProperty.value, type.value);
             }
           },
           keydown: {
@@ -146,9 +147,9 @@ define([
               }, 10000);
               $location.hash('restore');
             }
-            $log.log('Property deleted.');
+            return $translate('NODE_DELETE_PROPERTY_SUCCESS').then($log.log, $log.log);
           }, function(err) {
-            if (err.status === 423) { return $log.warn(err, 'You can not delete this property. It is locked.'); }
+            if (err.status === 423) { return $translate('NODE_PROPERTY_LOCKED').then($log.warn, $log.warn); }
             else if (err.data && err.data.message) { return $log.error(err, err.data.message); }
             $log.error(err);
           });
@@ -196,7 +197,7 @@ define([
       $scope.updateProperty = function(name, value, path) {
         rawProperties[name].update(path, value).then(function() {
           reloadProperties();
-          $log.log('Property updated.');
+          return $translate('NODE_UPDATE_PROPERTY_SUCCESS').then($log.log, $log.log);
         }, function(err) {
           if (err.data && err.data.message) { return $log.error(err, err.data.message); }
           $log.error(err);
@@ -206,7 +207,7 @@ define([
       $scope.updatePropertyType = function(name, type) {
         rawProperties[name].setType(type).then(function() {
           reloadProperties();
-          $log.log('Property updated.');
+          return $translate('NODE_UPDATE_PROPERTY_SUCCESS').then($log.log, $log.log);
         }, function(err) {
           if (err.data && err.data.message) { return $log.error(err, err.data.message); }
           $log.error(err);

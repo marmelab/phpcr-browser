@@ -23,11 +23,11 @@
   </head>
 
   <body ng-controller="mbFrontCtrl">
-    <mb-overlay text="Loading..." show-on="_browser.load" hide-on="_browser.loaded"></mb-overlay>
+    <mb-overlay text="{{ 'LOADING' | translate }}" show-on="_browser.load" hide-on="_browser.loaded"></mb-overlay>
     <div class="navbar navbar-default navbar-fixed-top" role="navigation" ng-controller="mbNavbarCtrl">
       <div class="navbar-header">
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-          <span class="sr-only">Toggle navigation</span>
+          <span class="sr-only">{{ 'TOGGLE_NAV' | translate }}</span>
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
@@ -43,12 +43,12 @@
           <li mb-navbar-item mb-link="menu.workspace" ng-class="menu.workspace.class"></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
-          <li><a href="https://github.com/marmelab/phpcr-browser" title="See on GitHub" class="github"><span class="fa fa-github"></span></a></li>
+          <li><a href="https://github.com/marmelab/phpcr-browser" title="{{ 'GITHUB' | translate }}" class="github"><span class="fa fa-github"></span></a></li>
         </ul>
         <form class="navbar-form navbar-right" id="search" role="search">
           <div class="form-group right-inner-addon">
             <span class="glyphicon glyphicon-search"></span>
-            <input type="text" class="form-control" placeholder="Search" ng-model="search">
+            <input type="text" class="form-control" placeholder="{{ 'SEARCH_PROMPT' | translate }}" ng-model="search">
           </div>
         </form>
       </div><!--/.nav-collapse -->
