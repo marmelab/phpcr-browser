@@ -4,5 +4,6 @@ vendor/
 config/dev.yml
 config/prod.yml
 web/assets/js/browser/config.js
+src/app.db
 .sass-cache
 .gaudi/

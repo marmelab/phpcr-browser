@@ -1,6 +1,6 @@
 # PHPCR Browser [![Build Status](https://travis-ci.org/marmelab/phpcr-browser.svg?branch=master)](https://travis-ci.org/marmelab/phpcr-browser)
 
-PHPCR Browser provides web interface to explore PHPCR repositories. The current implementation supports Jackalope Jackrabbit.
+PHPCR Browser provides web interface to explore PHPCR repositories. The current implementation supports Jackalope Jackrabbit and Doctrine DBAL.
 
 You can create/delete a workspace (if supported by the repository), add/delete/move nodes, add/edit/delete properties.
 
@@ -31,6 +31,15 @@ $ make install-gaudi
 $ make install-gaudi autoconfig=false
 ```
 
+In order to use Jackalope Doctrine DBAL now run the following:
+
+```sh
+$ composer require jackalope/jackalope-doctrine-dbal:1.1.* --no-update
+$ composer update jackalope/jackalope-doctrine-dbal
+```
+
+Note you can install and use both Jackalope Jackrabbit and Doctrine DBAL at the same time.
+
 Update
 ------
 
@@ -46,6 +55,14 @@ phpcr_repositories:
         factory: jackalope.jackrabbit
         parameters:
             jackalope.jackrabbit_uri: 'http://localhost:8080/server'
+            credentials.username: admin
+            credentials.password: admin
+    'My Doctrine DBAL Repository':
+        factory: jackalope.doctrine-dbal
+        parameters:
+            doctrine_dbal.config:
+                driver: pdo_sqlite
+                path: ../src/app.db
             credentials.username: admin
             credentials.password: admin
 ```

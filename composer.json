@@ -6,15 +6,26 @@
     "version": "1.0.0",
     "require": {
         "php": ">=5.4",
-        "silex/silex": "1.1.2",
-        "symfony/yaml": "2.4.4",
-        "twig/twig": "1.15.1",
-        "symfony/twig-bridge": "2.4.4",
-        "igorw/config-service-provider": "1.2.1",
-        "marmelab/phpcr-api-silex-provider": "1.0.0"
+        "silex/silex": "~1.1",
+        "symfony/yaml": "~2.4",
+        "twig/twig": "~1.15",
+        "symfony/twig-bridge": "~2.4",
+        "igorw/config-service-provider": "~1.2",
+        "marmelab/phpcr-api-silex-provider": "1.1.*",
+        "jackalope/jackalope-jackrabbit": "1.1.*"
     },
-
+    "require-dev": {
+        "jackalope/jackalope-doctrine-dbal": "1.1.*"
+    },
+    "suggest": {
+        "jackalope/jackalope-doctrine-dbal": "To connect to a Doctrine DBAL content repository, 1.1.*"
+    },
     "autoload": {
         "psr-0": {"PHPCRBrowser\\": "src/"}
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.1-dev"
+        }
     }
 }
