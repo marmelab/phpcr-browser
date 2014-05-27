@@ -110,5 +110,3 @@ License
 -------
 
 This application is available under the MIT License, courtesy of [marmelab](http://marmelab.com).
-
-Favicon by [Stephen Hutchings](http://typicons.com/) ([Found on iconfinder](https://www.iconfinder.com/icons/216194/eye_icon#size=32))
