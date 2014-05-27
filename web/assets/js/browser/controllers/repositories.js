@@ -8,8 +8,8 @@ define([
 ], function(app) {
   'use strict';
 
-  app.controller('mbRepositoriesCtrl', ['$scope', '$location', '$log', 'mbObjectMapper',
-    function($scope, $location, $log, ObjectMapper) {
+  app.controller('mbRepositoriesCtrl', ['$scope', '$location', '$log', '$translate', 'mbObjectMapper',
+    function($scope, $location, $log, $translate, ObjectMapper) {
       $scope.$on('search.change', function(e, value) {
         $scope.search = value;
       });
@@ -23,7 +23,11 @@ define([
         $scope.repositories = repositories;
         $scope.$emit('browser.loaded');
       }, function(err) {
-        $log.error(err, 'An error occurred, please retry.');
+        $translate('ERROR_RETRY', function(translation) {
+          $log.error(err, translation);
+        }, function() {
+          $log.error(err);
+        });
       });
     }]);
 });

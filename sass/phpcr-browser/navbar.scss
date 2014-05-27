@@ -27,6 +27,10 @@
   }
 }
 
+.navbar-nav > li > a {
+  line-height: 21px;
+}
+
 .navbar-nav > li > .dropdown-menu{
     @include border-radius(0);
 
@@ -37,7 +41,7 @@
     }
 }
 
-.github {
+.github, .settings {
   @extend .lead;
 
   margin-bottom: 0px;

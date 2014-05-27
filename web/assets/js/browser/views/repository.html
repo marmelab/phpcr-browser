@@ -1,8 +1,8 @@
 <div class="col-lg-12" style="padding-bottom: 40px;" ng-controller="mbRepositoryCtrl">
-    <div class="col-sm-2" ng-repeat="(key, workspace) in workspaces | mbJaroWinkler:search" draggable="{{ repository.supports('workspace.delete') }}" id="{{ workspace.getSlug() }}">
-        <div class="panel panel-box" ng-click="openWorkspace(workspace)">
+    <div class="col-sm-2" ng-repeat="(key, workspace) in workspaces track by $index | mbJaroWinkler:search" draggable="{{ repository.supports('workspace.delete') }}" id="{{ workspace.getSlug() }}" ng-if="workspace">
+        <div class="panel panel-box workspace" ng-click="openWorkspace(workspace)">
             <div class="panel-heading">
-                Workspace
+                {{ 'WORKSPACE_PANEL_BOX_TITLE' | translate }}
             </div>
             <div class="panel-body">
                 <p class="lead text-center">
@@ -15,11 +15,11 @@
         <div class="panel panel-box new">
             <div class="panel-body">
                 <p class="lead text-center" ng-click="showCreateForm()" ng-hide="displayCreateForm">
-                    Create a workspace
+                    {{ 'WORKSPACE_CREATE_PROMPT' | translate }}
                 </p>
                 <form ng-submit="createWorkspace(workspaceName)" ng-if="displayCreateForm">
                     <p class="text-center">
-                        <input type="text" ng-model="workspaceName" mb-focus-me="displayCreateForm" class="form-control workspace-input" placeholder="Enter a name" ui-keydown="{esc: 'hideCreateForm()'}"/>
+                        <input type="text" ng-model="workspaceName" mb-focus-me="displayCreateForm" class="form-control workspace-input" placeholder="{{ 'WORKSPACE_CREATE_NAME_PROMPT' | translate }}" ui-keydown="{esc: 'hideCreateForm()'}"/>
                     </p>
                 </form>
             </div>

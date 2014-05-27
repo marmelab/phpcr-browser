@@ -12,6 +12,7 @@ module.exports = function (config) {
       {pattern: 'web/assets/js/**/*.js', included: false},
       {pattern: 'tests/{spec,unit}/**/*.js', included: false},
       {pattern: 'web/assets/js/browser/directives/templates/**/*.html', watched: true, included: false, served: true},
+      {pattern: 'web/assets/js/browser/views/**/*.html', watched: true, included: false, served: true},
       'tests/main.js',
       'tests/fixtures.js',
       'tests/mixins.js',

@@ -4,17 +4,19 @@
 define([
   'angular',
   'app',
+  'locales/en_EN',
+  'locales/fr_FR',
   'config',
   'controllers/front',
   'services/event-bridge',
   'services/api-foundation',
   'services/menu',
   'services/menu-builder-factory'
-], function(angular, app) {
+], function(angular, app, localeEN, localeFR) {
   'use strict';
 
   app.value('$anchorScroll', angular.noop)
-  .config(function($stateProvider, $urlRouterProvider, RestangularProvider, mbApiFoundationProvider, mbConfig){
+  .config(function($stateProvider, $urlRouterProvider, $translateProvider, RestangularProvider, mbApiFoundationProvider, mbConfig){
     mbApiFoundationProvider.setServer(mbConfig.api.server);
     mbApiFoundationProvider.setRepositoriesPrefix(mbConfig.api.prefixes.repositories);
     mbApiFoundationProvider.setWorkspacesPrefix(mbConfig.api.prefixes.workspaces);
@@ -38,6 +40,21 @@ define([
         url: '/:repository/:workspace{path:(?:/.*)?}',
         templateUrl: '/assets/js/browser/views/workspace.html'
       });
+
+    $translateProvider
+      .useCookieStorage()
+      .translations('en', localeEN)
+      .translations('fr', localeFR)
+      .fallbackLanguage('en')
+      .registerAvailableLanguageKeys(['en', 'fr'], {
+        'en_US': 'en',
+        'en_UK': 'en',
+        'fr_FR': 'fr',
+        'de_DE': 'en',
+        'it_IT': 'en'
+      })
+      .determinePreferredLanguage();
+
   })
   .config(function($provide) {
     $provide.decorator('$window', ['$delegate', function($delegate) {
@@ -56,35 +73,51 @@ define([
       return $delegate;
     }]);
   })
-  .run(['$rootScope', '$log', 'toaster', 'editableOptions', 'mbEventBridge', 'mbMenu', 'mbMenuBuilderFactory', function($rootScope, $log, toaster, editableOptions, EventBridge, Menu, MenuBuilderFactory) {
+  .run(['$rootScope', '$log', '$translate', 'toaster', 'editableOptions', 'mbEventBridge', 'mbMenu', 'mbMenuBuilderFactory', function($rootScope, $log, $translate, toaster, editableOptions, EventBridge, Menu, MenuBuilderFactory) {
     editableOptions.theme = 'bs3';
 
     $log.before('error', function(message, toast, display) {
       display = display === undefined ? true : display;
       if (display) {
         if (toast) { message = toast; }
-        toaster.pop('error', 'An error occured', message);
+        $translate('ERROR').then(function(translation) {
+          toaster.pop('error', translation, message);
+        }, function(err) {
+          toaster.pop('error', err, message);
+        });
       }
     });
     $log.before('log', function(message, toast, display) {
       display = display === undefined ? true : display;
       if (display) {
         if (toast) { message = toast; }
-        toaster.pop('success', 'Success', message);
+        $translate('SUCCESS').then(function(translation) {
+          toaster.pop('success', translation, message);
+        }, function(err) {
+          toaster.pop('success', err, message);
+        });
       }
     });
     $log.before('info', function(message, toast, display) {
       display = display === undefined ? true : display;
       if (display) {
         if (toast) { message = toast; }
-        toaster.pop('note', 'Information', message);
+        $translate('NOTE').then(function(translation) {
+          toaster.pop('note', translation, message);
+        }, function(err) {
+          toaster.pop('note', err, message);
+        });
       }
     });
     $log.before('warn', function(message, toast, display) {
       display = display === undefined ? true : display;
       if (display) {
         if (toast) { message = toast; }
-        toaster.pop('warning', 'Warning', message, display);
+        $translate('WARNING').then(function(translation) {
+          toaster.pop('warning', translation, message);
+        }, function(err) {
+          toaster.pop('warning', err, message);
+        });
       }
     });
 

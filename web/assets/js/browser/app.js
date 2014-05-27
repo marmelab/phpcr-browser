@@ -3,12 +3,15 @@
 
 define([
   'angular',
+  'angularCookies',
   'angularUIRouter',
   'angularUIKeypress',
   'restangular',
   'talker',
   'angularJSToaster',
-  'angularXEditable'
+  'angularXEditable',
+  'angularTranslate',
+  'angularTranslateStorageCookie'
 ], function(angular) {
   'use strict';
 
@@ -18,6 +21,8 @@ define([
     'restangular',
     'talker',
     'toaster',
-    'xeditable'
+    'xeditable',
+    'ngCookies',
+    'pascalprecht.translate'
   ]);
 });

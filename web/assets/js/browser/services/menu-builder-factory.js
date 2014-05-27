@@ -11,7 +11,19 @@ define([
   /**
    * MenuBuilderFactory provides builders for Menu.
    */
-  app.service('mbMenuBuilderFactory', ['mbObjectMapper', 'mbRouteParametersConverter', function(ObjectMapper, RouteParametersConverter) {
+  app.service('mbMenuBuilderFactory', ['$rootScope', '$translate', 'mbObjectMapper', 'mbRouteParametersConverter', function($rootScope, $translate, ObjectMapper, RouteParametersConverter) {
+    var repositoriesLabel = 'MENU_REPOSITORIES';
+
+    var loadLocale = function() {
+      $translate('MENU_REPOSITORIES').then(function(translation) {
+        repositoriesLabel = translation;
+      }, function(err) {
+        repositoriesLabel = err;
+      });
+    };
+
+    loadLocale();
+    $rootScope.$on('$translateChangeSuccess',loadLocale);
 
     var builders = {
 
@@ -22,7 +34,7 @@ define([
       repositories: function(callback) {
         ObjectMapper.find().then(function(repositories) {
           var link = {
-            label: 'Repositories',
+            label: repositoriesLabel,
             class: 'dropdown',
             sublinks: []
           };
