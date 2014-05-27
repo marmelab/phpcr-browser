@@ -41,7 +41,7 @@ define([
 
       // div.panel.panel-repository
       expect(element.find('div').hasClass('panel')).toBe(true);
-      expect(element.find('div').hasClass('panel-repository')).toBe(true);
+      expect(element.find('div').hasClass('panel-box')).toBe(true);
       expect(element.find('div').attr('ng-click')).not.toBeUndefined();
 
       // div.panel-heading

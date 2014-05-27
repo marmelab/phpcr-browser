@@ -1,0 +1,16 @@
+$brand-primary: lighten(#dd4814, 20%);
+
+$font-family-base: 'Open Sans', 'Roboto', "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+$body-bg: rgb(247, 247, 247);
+
+$navbar-height: 40px;
+$navbar-default-bg: #dd4814;
+$navbar-default-link-color: #ffffff;
+$navbar-default-link-hover-bg: darken($navbar-default-bg, 5%);
+$navbar-default-link-hover-color: #ffffff;
+$navbar-default-link-active-color: #ffffff;
+
+$icon-font-path: '/bower_components/bootstrap/dist/fonts/';
+
+$scrollable-margin-top: 37px;
