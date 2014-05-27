@@ -6,10 +6,10 @@ body {
 }
 
 @font-face {
-  font-family: 'Roboto';
+  font-family: 'Open Sans';
   font-style: normal;
   font-weight: 400;
-  src: local('Roboto'), url(../fonts/Roboto-Regular.ttf) format('woff');
+  src: local('Open Sans'), local('OpenSans'), url(../fonts/OpenSans-Regular.ttf) format('woff');
 }
 
 .btn, .panel, input.form-control {
