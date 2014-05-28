@@ -27,8 +27,8 @@ define([
       var integer = 98755789;
       expect(integerValidator.override(integer)).toBe(parseInt(integer));
 
-      var integering = 8978.809;
-      expect(integerValidator.override(integering)).toBe(parseInt(integering));
+      var floating = 8978.809;
+      expect(integerValidator.override(floating)).toBe(parseInt(floating));
 
       var bool = false;
       expect(integerValidator.override(bool)).toBeNaN();
