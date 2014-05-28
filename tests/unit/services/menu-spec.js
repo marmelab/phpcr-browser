@@ -1,4 +1,4 @@
-/*global define,describe,it,beforeEach,module,inject,expect,spyOn,jasmine*/
+/*global define,describe,it,beforeEach,module,inject,expect,jasmine*/
 /* jshint indent:2 */
 
 define([

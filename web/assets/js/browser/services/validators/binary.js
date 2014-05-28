@@ -5,7 +5,7 @@ define([], function() {
   'use strict';
 
   return {
-    valid: function() {
+    validate: function() {
       return true;
     },
     override: function(value) {
