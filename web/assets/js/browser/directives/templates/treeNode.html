@@ -44,7 +44,7 @@
         <div class="node">
             <span class="glyphicon glyphicon-file"></span>
             <form ng-submit="createChildNode(node, nodeName)" class="node-create-form">
-                <input type="text" ng-model="nodeName" class="form-control" mb-focus-me="displayCreateForm" ui-keydown="{ esc: 'toggleCreateForm(node)' }" placeholder="Enter a name" required/>
+                <input type="text" ng-model="nodeName" class="form-control" mb-focus-me="displayCreateForm" ui-keydown="{ esc: 'toggleCreateForm(node)' }" placeholder="{{ 'NODE_CREATE_NAME_PROMPT' | translate }}" required/>
             </form>
         </div>
     </li>

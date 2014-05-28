@@ -11,7 +11,7 @@ define([
   /**
    * Tree display a tree of nodes.
    */
-  app.directive('mbTree', ['$log', '$location', '$q', function($log, $location, $q) {
+  app.directive('mbTree', ['$log', '$location', '$q', '$translate', function($log, $location, $q, $translate) {
     var scrollTop,
         deleteNode;
 
@@ -47,7 +47,7 @@ define([
         deleteNode = function(element) {
           if (element.hasClass('node')) {
             scope.richTree.getTree().remove(element.data('path')).then(function() {
-              $log.log('Node deleted.');
+              $translate('NODE_DELETE_SUCCESS').then($log.log, $log.log);
 
               // If the current was in the deleted hierarchy we display the parent node of the deleted node
               if ($location.path().substr(
@@ -63,7 +63,7 @@ define([
                 $location.path(scope.repository.getName() + '/' + scope.workspace.getName() + parentPath);
               }
             }, function(err) {
-              if (err.status === 423) { return $log.warn('You can not delete this node. It is locked.'); }
+              if (err.status === 423) { return $translate('NODE_LOCK').then($log.warn, $log.warn); }
               if (err.data && err.data.message) { return $log.error(err, err.data.message); }
               $log.error(err);
             });
@@ -103,15 +103,15 @@ define([
             element.data('path') + '/' + name === elementDropped.data('path')) {
             return;
           } else if (element.data('path').slice(0, elementDropped.data('path').length) === elementDropped.data('path')) {
-            $log.warn('Unauthorized move.');
-            return;
+            return $translate('NODE_MOVE_FORBIDDEN').then($log.warn, $log.warn);
           }
 
           scope.richTree.getTree().move(elementDropped.data('path'), element.data('path')).then(function(node) {
             scope.$emit('node.moved', { from: elementDropped.data('path'), to: element.data('path')});
+            $translate('NODE_MOVE_SUCCESS').then($log.log, $log.log);
             $location.path(scope.repository.getName() + '/' + scope.workspace.getName() + node.path);
           }, function(err) {
-            if (err.status === 423) { return $log.warn('You can not move this node. It is locked.'); }
+            if (err.status === 423) { return $translate('NODE_LOCK').then($log.warn, $log.warn); }
             if (err.data && err.data.message) { return $log.error(err, err.data.message); }
             $log.error(err);
           });

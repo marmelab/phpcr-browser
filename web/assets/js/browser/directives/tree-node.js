@@ -11,8 +11,8 @@ define([
   /**
    * TreeNode displays a node of the tree.
    */
-  app.directive('mbTreeNode', ['$log', '$timeout', 'mbRecursionHelper',
-    function($log, $timeout, RecursionHelper) {
+  app.directive('mbTreeNode', ['$log', '$timeout', '$translate', 'mbRecursionHelper',
+    function($log, $timeout, $translate, RecursionHelper) {
     return {
       restrict: 'A',
       require: '^mbTree',
@@ -52,7 +52,7 @@ define([
         $scope.createChildNode = function(node, nodeName) {
           if ($scope.repository.supports('node.create')) {
             if (!nodeName || nodeName.trim().length === 0) {
-              return $log.error('Name is empty.');
+              return $translate('NODE_DELETE_NAME_EMPTY').then($log.error, $log.error);
             }
 
             var path;
@@ -64,13 +64,13 @@ define([
 
             $scope.richTree.getTree().append(node.path, { name: nodeName, path: path }).then(function() {
               node.displayCreateForm = false;
-              $log.log('Node created');
+              $translate('NODE_CREATE_SUCCESS').then($log.log, $log.log);
             }, function(err) {
               if (err.data && err.data.message) { return $log.error(err, err.data.message); }
               $log.error(err);
             });
           } else {
-            $log.error('This repository does not support node creation.');
+            $translate('NODE_NOT_SUPPORT_CREATE').then($log.error, $log.error);
           }
         };
       }
