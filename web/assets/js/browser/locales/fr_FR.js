@@ -34,7 +34,7 @@ define([], function() {
     'NODE_DRAG_PROPERTY_PROMPT': 'Deplacer moi pour me supprimer',
     'NODE_PROPERTY_LOCKED': 'Vous ne pouvez pas supprimer cette propriété, elle est verrouillée.',
     'NODE_DELETE_PROPERTY_SUCCESS': 'Propriété supprimée',
-    'NODE_UDPATE_PROPERTY_SUCCESS': 'Propriété modifiée',
+    'NODE_UPDATE_PROPERTY_SUCCESS': 'Propriété modifiée',
     'NODE_CREATE_SUCCESS': 'Noeud créé',
     'NODE_CREATE_NAME_PROMPT': 'Entrez un nom',
     'NODE_CREATE_NAME_EMPTY': 'Le nom est vide',

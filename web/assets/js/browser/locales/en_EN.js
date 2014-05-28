@@ -34,7 +34,7 @@ define([], function() {
     'NODE_DRAG_PROPERTY_PROMPT': 'Drag me to delete me',
     'NODE_PROPERTY_LOCKED': 'You can not delete this property, it is locked.',
     'NODE_DELETE_PROPERTY_SUCCESS': 'Property deleted',
-    'NODE_UDPATE_PROPERTY_SUCCESS': 'Property updated',
+    'NODE_UPDATE_PROPERTY_SUCCESS': 'Property updated',
     'NODE_CREATE_SUCCESS': 'Node created',
     'NODE_CREATE_NAME_PROMPT': 'Enter a name',
     'NODE_CREATE_NAME_EMPTY': 'Name is empty',
