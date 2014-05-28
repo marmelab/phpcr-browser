@@ -6,10 +6,15 @@ define([], function() {
 
   return {
     validate: function(value) {
-      return value instanceof Date;
+      return value instanceof Date && !isNaN(value.getTime());
     },
     override: function(value) {
-      return this.valid(value) ? value : new Date(value);
+      if (!this.validate(value)) {
+        var date = new Date(value);
+        return this.validate(date) ? date : new Date();
+      }
+
+      return value;
     }
   };
 });
