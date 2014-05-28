@@ -10,7 +10,7 @@ define([
   'use strict';
 
   describe('Service: validator/binary', function () {
-    it('should valid everything', function () {
+    it('should validate everything', function () {
       expect(binaryValidator.validate('I am a string with some specials §!("éç!àà)---_ù`^$^ù:;,;,:;= characters')).toBe(true);
       expect(binaryValidator.validate(98755789)).toBe(true);
       expect(binaryValidator.validate(8978.809)).toBe(true);
@@ -20,7 +20,7 @@ define([
       expect(binaryValidator.validate([])).toBe(true);
     });
 
-    it('should override nothind', function () {
+    it('should not override', function () {
       var str = 'I am a string with some specials §!("éç!àà)---_ù`^$^ù:;,;,:;= characters';
       expect(binaryValidator.override(str)).toBe(str);
 
