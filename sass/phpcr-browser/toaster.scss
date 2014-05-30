@@ -16,4 +16,9 @@ $animation-duration: 200;
 #toast-container > div {
   @include border-radius(0);
   @include box-shadow(none);
+
+  &:hover {
+    @include border-radius(0);
+    @include box-shadow(none);
+  }
 }

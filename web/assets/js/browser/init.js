@@ -144,50 +144,24 @@ define([
   .run(['$rootScope', '$log', '$translate', 'toaster', 'editableOptions', 'mbEventBridge', 'mbMenu', 'mbMenuBuilderFactory', function($rootScope, $log, $translate, toaster, editableOptions, EventBridge, Menu, MenuBuilderFactory) {
     editableOptions.theme = 'bs3';
 
-    $log.before('error', function(message, toast, display) {
-      display = display === undefined ? true : display;
-      if (display) {
-        if (toast) { message = toast; }
-        $translate('ERROR').then(function(translation) {
-          toaster.pop('error', translation, message);
-        }, function(err) {
-          toaster.pop('error', err, message);
-        });
-      }
-    });
-    $log.before('log', function(message, toast, display) {
-      display = display === undefined ? true : display;
-      if (display) {
-        if (toast) { message = toast; }
-        $translate('SUCCESS').then(function(translation) {
-          toaster.pop('success', translation, message);
-        }, function(err) {
-          toaster.pop('success', err, message);
-        });
-      }
-    });
-    $log.before('info', function(message, toast, display) {
-      display = display === undefined ? true : display;
-      if (display) {
-        if (toast) { message = toast; }
-        $translate('NOTE').then(function(translation) {
-          toaster.pop('note', translation, message);
-        }, function(err) {
-          toaster.pop('note', err, message);
-        });
-      }
-    });
-    $log.before('warn', function(message, toast, display) {
-      display = display === undefined ? true : display;
-      if (display) {
-        if (toast) { message = toast; }
-        $translate('WARNING').then(function(translation) {
-          toaster.pop('warning', translation, message);
-        }, function(err) {
-          toaster.pop('warning', err, message);
-        });
-      }
-    });
+    var logListenerFactory = function(title, toastType) {
+      return function(message, toast, display) {
+        display = display === undefined ? true : display;
+        if (display) {
+          if (toast) { message = toast; }
+          $translate(title).then(function(translation) {
+            toaster.pop(toastType, translation, message);
+          }, function(err) {
+            toaster.pop(toastType, err, message);
+          });
+        }
+      };
+    };
+
+    $log.before('error', logListenerFactory('ERROR', 'error'));
+    $log.before('log',   logListenerFactory('SUCCESS', 'success'));
+    $log.before('info',  logListenerFactory('NOTE', 'note'));
+    $log.before('warn',  logListenerFactory('WARNING', 'warning'));
 
     $log.decorate(function(message) {
       return [message]; // To remove toast in the log
