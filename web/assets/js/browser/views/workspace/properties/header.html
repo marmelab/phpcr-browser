@@ -23,7 +23,7 @@
     <a class="btn btn-default btn-sm validate" ng-click="toggleCreateForm()" ng-show="displayCreateForm">
       <span class="glyphicon glyphicon-remove"></span>  {{ 'NODE_ADD_PROPERTY_CANCEL_BUTTON' | translate }}
     </a>
-    <a class="btn btn-primary btn-sm validate" ng-click="createProperty(name, value, type.value)" ng-show="displayCreateForm">
+    <a class="btn btn-primary btn-sm validate" ng-click="createProperty(newProperty.name, newProperty.value, newProperty.type.value)" ng-show="displayCreateForm">
       <span class="glyphicon glyphicon-ok"></span> {{ 'NODE_ADD_PROPERTY_SAVE_BUTTON' | translate }}
     </a>
   </div>

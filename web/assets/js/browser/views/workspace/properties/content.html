@@ -9,7 +9,7 @@
         <input type="text" ng-model="newProperty.value" class="form-control" placeholder="{{ 'NODE_ADD_PROPERTY_VALUE_PROMPT' | translate }}" ui-keypress="keyBinding.createForm.keypress" ui-keydown="keyBinding.createForm.keydown">
       </td>
       <td>
-        <select ng-model="type" class="form-control" ng-options="type.name for type in types">
+        <select ng-model="newProperty.type" class="form-control" ng-options="type.name for type in types">
           <option value="">{{ 'NODE_ADD_PROPERTY_TYPE_PROMPT' | translate }}</option>
         </select>
       </td>
