@@ -2,10 +2,11 @@
 /* jshint indent:2 */
 
 define([
+  'mocks',
   'angularMocks',
   'app',
   'services/event-bridge'
-], function () {
+], function (mocks) {
   'use strict';
 
   describe('Service: EventBridge', function () {
@@ -18,6 +19,8 @@ define([
     beforeEach(inject(function ($injector) {
       EventBridge = $injector.get('mbEventBridge');
       $rootScope = $injector.get('$rootScope');
+      var TreeCache = $injector.get('mbTreeCache');
+      spyOn(TreeCache, 'getCurrentRootNode').andReturn(mocks.getNodeMock());
     }));
 
     it('should broadcast events', function () {

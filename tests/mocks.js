@@ -165,7 +165,8 @@ define('mocks', [
           getName: function() { return fixtures.workspaces[0].name; },
           getRepository: function() {
             return {
-              getName: function() { return fixtures.repositories[0].name; }
+              getName: function() { return fixtures.repositories[0].name; },
+              getWorkspaces: jasmine.createSpy('getWorkspaces').andReturn(mixins.buildPromise([])),
             };
           }
         }),
@@ -223,17 +224,6 @@ define('mocks', [
       };
     };
 
-    getRouteParametersConverterMock = function() {
-      var repository = getRepositoryMock(),
-          workspace = getWorkspaceMock(),
-          node = getNodeMock();
-      return {
-        getCurrentRepository: jasmine.createSpy('getCurrentRepository').andReturn(mixins.buildPromise(repository)),
-        getCurrentWorkspace: jasmine.createSpy('getCurrentWorkspace').andReturn(mixins.buildPromise(workspace)),
-        getCurrentNode: jasmine.createSpy('getCurrentNode').andReturn(mixins.buildPromise(node)),
-      };
-    };
-
     var buildFactoryMock = function() {
       return function() {
         return {
@@ -273,7 +263,6 @@ define('mocks', [
       getRichTreeFactoryMock: buildFactoryWithPromiseMock(getRichTreeMock()),
       getRichTreeMock: getRichTreeMock,
       getNodeFactoryMock: buildFactoryMock(),
-      getJsonPatchMock: getJsonPatchMock,
-      getRouteParametersConverterMock: getRouteParametersConverterMock
+      getJsonPatchMock: getJsonPatchMock
     };
   });
