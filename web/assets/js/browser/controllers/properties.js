@@ -60,10 +60,10 @@ define([
           });
         }
 
-        return $scope.currentNode.createProperty(name, value).then(function() {
+        return $scope.currentNode.createProperty(name, value, type).then(function() {
           $translate('NODE_ADD_PROPERTY_SUCCESS').then($log.log, $log.log);
           reloadProperties();
-          $scope.name = $scope.value = undefined;
+          $scope.newProperty = {};
           $scope.displayCreateForm = false;
         }, function(err) {
           if (err.data && err.data.message) { return $log.error(err, err.data.message); }
