@@ -3,6 +3,7 @@
 
 define([
   'angular',
+  'angularRoute',
   'angularCookies',
   'angularUIRouter',
   'angularUIKeypress',

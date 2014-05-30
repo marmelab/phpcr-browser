@@ -1,8 +1,6 @@
-<div ng-controller="mbWorkspaceCtrl">
-  <div id="sidebar" ng-include="'/assets/js/browser/views/workspace/tree.html'"></div>
-  <div id="content" ng-controller="mbPropertiesCtrl">
-      <div id ="properties-header" ng-include="'/assets/js/browser/views/workspace/properties/header.html'"></div>
-      <div class="scrollable" ng-include="'/assets/js/browser/views/workspace/properties/content.html'"></div>
-  </div>
-  <mb-dropper drop="delete"></mb-dropper>
+<div id="sidebar" ng-include="'/assets/js/browser/views/workspace/tree.html'"></div>
+<div id="content" ng-controller="mbPropertiesCtrl">
+  <div id ="properties-header" ng-include="'/assets/js/browser/views/workspace/properties/header.html'"></div>
+  <div class="scrollable" ng-include="'/assets/js/browser/views/workspace/properties/content.html'"></div>
 </div>
+<mb-dropper drop="delete"></mb-dropper>

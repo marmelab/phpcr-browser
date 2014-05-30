@@ -8,8 +8,10 @@ define([
 ], function(app) {
   'use strict';
 
-  app.controller('mbRepositoriesCtrl', ['$scope', '$location', '$log', '$translate', 'mbObjectMapper',
-    function($scope, $location, $log, $translate, ObjectMapper) {
+  app.controller('mbRepositoriesCtrl', ['$scope', '$location', 'repositories',
+    function($scope, $location, repositories) {
+      $scope.repositories = repositories;
+
       $scope.$on('search.change', function(e, value) {
         $scope.search = value;
       });
@@ -17,17 +19,5 @@ define([
       $scope.openRepository = function(repository) {
         $location.path('/' + repository.getName());
       };
-
-      $scope.$emit('browser.load');
-      ObjectMapper.find().then(function(repositories) {
-        $scope.repositories = repositories;
-        $scope.$emit('browser.loaded');
-      }, function(err) {
-        $translate('ERROR_RETRY', function(translation) {
-          $log.error(err, translation);
-        }, function() {
-          $log.error(err);
-        });
-      });
     }]);
 });

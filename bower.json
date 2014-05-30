@@ -4,7 +4,7 @@
   "dependencies": {
     "angular": "1.2.14",
     "angular-route": "1.2.6",
-    "angular-ui-router": "0.2.8-bowratic-tedium",
+    "angular-ui-router": "0.2.10",
     "bootstrap": "3.0.2",
     "html5shiv": "3.7.0",
     "respond": "1.4.2",

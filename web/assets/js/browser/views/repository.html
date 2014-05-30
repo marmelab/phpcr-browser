@@ -1,4 +1,4 @@
-<div class="col-lg-12" style="padding-bottom: 40px;" ng-controller="mbRepositoryCtrl">
+<div class="col-lg-12" style="padding-bottom: 40px;">
     <div class="col-sm-2" ng-repeat="(key, workspace) in workspaces track by $index | mbJaroWinkler:search" draggable="{{ repository.supports('workspace.delete') }}" id="{{ workspace.getSlug() }}" ng-if="workspace">
         <div class="panel panel-box workspace" ng-click="openWorkspace(workspace)">
             <div class="panel-heading">
