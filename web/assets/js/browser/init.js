@@ -7,7 +7,16 @@ define([
   'locales/en_EN',
   'locales/fr_FR',
   'config',
-  'controllers/front',
+  'controllers/navbar',
+  'controllers/properties',
+  'controllers/repositories',
+  'controllers/repository',
+  'controllers/workspace',
+  'directives/ui/overlay',
+  'directives/ui/dropper',
+  'directives/draggable',
+  'directives/droppable',
+  'directives/focus-me',
   'services/event-bridge',
   'services/api-foundation',
   'services/menu',
@@ -70,18 +79,17 @@ define([
                 params = {};
 
             if (firstLoad) {
+              $rootScope.$emit('browser.load');
               params = { reducedTree: true, cache: false };
             }
 
-            $rootScope.$emit('browser.load');
+
             return ObjectMapper.find('/' + $stateParams.repository + '/' + $stateParams.workspace + path, params).then(function(node) {
               if (firstLoad) {
                 firstLoad = false;
                 TreeCache.buildRichTree(node).then(function() {
                   $rootScope.$emit('browser.loaded');
                 });
-              } else {
-                $rootScope.$emit('browser.loaded');
               }
               return node;
             });

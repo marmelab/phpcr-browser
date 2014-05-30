@@ -5,15 +5,14 @@ define([
   'app',
   'services/rich-tree-factory',
   'services/tree-factory',
-  'services/route-parameters-converter'
 ], function(app) {
   'use strict';
 
   /**
    * The TreeCache aims to stored a shared RichTree during a session to avoid to always rebuild it.
    */
-  app.factory('mbTreeCache', ['$q', '$rootScope', 'mbRichTreeFactory', 'mbTreeFactory', 'mbNodeFactory', 'mbRouteParametersConverter', 'mbObjectMapper',
-    function($q, $rootScope, RichTreeFactory, TreeFactory, NodeFactory, RouteParametersConverter, ObjectMapper) {
+  app.factory('mbTreeCache', ['$q', '$rootScope', 'mbRichTreeFactory', 'mbTreeFactory', 'mbNodeFactory', 'mbObjectMapper',
+    function($q, $rootScope, RichTreeFactory, TreeFactory, NodeFactory, ObjectMapper) {
     var repository,
         workspace,
         deferred;

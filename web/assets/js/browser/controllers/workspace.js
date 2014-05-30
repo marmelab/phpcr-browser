@@ -5,8 +5,7 @@ define([
   'app',
   'directives/property-value',
   'directives/tree-node',
-  'directives/tree',
-  'services/route-parameters-converter'
+  'directives/tree'
 ], function(app) {
   'use strict';
 

@@ -4,8 +4,7 @@
 define([
   'app',
   'angular',
-  'services/workspace-factory',
-  'services/route-parameters-converter'
+  'services/workspace-factory'
 ], function(app) {
   'use strict';
 
