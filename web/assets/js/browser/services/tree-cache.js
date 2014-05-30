@@ -15,7 +15,8 @@ define([
     function($q, $rootScope, RichTreeFactory, TreeFactory, NodeFactory, ObjectMapper) {
     var repository,
         workspace,
-        deferred;
+        deferred,
+        currentRootNode;
 
     var hooks = [
       {
@@ -94,6 +95,7 @@ define([
      * @return {promise}
      */
     var buildRichTree = function(rootNode) {
+      currentRootNode = rootNode;
       deferred = $q.defer();
       // rich tree is not built, retrieve the current node with its reduced tree
       repository = rootNode.getWorkspace().getRepository();
@@ -119,9 +121,18 @@ define([
       return deferred.promise;
     };
 
+    /**
+     * Get the current rootNode used to build the richTree
+     * @return {Node}
+     */
+    var getCurrentRootNode = function() {
+      return currentRootNode;
+    };
+
     return {
       buildRichTree: buildRichTree,
-      getRichTree: getRichTree
+      getRichTree: getRichTree,
+      getCurrentRootNode: getCurrentRootNode
     };
   }]);
 });
