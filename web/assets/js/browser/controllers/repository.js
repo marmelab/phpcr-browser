@@ -50,12 +50,6 @@ define([
           $translate('WORKSPACE_DELETE_SUCCESS').then($log.log, $log.log).finally(function() {
             delete $scope.workspaces[index];
           });
-        }, function(err) {
-          $translate('ERROR_RETRY', function(translation) {
-            $log.error(err, translation);
-          }, function() {
-            $log.error(err);
-          });
         });
       };
 
@@ -76,9 +70,6 @@ define([
               $scope.displayCreateForm = false;
             });
           });
-        }, function(err) {
-          if (err.data && err.data.message) { return $log.error(err, err.data.message); }
-          $log.error(err);
         });
       };
     }]);

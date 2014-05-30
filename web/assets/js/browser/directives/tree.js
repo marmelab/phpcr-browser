@@ -47,6 +47,7 @@ define([
         deleteNode = function(element) {
           if (element.hasClass('node')) {
             scope.richTree.getTree().remove(element.data('path')).then(function() {
+
               $translate('NODE_DELETE_SUCCESS').then($log.log, $log.log);
 
               // If the current was in the deleted hierarchy we display the parent node of the deleted node
@@ -62,10 +63,6 @@ define([
 
                 $location.path(scope.repository.getName() + '/' + scope.workspace.getName() + parentPath);
               }
-            }, function(err) {
-              if (err.status === 423) { return $translate('NODE_LOCK').then($log.warn, $log.warn); }
-              if (err.data && err.data.message) { return $log.error(err, err.data.message); }
-              $log.error(err);
             });
           }
         };
@@ -110,10 +107,6 @@ define([
             scope.$emit('node.moved', { from: elementDropped.data('path'), to: element.data('path')});
             $translate('NODE_MOVE_SUCCESS').then($log.log, $log.log);
             $location.path(scope.repository.getName() + '/' + scope.workspace.getName() + node.path);
-          }, function(err) {
-            if (err.status === 423) { return $translate('NODE_LOCK').then($log.warn, $log.warn); }
-            if (err.data && err.data.message) { return $log.error(err, err.data.message); }
-            $log.error(err);
           });
         };
       }

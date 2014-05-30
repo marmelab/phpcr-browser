@@ -33,6 +33,12 @@ define([
     mbApiFoundationProvider.setWorkspacesPrefix(mbConfig.api.prefixes.workspaces);
     mbApiFoundationProvider.setNodesPrefix(mbConfig.api.prefixes.nodes);
 
+    mbApiFoundationProvider.setErrorHandler(function(err, $log, $translate) {
+      if (err.status === 423) { return $translate('RESOURCE_LOCKED').then($log.warn, $log.warn); }
+      else if (err.data && err.data.message) { return $log.error(err, err.data.message); }
+      $log.error(err);
+    });
+
     RestangularProvider.setDefaultHttpFields({cache: true});
     $urlRouterProvider
       .when('', '/')

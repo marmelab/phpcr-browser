@@ -54,9 +54,6 @@ define([
           return rawProperties[type].insert(path, datum).then(function() {
             reloadProperties();
             $translate('NODE_ADD_PROPERTY_SUCCESS').then($log.log, $log.log);
-          }, function(err) {
-            if (err.data && err.data.message) { return $log.error(err, err.data.message); }
-            $log.error(err);
           });
         }
 
@@ -65,10 +62,6 @@ define([
           reloadProperties();
           $scope.newProperty = {};
           $scope.displayCreateForm = false;
-        }, function(err) {
-          if (err.data && err.data.message) { return $log.error(err, err.data.message); }
-          $log.error(err);
-          return $q.reject(err);
         });
       };
 
@@ -148,10 +141,6 @@ define([
               $location.hash('restore');
             }
             return $translate('NODE_DELETE_PROPERTY_SUCCESS').then($log.log, $log.log);
-          }, function(err) {
-            if (err.status === 423) { return $translate('NODE_PROPERTY_LOCKED').then($log.warn, $log.warn); }
-            else if (err.data && err.data.message) { return $log.error(err, err.data.message); }
-            $log.error(err);
           });
         }, $log.error);
       };
@@ -198,9 +187,6 @@ define([
         rawProperties[name].update(path, value).then(function() {
           reloadProperties();
           return $translate('NODE_UPDATE_PROPERTY_SUCCESS').then($log.log, $log.log);
-        }, function(err) {
-          if (err.data && err.data.message) { return $log.error(err, err.data.message); }
-          $log.error(err);
         });
       };
 
@@ -208,9 +194,6 @@ define([
         rawProperties[name].setType(type).then(function() {
           reloadProperties();
           return $translate('NODE_UPDATE_PROPERTY_SUCCESS').then($log.log, $log.log);
-        }, function(err) {
-          if (err.data && err.data.message) { return $log.error(err, err.data.message); }
-          $log.error(err);
         });
       };
 
