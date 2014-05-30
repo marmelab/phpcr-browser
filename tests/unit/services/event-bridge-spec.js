@@ -19,8 +19,9 @@ define([
     beforeEach(inject(function ($injector) {
       EventBridge = $injector.get('mbEventBridge');
       $rootScope = $injector.get('$rootScope');
-      var TreeCache = $injector.get('mbTreeCache');
-      spyOn(TreeCache, 'getCurrentRootNode').andReturn(mocks.getNodeMock());
+
+      // For menu building
+      $rootScope.currentNode = mocks.getNodeMock();
     }));
 
     it('should broadcast events', function () {

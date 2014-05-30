@@ -10,7 +10,7 @@ define([
   /**
    * MenuBuilderFactory provides builders for Menu.
    */
-  app.service('mbMenuBuilderFactory', ['$rootScope', '$translate', 'mbObjectMapper', 'mbTreeCache', function($rootScope, $translate, ObjectMapper, TreeCache) {
+  app.service('mbMenuBuilderFactory', ['$rootScope', '$translate', 'mbObjectMapper', function($rootScope, $translate, ObjectMapper) {
     var repositoriesLabel = 'MENU_REPOSITORIES';
 
     var loadLocale = function() {
@@ -52,7 +52,7 @@ define([
        * @param  {Function} callback
        */
       repository: ['repositories', function(callback) {
-        var repository = TreeCache.getCurrentRootNode().getWorkspace().getRepository();
+        var repository = $rootScope.repository ? $rootScope.repository : $rootScope.currentNode.getWorkspace().getRepository();
         repository.getWorkspaces().then(function(workspaces) {
           var link = {
             label: repository.getName(),
@@ -75,7 +75,7 @@ define([
        * @param  {Function} callback
        */
       workspace: ['repository', function(callback) {
-        var workspace = TreeCache.getCurrentRootNode().getWorkspace();
+        var workspace = $rootScope.currentNode.getWorkspace();
         var link = {
           label: workspace.getName(),
           href: '/' + workspace.getRepository().getName() + '/' + workspace.getName()

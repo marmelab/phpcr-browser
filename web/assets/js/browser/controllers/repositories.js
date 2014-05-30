@@ -8,10 +8,8 @@ define([
 ], function(app) {
   'use strict';
 
-  app.controller('mbRepositoriesCtrl', ['$scope', '$location', 'repositories',
-    function($scope, $location, repositories) {
-      $scope.repositories = repositories;
-
+  app.controller('mbRepositoriesCtrl', ['$scope', '$location',
+    function($scope, $location) {
       $scope.$on('search.change', function(e, value) {
         $scope.search = value;
       });

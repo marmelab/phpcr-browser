@@ -46,6 +46,7 @@ define([
             $rootScope.$emit('browser.load');
             return ObjectMapper.find().then(function(repositories) {
               $rootScope.$emit('browser.loaded');
+              $rootScope.repositories = repositories;
               return repositories;
             }, function(err) {
               return $q.reject(err);
@@ -62,6 +63,7 @@ define([
             $rootScope.$emit('browser.load');
             return ObjectMapper.find('/' + $stateParams.repository).then(function(repository) {
               $rootScope.$emit('browser.loaded');
+              $rootScope.repository = repository;
               return repository;
             }, function(err) {
               return $q.reject(err);
@@ -91,6 +93,8 @@ define([
                   $rootScope.$emit('browser.loaded');
                 });
               }
+
+              $rootScope.currentNode = node;
               return node;
             });
           }]

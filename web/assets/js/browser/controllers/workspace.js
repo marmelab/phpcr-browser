@@ -9,12 +9,11 @@ define([
 ], function(app) {
   'use strict';
 
-  app.controller('mbWorkspaceCtrl', ['$scope', '$log', 'mbTreeCache', 'node',
-    function($scope, $log, TreeCache, node) {
+  app.controller('mbWorkspaceCtrl', ['$scope', '$log', 'mbTreeCache',
+    function($scope, $log, TreeCache) {
 
-      $scope.currentNode = node;
-      $scope.workspace   = node.getWorkspace();
-      $scope.repository  = node.getWorkspace().getRepository();
+      $scope.workspace   = $scope.currentNode.getWorkspace();
+      $scope.repository  = $scope.currentNode.getWorkspace().getRepository();
 
       $scope.$on('search.change', function(e, value) {
         $scope.search = value;
