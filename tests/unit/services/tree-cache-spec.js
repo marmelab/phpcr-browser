@@ -1,4 +1,4 @@
-/*global define,describe,it,beforeEach,module,inject,expect,jasmine*/
+/*global define,describe,it,beforeEach,module,inject,expect*/
 /* jshint indent:2 */
 
 define([
@@ -12,18 +12,15 @@ define([
   describe('Service: TreeCache', function () {
     var TreeCache,
         RichTreeFactory,
-        RouteParametersConverter,
         $rootScope;
 
     // load the service's module
     beforeEach(module('browserApp'));
     beforeEach(function() {
       RichTreeFactory = mocks.getRichTreeFactoryMock();
-      RouteParametersConverter = mocks.getRouteParametersConverterMock();
 
       module(function ($provide) {
         $provide.value('mbRichTreeFactory', RichTreeFactory);
-        $provide.value('mbRouteParametersConverter', RouteParametersConverter);
       });
     });
 
@@ -32,10 +29,12 @@ define([
       $rootScope = $injector.get('$rootScope');
     }));
 
-    it('should return a RichTree after called getCurrentNode on RouteParametersConverter', function () {
-      TreeCache.getRichTree().then(function(richTree) {
-        expect(richTree).toEqual({ getRawTree: jasmine.any(Function) });
-        expect(RouteParametersConverter.getCurrentNode).toHaveBeenCalled();
+    it('should build a RichTree after called build on RichTreeFactory', function () {
+      var node = mocks.getNodeMock();
+      TreeCache.buildRichTree(node).then(function() {
+        expect(RichTreeFactory.build).toHaveBeenCalled();
+      }, function() {
+        expect(true).toBe(false); // to trigger an error if needed
       });
       $rootScope.$apply();
     });

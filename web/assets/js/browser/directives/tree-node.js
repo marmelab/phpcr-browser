@@ -65,9 +65,6 @@ define([
             $scope.richTree.getTree().append(node.path, { name: nodeName, path: path }).then(function() {
               node.displayCreateForm = false;
               $translate('NODE_CREATE_SUCCESS').then($log.log, $log.log);
-            }, function(err) {
-              if (err.data && err.data.message) { return $log.error(err, err.data.message); }
-              $log.error(err);
             });
           } else {
             $translate('NODE_NOT_SUPPORT_CREATE').then($log.error, $log.error);

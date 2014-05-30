@@ -26,6 +26,13 @@ define([
     });
 
     /**
+     * Forward search query
+     */
+    $rootScope.$on('_search.change', function(e, value) {
+      $rootScope.$broadcast('search.change', value);
+    });
+
+    /**
      * Broadcast repository.open.success, workspace.open.success, node.open.success events
      */
     $rootScope.$on('$stateChangeSuccess', function(evt, toState, toParams, fromState, fromParams){

@@ -5,18 +5,18 @@ define([
   'app',
   'services/rich-tree-factory',
   'services/tree-factory',
-  'services/route-parameters-converter'
 ], function(app) {
   'use strict';
 
   /**
    * The TreeCache aims to stored a shared RichTree during a session to avoid to always rebuild it.
    */
-  app.factory('mbTreeCache', ['$q', '$rootScope', 'mbRichTreeFactory', 'mbTreeFactory', 'mbNodeFactory', 'mbRouteParametersConverter', 'mbObjectMapper',
-    function($q, $rootScope, RichTreeFactory, TreeFactory, NodeFactory, RouteParametersConverter, ObjectMapper) {
-    var cache = {},
-        repository,
-        workspace;
+  app.factory('mbTreeCache', ['$q', '$rootScope', 'mbRichTreeFactory', 'mbTreeFactory', 'mbNodeFactory', 'mbObjectMapper',
+    function($q, $rootScope, RichTreeFactory, TreeFactory, NodeFactory, ObjectMapper) {
+    var repository,
+        workspace,
+        deferred,
+        currentRootNode;
 
     var hooks = [
       {
@@ -94,33 +94,23 @@ define([
      * Build a RichTree object based on the current node and cache it
      * @return {promise}
      */
-    var buildRichTree = function() {
+    var buildRichTree = function(rootNode) {
+      currentRootNode = rootNode;
+      deferred = $q.defer();
       // rich tree is not built, retrieve the current node with its reduced tree
-      return RouteParametersConverter.getCurrentNode({ reducedTree: true, cache: false }).then(function(node) {
-        repository = node.getWorkspace().getRepository();
-        workspace = node.getWorkspace();
-        return node;
-      }).then(function(node) {
+      repository = rootNode.getWorkspace().getRepository();
+      workspace = rootNode.getWorkspace();
         // build the rich tree
-        return RichTreeFactory.build(
-          node.getReducedTree()[0],
-          repository,
-          hooks
-        );
-      }).then(function(richTree) {
+      return RichTreeFactory.build(
+        rootNode.getReducedTree()[0],
+        repository,
+        hooks
+      ).then(function(richTree) {
         // save the built rich tree
-        cache.richTree = richTree;
-        return cache.richTree;
+        deferred.resolve(richTree);
       }, function(err) {
-        return $q.reject(err);
+        deferred.reject(err);
       });
-    };
-
-    /**
-     * Invalidate the RichTree in cache to force rebuild
-     */
-    var invalidateRichTreeCache = function() {
-      delete cache.richTree;
     };
 
     /**
@@ -128,22 +118,21 @@ define([
      * @return {promise}
      */
     var getRichTree = function() {
-      if (cache.richTree) {
-        // the rich tree is already build, we return it in a resolved promise
-        return $q.when(cache.richTree);
-      }
-
-      return buildRichTree();
+      return deferred.promise;
     };
 
     /**
-     * Listener on route change to invalidate the RichTree cache if needed
+     * Get the current rootNode used to build the richTree
+     * @return {Node}
      */
-    $rootScope.$on('workspace.open.start', invalidateRichTreeCache);
+    var getCurrentRootNode = function() {
+      return currentRootNode;
+    };
 
     return {
+      buildRichTree: buildRichTree,
       getRichTree: getRichTree,
-      invalidateRichTreeCache: invalidateRichTreeCache
+      getCurrentRootNode: getCurrentRootNode
     };
   }]);
 });

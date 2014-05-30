@@ -7,7 +7,16 @@ define([
   'locales/en_EN',
   'locales/fr_FR',
   'config',
-  'controllers/front',
+  'controllers/navbar',
+  'controllers/properties',
+  'controllers/repositories',
+  'controllers/repository',
+  'controllers/workspace',
+  'directives/ui/overlay',
+  'directives/ui/dropper',
+  'directives/draggable',
+  'directives/droppable',
+  'directives/focus-me',
   'services/event-bridge',
   'services/api-foundation',
   'services/menu',
@@ -15,12 +24,20 @@ define([
 ], function(angular, app, localeEN, localeFR) {
   'use strict';
 
+  var firstLoad = true;
+
   app.value('$anchorScroll', angular.noop)
   .config(function($stateProvider, $urlRouterProvider, $translateProvider, RestangularProvider, mbApiFoundationProvider, mbConfig){
     mbApiFoundationProvider.setServer(mbConfig.api.server);
     mbApiFoundationProvider.setRepositoriesPrefix(mbConfig.api.prefixes.repositories);
     mbApiFoundationProvider.setWorkspacesPrefix(mbConfig.api.prefixes.workspaces);
     mbApiFoundationProvider.setNodesPrefix(mbConfig.api.prefixes.nodes);
+
+    mbApiFoundationProvider.setErrorHandler(function(err, $log, $translate) {
+      if (err.status === 423) { return $translate('RESOURCE_LOCKED').then($log.warn, $log.warn); }
+      else if (err.data && err.data.message) { return $log.error(err, err.data.message); }
+      $log.error(err);
+    });
 
     RestangularProvider.setDefaultHttpFields({cache: true});
     $urlRouterProvider
@@ -30,15 +47,66 @@ define([
     $stateProvider
       .state('repositories', {
         url:'/',
-        templateUrl: '/assets/js/browser/views/repositories.html'
+        resolve: {
+          repositories: ['$rootScope', '$q', 'mbObjectMapper', function($rootScope, $q, ObjectMapper) {
+            $rootScope.$emit('browser.load');
+            return ObjectMapper.find().then(function(repositories) {
+              $rootScope.$emit('browser.loaded');
+              $rootScope.repositories = repositories;
+              return repositories;
+            }, function(err) {
+              return $q.reject(err);
+            });
+          }]
+        },
+        templateUrl: '/assets/js/browser/views/repositories.html',
+        controller: 'mbRepositoriesCtrl'
       })
       .state('repository', {
         url: '/:repository',
-        templateUrl: '/assets/js/browser/views/repository.html'
+        resolve: {
+          repository: ['$rootScope', '$q', '$stateParams', 'mbObjectMapper', function($rootScope, $q, $stateParams, ObjectMapper) {
+            $rootScope.$emit('browser.load');
+            return ObjectMapper.find('/' + $stateParams.repository).then(function(repository) {
+              $rootScope.$emit('browser.loaded');
+              $rootScope.repository = repository;
+              return repository;
+            }, function(err) {
+              return $q.reject(err);
+            });
+          }]
+        },
+        templateUrl: '/assets/js/browser/views/repository.html',
+        controller : 'mbRepositoryCtrl'
       })
       .state('workspace', {
         url: '/:repository/:workspace{path:(?:/.*)?}',
-        templateUrl: '/assets/js/browser/views/workspace.html'
+        resolve: {
+          node: ['$rootScope', '$q', '$stateParams', 'mbObjectMapper', 'mbTreeCache', function($rootScope, $q, $stateParams, ObjectMapper, TreeCache) {
+            var path = ($stateParams.path) ? $stateParams.path : '/',
+                params = {};
+
+            if (firstLoad) {
+              $rootScope.$emit('browser.load');
+              params = { reducedTree: true, cache: false };
+            }
+
+
+            return ObjectMapper.find('/' + $stateParams.repository + '/' + $stateParams.workspace + path, params).then(function(node) {
+              if (firstLoad) {
+                firstLoad = false;
+                TreeCache.buildRichTree(node).then(function() {
+                  $rootScope.$emit('browser.loaded');
+                });
+              }
+
+              $rootScope.currentNode = node;
+              return node;
+            });
+          }]
+        },
+        templateUrl: '/assets/js/browser/views/workspace.html',
+        controller: 'mbWorkspaceCtrl'
       });
 
     $translateProvider
@@ -76,53 +144,43 @@ define([
   .run(['$rootScope', '$log', '$translate', 'toaster', 'editableOptions', 'mbEventBridge', 'mbMenu', 'mbMenuBuilderFactory', function($rootScope, $log, $translate, toaster, editableOptions, EventBridge, Menu, MenuBuilderFactory) {
     editableOptions.theme = 'bs3';
 
-    $log.before('error', function(message, toast, display) {
-      display = display === undefined ? true : display;
-      if (display) {
-        if (toast) { message = toast; }
-        $translate('ERROR').then(function(translation) {
-          toaster.pop('error', translation, message);
-        }, function(err) {
-          toaster.pop('error', err, message);
-        });
-      }
-    });
-    $log.before('log', function(message, toast, display) {
-      display = display === undefined ? true : display;
-      if (display) {
-        if (toast) { message = toast; }
-        $translate('SUCCESS').then(function(translation) {
-          toaster.pop('success', translation, message);
-        }, function(err) {
-          toaster.pop('success', err, message);
-        });
-      }
-    });
-    $log.before('info', function(message, toast, display) {
-      display = display === undefined ? true : display;
-      if (display) {
-        if (toast) { message = toast; }
-        $translate('NOTE').then(function(translation) {
-          toaster.pop('note', translation, message);
-        }, function(err) {
-          toaster.pop('note', err, message);
-        });
-      }
-    });
-    $log.before('warn', function(message, toast, display) {
-      display = display === undefined ? true : display;
-      if (display) {
-        if (toast) { message = toast; }
-        $translate('WARNING').then(function(translation) {
-          toaster.pop('warning', translation, message);
-        }, function(err) {
-          toaster.pop('warning', err, message);
-        });
-      }
-    });
+    var logListenerFactory = function(title, toastType) {
+      return function(message, toast, display) {
+        display = display === undefined ? true : display;
+        if (display) {
+          if (toast) { message = toast; }
+          $translate(title).then(function(translation) {
+            toaster.pop(toastType, translation, message);
+          }, function(err) {
+            toaster.pop(toastType, err, message);
+          });
+        }
+      };
+    };
+
+    $log.before('error', logListenerFactory('ERROR', 'error'));
+    $log.before('log',   logListenerFactory('SUCCESS', 'success'));
+    $log.before('info',  logListenerFactory('NOTE', 'note'));
+    $log.before('warn',  logListenerFactory('WARNING', 'warning'));
 
     $log.decorate(function(message) {
       return [message]; // To remove toast in the log
+    });
+
+    $rootScope.$on('$stateChangeError', function(evt, toState, toParams, fromState, fromParams, err) {
+      if (err.data && err.data.message) {
+        return $log.error(err, err.data.message);
+      }
+      $translate('ERROR_RETRY', function(translation) {
+        $log.error(err, translation);
+      }, function() {
+        $log.error(err);
+      });
+    });
+
+    $rootScope.$on('workspace.open.start', function() {
+      // When changing workspace, we need to rebuild the RichTree cached by TreeCache
+      firstLoad = true;
     });
 
     Menu.appendBuilder(MenuBuilderFactory.getRepositoriesBuilder());

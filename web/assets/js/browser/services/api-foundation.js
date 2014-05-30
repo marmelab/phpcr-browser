@@ -3,7 +3,8 @@
 
 define([
   'app',
-], function(app) {
+  'angular',
+], function(app, angular) {
   'use strict';
   /**
    * ApiFoundation is the lower layer of the phpcr-browser.
@@ -13,7 +14,9 @@ define([
     var server,
         repositoriesPrefix,
         workspacesPrefix,
-        nodesPrefix;
+        nodesPrefix,
+        errorHandlerCallback = angular.noop,
+        errorHandler;
 
     /**
      * Configure server url
@@ -47,7 +50,16 @@ define([
       nodesPrefix = value;
     };
 
-    this.$get = ['$q', '$cacheFactory', 'Restangular', function($q, $cacheFactory, Restangular) {
+    /**
+     * Configure the error handler
+     * @param {Function} handler
+     */
+    this.setErrorHandler = function(handler) {
+      errorHandlerCallback = handler;
+    };
+
+
+    this.$get = ['$q', '$cacheFactory', '$log', '$translate', 'Restangular', function($q, $cacheFactory, $log, $translate, Restangular) {
       Restangular.setBaseUrl(server);
 
       var repositories    = Restangular.all(repositoriesPrefix);
@@ -55,6 +67,10 @@ define([
       var workspaceCache  = {};
       var nodeCache       = {};
 
+      errorHandler = function(err) {
+        errorHandlerCallback(err, $log, $translate);
+        return $q.reject(err);
+      };
       /**
        * Build repository Restangular object and cache it
        * @param  {string} repository
@@ -195,7 +211,7 @@ define([
             delete config.cache;
           }
 
-          return repositories.withHttpConfig(config).getList();
+          return repositories.withHttpConfig(config).getList().catch(errorHandler);
         },
 
         /**
@@ -212,7 +228,7 @@ define([
             delete config.cache;
           }
 
-          return repository(name).withHttpConfig(config).get();
+          return repository(name).withHttpConfig(config).get().catch(errorHandler);
         },
 
         /**
@@ -229,7 +245,7 @@ define([
             delete config.cache;
           }
 
-          return workspaces(repositoryName).withHttpConfig(config).getList();
+          return workspaces(repositoryName).withHttpConfig(config).getList().catch(errorHandler);
         },
 
         /**
@@ -247,7 +263,7 @@ define([
             delete config.cache;
           }
 
-          return workspace(repositoryName, name).withHttpConfig(config).get();
+          return workspace(repositoryName, name).withHttpConfig(config).get().catch(errorHandler);
         },
 
         /**
@@ -259,7 +275,7 @@ define([
          */
         createWorkspace: function(repositoryName, name, config) {
           config = config || {};
-          return workspaces(repositoryName).withHttpConfig(config).post({ name: name });
+          return workspaces(repositoryName).withHttpConfig(config).post({ name: name }).catch(errorHandler);
         },
 
         /**
@@ -271,7 +287,7 @@ define([
          */
         deleteWorkspace: function(repositoryName, name, config) {
           config = config || {};
-          return workspace(repositoryName, name).withHttpConfig(config).remove();
+          return workspace(repositoryName, name).withHttpConfig(config).remove().catch(errorHandler);
         },
 
         /**
@@ -297,7 +313,7 @@ define([
             delete config.cache;
           }
 
-          return node(repositoryName, workspaceName, path).withHttpConfig(config).get(params);
+          return node(repositoryName, workspaceName, path).withHttpConfig(config).get(params).catch(errorHandler);
         },
 
         /**
@@ -311,7 +327,7 @@ define([
          */
         createNode: function(repositoryName, workspaceName, parentPath, relPath, config) {
           config = config || {};
-          return nodeCollection(repositoryName, workspaceName, parentPath).withHttpConfig(config).post({ relPath: relPath});
+          return nodeCollection(repositoryName, workspaceName, parentPath).withHttpConfig(config).post({ relPath: relPath}).catch(errorHandler);
         },
 
         /**
@@ -324,7 +340,7 @@ define([
          */
         deleteNode: function(repositoryName, workspaceName, path, config) {
           config = config || {};
-          return node(repositoryName, workspaceName, path).withHttpConfig(config).remove();
+          return node(repositoryName, workspaceName, path).withHttpConfig(config).remove().catch(errorHandler);
         },
 
         /**
@@ -341,7 +357,7 @@ define([
           return node(repositoryName, workspaceName, path).withHttpConfig(config).put({
             method:      'move',
             destAbsPath: newPath
-          });
+          }).catch(errorHandler);
         },
 
         /**
@@ -358,7 +374,7 @@ define([
           return node(repositoryName, workspaceName, path).withHttpConfig(config).put({
             method: 'rename',
             newName: newName
-          });
+          }).catch(errorHandler);
         },
 
         /**
@@ -375,9 +391,9 @@ define([
         createNodeProperty: function(repositoryName, workspaceName, path, propertyName, propertyValue, propertyType, config) {
           config = config || {};
           if (propertyType) {
-            return nodeProperties(repositoryName, workspaceName, path).withHttpConfig(config).post({ name: propertyName, value: propertyValue, type: propertyType });
+            return nodeProperties(repositoryName, workspaceName, path).withHttpConfig(config).post({ name: propertyName, value: propertyValue, type: propertyType }).catch(errorHandler);
           }
-          return nodeProperties(repositoryName, workspaceName, path).withHttpConfig(config).post({ name: propertyName, value: propertyValue });
+          return nodeProperties(repositoryName, workspaceName, path).withHttpConfig(config).post({ name: propertyName, value: propertyValue }).catch(errorHandler);
         },
 
         /**
@@ -391,7 +407,7 @@ define([
          */
         deleteNodeProperty: function(repositoryName, workspaceName, path, propertyName, config) {
           config = config || {};
-          return nodeProperty(repositoryName, workspaceName, path, propertyName).withHttpConfig(config).remove();
+          return nodeProperty(repositoryName, workspaceName, path, propertyName).withHttpConfig(config).remove().catch(errorHandler);
         },
 
         /**
@@ -407,7 +423,7 @@ define([
          */
         updateNodeProperty: function(repositoryName, workspaceName, path, propertyName, propertyValue, propertyType, config) {
           config = config || {};
-          return nodeProperties(repositoryName, workspaceName, path).withHttpConfig(config).post({ name: propertyName, value: propertyValue, type: propertyType });
+          return nodeProperties(repositoryName, workspaceName, path).withHttpConfig(config).post({ name: propertyName, value: propertyValue, type: propertyType }).catch(errorHandler);
         },
 
         /**

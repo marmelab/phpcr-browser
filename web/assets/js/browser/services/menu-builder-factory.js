@@ -3,15 +3,14 @@
 
 define([
   'app',
-  'services/object-mapper',
-  'services/route-parameters-converter'
+  'services/object-mapper'
 ], function(app) {
   'use strict';
 
   /**
    * MenuBuilderFactory provides builders for Menu.
    */
-  app.service('mbMenuBuilderFactory', ['$rootScope', '$translate', 'mbObjectMapper', 'mbRouteParametersConverter', function($rootScope, $translate, ObjectMapper, RouteParametersConverter) {
+  app.service('mbMenuBuilderFactory', ['$rootScope', '$translate', 'mbObjectMapper', function($rootScope, $translate, ObjectMapper) {
     var repositoriesLabel = 'MENU_REPOSITORIES';
 
     var loadLocale = function() {
@@ -53,22 +52,21 @@ define([
        * @param  {Function} callback
        */
       repository: ['repositories', function(callback) {
-        RouteParametersConverter.getCurrentRepository().then(function(repository) {
-          repository.getWorkspaces().then(function(workspaces) {
-            var link = {
-              label: repository.getName(),
-              sublinks: []
-            };
+        var repository = $rootScope.repository ? $rootScope.repository : $rootScope.currentNode.getWorkspace().getRepository();
+        repository.getWorkspaces().then(function(workspaces) {
+          var link = {
+            label: repository.getName(),
+            sublinks: []
+          };
 
-            angular.forEach(workspaces, function(workspace) {
-              link.sublinks.push({
-                label: workspace.getName(),
-                href: '/' + repository.getName() + '/' + workspace.getName()
-              });
+          angular.forEach(workspaces, function(workspace) {
+            link.sublinks.push({
+              label: workspace.getName(),
+              href: '/' + repository.getName() + '/' + workspace.getName()
             });
-
-            callback(link);
           });
+
+          callback(link);
         });
       }],
 
@@ -77,14 +75,13 @@ define([
        * @param  {Function} callback
        */
       workspace: ['repository', function(callback) {
-        RouteParametersConverter.getCurrentWorkspace().then(function(workspace) {
-          var link = {
-            label: workspace.getName(),
-            href: '/' + workspace.getRepository().getName() + '/' + workspace.getName()
-          };
+        var workspace = $rootScope.currentNode.getWorkspace();
+        var link = {
+          label: workspace.getName(),
+          href: '/' + workspace.getRepository().getName() + '/' + workspace.getName()
+        };
 
-          callback(link);
-        });
+        callback(link);
       }]
     };
 

@@ -5,13 +5,16 @@ define([
   'app',
   'directives/property-value',
   'directives/tree-node',
-  'directives/tree',
-  'services/route-parameters-converter'
+  'directives/tree'
 ], function(app) {
   'use strict';
 
-  app.controller('mbWorkspaceCtrl', ['$scope', '$log', 'mbRouteParametersConverter', 'mbTreeCache',
-    function($scope, $log, RouteParametersConverter, TreeCache) {
+  app.controller('mbWorkspaceCtrl', ['$scope', '$log', 'mbTreeCache',
+    function($scope, $log, TreeCache) {
+
+      $scope.workspace   = $scope.currentNode.getWorkspace();
+      $scope.repository  = $scope.currentNode.getWorkspace().getRepository();
+
       $scope.$on('search.change', function(e, value) {
         $scope.search = value;
       });
@@ -22,18 +25,7 @@ define([
 
       TreeCache.getRichTree().then(function(rt) {
         $scope.richTree = rt;
-      }).then(function() {
-        return RouteParametersConverter.getCurrentNode();
-      }).then(function(node) {
-        $scope.currentNode = node;
-        $scope.repository = node.getWorkspace().getRepository();
-        $scope.workspace = node.getWorkspace();
         $scope.$emit('browser.loaded');
-      }, function(err) {
-        $scope.$emit('browser.load'); // force display of overlay
-        TreeCache.invalidateRichTreeCache(); // force rebuild of the rich tree
-        if (err.data && err.data.message) { return $log.error(err, err.data.message); }
-        $log.error(err);
       });
     }]);
 });
