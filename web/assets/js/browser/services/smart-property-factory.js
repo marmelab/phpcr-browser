@@ -148,7 +148,7 @@ define([
        * @return {boolean}
        */
       accept: function(data) {
-        return data.name !== undefined &&data.type !== undefined && data.value !== undefined;
+        return data.name !== undefined && data.type !== undefined && data.value !== undefined;
       }
     };
   }]);
