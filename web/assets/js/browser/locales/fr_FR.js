@@ -46,6 +46,7 @@ define([], function() {
     'WORKSPACE_DELETE_SUCCESS': 'Espace de travail supprimé',
     'WORKSPACE_CREATE_SUCCESS': 'Espace de travail créé',
     'WORKSPACE_CREATE_NAME_EMPTY': 'Le nom est vide',
-    'WORKSPACE_NOT_SUPPORT_DELETE': 'Ce dépôt ne supporte pas la suppression d\'espace de travail'
+    'WORKSPACE_NOT_SUPPORT_DELETE': 'Ce dépôt ne supporte pas la suppression d\'espace de travail',
+    'WORKSPACE_NOT_SUPPORT_CREATE': 'Ce dépôt ne supporte pas la création d\'espace de travail'
   };
 });

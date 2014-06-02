@@ -46,6 +46,7 @@ define([], function() {
     'WORKSPACE_DELETE_SUCCESS': 'Workspace deleted',
     'WORKSPACE_CREATE_SUCCESS': 'Workspace created',
     'WORKSPACE_CREATE_NAME_EMPTY': 'Name is empty',
-    'WORKSPACE_NOT_SUPPORT_DELETE': 'This repository does not support workspace creation.'
+    'WORKSPACE_NOT_SUPPORT_DELETE': 'This repository does not support workspace deletion.',
+    'WORKSPACE_NOT_SUPPORT_CREATE': 'This repository does not support workspace creation.'
   };
 });

@@ -10,7 +10,7 @@ define([
 ], function(mocks) {
   'use strict';
 
-  describe('Controller: RepositoriesCtrl', function () {
+  describe('Controller: RepositoriesCtrl', function() {
     var RepositoriesCtrl,
         $location,
         $rootScope,
@@ -32,12 +32,12 @@ define([
       });
     }));
 
-    it('should listen for search.change event', function () {
+    it('should listen for search.change event', function() {
       $rootScope.$broadcast('search.change', 'test');
       expect($scope.search).toBe('test');
     });
 
-    it('should call $location.path when openRepository is called', function () {
+    it('should call $location.path when openRepository is called', function() {
       spyOn($location, 'path');
       $scope.openRepository(repository);
       expect($location.path).toHaveBeenCalledWith('/' + repository.getName());

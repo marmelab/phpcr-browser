@@ -9,7 +9,7 @@ define([
 ], function() {
   'use strict';
 
-  describe('Controller: Navbar', function () {
+  describe('Controller: Navbar', function() {
     var NavbarCtrl,
         $translate,
         Menu,
@@ -32,7 +32,7 @@ define([
       });
     }));
 
-    it('should broadcast event when $scope.search change', function () {
+    it('should broadcast event when $scope.search change', function() {
       var search = null;
       $rootScope.$on('_search.change', function(e, value) {
         search = value;
@@ -43,7 +43,7 @@ define([
       expect(search).toBe('test');
     });
 
-    it('should append the menu to the $scope', function () {
+    it('should append the menu to the $scope', function() {
       $scope.$digest();
       expect($scope.menu).toEqual(Menu.getMenu());
 
@@ -52,7 +52,7 @@ define([
       expect($scope.menu).toEqual({ test: 'hey!' });
     });
 
-    it('should use $translate for translation actions', function () {
+    it('should use $translate for translation actions', function() {
       expect($scope.changeLanguage).toBe($translate.use); // ref equality
 
       spyOn($translate, 'use');
