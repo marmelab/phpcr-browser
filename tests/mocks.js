@@ -15,7 +15,8 @@ define('mocks', [
         getObjectMapperMock,
         getSmartPropertyFactoryMock,
         getJsonPatchMock,
-        lastWorkspaceMock;
+        lastWorkspaceMock,
+        getTreeCacheMock;
 
 
     mockServer = function($httpBackend, Config) {
@@ -165,19 +166,21 @@ define('mocks', [
 
     getNodeMock = function() {
       var node = fixtures.node;
+      var repository = {
+        getName: function() { return fixtures.repositories[0].name; },
+        getWorkspaces: jasmine.createSpy('getWorkspaces').andReturn(mixins.buildPromise([])),
+      };
 
+      var workspace = {
+        getName: function() { return fixtures.workspaces[0].name; },
+        getRepository: function() {
+          return repository;
+        }
+      };
       return {
         getName: jasmine.createSpy('getName').andReturn(node.name),
         // We don't return workspaceMock to avoid circular dependency
-        getWorkspace: jasmine.createSpy('getWorkspace').andReturn({
-          getName: function() { return fixtures.workspaces[0].name; },
-          getRepository: function() {
-            return {
-              getName: function() { return fixtures.repositories[0].name; },
-              getWorkspaces: jasmine.createSpy('getWorkspaces').andReturn(mixins.buildPromise([])),
-            };
-          }
-        }),
+        getWorkspace: jasmine.createSpy('getWorkspace').andReturn(workspace),
         setProperty: jasmine.createSpy('setProperty').andReturn(mixins.buildPromise()),
         getReducedTree: jasmine.createSpy('getReducedTree').andReturn(fixtures.node.reducedTree)
       };
@@ -232,6 +235,14 @@ define('mocks', [
       };
     };
 
+    getTreeCacheMock = function() {
+      return {
+        buildRichTree: jasmine.createSpy('buildRichTree'),
+        getRichTree: jasmine.createSpy('getRichTree').andReturn(mixins.buildPromise({})),
+        getCurrentRootNode: jasmine.createSpy('getCurrentRootNode').andReturn(getNodeMock())
+      };
+    };
+
     var buildFactoryMock = function(type) {
       return function() {
         return {
@@ -281,6 +292,7 @@ define('mocks', [
       getRichTreeMock: getRichTreeMock,
       getNodeFactoryMock: buildFactoryMock(),
       getJsonPatchMock: getJsonPatchMock,
-      getLastWorkspaceMock: getLastWorkspaceMock
+      getLastWorkspaceMock: getLastWorkspaceMock,
+      getTreeCacheMock: getTreeCacheMock
     };
   });
