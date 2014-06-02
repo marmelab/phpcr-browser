@@ -14,9 +14,14 @@ define([
 
       $scope.workspace   = $scope.currentNode.getWorkspace();
       $scope.repository  = $scope.currentNode.getWorkspace().getRepository();
+      $scope.displayTree = false; // used in mobile mode
 
       $scope.$on('search.change', function(e, value) {
         $scope.search = value;
+      });
+
+      $scope.$on('tree.toggle', function() {
+        $scope.displayTree = !$scope.displayTree;
       });
 
       $scope.delete = function(element) {

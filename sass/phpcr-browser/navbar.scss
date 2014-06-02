@@ -3,13 +3,16 @@
 #search {
   margin-right: 0px;
   padding: 0;
+  @extend .hidden-xs;
 
   input.form-control {
     @include border-radius(0);
     width: 150px;
 
-    &:hover, &:focus {
-      width: 250px;
+    @media (min-width: 992px) {
+      &:hover, &:focus {
+        width: 250px;
+      }
     }
   }
 
@@ -32,17 +35,55 @@
 }
 
 .navbar-nav > li > .dropdown-menu{
-    @include border-radius(0);
+  @include border-radius(0);
 
-    &>li {
-      &>a {
-        padding: 6px 20px;
-      }
+  &>li {
+    &>a {
+      padding: 6px 20px;
     }
+  }
+}
+
+.navbar-toggle:focus, .navbar-toggle:hover {
+  .icon-bar {
+    background-color: $navbar-default-bg;
+  }
+}
+
+.navbar-toggle {
+  border: none;
 }
 
 .github, .settings {
   @extend .lead;
-
   margin-bottom: 0px;
 }
+
+.github {
+  @extend .hidden-xs;
+}
+
+@media (max-width: 767px) {
+  .dropdown-header {
+    color: $navbar-default-link-color;
+  }
+}
+
+.tree-toggle {
+  float: left;
+  padding: 10px 15px;
+  line-height: 20px;
+  height: $navbar-height;
+  color: $navbar-default-link-color;
+  font-size: 13pt;
+  &:hover {
+    background-color: $navbar-default-link-hover-bg;
+    color: $navbar-default-link-hover-color;
+  }
+
+  &.active {
+    background-color: $navbar-default-link-hover-bg;
+    color: $navbar-default-link-hover-color;
+  }
+}
+

@@ -10,7 +10,11 @@ $navbar-default-link-color: #ffffff;
 $navbar-default-link-hover-bg: darken($navbar-default-bg, 5%);
 $navbar-default-link-hover-color: #ffffff;
 $navbar-default-link-active-color: #ffffff;
-
+$navbar-default-toggle-hover-bg: #fff;
+$navbar-default-toggle-icon-bar-bg: #fff;
 $icon-font-path: '/bower_components/bootstrap/dist/fonts/';
 
 $scrollable-margin-top: 37px;
+
+$content-toolbar-height: 37px;
+$dropper-height: 50px;

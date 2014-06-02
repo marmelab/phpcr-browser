@@ -16,6 +16,7 @@ define([], function() {
     'SUCCESS': 'Succès',
     'NOTE': 'Information',
     'WARNING': 'Avertissement',
+    'SETTINGS': 'Paramètres',
     'RESOURCE_LOCKED': 'La ressource est verrouillée.',
     'REPOSITORY_PANEL_BOX_TITLE': 'Dépôt',
     'WORKSPACE_PANEL_BOX_TITLE': 'Espace de travail',

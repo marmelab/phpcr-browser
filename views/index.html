@@ -19,7 +19,6 @@
       <script src="/bower_components/html5shiv/dist/html5shiv.js"></script>
       <script src="/bower_components/respond/dest/respond.min.js"></script>
     <![endif]-->
-
   </head>
 
   <body>
@@ -35,6 +34,10 @@
         <a class="navbar-brand" href="#/">
          phpcr-browser
         </a>
+        <a class="tree-toggle visible-xs" ng-show="isWorkspaceState()" ng-class="{ active: treeIsDisplayed }" ng-click="broadcast('_tree.toggle'); treeIsDisplayed = !treeIsDisplayed">
+          <span ng-show="!treeIsDisplayed" class="fa fa-indent"></span>
+          <span ng-show="treeIsDisplayed" class="fa fa-dedent"></span>
+        </a>
       </div>
       <div class="navbar-collapse collapse">
         <ul class="nav navbar-nav">
@@ -44,7 +47,10 @@
         </ul>
         <ul class="nav navbar-nav navbar-right">
           <li class="dropdown">
-            <a class="dropdown-toggle" data-toggle="dropdown" class="settings"><span class="fa fa-cog"></span></a>
+            <a class="dropdown-toggle" data-toggle="dropdown" class="settings">
+              <span class="hidden-xs fa fa-cog"></span>
+              <span class="visible-xs"> {{ 'SETTINGS' | translate }}</span>
+            </a>
             <ul class="dropdown-menu">
               <li class="dropdown-header">Change language</li>
               <li>
@@ -68,9 +74,9 @@
           </li>
         </ul>
         <form class="navbar-form navbar-right" id="search" role="search">
-          <div class="form-group right-inner-addon">
-            <span class="glyphicon glyphicon-search"></span>
+          <div class="form-group has-feedback">
             <input type="text" class="form-control" placeholder="{{ 'SEARCH_PROMPT' | translate }}" ng-model="search">
+            <span class="glyphicon glyphicon-search form-control-feedback"></span>
           </div>
         </form>
       </div><!--/.nav-collapse -->

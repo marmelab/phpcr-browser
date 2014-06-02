@@ -9,13 +9,23 @@ define([
 ], function(app) {
   'use strict';
 
-  app.controller('mbNavbarCtrl', ['$scope', '$translate', 'mbMenu', function($scope, $translate, mbMenu) {
+  app.controller('mbNavbarCtrl', ['$scope', '$translate', '$state', 'mbMenu', function($scope, $translate, $state, mbMenu) {
+
+    $scope.treeIsDisplayed = false;
+
+    $scope.isWorkspaceState = function() {
+      return $state.current.name === 'workspace';
+    };
 
     $scope.isPreferredLanguage = function(key) {
       return $translate.use() === key;
     };
 
     $scope.changeLanguage = $translate.use;
+
+    $scope.broadcast = function(event, data) {
+      $scope.$emit(event, data);
+    };
 
     $scope.$watch(function() {
       return mbMenu.getMenu();
