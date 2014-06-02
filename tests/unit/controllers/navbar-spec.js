@@ -6,7 +6,7 @@ define([
   'angularMocks',
   'app',
   'controllers/navbar'
-], function () {
+], function() {
   'use strict';
 
   describe('Controller: Navbar', function () {
@@ -41,8 +41,6 @@ define([
       $scope.search = 'test';
       $scope.$digest();
       expect(search).toBe('test');
-
-      expect($scope.menu).toEqual(Menu.getMenu());
     });
 
     it('should append the menu to the $scope', function () {
