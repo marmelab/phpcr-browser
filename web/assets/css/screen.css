@@ -10429,6 +10429,11 @@ a {
   }
 }
 
+/* line 80, ../../../sass/phpcr-browser/scaffolding.scss */
+.container-padding-top {
+  padding-top: 10px;
+}
+
 /* line 2, ../../../sass/phpcr-browser/tables.scss */
 table thead {
   border-top: 1px solid #dee3ea;
