@@ -2,7 +2,7 @@
 @import "bootstrap/mixins";
 
 body {
-  padding-top: $navbar-height + 10;
+  padding-top: $navbar-height;
 }
 
 @font-face {
@@ -65,13 +65,14 @@ a {
   @include make-sm-column(8);
   @include make-md-column(9);
   @include make-lg-column(9);
-  position: fixed;
+  @include make-sm-column-offset(4);
+  @include make-md-column-offset(3);
+  @include make-lg-column-offset(3);
   overflow-x: hidden;
   overflow-y: auto;
-  top: $navbar-height;
   right: 0;
   max-height: 100%;
-  background-color: #ffffff;
+  background-color: transparent;
   padding: 0;
   height: 100%;
 }

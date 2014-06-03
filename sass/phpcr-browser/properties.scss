@@ -6,7 +6,7 @@
   @extend .table;
   @extend .table-striped;
   @extend .table-hover;
-
+  background-color: #fff;
   border: 1px solid #dddddd;
   border-left: none;
   margin-bottom: $content-toolbar-height + $dropper-height;

@@ -10272,7 +10272,7 @@ button.close {
 }
 /* line 4, ../../../sass/phpcr-browser/scaffolding.scss */
 body {
-  padding-top: 50px;
+  padding-top: 40px;
 }
 
 @font-face {
@@ -10381,13 +10381,11 @@ a {
   min-height: 1px;
   padding-left: 15px;
   padding-right: 15px;
-  position: fixed;
   overflow-x: hidden;
   overflow-y: auto;
-  top: 40px;
   right: 0;
   max-height: 100%;
-  background-color: #ffffff;
+  background-color: transparent;
   padding: 0;
   height: 100%;
 }
@@ -10410,6 +10408,24 @@ a {
   #content {
     float: left;
     width: 75%;
+  }
+}
+@media (min-width: 768px) {
+  /* line 64, ../../../sass/phpcr-browser/scaffolding.scss */
+  #content {
+    margin-left: 33.3333333333%;
+  }
+}
+@media (min-width: 992px) {
+  /* line 64, ../../../sass/phpcr-browser/scaffolding.scss */
+  #content {
+    margin-left: 25%;
+  }
+}
+@media (min-width: 1200px) {
+  /* line 64, ../../../sass/phpcr-browser/scaffolding.scss */
+  #content {
+    margin-left: 25%;
   }
 }
 
@@ -10797,6 +10813,7 @@ ul.over {
 /* line 4, ../../../sass/phpcr-browser/properties.scss */
 #properties {
   z-index: 1;
+  background-color: #fff;
   border: 1px solid #dddddd;
   border-left: none;
   margin-bottom: 87px;
