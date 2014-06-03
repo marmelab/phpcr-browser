@@ -24,12 +24,6 @@ define([
       },
       templateUrl: '/assets/js/browser/directives/templates/tree.html',
       controller: ['$scope', function($scope) {
-        $scope.$on('node.open.success', function(event, repositoryName, workspaceName, nodePath){
-          $scope.toggleNode(nodePath).then(function() {
-
-          });
-        });
-
         $scope.$on('drop.delete', function(event, element) {
           deleteNode(element);
         });

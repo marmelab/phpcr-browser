@@ -34,9 +34,9 @@ define([
         nodeOpenSuccess: false
       };
 
-      var toState = { name: 'workspace' },
+      var toState = { parent: 'workspace', name: 'node' },
           toParams = { repository: 'test', workspace: 'default', path: '/' },
-          fromState = { name: 'workspace' },
+          fromState = { parent:'workspace', name: 'node' },
           fromParams = { repository: 'test', workspace: 'default', path: '/' };
 
 

@@ -41,10 +41,12 @@ define([
          * @param  {object} node
          */
         $scope.toggleCreateForm = function(node) {
-          node.displayCreateForm = !node.displayCreateForm;
-          if (node.displayCreateForm && node.collapsed) {
-            $scope.toggleNode(node.path);
+          if (node.collapsed && node.hasChildren) {
+            return $scope.toggleNode(node.path).then(function() {
+              node.displayCreateForm = !node.displayCreateForm;
+            });
           }
+          node.displayCreateForm = !node.displayCreateForm;
         };
 
         /**
