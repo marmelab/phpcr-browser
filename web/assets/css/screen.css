@@ -10434,6 +10434,19 @@ a {
   padding-top: 10px;
 }
 
+/* line 87, ../../../sass/phpcr-browser/scaffolding.scss */
+.table-striped > tbody > tr:nth-child(even) > td, #properties > tbody > tr:nth-child(even) > td,
+.table-striped > tbody > tr:nth-child(even) > th,
+#properties > tbody > tr:nth-child(even) > th {
+  background-color: #f9f9f9;
+}
+/* line 94, ../../../sass/phpcr-browser/scaffolding.scss */
+.table-striped > tbody > tr:nth-child(odd) > td, #properties > tbody > tr:nth-child(odd) > td,
+.table-striped > tbody > tr:nth-child(odd) > th,
+#properties > tbody > tr:nth-child(odd) > th {
+  background-color: #fff;
+}
+
 /* line 2, ../../../sass/phpcr-browser/tables.scss */
 table thead {
   border-top: 1px solid #dee3ea;

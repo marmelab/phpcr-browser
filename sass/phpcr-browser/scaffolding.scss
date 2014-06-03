@@ -80,3 +80,19 @@ a {
 .container-padding-top {
   padding-top: 10px;
 }
+
+.table-striped {
+  > tbody > tr:nth-child(even) {
+    > td,
+    > th {
+      background-color: $table-bg-accent;
+    }
+  }
+
+  > tbody > tr:nth-child(odd) {
+    > td,
+    > th {
+      background-color: #fff;
+    }
+  }
+}
