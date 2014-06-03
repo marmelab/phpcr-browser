@@ -66,5 +66,13 @@ define([
       expect($scope.richTree).toEqual({});
       expect(loaded).toBe(true);
     });
+
+    it('should init $scope.displayTree to false and update it when tree.toggle event is broadcasted', function() {
+      expect($scope.displayTree).toBe(false);
+      $rootScope.$broadcast('tree.toggle');
+      expect($scope.displayTree).toBe(true);
+      $rootScope.$broadcast('tree.toggle');
+      expect($scope.displayTree).toBe(false);
+    });
   });
 });
