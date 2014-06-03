@@ -12,8 +12,7 @@ define([
    * Tree display a tree of nodes.
    */
   app.directive('mbTree', ['$log', '$location', '$q', '$translate', function($log, $location, $q, $translate) {
-    var scrollTop,
-        deleteNode;
+    var deleteNode;
 
     return {
       restrict: 'E',
@@ -25,13 +24,9 @@ define([
       },
       templateUrl: '/assets/js/browser/directives/templates/tree.html',
       controller: ['$scope', function($scope) {
-        $scope.$on('node.open.start', function(){
-          scrollTop = $('.scrollable-tree').scrollTop();
-        });
-
         $scope.$on('node.open.success', function(event, repositoryName, workspaceName, nodePath){
           $scope.toggleNode(nodePath).then(function() {
-            $('.scrollable-tree').scrollTop(scrollTop);
+
           });
         });
 
@@ -80,6 +75,9 @@ define([
           return scope.richTree.getTree().find(path).then(function(node) {
             return scope.richTree.getTree().refresh(path, { collapsed: !node.collapsed} );
           }).then(function(node) {
+            if (node.collapsed) {
+              node.displayCreateForm = false;
+            }
             return node;
           });
         };

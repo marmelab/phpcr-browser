@@ -21,8 +21,7 @@ define([
       });
 
       $scope.$on('tree.toggle', function() {
-        $('#sidebar').toggleClass('active');
-        // $scope.displayTree = !$scope.displayTree;
+        $scope.displayTree = !$scope.displayTree;
       });
 
       $scope.delete = function(element) {
