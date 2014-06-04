@@ -12,7 +12,6 @@ test:
 
 install:
 	composer install --no-interaction
-	npm install
 	bower install --config.interactive=false
 ifneq ($(autoconfig), false)
 	cp config/prod.yml-dist config/prod.yml
@@ -28,6 +27,14 @@ ifneq ($(autoconfig), false)
 endif
 	cp web/assets/js/browser/config.js-dist web/assets/js/browser/config.js
 	gaudi
+
+update:
+	git pull
+	make install autoconfig=false
+
+update-gaudi:
+	git pull
+	make install-gaudi autoconfig=false
 
 install-test:
 	npm install
