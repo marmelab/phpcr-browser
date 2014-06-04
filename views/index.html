@@ -34,7 +34,7 @@
         <a class="navbar-brand" href="#/">
          phpcr-browser
         </a>
-        <a class="tree-toggle visible-xs" ng-show="isWorkspaceState()" ng-class="{ active: treeIsDisplayed }" ng-click="broadcast('_tree.toggle'); treeIsDisplayed = !treeIsDisplayed">
+        <a class="tree-toggle visible-xs" ng-if="isWorkspaceState" ng-class="{ active: treeIsDisplayed }" ng-click="broadcast('_tree.toggle'); treeIsDisplayed = !treeIsDisplayed">
           <span ng-show="!treeIsDisplayed" class="fa fa-indent"></span>
           <span ng-show="treeIsDisplayed" class="fa fa-dedent"></span>
         </a>

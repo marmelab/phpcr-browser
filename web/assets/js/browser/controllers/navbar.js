@@ -12,10 +12,7 @@ define([
   app.controller('mbNavbarCtrl', ['$scope', '$translate', '$state', 'mbMenu', function($scope, $translate, $state, mbMenu) {
 
     $scope.treeIsDisplayed = false;
-
-    $scope.isWorkspaceState = function() {
-      return $state.current.name === 'workspace';
-    };
+    $scope.isWorkspaceState = false;
 
     $scope.isPreferredLanguage = function(key) {
       return $translate.use() === key;
@@ -35,6 +32,12 @@ define([
 
     $scope.$watch('search', function(value) {
       $scope.$emit('_search.change', value);
+    });
+
+    $scope.$watch(function() {
+      return $state.current.name;
+    }, function(name) {
+      $scope.isWorkspaceState = name === 'node';
     });
   }]);
 });
