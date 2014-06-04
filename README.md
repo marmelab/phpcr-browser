@@ -40,7 +40,7 @@ To install the web application with the default configuration (see below), run t
 make install
 ```
 
-This will download all dependencies and do the [Configuration](#Configuration) part for you. If you prefer do it on your own run:
+This will download all dependencies and do the [Configuration](#configuration) part for you. If you prefer do it on your own run:
 
 ```sh
 make install autoconfig=false
@@ -126,7 +126,7 @@ Copy also the angular app config dist file :
 cp web/assets/js/browser/config.js-dist web/assets/js/browser/config.js
 ```
 
-For using Jackalope Doctrine DBAL refer to [Installation](#Installation).
+For using Jackalope Doctrine DBAL refer to [Installation](#installation).
 
 Usage
 -----
