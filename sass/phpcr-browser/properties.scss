@@ -6,10 +6,11 @@
   @extend .table;
   @extend .table-striped;
   @extend .table-hover;
-
+  background-color: #fff;
   border: 1px solid #dddddd;
   border-left: none;
-  margin-bottom: $scrollable-margin-top;
+  margin-bottom: $content-toolbar-height + $dropper-height;
+  margin-top: $content-toolbar-height;
 
   thead {
     tr {
@@ -122,18 +123,23 @@
 @include table-row-variant('property-form', #ddd);
 
 #properties-header {
-  height: 37px;
-  line-height: 37px;
+  height: $content-toolbar-height;
+  line-height: $content-toolbar-height;
   background-color: #eee;
   border-left: 1px solid #ddd;
   border-bottom: 1px solid #ddd;
   border-left: none;
   overflow: hidden;
+  position: fixed;
+  width: 100%;
+  z-index: 999;
+
   .breadcrumb {
+    position: fixed;
     padding: 0;
     padding-left: 10px;
     font-size: 10pt;
-    line-height: 37px;
+    line-height: $content-toolbar-height;
     margin: 0;
     white-space: nowrap;
     overflow: hidden;

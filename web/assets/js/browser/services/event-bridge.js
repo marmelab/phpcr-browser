@@ -33,13 +33,20 @@ define([
     });
 
     /**
+     * Forward search query
+     */
+    $rootScope.$on('_tree.toggle', function(e, value) {
+      $rootScope.$broadcast('tree.toggle', value);
+    });
+
+    /**
      * Broadcast repository.open.success, workspace.open.success, node.open.success events
      */
     $rootScope.$on('$stateChangeSuccess', function(evt, toState, toParams, fromState, fromParams){
-      if (toState.name === 'workspace' && fromState.name !== 'workspace') {
+      if (toState.parent === 'workspace' && fromState.parent !== 'workspace') {
         // open a workspace coming from repositories ou repository route
         $rootScope.$broadcast('workspace.open.success', toParams.repository, toParams.workspace);
-      } else if(toState.name === 'workspace' && toState.name === fromState.name &&
+      } else if(toState.parent === 'workspace' && toState.name === fromState.name &&
         (toParams.repository !== fromParams.repository ||
         toParams.workspace !== fromParams.workspace)) {
         // open a workspace coming from another workspace
@@ -50,7 +57,7 @@ define([
         // open a repository
         $rootScope.$broadcast('repository.open.success', toParams.repository, toParams.workspace);
       } else if(toState.name === fromState.name &&
-        toState.name === 'workspace' &&
+        toState.name === 'node' &&
         toParams.repository === fromParams.repository &&
         toParams.workspace === fromParams.workspace &&
         toParams.path !== fromParams.path) {
@@ -63,10 +70,10 @@ define([
      * Broadcast repository.open.start, workspace.open.start, node.open.start events
      */
     $rootScope.$on('$stateChangeStart', function(evt, toState, toParams, fromState, fromParams){
-      if (toState.name === 'workspace' && fromState.name !== 'workspace') {
+      if (toState.parent === 'workspace' && fromState.parent !== 'workspace') {
         // open a workspace coming from repositories ou repository route
         $rootScope.$broadcast('workspace.open.start', toParams.repository, toParams.workspace);
-      } else if(toState.name === 'workspace' && toState.name === fromState.name &&
+      } else if(toState.parent === 'workspace' && toState.name === fromState.name &&
         (toParams.repository !== fromParams.repository ||
         toParams.workspace !== fromParams.workspace)) {
         // open a workspace coming from another workspace
@@ -77,7 +84,7 @@ define([
         // open a repository
         $rootScope.$broadcast('repository.open.start', toParams.repository, toParams.workspace);
       } else if(toState.name === fromState.name &&
-        toState.name === 'workspace' &&
+        toState.name === 'node' &&
         toParams.repository === fromParams.repository &&
         toParams.workspace === fromParams.workspace &&
         toParams.path !== fromParams.path) {

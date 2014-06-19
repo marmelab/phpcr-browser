@@ -2,7 +2,7 @@
 @import "bootstrap/mixins";
 
 body {
-  padding-top: $navbar-height + 10;
+  padding-top: $navbar-height;
 }
 
 @font-face {
@@ -20,44 +20,63 @@ a {
     cursor: pointer;
 }
 
-.scrollabe {
-  overflow: scroll;
-  height: 100%;
-  position: absolute;
-  top:0;
+@media (min-width: 768px) {
+  #sidebar {
+    @include make-sm-column(4);
+    @include make-md-column(3);
+    @include make-lg-column(3);
+    display: block;
+    overflow-x: auto;
+    overflow-y: auto;
+    position: fixed;
+    top: $navbar-height;
+    left: 0;
+    bottom: 50px;
+    z-index: 1000;
+    border-right: 1px solid #ddd;
+    padding-top: 5px;
+  }
 }
 
-.scrollable-tree {
-  padding-top: 10px;
-  padding-bottom: 10px;
-  top: 0;
-  width: 95%;
-}
 
+@media (max-width: 767px) {
+  #sidebar {
+    width: 300px;
+    display: none;
+    overflow-x: auto;
+    overflow-y: auto;
+    position: fixed;
+    top: $navbar-height;
+    left: 0;
+    bottom: 50px;
+    z-index: 1000;
+    border-right: 1px solid #ddd;
+    padding-top: 5px;
+    background-color: $body-bg;
+    padding-left: 5px;
 
-#sidebar {
-  @include make-sm-column(3);
-  overflow: hidden;
-  position: fixed;
-  top: $navbar-height;
-  left: 0;
-  bottom: 50px;
-  border-right: 1px solid #ddd;
+    &.active {
+      display: block;
+    }
+  }
 }
 
 #content {
-  @include make-sm-column(9);
-  position: fixed;
-  top: $navbar-height;
+  @include make-sm-column(8);
+  @include make-md-column(9);
+  @include make-lg-column(9);
+  @include make-sm-column-offset(4);
+  @include make-md-column-offset(3);
+  @include make-lg-column-offset(3);
+  overflow-x: hidden;
+  overflow-y: auto;
   right: 0;
-  bottom: 50px;
   max-height: 100%;
-  background-color: #ffffff;
+  background-color: transparent;
   padding: 0;
+  height: 100%;
+}
 
-  .scrollable {
-    margin-top: $scrollable-margin-top;
-    left: 0;
-    right: 0;
-  }
+.container-padding-top {
+  padding-top: 10px;
 }

@@ -71,10 +71,10 @@ define([
       }],
 
       /**
-       * Workspaces menu link builder
+       * Node menu link builder
        * @param  {Function} callback
        */
-      workspace: ['repository', function(callback) {
+      'node': ['repository', function(callback) {
         var workspace = $rootScope.currentNode.getWorkspace();
         var link = {
           label: workspace.getName(),
@@ -102,7 +102,7 @@ define([
     return {
       getRepositoriesBuilder: callbackFactory('repositories'),
       getRepositoryBuilder: callbackFactory('repository'),
-      getWorkspaceBuilder: callbackFactory('workspace'),
+      getNodeBuilder: callbackFactory('node'),
     };
   }]);
 });

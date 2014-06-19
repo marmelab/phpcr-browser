@@ -80,7 +80,14 @@ define([
         controller : 'mbRepositoryCtrl'
       })
       .state('workspace', {
-        url: '/:repository/:workspace{path:(?:/.*)?}',
+        url: '/:repository/:workspace',
+        templateUrl: '/assets/js/browser/views/workspace.html',
+        abstract: true,
+        controller: 'mbWorkspaceCtrl'
+      })
+      .state('node', {
+        url: '{path:(?:/.*)?}',
+        parent: 'workspace',
         resolve: {
           node: ['$rootScope', '$q', '$stateParams', 'mbObjectMapper', 'mbTreeCache', function($rootScope, $q, $stateParams, ObjectMapper, TreeCache) {
             var path = ($stateParams.path) ? $stateParams.path : '/',
@@ -105,8 +112,8 @@ define([
             });
           }]
         },
-        templateUrl: '/assets/js/browser/views/workspace.html',
-        controller: 'mbWorkspaceCtrl'
+        templateUrl: '/assets/js/browser/views/workspace/properties.html',
+        controller: 'mbPropertiesCtrl'
       });
 
     $translateProvider
@@ -185,6 +192,6 @@ define([
 
     Menu.appendBuilder(MenuBuilderFactory.getRepositoriesBuilder());
     Menu.appendBuilder(MenuBuilderFactory.getRepositoryBuilder());
-    Menu.appendBuilder(MenuBuilderFactory.getWorkspaceBuilder());
+    Menu.appendBuilder(MenuBuilderFactory.getNodeBuilder());
   }]);
 });

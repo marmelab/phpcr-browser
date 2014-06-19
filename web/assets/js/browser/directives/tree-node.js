@@ -30,10 +30,10 @@ define([
          */
         $scope.openNode = function(node) {
           var target = '/' + $scope.repository.getName() + '/' + $scope.workspace.getName() + node.path;
+          $scope.toggleNode(node.path);
           if (target !== $location.path()) {
             return $location.path('/' + $scope.repository.getName() + '/' + $scope.workspace.getName() + node.path);
           }
-          $scope.toggleNode(node.path);
         };
 
         /**
@@ -41,6 +41,11 @@ define([
          * @param  {object} node
          */
         $scope.toggleCreateForm = function(node) {
+          if (node.collapsed && node.hasChildren) {
+            return $scope.toggleNode(node.path).then(function() {
+              node.displayCreateForm = !node.displayCreateForm;
+            });
+          }
           node.displayCreateForm = !node.displayCreateForm;
         };
 

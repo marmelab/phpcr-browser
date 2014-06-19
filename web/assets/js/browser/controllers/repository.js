@@ -8,7 +8,7 @@ define([
 ], function(app) {
   'use strict';
 
-  app.controller('mbRepositoryCtrl', ['$scope', '$log', '$location', '$translate', 'mbWorkspaceFactory', 'repository',
+  app.controller('mbRepositoryCtrl', ['$scope', '$log', '$location', '$translate', 'mbWorkspaceFactory',
     function($scope, $log, $location, $translate, WorkspaceFactory) {
       $scope.displayCreateForm = false;
 
@@ -55,7 +55,7 @@ define([
 
       $scope.createWorkspace = function(workspaceName) {
         if (!$scope.repository.supports('workspace.create')) {
-          return $translate('WORKSPACE_NOT_SUPPORT_DELETE').then($log.error, $log.error);
+          return $translate('WORKSPACE_NOT_SUPPORT_CREATE').then($log.error, $log.error);
         }
 
         if (!workspaceName || workspaceName.trim().length === 0) {

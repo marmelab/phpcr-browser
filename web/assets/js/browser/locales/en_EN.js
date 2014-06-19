@@ -16,6 +16,8 @@ define([], function() {
     'SUCCESS': 'Success',
     'NOTE': 'Information',
     'WARNING': 'Warning',
+    'SETTINGS': 'Settings',
+    'CHANGE_LANGUAGE': 'Change language',
     'RESOURCE_LOCKED': 'The resource is locked',
     'REPOSITORY_PANEL_BOX_TITLE': 'Repository',
     'WORKSPACE_PANEL_BOX_TITLE': 'Workspace',
@@ -46,6 +48,7 @@ define([], function() {
     'WORKSPACE_DELETE_SUCCESS': 'Workspace deleted',
     'WORKSPACE_CREATE_SUCCESS': 'Workspace created',
     'WORKSPACE_CREATE_NAME_EMPTY': 'Name is empty',
-    'WORKSPACE_NOT_SUPPORT_DELETE': 'This repository does not support workspace creation.'
+    'WORKSPACE_NOT_SUPPORT_DELETE': 'This repository does not support workspace deletion.',
+    'WORKSPACE_NOT_SUPPORT_CREATE': 'This repository does not support workspace creation.'
   };
 });
