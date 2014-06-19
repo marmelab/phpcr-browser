@@ -1,0 +1,15 @@
+phpcr_repositories:
+    'My Jackrabbit Repository':
+        factory: jackalope.jackrabbit
+        parameters:
+            jackalope.jackrabbit_uri: 'http://localhost:8080/server'
+            credentials.username: admin
+            credentials.password: admin
+    'My Doctrine DBAL Repository':
+        factory: jackalope.doctrine-dbal
+        parameters:
+            doctrine_dbal.config:
+                driver: pdo_sqlite
+                path: ../src/app.db
+            credentials.username: admin
+            credentials.password: admin
