@@ -11,7 +11,7 @@
         "twig/twig": "~1.15",
         "symfony/twig-bridge": "~2.4",
         "igorw/config-service-provider": "~1.2",
-        "marmelab/phpcr-api-silex-provider": "1.1.*",
+        "marmelab/phpcr-api-silex-provider": "2.0.*",
         "jackalope/jackalope-jackrabbit": "1.1.*"
     },
     "require-dev": {

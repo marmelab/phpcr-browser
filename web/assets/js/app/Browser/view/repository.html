@@ -1,0 +1,31 @@
+<div class="container-padding-top">
+    <div class="col-lg-12" style="padding-bottom: 40px;">
+        <div class="col-sm-2" ng-repeat="(key, workspace) in workspaces track by $index" draggable="{{ repositoryController.repository.supports('workspace.delete') }}" id="{{ workspace.slug }}" ng-if="workspace">
+            <div class="panel panel-box workspace" ng-click="repositoryController.openWorkspace(workspace)">
+                <div class="panel-heading">
+                    {{ 'WORKSPACE_PANEL_BOX_TITLE' | translate }}
+                </div>
+                <div class="panel-body">
+                    <p class="lead text-center">
+                        {{ workspace.name }}
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-2" ng-if="repositoryController.repository.supportedOperations.indexOf('workspace.create') !== -1">
+            <div class="panel panel-box new">
+                <div class="panel-body">
+                    <p class="lead text-center" ng-click="repositoryController.showCreateForm()" ng-hide="repositoryController.displayCreateForm">
+                        {{ 'WORKSPACE_CREATE_PROMPT' | translate }}
+                    </p>
+                    <form ng-submit="repositoryController.createWorkspace(repositoryController.workspaceName)" ng-if="repositoryController.displayCreateForm">
+                        <p class="text-center">
+                            <input type="text" ng-model="repositoryController.workspaceName" focus-me="repositoryController.displayCreateForm" class="form-control workspace-input" placeholder="{{ 'WORKSPACE_CREATE_NAME_PROMPT' | translate }}" ui-keydown="{esc: 'repositoryController.hideCreateForm()'}"/>
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <dropper ng-if="repositoryController.repository.supportedOperations.indexOf('workspace.delete') !== -1"></dropper>
+    </div>
+</div>

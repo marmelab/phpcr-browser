@@ -1,91 +1,29 @@
 {% raw %}
 <!DOCTYPE html>
-<html ng-app="browserApp" lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="">
+        <meta name="author" content="">
 
-    <title>phpcr browser</title>
-    <link rel="shortcut icon" href="/favicon.ico?v=2" />
-    <!-- Bootstrap core CSS -->
-    <link href="/bower_components/AngularJS-Toaster/toaster.css" rel="stylesheet">
-    <link href="/bower_components/angular-xeditable/dist/css/xeditable.css"></link>
-    <link href="/assets/css/screen.css" rel="stylesheet">
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script src="/bower_components/html5shiv/dist/html5shiv.js"></script>
-      <script src="/bower_components/respond/dest/respond.min.js"></script>
-    <![endif]-->
-  </head>
+        <title>phpcr browser</title>
+        <link rel="shortcut icon" href="/favicon.ico?v=2" />
+        <!-- Bootstrap core CSS -->
+        <link href="/assets/bower_components/AngularJS-Toaster/toaster.css" rel="stylesheet">
+        <link href="/assets/bower_components/angular-xeditable/dist/css/xeditable.css"></link>
+        <link href="/assets/css/screen.css" rel="stylesheet">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+          <script src="/bower_components/html5shiv/dist/html5shiv.js"></script>
+          <script src="/bower_components/respond/dest/respond.min.js"></script>
+        <![endif]-->
+        <script data-main="/assets/js/app" src="/assets/bower_components/requirejs/require.js"></script>
+    </head>
 
-  <body>
-    <mb-overlay text="{{ 'LOADING' | translate }}" show-on="_browser.load" hide-on="_browser.loaded"></mb-overlay>
-    <div class="navbar navbar-default navbar-fixed-top" role="navigation" ng-controller="mbNavbarCtrl">
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-          <span class="sr-only">{{ 'TOGGLE_NAV' | translate }}</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" href="#/">
-         phpcr-browser
-        </a>
-        <a class="tree-toggle visible-xs" ng-if="isWorkspaceState" ng-class="{ active: treeIsDisplayed }" ng-click="broadcast('_tree.toggle'); treeIsDisplayed = !treeIsDisplayed">
-          <span ng-show="!treeIsDisplayed" class="fa fa-indent"></span>
-          <span ng-show="treeIsDisplayed" class="fa fa-dedent"></span>
-        </a>
-      </div>
-      <div class="navbar-collapse collapse">
-        <ul class="nav navbar-nav">
-          <li mb-navbar-item mb-link="menu.repositories" ng-class="menu.repositories.class"></li>
-          <li mb-navbar-item mb-link="menu.repository" ng-class="menu.repository.class"></li>
-          <li mb-navbar-item mb-link="menu.node" ng-class="menu.node.class"></li>
-        </ul>
-        <ul class="nav navbar-nav navbar-right">
-          <li class="dropdown">
-            <a class="dropdown-toggle" data-toggle="dropdown" class="settings">
-              <span class="hidden-xs fa fa-gears"></span>
-              <span class="visible-xs"> {{ 'SETTINGS' | translate }}</span>
-            </a>
-            <ul class="dropdown-menu">
-              <li class="dropdown-header">{{ 'CHANGE_LANGUAGE' | translate }}</li>
-              <li>
-                <a ng-click="changeLanguage('en')">
-                  <span class="glyphicon glyphicon-ok pull-right" ng-show="isPreferredLanguage('en')"></span>
-                  English
-                </a>
-              </li>
-              <li>
-                <a ng-click="changeLanguage('fr')">
-                  <span class="glyphicon glyphicon-ok pull-right" ng-show="isPreferredLanguage('fr')"></span>
-                  Français
-                </a>
-              </li>
-            </ul>
-          </li>
-          <li>
-            <a href="https://github.com/marmelab/phpcr-browser" title="{{ 'GITHUB' | translate }}" class="github">
-              <span class="fa fa-github"></span>
-            </a>
-          </li>
-        </ul>
-        <form class="navbar-form navbar-right" id="search" role="search">
-          <div class="form-group has-feedback">
-            <input type="text" class="form-control" placeholder="{{ 'SEARCH_PROMPT' | translate }}" ng-model="search">
-            <span class="glyphicon glyphicon-search form-control-feedback"></span>
-          </div>
-        </form>
-      </div><!--/.nav-collapse -->
-    </div>
-
-    <toaster-container toaster-options="{'position-class': 'toast-bottom-right'}"> </toaster-container>
-    <div ui-view class="container-fluid"></div>
-
-    <script data-main="/assets/js/main" src="/bower_components/requirejs/require.js"></script>
-  </body>
+    <body>
+        <div ui-view></div>
+    </body>
 </html>
 {% endraw %}

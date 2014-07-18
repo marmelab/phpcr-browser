@@ -1,0 +1,25 @@
+<li ng-class="{ collapsed: tree.collapsed, active: tree.active }">
+    <span class="glyphicon glyphicon-refresh"
+        ng-if="tree.pending"
+    >
+    </span>
+    <span class="glyphicon glyphicon-folder-close"
+        ng-click="treeChildViewController.toggleCollapsed($event, tree)"
+        ng-show="tree.hasChildren && tree.collapsed && !tree.pending"
+    >
+    </span>
+    <span class="glyphicon glyphicon-folder-open"
+        ng-click="treeChildViewController.toggleCollapsed($event, tree)"
+        ng-show="tree.hasChildren && !tree.collapsed && !tree.pending"
+    >
+    </span>
+    <span class="glyphicon glyphicon-file"
+        ng-show="!(tree.hasChildren || tree.pending)"
+    >
+    </span>
+    <a href class="name" ng-click="treeChildViewController.toggleCollapsed($event, tree)">
+        <span ng-if="!(!tree._parent.name && tree._parent.children.length === 1)">{{ tree.name }}</span>
+        <span ng-if="!tree._parent.name && tree._parent.children.length === 1">/</span>
+    </a>
+    <tree-view ng-if="!tree.collapsed && tree.children.length > 0" tree="tree"></tree-view>
+</li>

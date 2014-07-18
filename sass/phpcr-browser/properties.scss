@@ -70,14 +70,15 @@
       width: 30px;
       text-align: center;
       vertical-align: middle;
-      .fa {
+      font-size: 12px;
+      .glyphicon {
         visibility: hidden;
       }
     }
 
     &:hover {
       td:first-child {
-        .fa {
+        .glyphicon {
           visibility: visible;
         }
       }

@@ -1,0 +1,30 @@
+{
+    "api": {
+      "server": "/index.php/api",
+      "prefixes": {
+        "repositories": "repositories",
+        "workspaces": "workspaces",
+        "nodes": "nodes"
+      }
+    },
+
+    "node": {
+      "property": {
+        "types": [
+          { "name": "undefined",     "value": 0},
+          { "name": "String",        "value": 1},
+          { "name": "Binary",        "value": 2},
+          { "name": "Long",          "value": 3},
+          { "name": "Double",        "value": 4},
+          { "name": "Date",          "value": 5},
+          { "name": "Boolean",       "value": 6},
+          { "name": "Name",          "value": 7},
+          { "name": "Path",          "value": 8},
+          { "name": "Reference",     "value": 9},
+          { "name": "WeakReference", "value": 10},
+          { "name": "URI",           "value": 11},
+          { "name": "Decimal",       "value": 12}
+        ]
+      }
+    }
+}

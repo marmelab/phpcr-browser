@@ -1,0 +1,88 @@
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" ng-click="navbarController.toggleCollapsed()" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="sr-only">{{ 'TOGGLE_NAV' | translate }}</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#/">
+         phpcr-browser
+        </a>
+        <a class="tree-toggle visible-xs" ng-if="isWorkspaceState" ng-class="{ active: treeIsDisplayed }" ng-click="broadcast('_tree.toggle'); treeIsDisplayed = !treeIsDisplayed">
+          <span ng-show="!treeIsDisplayed" class="fa fa-indent"></span>
+          <span ng-show="treeIsDisplayed" class="fa fa-dedent"></span>
+        </a>
+    </div>
+    <div collapse="navbarController.navbarCollapsed" class="navbar-collapse collapse">
+        <ul class="nav navbar-nav">
+            <li class="dropdown" ng-if="menu.repositories">
+                <a class="dropdown-toggle" data-toggle="dropdown">
+                  {{ 'MENU_REPOSITORIES' | translate }}
+                </a>
+                <ul class="dropdown-menu">
+                    <li ng-repeat="repository in menu.repositories"
+                        ng-class="{ active: repository.name === $state.params.repository }"
+                    >
+                        <a ui-sref="repository({ repository: repository.name })">
+                            {{ repository.name }}
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="dropdown" ng-if="menu.workspaces">
+                <a class="dropdown-toggle" data-toggle="dropdown">
+                  {{ $state.params.repository }}
+                </a>
+                <ul class="dropdown-menu">
+                    <li ng-repeat="workspace in menu.workspaces"
+                        ng-class="{ active: workspace.name === $state.params.workspace }"
+                    >
+                        <a ui-sref="node({ repository: workspace.getRepository().name, workspace: workspace.name })">
+                            {{ workspace.name }}
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li ng-if="menu.workspace">
+                <a ui-sref="node({ repository: $state.params.repository, workspace: $state.params.workspace, path: '/' })">
+                  {{ menu.workspace }}
+                </a>
+            </li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" class="settings">
+                  <span class="hidden-xs fa fa-gears"></span>
+                  <span class="visible-xs"> {{ 'SETTINGS' | translate }}</span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li class="dropdown-header">{{ 'CHANGE_LANGUAGE' | translate }}</li>
+                    <li>
+                        <a ng-click="$translate.use('en')">
+                            <span class="glyphicon glyphicon-ok pull-right" ng-if="$translate.use() === 'en'"></span>
+                            English
+                        </a>
+                    </li>
+                    <li>
+                        <a ng-click="$translate.use('fr')">
+                            <span class="glyphicon glyphicon-ok pull-right" ng-if="$translate.use() === 'fr'"></span>
+                            Français
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="https://github.com/marmelab/phpcr-browser" title="{{ 'GITHUB' | translate }}" class="github">
+                    <span class="fa fa-github"></span>
+                </a>
+          </li>
+        </ul>
+        <form class="navbar-form navbar-right" id="search" role="search">
+            <div class="form-group has-feedback">
+                <input type="text" class="form-control" placeholder="{{ 'SEARCH_PROMPT' | translate }}" ng-model="search">
+                <span class="glyphicon glyphicon-search form-control-feedback"></span>
+            </div>
+        </form>
+    </div><!--/.nav-collapse -->
+</div>

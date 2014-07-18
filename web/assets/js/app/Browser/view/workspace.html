@@ -1,0 +1,11 @@
+<div class="row">
+    <div id="sidebar">
+        <tree-view id="tree"
+            tree="tree"
+            tree-click="workspaceController.treeClick(tree)"
+            ng-if="tree"
+        ></tree-view>
+    </div>
+    <div id="content" ui-view></div>
+    <trash drop=""></trash>
+</div>

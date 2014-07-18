@@ -1,4 +1,4 @@
-web/bower_components/
+web/assets/bower_components/
 node_modules/
 vendor/
 config/dev.yml

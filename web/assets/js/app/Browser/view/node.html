@@ -1,0 +1,52 @@
+<div id="properties-header">
+    <div class="col-sm-10">
+        <ol class="breadcrumb">
+            <li>
+                <a href="#/{{ node.getWorkspace().getRepository().name }}/{{ node.getWorkspace().name }}">
+                    {{ 'TREE_ROOT_NODE_NAME' | translate }}
+                </a>
+            </li>
+            <li
+              ng-repeat="(key, n) in node.path.split('/') track by $index"
+              ng-if="n.length > 0">
+                <a  ui-sref="node({ repository: node.getWorkspace().getRepository().name, workspace: node.getWorkspace().name, path: node.path.split('/').slice(0, key + 1).join('/') })"
+                    ng-if="node.path.split('/').slice(0, key + 1).join('/') !== node.path">
+                    {{ n }}
+                </a>
+                <span ng-if="node.path.split('/').slice(0, key + 1).join('/') === node.path">
+                    {{ n }}
+                </a>
+            </li>
+        </ol>
+    </div>
+    <div class="col-sm-2">
+        <div class="toolbar text-right">
+            <a class="btn btn-primary btn-sm" ng-show="!displayCreateForm" ng-class="{ active: displayCreateForm }" ng-click="toggleCreateForm()">
+                <span class="glyphicon glyphicon-plus"></span>
+                {{ 'NODE_ADD_PROPERTY_BUTTON' | translate }}
+            </a>
+            <a class="btn btn-default btn-sm validate" ng-click="toggleCreateForm()" ng-show="displayCreateForm">
+                <span class="glyphicon glyphicon-remove"></span>  {{ 'NODE_ADD_PROPERTY_CANCEL_BUTTON' | translate }}
+            </a>
+            <a class="btn btn-primary btn-sm validate" ng-click="createProperty(newProperty.name, newProperty.value, newProperty.type.value)" ng-show="displayCreateForm">
+                <span class="glyphicon glyphicon-ok"></span> {{ 'NODE_ADD_PROPERTY_SAVE_BUTTON' | translate }}
+            </a>
+        </div>
+    </div>
+</div>
+<table id="properties">
+    <tbody>
+        <tr class="property-item" ng-repeat="property in properties" draggable>
+            <td>
+                <span class="glyphicon glyphicon-th" title="{{ 'NODE_DRAG_PROPERTY_PROMPT' | translate }}"></span>
+            </td>
+            <td>
+                <span class="text-primary">{{ property.name }}</span>
+            </td>
+            <td>{{ property.value }}</td>
+            <td>
+                <small>{{ property.type }}</small>
+            </td>
+        </tr>
+    </tbody>
+</table>
