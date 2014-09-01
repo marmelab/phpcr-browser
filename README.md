@@ -92,7 +92,7 @@ Update
 If you want to retrieve the latest version of the browser, run the following commands:
 
 ```
-make udpate
+make update
 ```
 
 Or if it is running with [gaudi](http://gaudi.io) run:
