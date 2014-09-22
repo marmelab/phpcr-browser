@@ -7,6 +7,7 @@ define(
         'app/Browser/component/controller/WorkspaceController',
         'app/Browser/component/controller/NodeController',
 
+        'app/Browser/component/directive/Focus',
         'app/Browser/component/directive/Trash',
 
         'app/Browser/component/filter/Fuzzy',
@@ -24,6 +25,7 @@ define(
         WorkspaceController,
         NodeController,
 
+        Focus,
         Trash,
 
         Fuzzy,
@@ -43,6 +45,7 @@ define(
         BrowserModule.controller('WorkspaceController', WorkspaceController);
         BrowserModule.controller('NodeController', NodeController);
 
+        BrowserModule.directive('focus', Focus);
         BrowserModule.directive('trash', Trash);
 
         BrowserModule.filter('$fuzzy', Fuzzy);

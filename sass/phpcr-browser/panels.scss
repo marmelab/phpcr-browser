@@ -7,59 +7,39 @@
   &.panel-box {
     cursor: pointer!important;
     @extend .panel-default;
+    border-top: 3px solid #f18a66;
 
     &:hover {
       @extend .panel-primary;
-    }
-
-    &.repository {
-      height: 110px;
-
-      .panel-body {
-        height: 90px;
-        overflow: auto;
+      .mega-octicon {
+        color: #f18a66;
+        opacity: 0.7;
       }
-    }
-
-    &.workspace {
-      height: 80px;
-
-      .panel-body {
-        height: 60px;
-        overflow: auto;
-      }
-    }
-
-    .panel-heading {
-      height: 20px;
-      text-align: center;
-      font-size: 10pt;
-      padding: 1px;
     }
 
     .panel-body {
       position: relative;
-      text-align: center;
+      text-align: left;
       margin: auto;
       p.lead {
-        margin: 0;
+        margin-bottom: 10px;
+      }
+
+      .mega-octicon {
+        opacity: 0.1;
+        float: right;
       }
     }
 
-    .panel-footer {
-      padding: 0!important;
-    }
-
     &.new {
-      opacity: 0.7;
-      border-style: dotted;
-      border-width: 2px;
-      padding-top: 9px;
-      padding-bottom: 9px;
-      min-height: 80px;
-      line-height: 80px;
+      opacity: 0.4;
+
       .panel-body {
-          padding: 0px 7px;
+        background-color: transparent;
+      }
+
+      &:hover, &.focused {
+        opacity: 1.0;
       }
     }
   }

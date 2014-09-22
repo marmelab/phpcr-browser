@@ -1,21 +1,17 @@
 define([], function () {
     "use strict";
 
-    function loadRequestAnimationFrame($rootScope, $log, $translate) {
+    function loadRequestAnimationFrame($rootScope, $log, $notification) {
         $rootScope.$on('$stateChangeError', function(evt, toState, toParams, fromState, fromParams, err) {
             if (err.data && err.data.message) {
-                return $log.error(err, err.data.message);
+                return $notification.error(err.data.message);
             }
-            console.log(err);
-            $translate('ERROR_RETRY', function(translation) {console.log(translation);
-                $log.error(err, translation);
-            }, function() {
-                $log.error(err);
-            });
+
+            $notification.error('ERROR_RETRY');
         });
     }
 
-    loadRequestAnimationFrame.$inject = ['$rootScope', '$log', '$translate', 'toaster'];
+    loadRequestAnimationFrame.$inject = ['$rootScope', '$log', '$notification'];
 
     return loadRequestAnimationFrame;
 });

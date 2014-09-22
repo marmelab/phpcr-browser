@@ -15,15 +15,15 @@ define([
         this.server = new Server(this.Restangular);
     };
 
-    Graph.prototype.$$findRepository = function(name) {
-        return this.server.getRepository(name);
+    Graph.prototype.$$findRepository = function(name, cache) {
+        return this.server.getRepository(name, cache);
     };
 
-    Graph.prototype.$$findWorkspace = function(repositoryName, name) {
+    Graph.prototype.$$findWorkspace = function(repositoryName, name, cache) {
         return this.server
-            .getRepository(repositoryName)
+            .getRepository(repositoryName, cache)
             .then(function(repository) {
-                return repository.getWorkspace(name);
+                return repository.getWorkspace(name, cache);
             })
         ;
     };
@@ -47,7 +47,7 @@ define([
         params = params || {};
 
         if (!query.repository) {
-            return this.server.getRepositories();
+            return this.server.getRepositories(params.cache);
         }
 
         if (!query.workspace) {
@@ -57,7 +57,8 @@ define([
         if (!query.path) {
             return this.$$findWorkspace(
                 query.repository,
-                query.workspace
+                query.workspace,
+                params.cache
             );
         }
 

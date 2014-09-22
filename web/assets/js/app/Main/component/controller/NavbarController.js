@@ -25,7 +25,7 @@ define([], function () {
         this.$scope.menu = {};
 
         this.$scope.$watch('search', function(value) {
-            self.$search.notify(value);
+            self.$search.notify(value || null);
         });
 
         this.$scope.$on('$destroy', function() {

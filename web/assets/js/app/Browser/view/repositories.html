@@ -2,10 +2,8 @@
     <div class="col-lg-12">
         <div class="col-sm-3" ng-repeat="(key, repository) in repositories">
             <div class="panel panel-box repository" ng-click="repositoriesController.openRepository(repository)">
-                <div class="panel-heading">
-                    {{ 'REPOSITORY_PANEL_BOX_TITLE' | translate }}
-                </div>
                 <div class="panel-body text-center">
+                    <span class="mega-octicon octicon-database"></span>
                     <p class="lead">{{ repository.name }}</p>
                     <p>{{ repository.factoryName }}</p>
                 </div>

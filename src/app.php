@@ -39,7 +39,7 @@ $app->get('/', function (Application $app) {
 
 $app->get('/browser/', function (Application $app) {
     return $app['twig']->render('index.html');
-})->bind('home');
+});
 
 $app->error(function (\Exception $e) use ($app) {
     return $app['twig']->render(
@@ -50,4 +50,5 @@ $app->error(function (\Exception $e) use ($app) {
         )
     );
 });
+
 return $app;

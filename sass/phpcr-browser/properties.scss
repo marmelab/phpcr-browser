@@ -71,14 +71,14 @@
       text-align: center;
       vertical-align: middle;
       font-size: 12px;
-      .glyphicon {
+      .octicon {
         visibility: hidden;
       }
     }
 
     &:hover {
       td:first-child {
-        .glyphicon {
+        .octicon {
           visibility: visible;
         }
       }
@@ -103,12 +103,12 @@
       td {
         text-align: left!important;
 
-        .glyphicon {
+        .octicon {
           display: none;
         }
 
         &:hover {
-         .glyphicon {
+         .octicon {
             display: inherit;
           }
         }

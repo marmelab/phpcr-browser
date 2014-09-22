@@ -2,9 +2,9 @@ define([
     'text!../view/layout.html',
     'text!../view/navbar.html'
 ], function (layoutTemplate, navbarTemplate) {
-    "use strict";
+    'use strict';
 
-    function routing($stateProvider, $locationProvider) {
+    function routing($stateProvider) {
 
         $stateProvider
             .state('main', {
@@ -22,11 +22,11 @@ define([
                         'template': navbarTemplate
                     }
                 }
-            });
+            })
+        ;
     }
 
-    routing.$inject = ['$stateProvider', '$locationProvider'];
+    routing.$inject = ['$stateProvider'];
 
     return routing;
-
 });

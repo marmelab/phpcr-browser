@@ -8,35 +8,32 @@ define([
      * @param {$scope} $scope
      * @constructor
      */
-    function RepositoryController($scope, $state, $graph, $search, $fuzzyFilter) {
+    function RepositoryController($scope, $state, $graph, $search, $fuzzyFilter, $notification) {
         this.$scope = $scope;
         this.$state = $state;
         this.$graph = $graph;
         this.$search = $search;
         this.$fuzzyFilter = $fuzzyFilter;
+        this.$notification = $notification;
 
         this.$$init();
     }
 
     RepositoryController.prototype.$$init = function() {
         var self = this;
-        this.displayCreateForm = false;
+
+        this.$scope.isWorkspaceCreationFormDisplayed = false;
+        this.$scope.workspaceCreationForm = {
+            name: null
+        };
+
         this.workspaces = {};
-
-        this.$graph.find(this.$state.params).then(function(repository) {
-            return repository.getWorkspaces();
-        }).then(function(workspaces) {
-            angular.forEach(workspaces, function(workspace) {
-                self.workspaces[workspace.name] = workspace;
-            });
-
-            self.$$updateWorkspaces();
-        });
+        this.$$loadWorkspaces();
 
         this.cancelSearchListener = this.$search.registerListener(function(search) {
-            if (search && self.search !== search) {
+            if (self.search !== search) {
                 self.search = search;
-                self.$$updateWorkspaces();
+                self.$$filterWorkspaces();
             }
         });
 
@@ -45,7 +42,22 @@ define([
         });
     };
 
-    RepositoryController.prototype.$$updateWorkspaces = function() {
+    RepositoryController.prototype.$$loadWorkspaces = function(cache) {
+        var self = this;
+
+        this.$graph.find(this.$state.params).then(function(repository) {
+            self.repository = repository;
+            return repository.getWorkspaces(cache);
+        }).then(function(workspaces) {
+            angular.forEach(workspaces, function(workspace) {
+                self.workspaces[workspace.name] = workspace;
+            });
+
+            self.$$filterWorkspaces();
+        });
+    };
+
+    RepositoryController.prototype.$$filterWorkspaces = function() {
         var filteredWorkspaceNames = this.$fuzzyFilter(Object.keys(this.workspaces), this.search),
             workspaces = [],
             self = this;
@@ -65,6 +77,35 @@ define([
         });
     };
 
+    RepositoryController.prototype.showWorkspaceCreationForm = function() {
+        this.$scope.isWorkspaceCreationFormDisplayed = true;
+    };
+
+    RepositoryController.prototype.hideWorkspaceCreationForm = function() {
+        this.$scope.isWorkspaceCreationFormDisplayed = false;
+        this.$scope.workspaceCreationForm.name = null;
+    };
+
+    RepositoryController.prototype.createWorkspace = function() {
+        var self = this;
+
+        if (!this.$scope.workspaceCreationForm.name) {
+            return this.$notification.error('Name is empty');
+        }
+
+        this.repository.createWorkspace(this.$scope.workspaceCreationForm)
+            .then(function() {
+                self.$notification.success('Workspace created');
+            })
+            .then(function() {
+                self.hideWorkspaceCreationForm();
+                self.$$loadWorkspaces(false);
+            }, function(err) {
+                self.$notification.error(err.data.message);
+            })
+        ;
+    };
+
     RepositoryController.prototype.$$destroy = function() {
         this.cancelSearchListener();
 
@@ -73,9 +114,10 @@ define([
         this.$graph = undefined;
         this.$search = undefined;
         this.$fuzzyFilter = undefined;
+        this.$notification = undefined;
     };
 
-    RepositoryController.$inject = ['$scope', '$state', '$graph', '$search', '$fuzzyFilter'];
+    RepositoryController.$inject = ['$scope', '$state', '$graph', '$search', '$fuzzyFilter', '$notification'];
 
     return RepositoryController;
 });

@@ -35,7 +35,7 @@ define([
         this.search = null;
 
         this.cancelSearchListener = this.$search.registerListener(function(search) {
-            if (search && self.search !== search) {
+            if (self.search !== search) {
                 self.search = search;
                 self.$$updateProperties();
             }

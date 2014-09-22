@@ -54,15 +54,6 @@
   border: none;
 }
 
-.github, .settings {
-  @extend .lead;
-  margin-bottom: 0px;
-}
-
-.github {
-  @extend .hidden-xs;
-}
-
 @media (max-width: 767px) {
   .dropdown-header {
     color: $navbar-default-link-color;

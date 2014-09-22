@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /* line 17, ../../../../../../../../Library/Ruby/Gems/2.0.0/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -1684,7 +1685,7 @@ p {
 }
 
 /* line 62, ../../../../../../../../Library/Ruby/Gems/2.0.0/gems/bootstrap-sass-3.2.0.1/assets/stylesheets/bootstrap/_type.scss */
-.lead, .github, .settings {
+.lead {
   margin-bottom: 20px;
   font-size: 16px;
   font-weight: 300;
@@ -1692,7 +1693,7 @@ p {
 }
 @media (min-width: 768px) {
   /* line 62, ../../../../../../../../Library/Ruby/Gems/2.0.0/gems/bootstrap-sass-3.2.0.1/assets/stylesheets/bootstrap/_type.scss */
-  .lead, .github, .settings {
+  .lead {
     font-size: 21px;
   }
 }
@@ -8112,7 +8113,7 @@ button.close {
 
 @media (max-width: 767px) {
   /* line 18, ../../../../../../../../Library/Ruby/Gems/2.0.0/gems/bootstrap-sass-3.2.0.1/assets/stylesheets/bootstrap/mixins/_responsive-visibility.scss */
-  .hidden-xs, #search, .github {
+  .hidden-xs, #search {
     display: none !important;
   }
 }
@@ -8200,6 +8201,1121 @@ button.close {
     display: none !important;
   }
 }
+@font-face {
+  font-family: 'octicons';
+  src: url(/assets/fonts/octicons.eot?#iefix) format("embedded-opentype"), url(/assets/fonts/octicons.woff) format("woff"), url(/assets/fonts/octicons.ttf) format("truetype"), url(/assets/fonts/octicons.svg#octicons) format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* line 13, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon, .mega-octicon {
+  font: normal normal normal 16px/1 octicons;
+  display: inline-block;
+  text-decoration: none;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* line 25, ../../../sass/phpcr-browser/_octicons.scss */
+.mega-octicon {
+  font-size: 32px;
+}
+
+/* line 27, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-alert:before {
+  content: '\f02d';
+}
+
+/*  */
+/* line 28, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-alignment-align:before {
+  content: '\f08a';
+}
+
+/*  */
+/* line 29, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-alignment-aligned-to:before {
+  content: '\f08e';
+}
+
+/*  */
+/* line 30, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-alignment-unalign:before {
+  content: '\f08b';
+}
+
+/*  */
+/* line 31, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-arrow-down:before {
+  content: '\f03f';
+}
+
+/*  */
+/* line 32, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-arrow-left:before {
+  content: '\f040';
+}
+
+/*  */
+/* line 33, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-arrow-right:before {
+  content: '\f03e';
+}
+
+/*  */
+/* line 34, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-arrow-small-down:before {
+  content: '\f0a0';
+}
+
+/*  */
+/* line 35, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-arrow-small-left:before {
+  content: '\f0a1';
+}
+
+/*  */
+/* line 36, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-arrow-small-right:before {
+  content: '\f071';
+}
+
+/*  */
+/* line 37, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-arrow-small-up:before {
+  content: '\f09f';
+}
+
+/*  */
+/* line 38, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-arrow-up:before {
+  content: '\f03d';
+}
+
+/*  */
+/* line 39, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-beer:before {
+  content: '\f069';
+}
+
+/*  */
+/* line 40, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-book:before {
+  content: '\f007';
+}
+
+/*  */
+/* line 41, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-bookmark:before {
+  content: '\f07b';
+}
+
+/*  */
+/* line 42, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-briefcase:before {
+  content: '\f0d3';
+}
+
+/*  */
+/* line 43, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-broadcast:before {
+  content: '\f048';
+}
+
+/*  */
+/* line 44, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-browser:before {
+  content: '\f0c5';
+}
+
+/*  */
+/* line 45, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-bug:before {
+  content: '\f091';
+}
+
+/*  */
+/* line 46, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-calendar:before {
+  content: '\f068';
+}
+
+/*  */
+/* line 47, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-check:before {
+  content: '\f03a';
+}
+
+/*  */
+/* line 48, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-checklist:before {
+  content: '\f076';
+}
+
+/*  */
+/* line 49, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-chevron-down:before {
+  content: '\f0a3';
+}
+
+/*  */
+/* line 50, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-chevron-left:before {
+  content: '\f0a4';
+}
+
+/*  */
+/* line 51, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-chevron-right:before {
+  content: '\f078';
+}
+
+/*  */
+/* line 52, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-chevron-up:before {
+  content: '\f0a2';
+}
+
+/*  */
+/* line 53, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-circle-slash:before {
+  content: '\f084';
+}
+
+/*  */
+/* line 54, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-circuit-board:before {
+  content: '\f0d6';
+}
+
+/*  */
+/* line 55, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-clippy:before {
+  content: '\f035';
+}
+
+/*  */
+/* line 56, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-clock:before {
+  content: '\f046';
+}
+
+/*  */
+/* line 57, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-cloud-download:before {
+  content: '\f00b';
+}
+
+/*  */
+/* line 58, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-cloud-upload:before {
+  content: '\f00c';
+}
+
+/*  */
+/* line 59, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-code:before {
+  content: '\f05f';
+}
+
+/*  */
+/* line 60, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-color-mode:before {
+  content: '\f065';
+}
+
+/*  */
+/* line 62, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-comment-add:before,
+.octicon-comment:before {
+  content: '\f02b';
+}
+
+/*  */
+/* line 63, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-comment-discussion:before {
+  content: '\f04f';
+}
+
+/*  */
+/* line 64, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-credit-card:before {
+  content: '\f045';
+}
+
+/*  */
+/* line 65, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-dash:before {
+  content: '\f0ca';
+}
+
+/*  */
+/* line 66, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-dashboard:before {
+  content: '\f07d';
+}
+
+/*  */
+/* line 67, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-database:before {
+  content: '\f096';
+}
+
+/*  */
+/* line 68, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-device-camera:before {
+  content: '\f056';
+}
+
+/*  */
+/* line 69, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-device-camera-video:before {
+  content: '\f057';
+}
+
+/*  */
+/* line 70, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-device-desktop:before {
+  content: '\f27c';
+}
+
+/*  */
+/* line 71, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-device-mobile:before {
+  content: '\f038';
+}
+
+/*  */
+/* line 72, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-diff:before {
+  content: '\f04d';
+}
+
+/*  */
+/* line 73, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-diff-added:before {
+  content: '\f06b';
+}
+
+/*  */
+/* line 74, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-diff-ignored:before {
+  content: '\f099';
+}
+
+/*  */
+/* line 75, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-diff-modified:before {
+  content: '\f06d';
+}
+
+/*  */
+/* line 76, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-diff-removed:before {
+  content: '\f06c';
+}
+
+/*  */
+/* line 77, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-diff-renamed:before {
+  content: '\f06e';
+}
+
+/*  */
+/* line 78, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-ellipsis:before {
+  content: '\f09a';
+}
+
+/*  */
+/* line 81, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-eye-unwatch:before,
+.octicon-eye-watch:before,
+.octicon-eye:before {
+  content: '\f04e';
+}
+
+/*  */
+/* line 82, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-file-binary:before {
+  content: '\f094';
+}
+
+/*  */
+/* line 83, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-file-code:before {
+  content: '\f010';
+}
+
+/*  */
+/* line 84, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-file-directory:before {
+  content: '\f016';
+}
+
+/*  */
+/* line 85, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-file-media:before {
+  content: '\f012';
+}
+
+/*  */
+/* line 86, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-file-pdf:before {
+  content: '\f014';
+}
+
+/*  */
+/* line 87, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-file-submodule:before {
+  content: '\f017';
+}
+
+/*  */
+/* line 88, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-file-symlink-directory:before {
+  content: '\f0b1';
+}
+
+/*  */
+/* line 89, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-file-symlink-file:before {
+  content: '\f0b0';
+}
+
+/*  */
+/* line 90, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-file-text:before {
+  content: '\f011';
+}
+
+/*  */
+/* line 91, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-file-zip:before {
+  content: '\f013';
+}
+
+/*  */
+/* line 92, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-flame:before {
+  content: '\f0d2';
+}
+
+/*  */
+/* line 93, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-fold:before {
+  content: '\f0cc';
+}
+
+/*  */
+/* line 94, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-gear:before {
+  content: '\f02f';
+}
+
+/*  */
+/* line 95, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-gift:before {
+  content: '\f042';
+}
+
+/*  */
+/* line 96, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-gist:before {
+  content: '\f00e';
+}
+
+/*  */
+/* line 97, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-gist-secret:before {
+  content: '\f08c';
+}
+
+/*  */
+/* line 100, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-git-branch-create:before,
+.octicon-git-branch-delete:before,
+.octicon-git-branch:before {
+  content: '\f020';
+}
+
+/*  */
+/* line 101, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-git-commit:before {
+  content: '\f01f';
+}
+
+/*  */
+/* line 102, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-git-compare:before {
+  content: '\f0ac';
+}
+
+/*  */
+/* line 103, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-git-merge:before {
+  content: '\f023';
+}
+
+/*  */
+/* line 105, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-git-pull-request-abandoned:before,
+.octicon-git-pull-request:before {
+  content: '\f009';
+}
+
+/*  */
+/* line 106, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-globe:before {
+  content: '\f0b6';
+}
+
+/*  */
+/* line 107, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-graph:before {
+  content: '\f043';
+}
+
+/*  */
+/* line 108, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-heart:before {
+  content: '\2665';
+}
+
+/* ♥ */
+/* line 109, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-history:before {
+  content: '\f07e';
+}
+
+/*  */
+/* line 110, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-home:before {
+  content: '\f08d';
+}
+
+/*  */
+/* line 111, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-horizontal-rule:before {
+  content: '\f070';
+}
+
+/*  */
+/* line 112, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-hourglass:before {
+  content: '\f09e';
+}
+
+/*  */
+/* line 113, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-hubot:before {
+  content: '\f09d';
+}
+
+/*  */
+/* line 114, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-inbox:before {
+  content: '\f0cf';
+}
+
+/*  */
+/* line 115, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-info:before {
+  content: '\f059';
+}
+
+/*  */
+/* line 116, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-issue-closed:before {
+  content: '\f028';
+}
+
+/*  */
+/* line 117, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-issue-opened:before {
+  content: '\f026';
+}
+
+/*  */
+/* line 118, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-issue-reopened:before {
+  content: '\f027';
+}
+
+/*  */
+/* line 119, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-jersey:before {
+  content: '\f019';
+}
+
+/*  */
+/* line 120, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-jump-down:before {
+  content: '\f072';
+}
+
+/*  */
+/* line 121, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-jump-left:before {
+  content: '\f0a5';
+}
+
+/*  */
+/* line 122, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-jump-right:before {
+  content: '\f0a6';
+}
+
+/*  */
+/* line 123, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-jump-up:before {
+  content: '\f073';
+}
+
+/*  */
+/* line 124, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-key:before {
+  content: '\f049';
+}
+
+/*  */
+/* line 125, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-keyboard:before {
+  content: '\f00d';
+}
+
+/*  */
+/* line 126, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-law:before {
+  content: '\f0d8';
+}
+
+/*  */
+/* line 127, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-light-bulb:before {
+  content: '\f000';
+}
+
+/*  */
+/* line 128, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-link:before {
+  content: '\f05c';
+}
+
+/*  */
+/* line 129, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-link-external:before {
+  content: '\f07f';
+}
+
+/*  */
+/* line 130, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-list-ordered:before {
+  content: '\f062';
+}
+
+/*  */
+/* line 131, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-list-unordered:before {
+  content: '\f061';
+}
+
+/*  */
+/* line 132, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-location:before {
+  content: '\f060';
+}
+
+/*  */
+/* line 136, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-gist-private:before,
+.octicon-mirror-private:before,
+.octicon-git-fork-private:before,
+.octicon-lock:before {
+  content: '\f06a';
+}
+
+/*  */
+/* line 137, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-logo-github:before {
+  content: '\f092';
+}
+
+/*  */
+/* line 138, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-mail:before {
+  content: '\f03b';
+}
+
+/*  */
+/* line 139, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-mail-read:before {
+  content: '\f03c';
+}
+
+/*  */
+/* line 140, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-mail-reply:before {
+  content: '\f051';
+}
+
+/*  */
+/* line 141, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-mark-github:before {
+  content: '\f00a';
+}
+
+/*  */
+/* line 142, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-markdown:before {
+  content: '\f0c9';
+}
+
+/*  */
+/* line 143, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-megaphone:before {
+  content: '\f077';
+}
+
+/*  */
+/* line 144, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-mention:before {
+  content: '\f0be';
+}
+
+/*  */
+/* line 145, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-microscope:before {
+  content: '\f089';
+}
+
+/*  */
+/* line 146, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-milestone:before {
+  content: '\f075';
+}
+
+/*  */
+/* line 148, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-mirror-public:before,
+.octicon-mirror:before {
+  content: '\f024';
+}
+
+/*  */
+/* line 149, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-mortar-board:before {
+  content: '\f0d7';
+}
+
+/*  */
+/* line 150, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-move-down:before {
+  content: '\f0a8';
+}
+
+/*  */
+/* line 151, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-move-left:before {
+  content: '\f074';
+}
+
+/*  */
+/* line 152, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-move-right:before {
+  content: '\f0a9';
+}
+
+/*  */
+/* line 153, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-move-up:before {
+  content: '\f0a7';
+}
+
+/*  */
+/* line 154, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-mute:before {
+  content: '\f080';
+}
+
+/*  */
+/* line 155, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-no-newline:before {
+  content: '\f09c';
+}
+
+/*  */
+/* line 156, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-octoface:before {
+  content: '\f008';
+}
+
+/*  */
+/* line 157, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-organization:before {
+  content: '\f037';
+}
+
+/*  */
+/* line 158, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-package:before {
+  content: '\f0c4';
+}
+
+/*  */
+/* line 159, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-paintcan:before {
+  content: '\f0d1';
+}
+
+/*  */
+/* line 160, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-pencil:before {
+  content: '\f058';
+}
+
+/*  */
+/* line 163, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-person-add:before,
+.octicon-person-follow:before,
+.octicon-person:before {
+  content: '\f018';
+}
+
+/*  */
+/* line 164, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-pin:before {
+  content: '\f041';
+}
+
+/*  */
+/* line 165, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-playback-fast-forward:before {
+  content: '\f0bd';
+}
+
+/*  */
+/* line 166, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-playback-pause:before {
+  content: '\f0bb';
+}
+
+/*  */
+/* line 167, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-playback-play:before {
+  content: '\f0bf';
+}
+
+/*  */
+/* line 168, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-playback-rewind:before {
+  content: '\f0bc';
+}
+
+/*  */
+/* line 169, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-plug:before {
+  content: '\f0d4';
+}
+
+/*  */
+/* line 174, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-repo-create:before,
+.octicon-gist-new:before,
+.octicon-file-directory-create:before,
+.octicon-file-add:before,
+.octicon-plus:before {
+  content: '\f05d';
+}
+
+/*  */
+/* line 175, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-podium:before {
+  content: '\f0af';
+}
+
+/*  */
+/* line 176, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-primitive-dot:before {
+  content: '\f052';
+}
+
+/*  */
+/* line 177, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-primitive-square:before {
+  content: '\f053';
+}
+
+/*  */
+/* line 178, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-pulse:before {
+  content: '\f085';
+}
+
+/*  */
+/* line 179, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-puzzle:before {
+  content: '\f0c0';
+}
+
+/*  */
+/* line 180, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-question:before {
+  content: '\f02c';
+}
+
+/*  */
+/* line 181, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-quote:before {
+  content: '\f063';
+}
+
+/*  */
+/* line 182, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-radio-tower:before {
+  content: '\f030';
+}
+
+/*  */
+/* line 184, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-repo-delete:before,
+.octicon-repo:before {
+  content: '\f001';
+}
+
+/*  */
+/* line 185, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-repo-clone:before {
+  content: '\f04c';
+}
+
+/*  */
+/* line 186, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-repo-force-push:before {
+  content: '\f04a';
+}
+
+/*  */
+/* line 188, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-gist-fork:before,
+.octicon-repo-forked:before {
+  content: '\f002';
+}
+
+/*  */
+/* line 189, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-repo-pull:before {
+  content: '\f006';
+}
+
+/*  */
+/* line 190, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-repo-push:before {
+  content: '\f005';
+}
+
+/*  */
+/* line 191, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-rocket:before {
+  content: '\f033';
+}
+
+/*  */
+/* line 192, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-rss:before {
+  content: '\f034';
+}
+
+/*  */
+/* line 193, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-ruby:before {
+  content: '\f047';
+}
+
+/*  */
+/* line 194, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-screen-full:before {
+  content: '\f066';
+}
+
+/*  */
+/* line 195, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-screen-normal:before {
+  content: '\f067';
+}
+
+/*  */
+/* line 197, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-search-save:before,
+.octicon-search:before {
+  content: '\f02e';
+}
+
+/*  */
+/* line 198, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-server:before {
+  content: '\f097';
+}
+
+/*  */
+/* line 199, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-settings:before {
+  content: '\f07c';
+}
+
+/*  */
+/* line 201, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-log-in:before,
+.octicon-sign-in:before {
+  content: '\f036';
+}
+
+/*  */
+/* line 203, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-log-out:before,
+.octicon-sign-out:before {
+  content: '\f032';
+}
+
+/*  */
+/* line 204, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-split:before {
+  content: '\f0c6';
+}
+
+/*  */
+/* line 205, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-squirrel:before {
+  content: '\f0b2';
+}
+
+/*  */
+/* line 208, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-star-add:before,
+.octicon-star-delete:before,
+.octicon-star:before {
+  content: '\f02a';
+}
+
+/*  */
+/* line 209, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-steps:before {
+  content: '\f0c7';
+}
+
+/*  */
+/* line 210, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-stop:before {
+  content: '\f08f';
+}
+
+/*  */
+/* line 212, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-repo-sync:before,
+.octicon-sync:before {
+  content: '\f087';
+}
+
+/*  */
+/* line 215, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-tag-remove:before,
+.octicon-tag-add:before,
+.octicon-tag:before {
+  content: '\f015';
+}
+
+/*  */
+/* line 216, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-telescope:before {
+  content: '\f088';
+}
+
+/*  */
+/* line 217, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-terminal:before {
+  content: '\f0c8';
+}
+
+/*  */
+/* line 218, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-three-bars:before {
+  content: '\f05e';
+}
+
+/*  */
+/* line 219, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-tools:before {
+  content: '\f031';
+}
+
+/*  */
+/* line 220, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-trashcan:before {
+  content: '\f0d0';
+}
+
+/*  */
+/* line 221, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-triangle-down:before {
+  content: '\f05b';
+}
+
+/*  */
+/* line 222, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-triangle-left:before {
+  content: '\f044';
+}
+
+/*  */
+/* line 223, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-triangle-right:before {
+  content: '\f05a';
+}
+
+/*  */
+/* line 224, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-triangle-up:before {
+  content: '\f0aa';
+}
+
+/*  */
+/* line 225, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-unfold:before {
+  content: '\f039';
+}
+
+/*  */
+/* line 226, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-unmute:before {
+  content: '\f0ba';
+}
+
+/*  */
+/* line 227, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-versions:before {
+  content: '\f064';
+}
+
+/*  */
+/* line 229, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-remove-close:before,
+.octicon-x:before {
+  content: '\f081';
+}
+
+/*  */
+/* line 230, ../../../sass/phpcr-browser/_octicons.scss */
+.octicon-zap:before {
+  content: '\26A1';
+}
+
+/* ⚡ */
 /* line 4, ../../../sass/phpcr-browser/scaffolding.scss */
 body {
   padding-top: 40px;
@@ -8392,20 +9508,19 @@ table tbody tr:first-child td {
 }
 
 /* line 1, ../../../sass/phpcr-browser/forms.scss */
-.workspace-input, .workspace-input:focus {
+.input-ghost, .input-ghost:focus {
   border: none;
   height: 100%;
   box-shadow: none;
-  font-size: 17pt;
   margin: 0;
   padding-bottom: 0;
 }
 
-/* line 10, ../../../sass/phpcr-browser/forms.scss */
+/* line 9, ../../../sass/phpcr-browser/forms.scss */
 .node-create-form {
   display: inline-block;
 }
-/* line 12, ../../../sass/phpcr-browser/forms.scss */
+/* line 11, ../../../sass/phpcr-browser/forms.scss */
 .node-create-form input {
   background-color: #dedede;
   box-shadow: none;
@@ -8414,7 +9529,7 @@ table tbody tr:first-child td {
   height: 30px;
 }
 
-/* line 21, ../../../sass/phpcr-browser/forms.scss */
+/* line 20, ../../../sass/phpcr-browser/forms.scss */
 .property-input {
   min-height: 20px;
   min-width: 100px;
@@ -8422,7 +9537,7 @@ table tbody tr:first-child td {
   margin: 0;
 }
 
-/* line 28, ../../../sass/phpcr-browser/forms.scss */
+/* line 27, ../../../sass/phpcr-browser/forms.scss */
 .property-form {
   position: fixed;
   top: 77px;
@@ -8588,18 +9703,13 @@ table tbody tr:first-child td {
   border: none;
 }
 
-/* line 57, ../../../sass/phpcr-browser/navbar.scss */
-.github, .settings {
-  margin-bottom: 0px;
-}
-
 @media (max-width: 767px) {
-  /* line 67, ../../../sass/phpcr-browser/navbar.scss */
+  /* line 58, ../../../sass/phpcr-browser/navbar.scss */
   .dropdown-header {
     color: white;
   }
 }
-/* line 72, ../../../sass/phpcr-browser/navbar.scss */
+/* line 63, ../../../sass/phpcr-browser/navbar.scss */
 .tree-toggle {
   float: left;
   padding: 10px 15px;
@@ -8608,48 +9718,15 @@ table tbody tr:first-child td {
   color: white;
   font-size: 13pt;
 }
-/* line 79, ../../../sass/phpcr-browser/navbar.scss */
+/* line 70, ../../../sass/phpcr-browser/navbar.scss */
 .tree-toggle:hover {
   background-color: #c64012;
   color: white;
 }
-/* line 84, ../../../sass/phpcr-browser/navbar.scss */
+/* line 75, ../../../sass/phpcr-browser/navbar.scss */
 .tree-toggle.active {
   background-color: #c64012;
   color: white;
-}
-
-/* line 7, ../../../sass/phpcr-browser/toaster.scss */
-#toast-container > div.ng-enter,
-#toast-container > div.ng-leave {
-  -webkit-transition: 200ms cubic-bezier(0.25, 0.25, 0.75, 0.75) all;
-  -moz-transition: 200ms cubic-bezier(0.25, 0.25, 0.75, 0.75) all;
-  -ms-transition: 200ms cubic-bezier(0.25, 0.25, 0.75, 0.75) all;
-  -o-transition: 200ms cubic-bezier(0.25, 0.25, 0.75, 0.75) all;
-  transition: 200ms cubic-bezier(0.25, 0.25, 0.75, 0.75) all;
-}
-
-/* line 16, ../../../sass/phpcr-browser/toaster.scss */
-#toast-container > div {
-  -webkit-border-radius: 0;
-  -moz-border-radius: 0;
-  -ms-border-radius: 0;
-  -o-border-radius: 0;
-  border-radius: 0;
-  -webkit-box-shadow: none;
-  -moz-box-shadow: none;
-  box-shadow: none;
-}
-/* line 20, ../../../sass/phpcr-browser/toaster.scss */
-#toast-container > div:hover {
-  -webkit-border-radius: 0;
-  -moz-border-radius: 0;
-  -ms-border-radius: 0;
-  -o-border-radius: 0;
-  border-radius: 0;
-  -webkit-box-shadow: none;
-  -moz-box-shadow: none;
-  box-shadow: none;
 }
 
 /* line 3, ../../../sass/phpcr-browser/dragdrop.scss */
@@ -8696,59 +9773,39 @@ ul.over {
 /* line 7, ../../../sass/phpcr-browser/panels.scss */
 .panel.panel-box {
   cursor: pointer !important;
+  border-top: 3px solid #f18a66;
 }
-/* line 15, ../../../sass/phpcr-browser/panels.scss */
-.panel.panel-box.repository {
-  height: 110px;
+/* line 14, ../../../sass/phpcr-browser/panels.scss */
+.panel.panel-box:hover .mega-octicon {
+  color: #f18a66;
+  opacity: 0.7;
 }
-/* line 18, ../../../sass/phpcr-browser/panels.scss */
-.panel.panel-box.repository .panel-body {
-  height: 90px;
-  overflow: auto;
-}
-/* line 24, ../../../sass/phpcr-browser/panels.scss */
-.panel.panel-box.workspace {
-  height: 80px;
-}
-/* line 27, ../../../sass/phpcr-browser/panels.scss */
-.panel.panel-box.workspace .panel-body {
-  height: 60px;
-  overflow: auto;
-}
-/* line 33, ../../../sass/phpcr-browser/panels.scss */
-.panel.panel-box .panel-heading {
-  height: 20px;
-  text-align: center;
-  font-size: 10pt;
-  padding: 1px;
-}
-/* line 40, ../../../sass/phpcr-browser/panels.scss */
+/* line 20, ../../../sass/phpcr-browser/panels.scss */
 .panel.panel-box .panel-body {
   position: relative;
-  text-align: center;
+  text-align: left;
   margin: auto;
 }
-/* line 44, ../../../sass/phpcr-browser/panels.scss */
-.panel.panel-box .panel-body p.lead, .panel.panel-box .panel-body p.github, .panel.panel-box .panel-body p.settings {
-  margin: 0;
+/* line 24, ../../../sass/phpcr-browser/panels.scss */
+.panel.panel-box .panel-body p.lead {
+  margin-bottom: 10px;
 }
-/* line 49, ../../../sass/phpcr-browser/panels.scss */
-.panel.panel-box .panel-footer {
-  padding: 0 !important;
+/* line 28, ../../../sass/phpcr-browser/panels.scss */
+.panel.panel-box .panel-body .mega-octicon {
+  opacity: 0.1;
+  float: right;
 }
-/* line 53, ../../../sass/phpcr-browser/panels.scss */
+/* line 34, ../../../sass/phpcr-browser/panels.scss */
 .panel.panel-box.new {
-  opacity: 0.7;
-  border-style: dotted;
-  border-width: 2px;
-  padding-top: 9px;
-  padding-bottom: 9px;
-  min-height: 80px;
-  line-height: 80px;
+  opacity: 0.4;
 }
-/* line 61, ../../../sass/phpcr-browser/panels.scss */
+/* line 37, ../../../sass/phpcr-browser/panels.scss */
 .panel.panel-box.new .panel-body {
-  padding: 0px 7px;
+  background-color: transparent;
+}
+/* line 41, ../../../sass/phpcr-browser/panels.scss */
+.panel.panel-box.new:hover, .panel.panel-box.new.focused {
+  opacity: 1.0;
 }
 
 /* line 4, ../../../sass/phpcr-browser/properties.scss */
@@ -8821,11 +9878,11 @@ ul.over {
   font-size: 12px;
 }
 /* line 74, ../../../sass/phpcr-browser/properties.scss */
-#properties tr td:first-child .glyphicon {
+#properties tr td:first-child .octicon {
   visibility: hidden;
 }
 /* line 81, ../../../sass/phpcr-browser/properties.scss */
-#properties tr:hover td:first-child .glyphicon {
+#properties tr:hover td:first-child .octicon {
   visibility: visible;
 }
 /* line 88, ../../../sass/phpcr-browser/properties.scss */
@@ -8849,11 +9906,11 @@ ul.over {
   text-align: left !important;
 }
 /* line 106, ../../../sass/phpcr-browser/properties.scss */
-#properties table tr td .glyphicon {
+#properties table tr td .octicon {
   display: none;
 }
 /* line 111, ../../../sass/phpcr-browser/properties.scss */
-#properties table tr td:hover .glyphicon {
+#properties table tr td:hover .octicon {
   display: inherit;
 }
 /* line 116, ../../../sass/phpcr-browser/properties.scss */

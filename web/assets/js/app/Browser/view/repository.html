@@ -1,31 +1,35 @@
 <div class="container-padding-top">
     <div class="col-lg-12" style="padding-bottom: 40px;">
-        <div class="col-sm-2" ng-repeat="(key, workspace) in workspaces track by $index" draggable="{{ repositoryController.repository.supports('workspace.delete') }}" id="{{ workspace.slug }}" ng-if="workspace">
-            <div class="panel panel-box workspace" ng-click="repositoryController.openWorkspace(workspace)">
-                <div class="panel-heading">
-                    {{ 'WORKSPACE_PANEL_BOX_TITLE' | translate }}
-                </div>
+        <div class="col-sm-2" ng-repeat="(key, workspace) in workspaces track by $index" draggable="{{ repositoryController.repository.supports('workspace.delete') }}" id="{{ workspace.slug }}">
+            <div class="panel panel-box" ng-click="repositoryController.openWorkspace(workspace)">
                 <div class="panel-body">
-                    <p class="lead text-center">
-                        {{ workspace.name }}
+                    <span class="mega-octicon octicon-file-directory pull-right"></span>
+                    <p class="lead">{{ workspace.name }}</p>
                     </p>
                 </div>
             </div>
         </div>
         <div class="col-sm-2" ng-if="repositoryController.repository.supportedOperations.indexOf('workspace.create') !== -1">
-            <div class="panel panel-box new">
+            <div class="panel panel-box new"
+                ng-click="repositoryController.showWorkspaceCreationForm()"
+                ng-class="{ focused: isWorkspaceCreationFormDisplayed }">
                 <div class="panel-body">
-                    <p class="lead text-center" ng-click="repositoryController.showCreateForm()" ng-hide="repositoryController.displayCreateForm">
+                    <span class="mega-octicon octicon-plus" ng-if="!isWorkspaceCreationFormDisplayed"></span>
+                    <p class="lead" ng-if="!isWorkspaceCreationFormDisplayed">
                         {{ 'WORKSPACE_CREATE_PROMPT' | translate }}
                     </p>
-                    <form ng-submit="repositoryController.createWorkspace(repositoryController.workspaceName)" ng-if="repositoryController.displayCreateForm">
-                        <p class="text-center">
-                            <input type="text" ng-model="repositoryController.workspaceName" focus-me="repositoryController.displayCreateForm" class="form-control workspace-input" placeholder="{{ 'WORKSPACE_CREATE_NAME_PROMPT' | translate }}" ui-keydown="{esc: 'repositoryController.hideCreateForm()'}"/>
-                        </p>
+                    <form ng-submit="repositoryController.createWorkspace()" ng-if="isWorkspaceCreationFormDisplayed">
+                        <input type="text" class="form-control input-ghost" focus
+                            ng-model="workspaceCreationForm.name"
+                            ng-blur="repositoryController.hideWorkspaceCreationForm()"
+                            placeholder="{{ 'WORKSPACE_CREATE_NAME_PROMPT' | translate }}"
+                            style="font-size:21px"
+                            ui-keydown="{esc: 'repositoryController.hideWorkspaceCreationForm()'}"
+                        />
                     </form>
                 </div>
             </div>
         </div>
-        <dropper ng-if="repositoryController.repository.supportedOperations.indexOf('workspace.delete') !== -1"></dropper>
     </div>
+    <trash ng-if="repositoryController.repository.supportedOperations.indexOf('workspace.delete') !== -1"></trash>
 </div>

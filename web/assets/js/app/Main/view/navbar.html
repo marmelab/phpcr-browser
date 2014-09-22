@@ -38,7 +38,7 @@
                     <li ng-repeat="workspace in menu.workspaces"
                         ng-class="{ active: workspace.name === $state.params.workspace }"
                     >
-                        <a ui-sref="node({ repository: workspace.getRepository().name, workspace: workspace.name })">
+                        <a ui-sref="node({ repository: workspace.getRepository().name, workspace: workspace.name, path: '/' })">
                             {{ workspace.name }}
                         </a>
                     </li>
@@ -52,8 +52,8 @@
         </ul>
         <ul class="nav navbar-nav navbar-right">
             <li class="dropdown">
-                <a class="dropdown-toggle" data-toggle="dropdown" class="settings">
-                  <span class="hidden-xs fa fa-gears"></span>
+                <a class="dropdown-toggle" data-toggle="dropdown">
+                  <span class="hidden-xs octicon octicon-tools"></span>
                   <span class="visible-xs"> {{ 'SETTINGS' | translate }}</span>
                 </a>
                 <ul class="dropdown-menu">
@@ -73,8 +73,8 @@
                 </ul>
             </li>
             <li>
-                <a href="https://github.com/marmelab/phpcr-browser" title="{{ 'GITHUB' | translate }}" class="github">
-                    <span class="fa fa-github"></span>
+                <a href="https://github.com/marmelab/phpcr-browser" title="{{ 'GITHUB' | translate }}">
+                    <span class="octicon octicon-mark-github"></span>
                 </a>
           </li>
         </ul>
