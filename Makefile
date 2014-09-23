@@ -16,7 +16,6 @@ install:
 ifneq ($(autoconfig), false)
 	cp config/prod.yml-dist config/prod.yml
 endif
-	cp web/assets/js/browser/config.js-dist web/assets/js/browser/config.js
 
 install-gaudi:
 	gaudi run composer install
@@ -25,7 +24,6 @@ install-gaudi:
 ifneq ($(autoconfig), false)
 	cp config/prod.yml-dist config/prod.yml
 endif
-	cp web/assets/js/browser/config.js-dist web/assets/js/browser/config.js
 	gaudi
 
 update:
