@@ -4,4 +4,3 @@ node_js:
 before_script:
   - 'npm install -g bower'
   - 'bower install'
-  - 'cp web/assets/js/browser/config.js-dist web/assets/js/browser/config.js'
