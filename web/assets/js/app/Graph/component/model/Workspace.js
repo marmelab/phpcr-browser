@@ -11,17 +11,6 @@ define([
         this.nodesCollection = restangularizedElement.all('nodes');
     }
 
-    Workspace.prototype.getNodes = function() {
-        var self = this;
-        return this.nodesCollection
-            .getList()
-            then(function(nodes) {
-                return nodes.map(function(node) {
-                    return new Node(node, self);
-                });
-            });
-    };
-
     Workspace.prototype.getNode = function(path, reducedTree) {
         var self = this,
             params = reducedTree ? { reducedTree: 'true' } : {}
