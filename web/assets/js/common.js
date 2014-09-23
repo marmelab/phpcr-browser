@@ -40,7 +40,7 @@ require.config({
     },
     modules: [
         {
-            name: 'vendor',
+            name: 'common',
             include: [
                 'angular',
                 'jquery',

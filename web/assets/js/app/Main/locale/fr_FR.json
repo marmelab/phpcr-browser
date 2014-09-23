@@ -16,7 +16,6 @@
     "REPOSITORY_PANEL_BOX_TITLE": "Dépôt",
     "WORKSPACE_PANEL_BOX_TITLE": "Espace de travail",
     "WORKSPACE_CREATE_PROMPT": "Nouveau",
-    "WORKSPACE_CREATE_NAME_PROMPT": "Nom",
     "TREE_ROOT_NODE_NAME": "racine",
     "NODE_ADD_PROPERTY_BUTTON": "Ajouter une propriété",
     "NODE_ADD_PROPERTY_CANCEL_BUTTON": "Annuler",
@@ -46,5 +45,7 @@
     "WORKSPACE_NOT_SUPPORT_CREATE": "Ce dépôt ne supporte pas la création d'espace de travail",
     "The repository is not available": "Le dépôt n'est pas disponible",
     "The workspace already exists": "L'espace de travail existe déjà",
-    "Name is empty": "Le nom est vide"
+    "Name is empty": "Le nom est vide",
+    "Name": "Nom",
+    "New": "Nouveau"
 }

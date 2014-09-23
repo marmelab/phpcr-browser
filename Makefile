@@ -8,7 +8,7 @@ compass-watch:
 	compass watch sass/screen.scss
 
 test:
-	karma start config/karma.conf.js
+	karma start test/web/karma.conf.js
 
 install:
 	composer install --no-interaction

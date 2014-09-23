@@ -19,7 +19,7 @@ require.config({
                 'TreeModule'
             ],
             exclude: [
-                'vendor'
+                'common'
             ]
         }
     ]

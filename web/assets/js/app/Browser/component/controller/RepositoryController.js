@@ -45,9 +45,11 @@ define([
     RepositoryController.prototype.$$loadWorkspaces = function(cache) {
         var self = this;
 
+        cache = cache !== undefined ? !!cache : true;
+
         this.$graph.find(this.$state.params).then(function(repository) {
             self.repository = repository;
-            return repository.getWorkspaces(cache);
+            return repository.getWorkspaces({ cache: cache });
         }).then(function(workspaces) {
             angular.forEach(workspaces, function(workspace) {
                 self.workspaces[workspace.name] = workspace;

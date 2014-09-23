@@ -1,14 +1,17 @@
 @import 'compass/css3';
 
 .drag {
-  opacity: 0.5;
+  /*opacity: 0.5;*/
 
   &.node {
     background-color: inherit;
     color: $brand-primary;
   }
 
-  background-color: $brand-primary!important;
+  .panel-box {
+    border: 1px solid $brand-primary;
+    border-top: 3px solid $brand-primary;
+  }
 
   td {
     background-color: $brand-primary!important;

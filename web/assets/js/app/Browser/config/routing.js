@@ -21,22 +21,37 @@ define([
                 'url': '/:repository',
                 'template': repositoryTemplate,
                 'controller' : 'RepositoryController',
-                'controllerAs' : 'repositoryController'
+                'controllerAs' : 'repositoryController',
+                'resolve': {
+                    'repository': function($graph, $stateParams) {
+                        return $graph.find($stateParams, { cache: false })
+                    }
+                }
             })
             .state('workspace', {
-                parent: 'main',
-                abstract: true,
-                url: '/:repository/:workspace',
-                template: workspaceTemplate,
-                controller: 'WorkspaceController',
-                controllerAs: 'workspaceController'
+                'parent': 'main',
+                'abstract': true,
+                'url': '/:repository/:workspace',
+                'template': workspaceTemplate,
+                'controller': 'WorkspaceController',
+                'controllerAs': 'workspaceController',
+                'resolve': {
+                    'workspace': function($graph, $stateParams) {
+                        return $graph.find($stateParams, { cache: false })
+                    }
+                }
             })
             .state('node', {
-                parent: 'workspace',
-                url: '{path:(?:/.*)?}',
-                template: nodeTemplate,
-                controller: 'NodeController',
-                controllerAs: 'nodeController'
+                'parent': 'workspace',
+                'url': '{path:(?:/.*)?}',
+                'template': nodeTemplate,
+                'controller': 'NodeController',
+                'controllerAs': 'nodeController',
+                'resolve': {
+                    'node': function($graph, $stateParams) {
+                        return $graph.find($stateParams, { cache: false })
+                    }
+                }
             });
     }
 

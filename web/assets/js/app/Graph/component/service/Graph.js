@@ -1,29 +1,37 @@
 define([
+    'lodash',
     'app/Graph/component/model/Server'
-], function(Server) {
+], function(_, Server) {
     'use strict';
 
-    function Graph(Restangular) {
+    function Graph(Restangular, $cacheFactory) {
        this.Restangular = Restangular;
+       this.$cacheFactory = $cacheFactory;
 
        this.$$init();
     }
 
     Graph.prototype.$$init = function() {
-        this.Restangular.setBaseUrl('/index.php/api');
+        this.baseUrl = '/index.php/api';
+
+        this.Restangular.setBaseUrl(this.baseUrl);
 
         this.server = new Server(this.Restangular);
     };
 
-    Graph.prototype.$$findRepository = function(name, cache) {
-        return this.server.getRepository(name, cache);
+    Graph.prototype.$$invalidateCacheEntry = function(key) {
+        this.$cacheFactory.get('$http').remove(key);
     };
 
-    Graph.prototype.$$findWorkspace = function(repositoryName, name, cache) {
+    Graph.prototype.$$findRepository = function(name, config) {
+        return this.server.getRepository(name, config);
+    };
+
+    Graph.prototype.$$findWorkspace = function(repositoryName, name, config) {
         return this.server
-            .getRepository(repositoryName, cache)
+            .getRepository(repositoryName, config)
             .then(function(repository) {
-                return repository.getWorkspace(name, cache);
+                return repository.getWorkspace(name, config);
             })
         ;
     };
@@ -42,23 +50,42 @@ define([
         ;
     };
 
-    Graph.prototype.find = function(query, params) {
+    Graph.prototype.find = function(query, config) {
         query = query || {};
-        params = params || {};
+        config = config || {};
+
+        if (config.cache === false) {
+            var key = this.baseUrl;
+
+            if (query.repository) {
+                key += '/repositories/' + query.repository;
+            }
+
+            if (query.workspace) {
+                key += '/workspaces/' + query.workspace;
+            }
+
+            if (query.path) {
+                key += '/nodes/' + query.path.slice(1);
+            }
+
+            // Invalidate the cache if the cache is set to false
+            this.$$invalidateCacheEntry(key);
+        }
 
         if (!query.repository) {
-            return this.server.getRepositories(params.cache);
+            return this.server.getRepositories(config);
         }
 
         if (!query.workspace) {
-            return this.$$findRepository(query.repository);
+            return this.$$findRepository(query.repository, config);
         }
 
         if (!query.path) {
             return this.$$findWorkspace(
                 query.repository,
                 query.workspace,
-                params.cache
+                config
             );
         }
 
@@ -66,11 +93,11 @@ define([
             query.repository,
             query.workspace,
             query.path,
-            params.reducedTree
+            config.reducedTree
         );
     };
 
-    Graph.$inject = ['Restangular'];
+    Graph.$inject = ['Restangular', '$cacheFactory'];
 
     return Graph;
 });

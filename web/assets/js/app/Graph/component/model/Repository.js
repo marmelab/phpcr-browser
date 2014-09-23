@@ -11,11 +11,11 @@ define([
         this.workspacesCollection = restangularizedElement.all('workspaces');
     }
 
-    Repository.prototype.getWorkspaces = function(cache) {
+    Repository.prototype.getWorkspaces = function(config) {
         var self = this;
-        cache = cache !== undefined ? !!cache : true
+
         return this.workspacesCollection
-            .withHttpConfig({ cache: cache })
+            .withHttpConfig(config)
             .getList()
             .then(function(workspaces) {
                 return workspaces.map(function(workspace) {
@@ -24,13 +24,12 @@ define([
             });
     };
 
-    Repository.prototype.getWorkspace = function(name, cache) {
+    Repository.prototype.getWorkspace = function(name, config) {
         var self = this;
-        cache = cache !== undefined ? !!cache : true
 
         return this.workspacesCollection
             .one(name)
-            .withHttpConfig({ cache: cache })
+            .withHttpConfig(config)
             .get()
             .then(function(workspace) {
                 return new Workspace(workspace, self);
@@ -39,6 +38,10 @@ define([
 
     Repository.prototype.createWorkspace = function(workspace) {
         return this.workspacesCollection.post(workspace);
+    };
+
+    Repository.prototype.hasSupportedOperation = function(name) {
+        return this.supportedOperations.indexOf(name) !== -1
     };
 
     return Repository;

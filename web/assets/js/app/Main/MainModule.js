@@ -14,7 +14,7 @@ define(
 
         'app/Main/run/loadStateErrorListener',
         'app/Main/run/loadProgress',
-        'app/Main/run/loadStateAccessRules',
+        'app/Main/run/loadIntervalCheck',
 
         'text!app/config.json',
 
@@ -35,7 +35,7 @@ define(
 
         loadStateErrorListener,
         loadProgress,
-        loadStateAccessRules,
+        loadIntervalCheck,
 
         config
     ) {
@@ -60,7 +60,7 @@ define(
 
         MainModule.run(loadStateErrorListener);
         MainModule.run(loadProgress);
-        MainModule.run(loadStateAccessRules);
+        MainModule.run(loadIntervalCheck);
 
         return MainModule;
     }

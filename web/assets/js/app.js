@@ -1,4 +1,4 @@
-require(['vendor', 'phpcr-browser'], function () {
+require(['common', 'phpcr-browser'], function () {
     'use strict';
 
     require(['angular', 'MainModule', 'BrowserModule', 'GraphModule', 'TreeModule'], function (angular) {

@@ -9513,14 +9513,15 @@ table tbody tr:first-child td {
   height: 100%;
   box-shadow: none;
   margin: 0;
-  padding-bottom: 0;
+  padding: 0;
+  padding-bottom: 10px;
 }
 
-/* line 9, ../../../sass/phpcr-browser/forms.scss */
+/* line 10, ../../../sass/phpcr-browser/forms.scss */
 .node-create-form {
   display: inline-block;
 }
-/* line 11, ../../../sass/phpcr-browser/forms.scss */
+/* line 12, ../../../sass/phpcr-browser/forms.scss */
 .node-create-form input {
   background-color: #dedede;
   box-shadow: none;
@@ -9529,7 +9530,7 @@ table tbody tr:first-child td {
   height: 30px;
 }
 
-/* line 20, ../../../sass/phpcr-browser/forms.scss */
+/* line 21, ../../../sass/phpcr-browser/forms.scss */
 .property-input {
   min-height: 20px;
   min-width: 100px;
@@ -9537,7 +9538,7 @@ table tbody tr:first-child td {
   margin: 0;
 }
 
-/* line 27, ../../../sass/phpcr-browser/forms.scss */
+/* line 28, ../../../sass/phpcr-browser/forms.scss */
 .property-form {
   position: fixed;
   top: 77px;
@@ -9731,35 +9732,39 @@ table tbody tr:first-child td {
 
 /* line 3, ../../../sass/phpcr-browser/dragdrop.scss */
 .drag {
-  opacity: 0.5;
-  background-color: #f18a66 !important;
+  /*opacity: 0.5;*/
 }
 /* line 6, ../../../sass/phpcr-browser/dragdrop.scss */
 .drag.node {
   background-color: inherit;
   color: #f18a66;
 }
-/* line 13, ../../../sass/phpcr-browser/dragdrop.scss */
+/* line 11, ../../../sass/phpcr-browser/dragdrop.scss */
+.drag .panel-box {
+  border: 1px solid #f18a66;
+  border-top: 3px solid #f18a66;
+}
+/* line 16, ../../../sass/phpcr-browser/dragdrop.scss */
 .drag td {
   background-color: #f18a66 !important;
 }
-/* line 15, ../../../sass/phpcr-browser/dragdrop.scss */
+/* line 18, ../../../sass/phpcr-browser/dragdrop.scss */
 .drag td > span {
   color: #000000;
 }
 
-/* line 21, ../../../sass/phpcr-browser/dragdrop.scss */
+/* line 24, ../../../sass/phpcr-browser/dragdrop.scss */
 .over {
   border-color: #f18a66 !important;
   color: #f18a66 !important;
 }
-/* line 24, ../../../sass/phpcr-browser/dragdrop.scss */
+/* line 27, ../../../sass/phpcr-browser/dragdrop.scss */
 .over.node {
   border: none;
   color: #f18a66;
 }
 
-/* line 30, ../../../sass/phpcr-browser/dragdrop.scss */
+/* line 33, ../../../sass/phpcr-browser/dragdrop.scss */
 ul.over {
   background-color: #f18a66;
 }

@@ -7,6 +7,7 @@ define(
         'app/Browser/component/controller/WorkspaceController',
         'app/Browser/component/controller/NodeController',
 
+        'app/Browser/component/directive/Draggable',
         'app/Browser/component/directive/Focus',
         'app/Browser/component/directive/Trash',
 
@@ -25,6 +26,7 @@ define(
         WorkspaceController,
         NodeController,
 
+        Draggable,
         Focus,
         Trash,
 
@@ -45,6 +47,7 @@ define(
         BrowserModule.controller('WorkspaceController', WorkspaceController);
         BrowserModule.controller('NodeController', NodeController);
 
+        BrowserModule.directive('draggable', Draggable);
         BrowserModule.directive('focus', Focus);
         BrowserModule.directive('trash', Trash);
 
