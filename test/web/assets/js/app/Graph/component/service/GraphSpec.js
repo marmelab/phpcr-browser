@@ -61,11 +61,8 @@ define([
         });
 
         it('should call $$invalidateCacheEntry if cache config is setted to false', function() {
-            var $httpCache = {
-                remove: jasmine.createSpy('remove')
-            };
-
-            spyOn($cacheFactory, 'get').andReturn($httpCache);
+            var $httpCache = $cacheFactory('$http');
+            spyOn($httpCache, 'remove');
 
             $graph.find({ repository: 'test', workspace: 'default', path: '/toto' }, { cache: false }).then(function() {
                 // As we use our mock, the promises are always resolved synchronously

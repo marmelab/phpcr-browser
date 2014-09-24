@@ -63,7 +63,7 @@ define('mock/Injector', [
 
         var instance = this.$$injector.get(name);
 
-        this.$$spyObject(instance, true);
+        instance = this.$$spyObject(instance, true, name);
         this.set(name, instance);
 
         return instance;
@@ -85,11 +85,8 @@ define('mock/Injector', [
         var constructor = callback.pop();
 
         var object = constructor.apply(constructor, this.$$resolve(callback));
-        object = angular.extend(jasmine.createSpy(spyName).andCallFake(object), object);
 
-        this.$$spyObject(object);
-
-        return object;
+        return this.$$spyObject(object, spyName);
     }
 
     Injector.prototype.instantiate = function(callback, dependencies) {
@@ -114,24 +111,52 @@ define('mock/Injector', [
         F.prototype = constructor.prototype;
 
         var instance = new F();
-        this.$$spyObject(instance);
-
-        return instance;
+        return this.$$spyObject(instance);
     }
 
-    Injector.prototype.$$spyObject = function(object, ignorePrivate) {
+    Injector.prototype.$$spyFunction = function(callback, spyName) {
+        var spy = jasmine.createSpy(spyName).andCallFake(callback);
+        angular.extend(spy, callback);
+
+        return spy;
+    };
+
+    Injector.prototype.$$spyObject = function(object, ignorePrivate, spyName) {
         ignorePrivate = ignorePrivate !== undefined ? ignorePrivate : false;
 
-        angular.forEach(Object.getOwnPropertyNames(object.__proto__), function(property) {;
-            if (ignorePrivate && property.slice(0, 2) === '$$') {
+        var methods = this.$$getObjectMethodNames(object);
+
+        if (object.constructor.name === 'Function') {
+            object = this.$$spyFunction(object, spyName);
+        }
+
+        angular.forEach(methods, function(method) {
+            if (ignorePrivate && method.slice(0, 2) === '$$') {
+                return false;
+            }
+
+            spyOn(object, method).andCallThrough();
+        });
+
+        return object;
+    };
+
+    Injector.prototype.$$getObjectMethodNames = function(object) {
+        var methods = [];
+
+        angular.forEach(Object.getOwnPropertyNames(object.__proto__), function(property) {
+            if (!(spyExclusionList.indexOf(property) === -1 && typeof(object[property]) === 'function')) {
                 return;
             }
 
-            if (spyExclusionList.indexOf(property) === -1 && typeof(object[property]) === 'function') {
-
-                spyOn(object, property).andCallThrough();
-            }
+            methods.push(property);
         });
+
+        if (methods.length === 0) {
+            methods = Object.keys(object);
+        }
+
+        return methods;
     };
 
     Injector.prototype.$$resolve = function(dependencies) {
