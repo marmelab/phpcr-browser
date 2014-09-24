@@ -6,22 +6,23 @@ define([
 ], function(Server, Repository, Restangular) {
     'use strict';
 
-    var restangular,
-        server,
-        repositories
-    ;
-
-    beforeEach(function() {
-        repositories = [new Restangular()];
-
-        restangular = new Restangular(repositories, repositories[0]);
-
-        spyOn(restangular, 'all').andCallThrough();
-
-        server = new Server(restangular);
-    });
-
     describe('Server', function() {
+        var restangular,
+            server,
+            repositories
+        ;
+
+        beforeEach(function() {
+            repositories = [new Restangular()];
+
+            restangular = new Restangular(repositories, repositories[0]);
+
+            spyOn(restangular, 'all').andCallThrough();
+
+            server = new Server(restangular);
+        });
+
+
         it('should call Restangular.all to get repositories collection', function() {
             expect(restangular.all).toHaveBeenCalledWith('repositories');
         });

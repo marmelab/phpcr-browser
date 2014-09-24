@@ -14,7 +14,8 @@ requirejs.config({
     paths: {
         'angular-mocks': '/base/web/assets/bower_components/angular-mocks/angular-mocks',
         'mixin': '/base/test/web/assets/js/mixin',
-        'mock': '/base/test/web/assets/js/mock'
+        'mock': '/base/test/web/assets/js/mock',
+        'fixture': '/base/test/web/assets/js/fixture'
     },
     shim: {
         'angular-mocks': ['angular']

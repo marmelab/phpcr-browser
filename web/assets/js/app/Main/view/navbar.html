@@ -1,7 +1,7 @@
 <div class="navbar navbar-default navbar-fixed-top" role="navigation">
     <div class="navbar-header">
         <button type="button" class="navbar-toggle" ng-click="navbarController.toggleCollapsed()" data-toggle="collapse" data-target=".navbar-collapse">
-          <span class="sr-only">{{ 'TOGGLE_NAV' | translate }}</span>
+          <span class="sr-only">{{ 'Toggle navigation' | translate }}</span>
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
@@ -18,7 +18,7 @@
         <ul class="nav navbar-nav">
             <li class="dropdown" ng-if="menu.repositories">
                 <a class="dropdown-toggle" data-toggle="dropdown">
-                  {{ 'MENU_REPOSITORIES' | translate }}
+                  {{ 'Repositories' | translate }}
                 </a>
                 <ul class="dropdown-menu">
                     <li ng-repeat="repository in menu.repositories"
@@ -51,13 +51,21 @@
             </li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
+            <li  class="dropdown" ng-if="offlineStatus">
+                <a class="dropdown-toggle" data-toggle="dropdown" title="The repository is unavailable">
+                    <span class="octicon octicon-alert"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li class="dropdown-header">{{ 'The connection with the repository has been lost' | translate }}</li>
+                </ul>
+            </li>
             <li class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown">
                   <span class="hidden-xs octicon octicon-settings"></span>
-                  <span class="visible-xs"> {{ 'SETTINGS' | translate }}</span>
+                  <span class="visible-xs"> {{ 'Settings' | translate }}</span>
                 </a>
                 <ul class="dropdown-menu">
-                    <li class="dropdown-header">{{ 'CHANGE_LANGUAGE' | translate }}</li>
+                    <li class="dropdown-header">{{ 'Change language' | translate }}</li>
                     <li>
                         <a ng-click="$translate.use('en')">
                             <span class="glyphicon glyphicon-ok pull-right" ng-if="$translate.use() === 'en'"></span>

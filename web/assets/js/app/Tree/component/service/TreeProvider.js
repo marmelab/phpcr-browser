@@ -109,7 +109,8 @@ define([
                 provider: this
             })
             .deferred
-            .promise;
+            .promise
+        ;
 
         var listeners = [];
 

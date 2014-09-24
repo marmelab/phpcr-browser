@@ -1,7 +1,7 @@
 define([], function () {
     "use strict";
 
-    function loadIntervalCheck($rootScope, $graph, $state, $notification, $interval) {
+    function loadIntervalCheck($rootScope, $graph, $state, $interval) {
         $interval(function() {
             var params = {};
 
@@ -11,18 +11,15 @@ define([], function () {
                 }
             }
 
-            $graph.find(params, { cache: false }).then(null, function(err) {
-                return $state
-                    .go('repositories')
-                    .then(function() {
-                        $notification.error(err.data.message);
-                    })
-                ;
+            $graph.find(params, { cache: false }).then(function() {
+                $rootScope.$broadcast('$checkStatusUpdate', true);
+            }, function(err) {
+                $rootScope.$broadcast('$checkStatusUpdate', false);
             });
         }, 30000);
     }
 
-    loadIntervalCheck.$inject = ['$rootScope', '$graph', '$state', '$notification', '$interval'];
+    loadIntervalCheck.$inject = ['$rootScope', '$graph', '$state', '$interval'];
 
     return loadIntervalCheck;
 });

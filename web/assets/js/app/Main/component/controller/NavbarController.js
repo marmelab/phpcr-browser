@@ -21,6 +21,7 @@ define([], function () {
 
         this.$scope.$translate = this.$translate;
         this.$scope.$state = this.$state;
+        this.$scope.offlineStatus = false;
 
         this.$scope.menu = {};
 
@@ -36,6 +37,11 @@ define([], function () {
 
         this.$scope.$on('$stateChangeSuccess', function() {
             self.$$buildMenu();
+            self.$scope.offlineStatus = false;
+        });
+
+        this.$scope.$on('$checkStatusUpdate', function($event, status) {
+            self.$scope.offlineStatus = !status;
         });
     };
 

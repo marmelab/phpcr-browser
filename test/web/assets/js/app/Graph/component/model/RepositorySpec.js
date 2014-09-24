@@ -6,22 +6,23 @@ define([
 ], function(Repository, Workspace, Restangular) {
     'use strict';
 
-    var restangular,
-        repository,
-        workspaces
-    ;
-
-    beforeEach(function() {
-        workspaces = [new Restangular()];
-
-        restangular = new Restangular(workspaces, workspaces[0]);
-
-        spyOn(restangular, 'all').andCallThrough();
-
-        repository = new Repository(restangular);
-    });
-
     describe('Repository', function() {
+        var restangular,
+            repository,
+            workspaces
+        ;
+
+        beforeEach(function() {
+            workspaces = [new Restangular()];
+
+            restangular = new Restangular(workspaces, workspaces[0]);
+
+            spyOn(restangular, 'all').andCallThrough();
+
+            repository = new Repository(restangular);
+        });
+
+
         it('should call Restangular.all to get workspaces collection', function() {
             expect(restangular.all).toHaveBeenCalledWith('workspaces');
         });

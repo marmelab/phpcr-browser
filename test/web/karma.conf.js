@@ -21,8 +21,7 @@ module.exports = function (config) {
             {pattern: 'test/**/*Spec.js', included: false},
             {pattern: 'test/web/assets/js/mixin.js', included: false},
             {pattern: 'test/web/assets/js/mock/**/*.js', included: false},
-            // {pattern: 'test/fixtures/public/**/*.js', included: false},
-            // {pattern: 'test/fixtures/public/**/**/*.js', included: false},
+            {pattern: 'test/web/assets/js/fixture/**/*.js', included: false},
 
             // require configuration files
             'web/assets/js/common.js',
