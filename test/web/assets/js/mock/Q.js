@@ -11,6 +11,7 @@ define('mock/Q', [
         var deferred = this.$q.defer();
         deferred.promise.resolve = deferred.resolve;
         deferred.promise.reject = deferred.reject;
+        deferred.promise.notify = deferred.notify;
 
         return deferred;
     };
