@@ -1,44 +1,79 @@
 /*global describe,it,expect,beforeEach*/
 define([
     'app/Tree/component/service/TreeProvider',
-    'mock/Injector',
+    'mock/TreeFactory',
+    'mock/Graph',
+    'mock/Progress',
     'fixture/node',
+    'mixin',
     'angular',
     'angular-mocks'
-], function(TreeProvider, Injector, nodeFixture, angular) {
+], function(TreeProvider, TreeFactory, Graph, Progress, nodeFixture, mixin, angular) {
     'use strict';
 
     describe('TreeProvider', function() {
-        var injector = angular.injector(['ngMock']),
-            $injector,
+        var $injector = angular.injector(['ngMock']),
+            treeProvider,
+            $q,
             $rootScope,
-            $graph,
             $state,
             $treeFactory,
+            $graph,
             $progress,
             $tree
         ;
 
         beforeEach(function() {
-            $injector = new Injector();
+            treeProvider = new TreeProvider();
+
+            $q = $injector.get('$q');
 
             $rootScope = $injector.get('$rootScope');
-            $graph = $injector.get('$graph');
-            $state = $injector.get('$state');
-            $treeFactory = $injector.get('$treeFactory');
-            $progress = $injector.get('$progress');
+            spyOn($rootScope, '$on').andCallThrough();
 
-            $state.params = {
-                repository: 'test',
-                workspace: 'default',
-                path: '/jcr:nodeTypes/rep:Group'
+            $state = {
+                params: {
+                    repository: 'test',
+                    workspace: 'default',
+                    path: '/jcr:nodeTypes/rep:Group'
+                },
+                current: {
+                    name: 'node'
+                }
             };
 
-            $injector.provider('$tree', TreeProvider)
-            $tree = $injector.get('$tree');
+            $treeFactory = jasmine.createSpy('$treeFactory').andCallFake(TreeFactory);
+            angular.extend($treeFactory, TreeFactory);
+            spyOn($treeFactory, 'activate').andCallThrough();
+
+            $graph = new Graph();
+            spyOn($graph, 'find').andReturn(mixin.buildPromise(angular.copy(nodeFixture)))
+
+            $progress = new Progress();
+            spyOn($progress, 'done').andCallThrough();
+
+            $tree = treeProvider.$get[1]({
+                instantiate: function(object, dependencies) {
+                    var instance = new object(
+                        dependencies.provider,
+                        $q,
+                        $rootScope,
+                        $state,
+                        $treeFactory,
+                        $graph,
+                        $progress
+                    );
+
+                    instance.deferred.promise.notify = instance.deferred.notify;
+
+                    return instance;
+                }
+            });
         });
 
         it('should instanciate Tree service and return a patched promise when $get is called', function() {
+            spyOn($tree, 'then').andCallThrough();
+
             expect($tree.then).toEqual(jasmine.any(Function));
             expect($tree.notified).toEqual(jasmine.any(Function));
 

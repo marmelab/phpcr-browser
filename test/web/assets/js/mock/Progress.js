@@ -1,9 +1,7 @@
 define('mock/Progress', [], function() {
     'use strict';
 
-    function Progress() {
-
-    }
+    function Progress() {}
 
     Progress.prototype.start = function() {};
 

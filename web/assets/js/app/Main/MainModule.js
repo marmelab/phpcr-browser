@@ -14,7 +14,7 @@ define(
 
         'app/Main/run/loadStateErrorListener',
         'app/Main/run/loadProgress',
-        'app/Main/run/loadIntervalCheck',
+        'app/Main/run/loadOfflineStatusUpdate',
 
         'text!app/config.json',
 
@@ -35,7 +35,7 @@ define(
 
         loadStateErrorListener,
         loadProgress,
-        loadIntervalCheck,
+        loadOfflineStatusUpdate,
 
         config
     ) {
@@ -60,7 +60,7 @@ define(
 
         MainModule.run(loadStateErrorListener);
         MainModule.run(loadProgress);
-        MainModule.run(loadIntervalCheck);
+        MainModule.run(loadOfflineStatusUpdate);
 
         return MainModule;
     }

@@ -1,7 +1,7 @@
 define([], function () {
     "use strict";
 
-    function loadIntervalCheck($rootScope, $graph, $state, $interval) {
+    function loadOfflineStatusUpdate($rootScope, $graph, $state, $interval) {
         $interval(function() {
             var params = {};
 
@@ -12,15 +12,15 @@ define([], function () {
             }
 
             $graph.find(params, { cache: false }).then(function() {
-                $rootScope.$broadcast('$checkStatusUpdate', true);
+                $rootScope.$broadcast('$offlineStatusUpdate', false);
             }, function(err) {
-                $rootScope.$broadcast('$checkStatusUpdate', false);
+                $rootScope.$broadcast('$offlineStatusUpdate', true);
             });
         }, 30000);
     }
 
-    loadIntervalCheck.$inject = ['$rootScope', '$graph', '$state', '$interval'];
+    loadOfflineStatusUpdate.$inject = ['$rootScope', '$graph', '$state', '$interval'];
 
-    return loadIntervalCheck;
+    return loadOfflineStatusUpdate;
 });
 

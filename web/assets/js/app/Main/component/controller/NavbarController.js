@@ -22,8 +22,7 @@ define([], function () {
         this.$scope.$translate = this.$translate;
         this.$scope.$state = this.$state;
         this.$scope.offlineStatus = false;
-
-        this.$scope.menu = {};
+        this.$scope.navbarCollapsed = true;
 
         this.$scope.$watch('search', function(value) {
             self.$search.notify(value || null);
@@ -40,8 +39,8 @@ define([], function () {
             self.$scope.offlineStatus = false;
         });
 
-        this.$scope.$on('$checkStatusUpdate', function($event, status) {
-            self.$scope.offlineStatus = !status;
+        this.$scope.$on('$offlineStatusUpdate', function($event, status) {
+            self.$scope.offlineStatus = status;
         });
     };
 
@@ -86,22 +85,16 @@ define([], function () {
         ;
     };
 
-    NavbarController.prototype.toggleCollapsed = function() {
-        this.navbarCollapsed = !this.navbarCollapsed;
-    };
-
-    NavbarController.prototype.isPreferredLanguage = function(key) {
-        return this.$translate.use() === key;
-    };
-
-    NavbarController.prototype.changeLanguage = function(key) {
-        return this.$translate.use(key);
+    NavbarController.prototype.toggleNavbarCollapsed = function() {
+        this.$scope.navbarCollapsed = !this.$scope.navbarCollapsed;
     };
 
     NavbarController.prototype.$$destroy = function() {
         this.$scope = undefined;
         this.$translate = undefined;
         this.$state = undefined;
+        this.$graph = undefined;
+        this.$search = undefined;
     };
 
     NavbarController.$inject = ['$scope', '$translate', '$state', '$graph', '$search'];

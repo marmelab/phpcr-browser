@@ -23,13 +23,15 @@ define([], function () {
             .then(function(translation) {
                 self.notifications.push({
                     type: type,
-                    content: translation
+                    content: translation,
+                    expired: false,
+                    $$hashKey: index
                 });
             }, function() {
                 self.notifications[index] = {
                     type: type,
                     content: message,
-                    expire: false,
+                    expired: false,
                     $$hashKey: index
                 };
             })
@@ -42,7 +44,7 @@ define([], function () {
     };
 
     Notification.prototype.close = function(index) {
-        this.notifications[index].expire = true;
+        this.notifications[index].expired = true;
     };
 
     Notification.prototype.error = function(message) {
