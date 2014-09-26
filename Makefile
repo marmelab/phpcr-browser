@@ -7,7 +7,7 @@ compass-compile:
 compass-watch:
 	compass watch sass/screen.scss
 
-test:
+test-spec:
 	karma start test/web/karma.conf.js
 
 install:

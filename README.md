@@ -172,7 +172,7 @@ Tests
 The PHPCR Browser AngularJS part is fully unit tested with [Karma](http://karma-runner.github.io/) and [Jasmine](http://jasmine.github.io/).
 If you want to run them, install dependencies by running: `make install-test`
 
-Then run the following command: `make test`
+Then run the following command: `make test-spec`
 
 Sass
 ----

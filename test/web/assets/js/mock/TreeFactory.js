@@ -25,5 +25,7 @@ define('mock/TreeFactory', [], function() {
         o.active = true;
     }
 
+    TreeFactory.patchChildren = function() {}
+
     return TreeFactory;
 });

@@ -37,7 +37,7 @@ define([
         this.cancelSearchListener = this.$search.registerListener(function(search) {
             if (self.search !== search) {
                 self.search = search;
-                self.$$updateProperties();
+                self.$$filterProperties();
             }
         });
 
@@ -47,7 +47,7 @@ define([
             path: this.$state.params.path ? this.$state.params.path : '/'
         }).then(function(node) {
             self.$scope.node = node;
-            self.$$updateProperties();
+            self.$$filterProperties();
         });
 
         this.$scope.$on('$destroy', function() {
@@ -55,7 +55,7 @@ define([
         });
     };
 
-    NodeController.prototype.$$updateProperties = function() {
+    NodeController.prototype.$$filterProperties = function() {
         var filteredPropertyNames = this.$fuzzyFilter(Object.keys(this.$scope.node.properties), this.search),
             properties = [],
             self = this;

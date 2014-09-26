@@ -22,6 +22,8 @@ define([
     RepositoryController.prototype.$$init = function() {
         var self = this;
 
+        this.search = null;
+
         this.$scope.isWorkspaceCreationFormDisplayed = false;
         this.$scope.workspaceCreationForm = {
             name: null
@@ -62,7 +64,8 @@ define([
     RepositoryController.prototype.$$filterWorkspaces = function() {
         var filteredWorkspaceNames = this.$fuzzyFilter(Object.keys(this.workspaces), this.search),
             workspaces = [],
-            self = this;
+            self = this
+        ;
 
         angular.forEach(filteredWorkspaceNames, function(workspaceName) {
             workspaces.push(self.workspaces[workspaceName]);
@@ -117,6 +120,7 @@ define([
         this.$search = undefined;
         this.$fuzzyFilter = undefined;
         this.$notification = undefined;
+        this.search = undefined;
     };
 
     RepositoryController.$inject = ['$scope', '$state', '$graph', '$search', '$fuzzyFilter', '$notification'];

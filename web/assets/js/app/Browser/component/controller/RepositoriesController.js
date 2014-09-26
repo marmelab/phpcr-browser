@@ -20,18 +20,20 @@ define([], function () {
         var self = this;
         this.repositories = {};
 
+        this.search = null;
+
         this.$graph.find().then(function(repositories) {
             angular.forEach(repositories, function(repository) {
                 self.repositories[repository.name] = repository;
             });
 
-            self.$$updateRepositories();
+            self.$$filterRepositories();
         });
 
         this.cancelSearchListener = this.$search.registerListener(function(search) {
             if (self.search !== search) {
                 self.search = search;
-                self.$$updateRepositories();
+                self.$$filterRepositories();
             }
         });
 
@@ -40,7 +42,7 @@ define([], function () {
         });
     };
 
-     RepositoriesController.prototype.$$updateRepositories = function() {
+     RepositoriesController.prototype.$$filterRepositories = function() {
         var filteredRepositoriesNames = this.$fuzzyFilter(Object.keys(this.repositories), this.search),
             repositories = [],
             self = this;
@@ -66,6 +68,7 @@ define([], function () {
         this.$graph = undefined;
         this.$search = undefined;
         this.$fuzzyFilter = undefined;
+        this.search = undefined;
     };
 
     RepositoriesController.$inject = ['$scope', '$state', '$graph', '$search', '$fuzzyFilter'];

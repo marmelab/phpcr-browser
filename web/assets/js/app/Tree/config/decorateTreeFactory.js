@@ -26,10 +26,10 @@ define([
                 var promises = [];
 
                 angular.forEach(children, function(child) {
-                    promises.push(tree.append($delegate(child)));
+                    // Do not use the append method to avoid triggering hooks
+                    child._parent = tree.data();
+                    tree.data().children.push(child);
                 });
-
-                return $q.all(promises);
             };
 
             $delegate.activate = function(tree) {

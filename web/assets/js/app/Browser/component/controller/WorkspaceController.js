@@ -22,10 +22,6 @@ define([
             self.$scope.tree = tree;
         });
 
-        this.$scope.$on('tree.toggle', function() {
-            self.displayTree = !self.displayTree;
-        });
-
         this.$scope.$on('$destroy', function() {
             self.$$destroy();
         });

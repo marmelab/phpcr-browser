@@ -16,47 +16,90 @@ define([
             $graph,
             $search,
             $fuzzyFilter,
-            respositoriesController
+            repositoriesController,
+            searchListener,
+            removeSearchListener
         ;
 
         beforeEach(function() {
             $scope = $injector.get('$rootScope').$new();
 
             $state = {
-
+                go: jasmine.createSpy('go')
             };
 
             $graph = new Graph();
             spyOn($graph, 'find').andReturn(mixin.buildPromise([
-                { name: 'test '}
+                { name: 'test'}
             ]));
 
             $search = new Search();
-            var removeSearchListener = jasmine.createSpy('removeSearchListener');
-            spyOn($search, 'registerListener').andReturn(removeSearchListener);
+            removeSearchListener = jasmine.createSpy('removeSearchListener');
+            spyOn($search, 'registerListener').andCallFake(function(listener) {
+                searchListener = listener;
+                return removeSearchListener;
+            });
 
-            $fuzzyFilter = jasmine.createSpy('$fuzzyFilter').andReturn([]);
+            $fuzzyFilter = jasmine.createSpy('$fuzzyFilter').andReturn(['test']);
 
-            respositoriesController = new RepositoriesController(
+            repositoriesController = new RepositoriesController(
                 $scope,
                 $state,
                 $graph,
                 $search,
                 $fuzzyFilter
             );
+        });
 
-            spyOn(respositoriesController, '$$destroy').andCallThrough();
+        it('should call $graph.find to set repositoriesController.repositories and build $scope.repositories', function() {
+            expect(repositoriesController.$graph.find).toHaveBeenCalledWith();
+            // As we use our mock, the promises are always resolved synchronously
+            expect(repositoriesController.repositories).toEqual({
+                'test': { name : 'test' }
+            })
+
+            expect(repositoriesController.$fuzzyFilter).toHaveBeenCalledWith(['test'], null);
+            expect(repositoriesController.$scope.repositories).toEqual([
+                { name : 'test' }
+            ]);
+
+            expect(repositoriesController.$search.registerListener).toHaveBeenCalledWith(searchListener);
+        });
+
+        it('should call $$filterRepositories when searchListener is called', function() {
+            spyOn(repositoriesController, '$$filterRepositories').andCallThrough();
+
+            searchListener('searching...');
+            expect(repositoriesController.search).toBe('searching...');
+            expect(repositoriesController.$$filterRepositories).toHaveBeenCalled();
+            expect(repositoriesController.$fuzzyFilter).toHaveBeenCalledWith(['test'], 'searching...');
+
+            // Same string, it should not call $$filterRepositories
+            searchListener('searching...');
+            expect(repositoriesController.$$filterRepositories.callCount).toBe(1); // the init call is not spied yet
+        });
+
+         it('should call $state.go when openRepository is called', function() {
+            repositoriesController.openRepository({ name: 'test' });
+            expect(repositoriesController.$state.go).toHaveBeenCalledWith('repository', {
+                repository: 'test'
+            });
         });
 
         it('should call $$destroy on $scope.$destroy() and set to undefined all its dependencies', function() {
-            expect(respositoriesController.$$destroy).not.toHaveBeenCalled();
-            respositoriesController.$scope.$destroy();
-            expect(respositoriesController.$$destroy).toHaveBeenCalled();
-            expect(respositoriesController.$scope).toBeUndefined();
-            expect(respositoriesController.$state).toBeUndefined();
-            expect(respositoriesController.$graph).toBeUndefined();
-            expect(respositoriesController.$search).toBeUndefined();
-            expect(respositoriesController.$fuzzyFilter).toBeUndefined();
+            spyOn(repositoriesController, '$$destroy').andCallThrough();
+
+            expect(repositoriesController.$$destroy).not.toHaveBeenCalled();
+            repositoriesController.$scope.$destroy();
+
+            expect(removeSearchListener).toHaveBeenCalled();
+            expect(repositoriesController.$$destroy).toHaveBeenCalled();
+            expect(repositoriesController.$scope).toBeUndefined();
+            expect(repositoriesController.$state).toBeUndefined();
+            expect(repositoriesController.$graph).toBeUndefined();
+            expect(repositoriesController.$search).toBeUndefined();
+            expect(repositoriesController.$fuzzyFilter).toBeUndefined();
+            expect(repositoriesController.search).toBeUndefined();
         });
     });
 });
