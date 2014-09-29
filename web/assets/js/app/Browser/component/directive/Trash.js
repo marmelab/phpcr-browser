@@ -4,8 +4,7 @@ define([], function() {
     function Trash() {
         return {
             restrict: 'E',
-            scope: '=',
-            template: '<div class="dropper" droppable><span class="glyphicon glyphicon-trash"></span></div>'
+            template: '<div class="dropper" droppable droppable-data="{ trash: true }"><span class="glyphicon glyphicon-trash"></span></div>'
         };
     }
 

@@ -32,10 +32,44 @@ define([
     };
 
     Tree.prototype.$$decorate = function(tree) {
-        // TODO: Add hook listeners
-        var current = tree;
+        var self = this;
 
+        tree.registerListener(tree.HOOK_PRE_MOVE, function(next, treeDestination) {
+            self.$progress.start();
 
+            var destAbsPath = treeDestination.path().replace('/root', '') + '/' + this.name();
+            self.$graph.find({
+                repository: self.$state.params.repository,
+                workspace: self.$state.params.workspace,
+                path: this.path().replace('/root', '')
+            }).then(function(node) {
+                return node.moveTo(destAbsPath);
+            }).then(function() {
+                next();
+            }, next)
+            .finally(function() {
+                self.$progress.done();
+            })
+        ;
+        });
+
+        tree.registerListener(tree.HOOK_PRE_REMOVE, function(next) {
+            self.$progress.start();
+
+            self.$graph.find({
+                repository: self.$state.params.repository,
+                workspace: self.$state.params.workspace,
+                path: this.path().replace('/root', '')
+            }).then(function(node) {
+                return node.remove();
+            }).then(function() {
+                next();
+            }, next)
+            .finally(function() {
+                self.$progress.done();
+            })
+        ;
+        });
         return tree;
     };
 

@@ -8,7 +8,9 @@ define(
         'app/Browser/component/controller/NodeController',
 
         'app/Browser/component/directive/Draggable',
+        'app/Browser/component/directive/Droppable',
         'app/Browser/component/directive/Focus',
+        'app/Browser/component/directive/GhostText',
         'app/Browser/component/directive/Trash',
 
         'app/Browser/component/filter/Fuzzy',
@@ -27,7 +29,9 @@ define(
         NodeController,
 
         Draggable,
+        Droppable,
         Focus,
+        GhostText,
         Trash,
 
         Fuzzy,
@@ -48,11 +52,13 @@ define(
         BrowserModule.controller('NodeController', NodeController);
 
         BrowserModule.directive('draggable', Draggable);
+        BrowserModule.directive('droppable', Droppable);
         BrowserModule.directive('focus', Focus);
+        BrowserModule.directive('ghostText', GhostText);
         BrowserModule.directive('trash', Trash);
 
         BrowserModule.filter('$fuzzy', Fuzzy);
-        BrowserModule.filter('PropertiesSorter', PropertiesSorter);
+        BrowserModule.filter('$propertiesSorter', PropertiesSorter);
 
         BrowserModule.config(routing);
 

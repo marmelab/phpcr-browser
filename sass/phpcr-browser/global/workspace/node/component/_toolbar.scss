@@ -1,0 +1,65 @@
+#toolbar {
+    position: fixed;
+    width: 100%;
+    height: $toolbar-height;
+    line-height: $toolbar-height;
+
+    background-color: #f5f5f5;
+    border-bottom: 1px solid #ccc;
+    z-index: 200;
+
+    .breadcrumb {
+        display: inline-block;
+        padding: 0;
+        margin: 0 30px 0 15px;
+
+        background-color: transparent;
+        font-size: 13px;
+    }
+
+    .btn-group {
+        position: fixed;
+        right: 0;
+        margin-top: 6px;
+        height: $toolbar-height;
+
+        .btn {
+            background-color: transparent;
+            border: none;
+            @include box-shadow(none);
+
+            &:focus {
+                @include box-shadow(none);
+            }
+        }
+
+        &.open {
+            .btn {
+                @include box-shadow(none);
+            }
+        }
+    }
+
+    .icon {
+        margin-left: 15px;
+    }
+
+    form {
+        display: inline-block;
+        width: 90%;
+
+        input {
+            border: none;
+            height: $toolbar-height;
+            @include box-shadow(none);
+            margin: 0;
+            padding: 0;
+            background-color: transparent;
+
+            &.input-full-width {
+                padding-left: 15px;
+
+            }
+        }
+    }
+}

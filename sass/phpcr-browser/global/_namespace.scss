@@ -1,0 +1,27 @@
+@import 'compass/css3';
+@import "bootstrap/mixins";
+
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Open Sans'), local('OpenSans'), url(../fonts/OpenSans-Regular.ttf) format('woff');
+}
+
+.ns-global {
+    & > .inner {
+        padding-top: $navbar-height;
+
+        .btn, .panel, input.form-control {
+            @include border-radius(0!important);
+        }
+
+        a {
+            cursor: pointer;
+        }
+
+        @import "repositories/_namespace.scss";
+        @import "repository/_namespace.scss";
+        @import "workspace/_namespace.scss";
+    }
+}

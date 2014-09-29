@@ -1,11 +1,13 @@
-<div class="container-padding-top">
-    <div class="col-lg-12">
-        <div class="col-sm-3" ng-repeat="(key, repository) in repositories">
-            <div class="panel panel-box repository" ng-click="repositoriesController.openRepository(repository)">
-                <div class="panel-body text-center">
-                    <span class="mega-octicon octicon-database"></span>
-                    <p class="lead">{{ repository.name }}</p>
-                    <p>{{ repository.factoryName }}</p>
+<div class="ns-repositories">
+    <div class="inner">
+        <div class="col-lg-12">
+            <div class="col-sm-3" ng-repeat="(key, repository) in repositories">
+                <div class="panel panel-box repository" ng-click="repositoriesController.openRepository(repository)">
+                    <div class="panel-body text-center">
+                        <span class="mega-octicon octicon-database"></span>
+                        <p class="lead">{{ repository.name }}</p>
+                        <p>{{ repository.factoryName }}</p>
+                    </div>
                 </div>
             </div>
         </div>

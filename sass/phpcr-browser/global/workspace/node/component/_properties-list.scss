@@ -1,0 +1,9 @@
+#properties-list {
+    position: absolute;
+    top: $toolbar-height - 1px; /* -1px to consume the border */
+    bottom: 0;
+    left: 0;
+    right: 0;
+    overflow: auto;
+    z-index: 100;
+}

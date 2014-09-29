@@ -1,5 +1,5 @@
 <div ui-view="navbar"></div>
-<div style="position: fixed; right: 5px; bottom: 40px; width: 300px;">
+<div style="position: fixed; right: 5px; bottom: 40px; width: 300px;z-index: 999999;">
     <alert
         ng-repeat="notification in $notification.notifications"
         type="{{ notification.type }}" close="$notification.close($index)"

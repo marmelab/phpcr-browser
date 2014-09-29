@@ -15,10 +15,29 @@ define([
         }
 
         this.workspace = workspace;
+        this.restangularizedElement = restangularizedElement;
     }
 
     Node.prototype.getWorkspace = function() {
         return this.workspace;
+    };
+
+    Node.prototype.moveTo = function(destination) {
+        return this.restangularizedElement.customPUT({
+            method: 'move',
+            destAbsPath: destination
+        });
+    };
+
+    Node.prototype.remove = function() {
+        return this.restangularizedElement.remove();
+    };
+
+    Node.prototype.rename = function(name) {
+        return this.restangularizedElement.customPUT({
+            method: 'rename',
+            newName: name
+        });
     };
 
     return Node;

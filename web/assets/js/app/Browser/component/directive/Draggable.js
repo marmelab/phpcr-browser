@@ -1,13 +1,16 @@
 define([], function() {
     'use strict';
     // From http://blog.parkji.co.uk/2013/08/11/native-drag-and-drop-in-angularjs.html
-    function Draggable() {
+    function Draggable($parse) {
         return {
             restrict: 'A',
             link: function(scope, element, attrs) {
-                if (!attrs.draggable) { return; }
+                if (!$parse(attrs.draggable)(scope)) {
+                    return;
+                }
 
                 var el = element[0];
+                scope.draggableData = $parse(attrs.draggableData)(scope) || {};
 
                 el.draggable = true;
 
@@ -34,7 +37,7 @@ define([], function() {
         };
     }
 
-    Draggable.$inject = [];
+    Draggable.$inject = ['$parse'];
 
     return Draggable;
 });

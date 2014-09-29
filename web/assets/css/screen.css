@@ -8202,6 +8202,284 @@ button.close {
   }
 }
 @font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: local("Open Sans"), local("OpenSans"), url(../fonts/OpenSans-Regular.ttf) format("woff");
+}
+
+/* line 12, ../../../sass/phpcr-browser/global/_namespace.scss */
+.ns-global > .inner {
+  padding-top: 40px;
+}
+/* line 15, ../../../sass/phpcr-browser/global/_namespace.scss */
+.ns-global > .inner .btn, .ns-global > .inner .panel, .ns-global > .inner input.form-control {
+  -webkit-border-radius: 0 !important;
+  -moz-border-radius: 0 !important;
+  -ms-border-radius: 0 !important;
+  -o-border-radius: 0 !important;
+  border-radius: 0 !important;
+}
+/* line 19, ../../../sass/phpcr-browser/global/_namespace.scss */
+.ns-global > .inner a {
+  cursor: pointer;
+}
+/* line 2, ../../../sass/phpcr-browser/global/repositories/_namespace.scss */
+.ns-global > .inner .ns-repositories > .inner {
+  margin-left: 0;
+  margin-right: 0;
+  /* make a row without padding */
+  position: fixed;
+  top: 40px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding-top: 10px;
+}
+/* line 15, ../../../../../../../../Library/Ruby/Gems/2.0.0/gems/bootstrap-sass-3.2.0.1/assets/stylesheets/bootstrap/mixins/_clearfix.scss */
+.ns-global > .inner .ns-repositories > .inner:before, .ns-global > .inner .ns-repositories > .inner:after {
+  content: " ";
+  display: table;
+}
+/* line 19, ../../../../../../../../Library/Ruby/Gems/2.0.0/gems/bootstrap-sass-3.2.0.1/assets/stylesheets/bootstrap/mixins/_clearfix.scss */
+.ns-global > .inner .ns-repositories > .inner:after {
+  clear: both;
+}
+/* line 2, ../../../sass/phpcr-browser/global/repository/_namespace.scss */
+.ns-global > .inner .ns-repository > .inner {
+  margin-left: 0;
+  margin-right: 0;
+  /* make a row without padding */
+  position: fixed;
+  top: 40px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding-top: 10px;
+}
+/* line 15, ../../../../../../../../Library/Ruby/Gems/2.0.0/gems/bootstrap-sass-3.2.0.1/assets/stylesheets/bootstrap/mixins/_clearfix.scss */
+.ns-global > .inner .ns-repository > .inner:before, .ns-global > .inner .ns-repository > .inner:after {
+  content: " ";
+  display: table;
+}
+/* line 19, ../../../../../../../../Library/Ruby/Gems/2.0.0/gems/bootstrap-sass-3.2.0.1/assets/stylesheets/bootstrap/mixins/_clearfix.scss */
+.ns-global > .inner .ns-repository > .inner:after {
+  clear: both;
+}
+/* line 2, ../../../sass/phpcr-browser/global/workspace/_namespace.scss */
+.ns-global > .inner .ns-workspace > .inner {
+  margin-left: 0;
+  margin-right: 0;
+  /* make a row without padding */
+  position: fixed;
+  top: 40px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+/* line 15, ../../../../../../../../Library/Ruby/Gems/2.0.0/gems/bootstrap-sass-3.2.0.1/assets/stylesheets/bootstrap/mixins/_clearfix.scss */
+.ns-global > .inner .ns-workspace > .inner:before, .ns-global > .inner .ns-workspace > .inner:after {
+  content: " ";
+  display: table;
+}
+/* line 19, ../../../../../../../../Library/Ruby/Gems/2.0.0/gems/bootstrap-sass-3.2.0.1/assets/stylesheets/bootstrap/mixins/_clearfix.scss */
+.ns-global > .inner .ns-workspace > .inner:after {
+  clear: both;
+}
+/* line 1, ../../../sass/phpcr-browser/global/workspace/component/_sidebar.scss */
+.ns-global > .inner .ns-workspace > .inner #sidebar {
+  position: relative;
+  min-height: 1px;
+  padding-left: 15px;
+  padding-right: 15px;
+  position: relative;
+  min-height: 1px;
+  padding-left: 15px;
+  padding-right: 15px;
+  position: relative;
+  min-height: 1px;
+  padding-left: 15px;
+  padding-right: 15px;
+  position: absolute;
+  top: 0;
+  bottom: 50px;
+  left: 0;
+  overflow: auto;
+  z-index: 1000;
+  padding-top: 5px;
+  border-right: 1px solid #ddd;
+}
+@media (min-width: 768px) {
+  /* line 1, ../../../sass/phpcr-browser/global/workspace/component/_sidebar.scss */
+  .ns-global > .inner .ns-workspace > .inner #sidebar {
+    float: left;
+    width: 33.3333333333%;
+  }
+}
+@media (min-width: 992px) {
+  /* line 1, ../../../sass/phpcr-browser/global/workspace/component/_sidebar.scss */
+  .ns-global > .inner .ns-workspace > .inner #sidebar {
+    float: left;
+    width: 25%;
+  }
+}
+@media (min-width: 1200px) {
+  /* line 1, ../../../sass/phpcr-browser/global/workspace/component/_sidebar.scss */
+  .ns-global > .inner .ns-workspace > .inner #sidebar {
+    float: left;
+    width: 25%;
+  }
+}
+@media (max-width: 767px) {
+  /* line 18, ../../../sass/phpcr-browser/global/workspace/component/_sidebar.scss */
+  .ns-global > .inner .ns-workspace > .inner #sidebar {
+    width: 300px;
+    display: none;
+  }
+  /* line 22, ../../../sass/phpcr-browser/global/workspace/component/_sidebar.scss */
+  .ns-global > .inner .ns-workspace > .inner #sidebar.active {
+    display: block;
+  }
+}
+/* line 1, ../../../sass/phpcr-browser/global/workspace/component/_content.scss */
+.ns-global > .inner .ns-workspace > .inner #content {
+  position: relative;
+  min-height: 1px;
+  padding-left: 15px;
+  padding-right: 15px;
+  position: relative;
+  min-height: 1px;
+  padding-left: 15px;
+  padding-right: 15px;
+  position: relative;
+  min-height: 1px;
+  padding-left: 15px;
+  padding-right: 15px;
+  position: absolute;
+  top: 0;
+  bottom: 50px;
+  right: 0;
+  overflow: auto;
+}
+@media (min-width: 768px) {
+  /* line 1, ../../../sass/phpcr-browser/global/workspace/component/_content.scss */
+  .ns-global > .inner .ns-workspace > .inner #content {
+    float: left;
+    width: 66.6666666667%;
+  }
+}
+@media (min-width: 992px) {
+  /* line 1, ../../../sass/phpcr-browser/global/workspace/component/_content.scss */
+  .ns-global > .inner .ns-workspace > .inner #content {
+    float: left;
+    width: 75%;
+  }
+}
+@media (min-width: 1200px) {
+  /* line 1, ../../../sass/phpcr-browser/global/workspace/component/_content.scss */
+  .ns-global > .inner .ns-workspace > .inner #content {
+    float: left;
+    width: 75%;
+  }
+}
+/* line 4, ../../../sass/phpcr-browser/global/workspace/node/_namespace.scss */
+.ns-global > .inner .ns-workspace .ns-node > .inner {
+  margin-left: 0;
+  margin-right: 0;
+  /* make a row without padding */
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+/* line 15, ../../../../../../../../Library/Ruby/Gems/2.0.0/gems/bootstrap-sass-3.2.0.1/assets/stylesheets/bootstrap/mixins/_clearfix.scss */
+.ns-global > .inner .ns-workspace .ns-node > .inner:before, .ns-global > .inner .ns-workspace .ns-node > .inner:after {
+  content: " ";
+  display: table;
+}
+/* line 19, ../../../../../../../../Library/Ruby/Gems/2.0.0/gems/bootstrap-sass-3.2.0.1/assets/stylesheets/bootstrap/mixins/_clearfix.scss */
+.ns-global > .inner .ns-workspace .ns-node > .inner:after {
+  clear: both;
+}
+/* line 1, ../../../sass/phpcr-browser/global/workspace/node/component/_toolbar.scss */
+.ns-global > .inner .ns-workspace .ns-node > .inner #toolbar {
+  position: fixed;
+  width: 100%;
+  height: 40px;
+  line-height: 40px;
+  background-color: #f5f5f5;
+  border-bottom: 1px solid #ccc;
+  z-index: 200;
+}
+/* line 11, ../../../sass/phpcr-browser/global/workspace/node/component/_toolbar.scss */
+.ns-global > .inner .ns-workspace .ns-node > .inner #toolbar .breadcrumb {
+  display: inline-block;
+  padding: 0;
+  margin: 0 30px 0 15px;
+  background-color: transparent;
+  font-size: 13px;
+}
+/* line 20, ../../../sass/phpcr-browser/global/workspace/node/component/_toolbar.scss */
+.ns-global > .inner .ns-workspace .ns-node > .inner #toolbar .btn-group {
+  position: fixed;
+  right: 0;
+  margin-top: 6px;
+  height: 40px;
+}
+/* line 26, ../../../sass/phpcr-browser/global/workspace/node/component/_toolbar.scss */
+.ns-global > .inner .ns-workspace .ns-node > .inner #toolbar .btn-group .btn {
+  background-color: transparent;
+  border: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+/* line 31, ../../../sass/phpcr-browser/global/workspace/node/component/_toolbar.scss */
+.ns-global > .inner .ns-workspace .ns-node > .inner #toolbar .btn-group .btn:focus {
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+/* line 37, ../../../sass/phpcr-browser/global/workspace/node/component/_toolbar.scss */
+.ns-global > .inner .ns-workspace .ns-node > .inner #toolbar .btn-group.open .btn {
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+/* line 43, ../../../sass/phpcr-browser/global/workspace/node/component/_toolbar.scss */
+.ns-global > .inner .ns-workspace .ns-node > .inner #toolbar .icon {
+  margin-left: 15px;
+}
+/* line 47, ../../../sass/phpcr-browser/global/workspace/node/component/_toolbar.scss */
+.ns-global > .inner .ns-workspace .ns-node > .inner #toolbar form {
+  display: inline-block;
+  width: 90%;
+}
+/* line 51, ../../../sass/phpcr-browser/global/workspace/node/component/_toolbar.scss */
+.ns-global > .inner .ns-workspace .ns-node > .inner #toolbar form input {
+  border: none;
+  height: 40px;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  margin: 0;
+  padding: 0;
+  background-color: transparent;
+}
+/* line 59, ../../../sass/phpcr-browser/global/workspace/node/component/_toolbar.scss */
+.ns-global > .inner .ns-workspace .ns-node > .inner #toolbar form input.input-full-width {
+  padding-left: 15px;
+}
+/* line 1, ../../../sass/phpcr-browser/global/workspace/node/component/_properties-list.scss */
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list {
+  position: absolute;
+  top: 39px;
+  /* -1px to consume the border */
+  bottom: 0;
+  left: 0;
+  right: 0;
+  overflow: auto;
+  z-index: 100;
+}
+
+@font-face {
   font-family: 'octicons';
   src: url(/assets/fonts/octicons.eot?#iefix) format("embedded-opentype"), url(/assets/fonts/octicons.woff) format("woff"), url(/assets/fonts/octicons.ttf) format("truetype"), url(/assets/fonts/octicons.svg#octicons) format("svg");
   font-weight: normal;
@@ -9316,170 +9594,6 @@ button.close {
 }
 
 /* ⚡ */
-/* line 4, ../../../sass/phpcr-browser/scaffolding.scss */
-body {
-  padding-top: 40px;
-}
-
-@font-face {
-  font-family: 'Open Sans';
-  font-style: normal;
-  font-weight: 400;
-  src: local("Open Sans"), local("OpenSans"), url(../fonts/OpenSans-Regular.ttf) format("woff");
-}
-
-/* line 15, ../../../sass/phpcr-browser/scaffolding.scss */
-.btn, .panel, input.form-control {
-  -webkit-border-radius: 0 !important;
-  -moz-border-radius: 0 !important;
-  -ms-border-radius: 0 !important;
-  -o-border-radius: 0 !important;
-  border-radius: 0 !important;
-}
-
-/* line 19, ../../../sass/phpcr-browser/scaffolding.scss */
-a {
-  cursor: pointer;
-}
-
-@media (min-width: 768px) {
-  /* line 24, ../../../sass/phpcr-browser/scaffolding.scss */
-  #sidebar {
-    position: relative;
-    min-height: 1px;
-    padding-left: 15px;
-    padding-right: 15px;
-    position: relative;
-    min-height: 1px;
-    padding-left: 15px;
-    padding-right: 15px;
-    position: relative;
-    min-height: 1px;
-    padding-left: 15px;
-    padding-right: 15px;
-    display: block;
-    overflow-x: auto;
-    overflow-y: auto;
-    position: fixed;
-    top: 40px;
-    left: 0;
-    bottom: 50px;
-    z-index: 1000;
-    border-right: 1px solid #ddd;
-    padding-top: 5px;
-  }
-}
-@media (min-width: 768px) and (min-width: 768px) {
-  /* line 24, ../../../sass/phpcr-browser/scaffolding.scss */
-  #sidebar {
-    float: left;
-    width: 33.3333333333%;
-  }
-}
-@media (min-width: 768px) and (min-width: 992px) {
-  /* line 24, ../../../sass/phpcr-browser/scaffolding.scss */
-  #sidebar {
-    float: left;
-    width: 25%;
-  }
-}
-@media (min-width: 768px) and (min-width: 1200px) {
-  /* line 24, ../../../sass/phpcr-browser/scaffolding.scss */
-  #sidebar {
-    float: left;
-    width: 25%;
-  }
-}
-
-@media (max-width: 767px) {
-  /* line 43, ../../../sass/phpcr-browser/scaffolding.scss */
-  #sidebar {
-    width: 300px;
-    display: none;
-    overflow-x: auto;
-    overflow-y: auto;
-    position: fixed;
-    top: 40px;
-    left: 0;
-    bottom: 50px;
-    z-index: 1000;
-    border-right: 1px solid #ddd;
-    padding-top: 5px;
-    background-color: #f7f7f7;
-    padding-left: 5px;
-  }
-  /* line 58, ../../../sass/phpcr-browser/scaffolding.scss */
-  #sidebar.active {
-    display: block;
-  }
-}
-/* line 64, ../../../sass/phpcr-browser/scaffolding.scss */
-#content {
-  position: relative;
-  min-height: 1px;
-  padding-left: 15px;
-  padding-right: 15px;
-  position: relative;
-  min-height: 1px;
-  padding-left: 15px;
-  padding-right: 15px;
-  position: relative;
-  min-height: 1px;
-  padding-left: 15px;
-  padding-right: 15px;
-  overflow-x: hidden;
-  overflow-y: auto;
-  right: 0;
-  max-height: 100%;
-  background-color: transparent;
-  padding: 0;
-  height: 100%;
-}
-@media (min-width: 768px) {
-  /* line 64, ../../../sass/phpcr-browser/scaffolding.scss */
-  #content {
-    float: left;
-    width: 66.6666666667%;
-  }
-}
-@media (min-width: 992px) {
-  /* line 64, ../../../sass/phpcr-browser/scaffolding.scss */
-  #content {
-    float: left;
-    width: 75%;
-  }
-}
-@media (min-width: 1200px) {
-  /* line 64, ../../../sass/phpcr-browser/scaffolding.scss */
-  #content {
-    float: left;
-    width: 75%;
-  }
-}
-@media (min-width: 768px) {
-  /* line 64, ../../../sass/phpcr-browser/scaffolding.scss */
-  #content {
-    margin-left: 33.3333333333%;
-  }
-}
-@media (min-width: 992px) {
-  /* line 64, ../../../sass/phpcr-browser/scaffolding.scss */
-  #content {
-    margin-left: 25%;
-  }
-}
-@media (min-width: 1200px) {
-  /* line 64, ../../../sass/phpcr-browser/scaffolding.scss */
-  #content {
-    margin-left: 25%;
-  }
-}
-
-/* line 80, ../../../sass/phpcr-browser/scaffolding.scss */
-.container-padding-top {
-  padding-top: 10px;
-}
-
 /* line 2, ../../../sass/phpcr-browser/tables.scss */
 table thead {
   border-top: 1px solid #dee3ea;
@@ -9588,7 +9702,37 @@ table tbody tr:first-child td {
 #tree ul li.active > a {
   color: #ff7373;
 }
-/* line 40, ../../../sass/phpcr-browser/tree.scss */
+/* line 41, ../../../sass/phpcr-browser/tree.scss */
+#tree ul li > div span.drag, #tree ul li > div span.over {
+  display: none;
+}
+/* line 45, ../../../sass/phpcr-browser/tree.scss */
+#tree ul li > div span.over {
+  position: absolute;
+  right: 0;
+  top: 5px;
+}
+/* line 52, ../../../sass/phpcr-browser/tree.scss */
+#tree ul li > div.drag span.drag {
+  display: inline;
+}
+/* line 58, ../../../sass/phpcr-browser/tree.scss */
+#tree ul li > div.over span.over {
+  display: inline;
+}
+/* line 63, ../../../sass/phpcr-browser/tree.scss */
+#tree ul li > div .octicon-plus {
+  display: none;
+}
+/* line 67, ../../../sass/phpcr-browser/tree.scss */
+#tree ul li > div .octicon-dash, #tree ul li > div .octicon-plus {
+  cursor: pointer;
+}
+/* line 72, ../../../sass/phpcr-browser/tree.scss */
+#tree ul li > div:hover .octicon-plus {
+  display: inline;
+}
+/* line 78, ../../../sass/phpcr-browser/tree.scss */
 #tree ul li a {
   display: inline-block;
   /*border: 1px solid #ccc;*/
@@ -9598,44 +9742,48 @@ table tbody tr:first-child td {
   font-size: 13px;
   cursor: pointer;
 }
-/* line 49, ../../../sass/phpcr-browser/tree.scss */
+/* line 87, ../../../sass/phpcr-browser/tree.scss */
 #tree ul li a.active:hover {
   color: #ff7373;
   text-decoration: none;
 }
-/* line 54, ../../../sass/phpcr-browser/tree.scss */
+/* line 92, ../../../sass/phpcr-browser/tree.scss */
+#tree ul li a .hover {
+  display: none;
+}
+/* line 96, ../../../sass/phpcr-browser/tree.scss */
 #tree ul li a:hover {
   text-decoration: underline;
 }
-/* line 57, ../../../sass/phpcr-browser/tree.scss */
+/* line 99, ../../../sass/phpcr-browser/tree.scss */
 #tree ul li a:hover + ul li a {
   text-decoration: underline;
 }
-/* line 63, ../../../sass/phpcr-browser/tree.scss */
+/* line 105, ../../../sass/phpcr-browser/tree.scss */
 #tree ul li a:hover + ul li::after, #tree ul li a:hover + ul::before, #tree ul li a:hover + ul ul::before {
   border-color: #94a0b4;
 }
-/* line 69, ../../../sass/phpcr-browser/tree.scss */
+/* line 111, ../../../sass/phpcr-browser/tree.scss */
 #tree ul li .glyphicon-folder-open, #tree ul li .glyphicon-folder-close {
   cursor: pointer;
   width: 15px;
 }
 
-/* line 78, ../../../sass/phpcr-browser/tree.scss */
+/* line 120, ../../../sass/phpcr-browser/tree.scss */
 .node .node-add {
   font-size: 6pt;
   visibility: hidden;
   cursor: pointer;
 }
-/* line 83, ../../../sass/phpcr-browser/tree.scss */
+/* line 125, ../../../sass/phpcr-browser/tree.scss */
 .node .node-add.focus {
   visibility: visible;
 }
-/* line 89, ../../../sass/phpcr-browser/tree.scss */
+/* line 131, ../../../sass/phpcr-browser/tree.scss */
 .node:hover .node-add {
   visibility: visible;
 }
-/* line 94, ../../../sass/phpcr-browser/tree.scss */
+/* line 136, ../../../sass/phpcr-browser/tree.scss */
 .node .active {
   color: #f18a66 !important;
 }
@@ -9764,11 +9912,6 @@ table tbody tr:first-child td {
   color: #f18a66;
 }
 
-/* line 33, ../../../sass/phpcr-browser/dragdrop.scss */
-ul.over {
-  background-color: #f18a66;
-}
-
 /* line 3, ../../../sass/phpcr-browser/panels.scss */
 .panel {
   /**
@@ -9819,38 +9962,36 @@ ul.over {
   background-color: #fff;
   border: 1px solid #dddddd;
   border-left: none;
-  margin-bottom: 87px;
-  margin-top: 37px;
 }
-/* line 15, ../../../sass/phpcr-browser/properties.scss */
+/* line 13, ../../../sass/phpcr-browser/properties.scss */
 #properties thead {
   border-bottom: 2px solid #ddd;
 }
-/* line 17, ../../../sass/phpcr-browser/properties.scss */
+/* line 15, ../../../sass/phpcr-browser/properties.scss */
 #properties thead tr th:nth-child(2) {
   width: 25%;
 }
-/* line 21, ../../../sass/phpcr-browser/properties.scss */
+/* line 19, ../../../sass/phpcr-browser/properties.scss */
 #properties thead tr th:nth-child(3) {
   width: 15%;
 }
-/* line 25, ../../../sass/phpcr-browser/properties.scss */
+/* line 23, ../../../sass/phpcr-browser/properties.scss */
 #properties thead tr th:first-child {
   width: 30px;
 }
-/* line 33, ../../../sass/phpcr-browser/properties.scss */
+/* line 31, ../../../sass/phpcr-browser/properties.scss */
 #properties tbody {
   overflow: auto;
 }
-/* line 37, ../../../sass/phpcr-browser/properties.scss */
+/* line 35, ../../../sass/phpcr-browser/properties.scss */
 #properties tr {
   cursor: pointer;
 }
-/* line 40, ../../../sass/phpcr-browser/properties.scss */
+/* line 38, ../../../sass/phpcr-browser/properties.scss */
 #properties tr:first-child td {
   border-top: none;
 }
-/* line 44, ../../../sass/phpcr-browser/properties.scss */
+/* line 42, ../../../sass/phpcr-browser/properties.scss */
 #properties tr td:nth-child(2) {
   /* Name column */
   width: 20%;
@@ -9858,67 +9999,67 @@ ul.over {
   text-align: right;
   font-size: 10pt;
 }
-/* line 52, ../../../sass/phpcr-browser/properties.scss */
+/* line 50, ../../../sass/phpcr-browser/properties.scss */
 #properties tr td:nth-child(3) {
   font-size: 10pt;
 }
-/* line 56, ../../../sass/phpcr-browser/properties.scss */
+/* line 54, ../../../sass/phpcr-browser/properties.scss */
 #properties tr td:nth-child(4) {
   /* Type column */
   width: 12%;
   vertical-align: middle;
   text-align: center;
 }
-/* line 63, ../../../sass/phpcr-browser/properties.scss */
+/* line 61, ../../../sass/phpcr-browser/properties.scss */
 #properties tr td:last-child {
   word-wrap: break-word;
   vertical-align: middle;
   word-break: break-word;
 }
-/* line 69, ../../../sass/phpcr-browser/properties.scss */
+/* line 67, ../../../sass/phpcr-browser/properties.scss */
 #properties tr td:first-child {
   width: 30px;
   text-align: center;
   vertical-align: middle;
   font-size: 12px;
 }
-/* line 74, ../../../sass/phpcr-browser/properties.scss */
+/* line 72, ../../../sass/phpcr-browser/properties.scss */
 #properties tr td:first-child .octicon {
   visibility: hidden;
 }
-/* line 81, ../../../sass/phpcr-browser/properties.scss */
+/* line 79, ../../../sass/phpcr-browser/properties.scss */
 #properties tr:hover td:first-child .octicon {
   visibility: visible;
 }
-/* line 88, ../../../sass/phpcr-browser/properties.scss */
+/* line 86, ../../../sass/phpcr-browser/properties.scss */
 #properties table {
   table-layout: fixed;
 }
-/* line 91, ../../../sass/phpcr-browser/properties.scss */
+/* line 89, ../../../sass/phpcr-browser/properties.scss */
 #properties table tr th {
   height: 25px;
   padding: 0;
   font-size: 8pt;
   vertical-align: middle;
 }
-/* line 98, ../../../sass/phpcr-browser/properties.scss */
+/* line 96, ../../../sass/phpcr-browser/properties.scss */
 #properties table tr td:first-child {
   width: 20%;
   vertical-align: middle;
 }
-/* line 103, ../../../sass/phpcr-browser/properties.scss */
+/* line 101, ../../../sass/phpcr-browser/properties.scss */
 #properties table tr td {
   text-align: left !important;
 }
-/* line 106, ../../../sass/phpcr-browser/properties.scss */
+/* line 104, ../../../sass/phpcr-browser/properties.scss */
 #properties table tr td .octicon {
   display: none;
 }
-/* line 111, ../../../sass/phpcr-browser/properties.scss */
+/* line 109, ../../../sass/phpcr-browser/properties.scss */
 #properties table tr td:hover .octicon {
   display: inherit;
 }
-/* line 116, ../../../sass/phpcr-browser/properties.scss */
+/* line 114, ../../../sass/phpcr-browser/properties.scss */
 #properties table tr td a:hover {
   text-decoration: none;
 }
@@ -9953,71 +10094,63 @@ ul.over {
   background-color: #d0d0d0;
 }
 
-/* line 126, ../../../sass/phpcr-browser/properties.scss */
-#properties-header {
-  height: 37px;
-  line-height: 37px;
-  background-color: #eee;
-  border-left: 1px solid #ddd;
-  border-bottom: 1px solid #ddd;
-  border-left: none;
-  overflow: hidden;
-  position: fixed;
-  width: 100%;
-  z-index: 999;
+/* line 124, ../../../sass/phpcr-browser/properties.scss */
+#node-toolbar {
+  height: 40px;
+  line-height: 40px;
 }
-/* line 138, ../../../sass/phpcr-browser/properties.scss */
-#properties-header .breadcrumb {
-  position: fixed;
+/* line 129, ../../../sass/phpcr-browser/properties.scss */
+#node-toolbar .breadcrumb {
+  position: relative;
   padding: 0;
-  padding-left: 10px;
-  font-size: 10pt;
-  line-height: 37px;
   margin: 0;
+  font-size: 13px;
   white-space: nowrap;
   overflow: hidden;
   background-color: transparent;
 }
+/* line 138, ../../../sass/phpcr-browser/properties.scss */
+#node-toolbar .breadcrumb a {
+  color: #000;
+}
+/* line 142, ../../../sass/phpcr-browser/properties.scss */
+#node-toolbar .breadcrumb span.active {
+  color: #f18a66;
+  cursor: default;
+}
 /* line 149, ../../../sass/phpcr-browser/properties.scss */
-#properties-header .breadcrumb a {
-  color: #000000;
-  white-space: nowrap;
-  text-overflow: ellipsis;
+#node-toolbar #action.btn-group .btn {
+  background-color: transparent;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  border: none;
 }
 /* line 156, ../../../sass/phpcr-browser/properties.scss */
-#properties-header .toolbar {
-  margin-top: -2px;
-  position: fixed;
-  right: 10px;
-}
-/* line 160, ../../../sass/phpcr-browser/properties.scss */
-#properties-header .toolbar .btn {
-  padding: 2px 10px;
-}
-/* line 164, ../../../sass/phpcr-browser/properties.scss */
-#properties-header .toolbar .btn.validate {
-  margin-top: 12px;
-  padding: 4px 10px;
-  padding-top: 3px;
+#node-toolbar #action.btn-group.open .btn {
+  background-color: transparent;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
 }
 
-/* line 172, ../../../sass/phpcr-browser/properties.scss */
+/* line 164, ../../../sass/phpcr-browser/properties.scss */
 .property-item .property-options .btn-group {
   visibility: hidden;
 }
 
-/* line 176, ../../../sass/phpcr-browser/properties.scss */
+/* line 168, ../../../sass/phpcr-browser/properties.scss */
 .property-item .property-options .btn-group a {
   color: #bbb;
 }
 
-/* line 180, ../../../sass/phpcr-browser/properties.scss */
+/* line 172, ../../../sass/phpcr-browser/properties.scss */
 .property-item .property-options .btn-group a:hover {
   color: #000;
   text-decoration: none;
 }
 
-/* line 185, ../../../sass/phpcr-browser/properties.scss */
+/* line 177, ../../../sass/phpcr-browser/properties.scss */
 .property-item:hover .property-options .btn-group {
   visibility: visible;
   display: block;

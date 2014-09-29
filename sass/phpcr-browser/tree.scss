@@ -37,6 +37,44 @@
                 color:#ff7373;
             }
 
+            & > div {
+                span.drag, span.over {
+                    display: none;
+                }
+
+                span.over {
+                    position: absolute;
+                    right: 0;
+                    top: 5px;
+                }
+
+                &.drag {
+                    span.drag {
+                        display: inline;
+                    }
+                }
+
+                &.over {
+                    span.over {
+                        display: inline;
+                    }
+                }
+
+                .octicon-plus {
+                    display: none;
+                }
+
+                .octicon-dash, .octicon-plus {
+                    cursor: pointer;
+                }
+
+                &:hover {
+                    .octicon-plus {
+                        display: inline;
+                    }
+                }
+            }
+
             a {
                 display: inline-block;
                 /*border: 1px solid #ccc;*/
@@ -49,6 +87,10 @@
                 &.active:hover{
                     color:#ff7373;
                     text-decoration: none;
+                }
+
+                .hover {
+                    display: none;
                 }
 
                 &:hover {

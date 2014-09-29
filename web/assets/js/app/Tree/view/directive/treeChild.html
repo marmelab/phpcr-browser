@@ -1,25 +1,44 @@
 <li ng-class="{ collapsed: tree.collapsed, active: tree.active }">
-    <span class="glyphicon glyphicon-refresh"
-        ng-if="tree.pending"
+    <div droppable
+        droppable-data="{ tree: tree }"
+        draggable="tree.path !== '/'"
+        draggable-data="{ tree: tree }"
+        id="{{ tree.path }}"
     >
-    </span>
-    <span class="glyphicon glyphicon-folder-close"
-        ng-click="treeChildViewController.toggleCollapsed($event, tree)"
-        ng-show="tree.hasChildren && tree.collapsed && !tree.pending"
-    >
-    </span>
-    <span class="glyphicon glyphicon-folder-open"
-        ng-click="treeChildViewController.toggleCollapsed($event, tree)"
-        ng-show="tree.hasChildren && !tree.collapsed && !tree.pending"
-    >
-    </span>
-    <span class="octicon octicon-file-text"
-        ng-show="!(tree.hasChildren || tree.pending)"
-    >
-    </span>
-    <a href class="name" ng-click="treeChildViewController.toggleCollapsed($event, tree)">
-        <span ng-if="!(!tree._parent.name && tree._parent.children.length === 1)">{{ tree.name }}</span>
-        <span ng-if="!tree._parent.name && tree._parent.children.length === 1">/</span>
-    </a>
-    <tree-view ng-if="!tree.collapsed && tree.children.length > 0" tree="tree"></tree-view>
+        <span class="glyphicon glyphicon-refresh"
+            ng-if="tree.pending"
+        >
+        </span>
+        <span class="glyphicon glyphicon-folder-close"
+            ng-click="treeChildViewController.toggleCollapsed($event, tree)"
+            ng-if="tree.hasChildren && tree.collapsed && !tree.pending"
+        >
+        </span>
+        <span class="glyphicon glyphicon-folder-open"
+            ng-click="treeChildViewController.toggleCollapsed($event, tree)"
+            ng-if="tree.hasChildren && !tree.collapsed && !tree.pending"
+        >
+        </span>
+        <span class="octicon octicon-file-text"
+            ng-if="!(tree.hasChildren || tree.pending)"
+        >
+        </span>
+        <a href class="name"
+            ng-click="treeChildViewController.toggleCollapsed($event, tree)"
+        >
+            <span ng-if="!(!tree._parent.name && tree._parent.children.length === 1)">{{ tree.name }}</span>
+            <span ng-if="!tree._parent.name && tree._parent.children.length === 1">/</span>
+            <span class="drag octicon octicon-hourglass"></span>
+            <span class="over octicon octicon-triangle-left"></span>
+        </a>
+        <span class="octicon octicon-plus"
+            ng-if="!tree.nodeCreationFormDisplayed"
+            ng-click="tree.nodeCreationFormDisplayed = !tree.nodeCreationFormDisplayed"
+        ></span>
+        <span class="octicon octicon-dash"
+            ng-if="tree.nodeCreationFormDisplayed"
+            ng-click="tree.nodeCreationFormDisplayed = !tree.nodeCreationFormDisplayed"
+        ></span>
+    </div>
+    <tree-view ng-if="(!tree.collapsed && tree.children.length > 0) || tree.nodeCreationFormDisplayed" tree="tree"></tree-view>
 </li>

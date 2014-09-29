@@ -1,3 +1,8 @@
 <ul class="tree">
+    <li ng-if="tree.nodeCreationFormDisplayed" node-creation-form>
+        <form>
+            <input type="text" placeholder="Name"/>
+        </form>
+    </li>
     <tree-child-view ng-repeat="child in tree.children" tree="child"></tree-child-view>
 </ul>
