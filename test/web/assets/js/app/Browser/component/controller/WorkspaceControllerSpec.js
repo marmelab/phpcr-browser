@@ -86,7 +86,7 @@ define([
 
             var selectedNode = {
                 path: jasmine.createSpy('path').andReturn('/root/test'),
-                attr: jasmine.createSpy('attr'),
+                attr: jasmine.createSpy('attr').andReturn(true),
                 data: jasmine.createSpy('data').andReturn({
                     hasChildren: true
                 }),
@@ -96,37 +96,39 @@ define([
             workspaceController.treeClick(selectedNode);
 
             expect(selectedNode.path).toHaveBeenCalled();
-            expect(selectedNode.attr.calls[0].args).toEqual(['pending', true]);
+            expect(selectedNode.attr.calls[0].args).toEqual(['hasChildren']);
+            expect(selectedNode.attr.calls[1].args).toEqual(['pending', true]);
             expect(workspaceController.$progress.start).toHaveBeenCalled();
             expect(workspaceController.$graph.find).toHaveBeenCalledWith({
                 repository: 'test',
                 workspace: 'default',
                 path: '/test'
-            });
+            }, { cache : true });
             expect(workspaceController.$treeFactory.patchChildren).toHaveBeenCalledWith(selectedNode, [ { name: 'titi'} ]);
             expect(workspaceController.$state.go).toHaveBeenCalledWith('node', {
                 repository: 'test',
                 workspace: 'default',
                 path: '/test'
             });
-            expect(selectedNode.attr.calls[1].args).toEqual(['pending', false]);
+            expect(selectedNode.attr.calls[2].args).toEqual(['pending', false]);
             expect(deferred.resolve).toHaveBeenCalled();
         });
 
-        it('should only call $state.go when treeClick is called and the node\'s children are already loaded', function() {
+        it('should call $$patchChildren and then $state.go when treeClick is called', function() {
             var deferred = {
                 promise: {},
                 resolve: jasmine.createSpy('resolve'),
                 reject: jasmine.createSpy('reject')
             };
 
-            spyOn(workspaceController.$treeFactory, 'patchChildren');
             spyOn(workspaceController.$q, 'defer').andReturn(deferred);
             spyOn(workspaceController.$progress, 'start').andCallThrough();
+            spyOn(workspaceController.$progress, 'done').andCallThrough();
+            spyOn(workspaceController, '$$patchChildren').andCallThrough();
 
             var selectedNode = {
                 path: jasmine.createSpy('path').andReturn('/root/test'),
-                attr: jasmine.createSpy('attr'),
+                attr: jasmine.createSpy('attr').andReturn(true),
                 data: jasmine.createSpy('data').andReturn({
                     hasChildren: true
                 }),
@@ -134,17 +136,17 @@ define([
             };
 
             workspaceController.treeClick(selectedNode);
+            workspaceController.$scope.$digest();
 
             expect(selectedNode.path).toHaveBeenCalled();
-            expect(selectedNode.attr).not.toHaveBeenCalled();
-            expect(workspaceController.$progress.start).not.toHaveBeenCalled();
-            expect(workspaceController.$graph.find).not.toHaveBeenCalled();
-            expect(workspaceController.$treeFactory.patchChildren).not.toHaveBeenCalled();
+            expect(workspaceController.$progress.start).toHaveBeenCalled();
+            expect(workspaceController.$$patchChildren).toHaveBeenCalled();
             expect(workspaceController.$state.go).toHaveBeenCalledWith('node', {
                 repository: 'test',
                 workspace: 'default',
                 path: '/test'
             });
+            expect(workspaceController.$progress.done).toHaveBeenCalled();
             expect(deferred.resolve).toHaveBeenCalled();
         });
 

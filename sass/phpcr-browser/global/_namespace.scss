@@ -20,6 +20,18 @@
             cursor: pointer;
         }
 
+        input.input-transparent, input.input-transparent:focus {
+            border: none;
+            @include box-shadow(none);
+            margin: 0;
+            padding: 0;
+            background-color: transparent;
+        }
+
+        .inline-block {
+            display: inline-block;
+        }
+
         @import "repositories/_namespace.scss";
         @import "repository/_namespace.scss";
         @import "workspace/_namespace.scss";

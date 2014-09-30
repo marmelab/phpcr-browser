@@ -13,6 +13,14 @@ define('mock/TreeFactory', [], function() {
 
             parent: function() {
                 return undefined;
+            },
+
+            registerListener: function() {
+
+            },
+
+            attr: function() {
+
             }
         }
     };

@@ -1,8 +1,15 @@
 <ul class="tree">
     <li ng-if="tree.nodeCreationFormDisplayed" node-creation-form>
-        <form>
-            <input type="text" placeholder="Name"/>
+        <span class="octicon octicon-file-text"></span>
+        <form class="inline" ng-submit="nodeCreationFormController.createNode()">
+            <input type="text" class="form-control input-transparent empty-node" placeholder="{{ 'Name' | translate }}"
+                ng-model="nodeCreationForm.name"
+                ng-blur="nodeCreationFormController.hideNodeCreationForm()"
+                ui-keydown="{esc: 'nodeCreationFormController.hideNodeCreationForm()'}"
+                focus
+            />
         </form>
     </li>
-    <tree-child-view ng-repeat="child in tree.children" tree="child"></tree-child-view>
+    <tree-child-view ng-repeat="child in tree.children"  tree="child">
+    </tree-child-view>
 </ul>

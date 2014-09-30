@@ -19,7 +19,7 @@
     "angular-translate-storage-cookie": "2.1.0",
     "angular-cookies": "1.2.1",
     "angular-bootstrap": "~0.11.0",
-    "ng-tree": "~0.1.0",
+    "ng-tree": "~0.1.1",
     "nprogress": "~0.1.6",
     "famous-angular": "~0.4.0"
   },

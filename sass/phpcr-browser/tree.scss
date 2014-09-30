@@ -33,7 +33,7 @@
                 border-top: 1px solid #ccc;
             }
 
-            &.active > a {
+            &.active > div > a {
                 color:#ff7373;
             }
 
@@ -84,11 +84,6 @@
                 font-size: 13px;
                 cursor: pointer;
 
-                &.active:hover{
-                    color:#ff7373;
-                    text-decoration: none;
-                }
-
                 .hover {
                     display: none;
                 }
@@ -116,24 +111,8 @@
     }
 }
 
-.node {
-    .node-add {
-        font-size: 6pt;
-        visibility: hidden;
-        cursor: pointer;
-
-        &.focus {
-            visibility: visible;
-        }
-    }
-
-        &:hover {
-            .node-add {
-                visibility: visible;
-            }
-        }
-
-    .active {
-        color: $brand-primary!important;
-    }
+.empty-node {
+    position: absolute;
+    top: -6px;
+    left: 20px;
 }

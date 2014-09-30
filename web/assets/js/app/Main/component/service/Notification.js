@@ -63,6 +63,21 @@ define([], function () {
         return this.$$dispatch('warning', message);
     };
 
+    Notification.prototype.errorFromResponse = function(err) {
+        var message = 'An error occured',
+            type = 'error'
+        ;
+
+        if (err.status === 423) {
+            message = 'The resource is locked';
+            type = 'warning';
+        } else if (err.data.message) {
+            message = err.data.message;
+        }
+
+        return this[type](message);
+    };
+
     Notification.$inject = ['$translate', '$timeout'];
 
     return Notification;

@@ -3,13 +3,14 @@ define([
 ], function(angular) {
     'use strict';
 
-    function NodeController($scope, $state, $graph, $search, $fuzzyFilter, $notification) {
+    function NodeController($scope, $state, $graph, $search, $fuzzyFilter, $notification, $treeFactory) {
         this.$scope = $scope;
         this.$state = $state;
         this.$graph = $graph;
         this.$search = $search;
         this.$fuzzyFilter = $fuzzyFilter;
         this.$notification = $notification;
+        this.$treeFactory = $treeFactory;
 
         this.$$init();
     }
@@ -68,6 +69,10 @@ define([
     };
 
     NodeController.prototype.showNodeRenameForm = function() {
+        if (this.$scope.node.path === '/') {
+            return;
+        }
+
         this.$scope.nodeRenameFormDisplayed = true;
     };
 
@@ -89,20 +94,23 @@ define([
 
         this.$scope.node.rename(this.$scope.nodeRenameForm.name).then(function() {
             self.$notification.success('Node renamed');
+
+            // We find the node in the tree to update its name and path
+            var currentTree = self.$scope.tree.find('/root' + self.$scope.node.path);
+            currentTree.attr('name', self.$scope.nodeRenameForm.name);
+
+            self.$treeFactory.walkChildren(currentTree, function(tree) {
+                tree.attr('path', tree.path().replace('/root', ''));
+            });
+
             self.hideNodeRenameForm();
+            self.$state.go('node', {
+                repository: self.$state.params.repository,
+                workspace: self.$state.params.workspace,
+                path: currentTree.attr('path')
+            })
         }, function(err) {
-            var message = 'An error occured',
-                type = 'error'
-            ;
-
-            if (err.status === 423) {
-                message = 'The resource is locked';
-                type = 'warning';
-            } else if (err.data.message) {
-                message = err.data.message;
-            }
-
-            self.$notification[type](message);
+            self.$notification.errorFromResponse(err);
         });
     };
 
@@ -131,11 +139,12 @@ define([
         this.$search = undefined;
         this.$fuzzyFilter = undefined;
         this.$notification = undefined;
+        this.$treeFactory = undefined;
         this.search = undefined;
         this.propertyTypes = undefined;
     };
 
-    NodeController.$inject = ['$scope', '$state', '$graph', '$search', '$fuzzyFilter', '$notification'];
+    NodeController.$inject = ['$scope', '$state', '$graph', '$search', '$fuzzyFilter', '$notification', '$treeFactory'];
 
     return NodeController;
 });

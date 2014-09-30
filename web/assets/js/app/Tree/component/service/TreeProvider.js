@@ -3,6 +3,8 @@ define([
 ], function(angular) {
     'use strict';
 
+    var lastTree = null;
+
     function Tree(provider, $q, $rootScope, $state, $treeFactory, $graph, $progress) {
         this.provider = provider;
         this.$q = $q;
@@ -70,6 +72,29 @@ define([
             })
         ;
         });
+
+        tree.registerListener(tree.HOOK_PRE_APPEND, function(next, newNode) {
+            var path = this.path().replace('/root', '');
+            if (path === '') {
+                path = '/';
+            }
+
+            self.$progress.start();
+
+            self.$graph.find({
+                repository: self.$state.params.repository,
+                workspace: self.$state.params.workspace,
+                path: path
+            }).then(function(node) {
+                return node.create(newNode.name());
+            }).then(function() {
+                next();
+            }, next)
+            .finally(function() {
+                self.$progress.done();
+            })
+        ;
+        });
         return tree;
     };
 
@@ -91,13 +116,12 @@ define([
                 var current = tree.find('/root' + findParams.path);
                 if (current) {
                     self.$treeFactory.activate(current);
-
                     do {
-                        current.toggle('collapsed');
+                        current.attr('collapsed', false);
                     } while (current = current.parent());
                 } else {
                     var root = tree.find('/root');
-                    root.toggle('collapsed');
+                    root.attr('collapsed', false);
                     self.$treeFactory.activate(root);
                 }
 
@@ -118,6 +142,7 @@ define([
             if (toState.name === 'node' &&
                 (fromParams.repository !== toParams.repository || fromParams.workspace !== toParams.workspace)
             ) {
+                lastTree = null;
                 var path = toParams.path === null || toParams.path.length === 0 ? '/' : toParams.path;
                 self.$$create({
                     repository: toParams.repository,
@@ -125,9 +150,17 @@ define([
                     path: path
                 });
             } else if (toState.name === 'node' && self.tree !== null) {
-                self.$treeFactory.activate(
-                    self.tree.find('/root' + (toParams.path === '/' ? '' : toParams.path))
-                );
+                var tree = self.tree.find('/root' + (toParams.path === '/' ? '' : toParams.path));
+
+                if (!tree) {
+                    return self.$$create({
+                        repository: toParams.repository,
+                        workspace: toParams.workspace,
+                        path: (toParams.path === '/' ? '' : toParams.path)
+                    });
+                }
+
+                self.$treeFactory.activate(tree);
             }
         });
     }
@@ -149,12 +182,17 @@ define([
         var listeners = [];
 
         promise.then(null, null, function(tree) {
+            lastTree = tree;
             angular.forEach(listeners, function(listener) {
                 listener(tree);
             });
         });
 
         promise.notified = function(listener) {
+            if (lastTree) {
+                listener(lastTree);
+            }
+
             listeners.push(listener);
 
             return (function(listener) {

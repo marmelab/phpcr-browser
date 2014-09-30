@@ -3,12 +3,9 @@ define([], function() {
 
     function NodeCreationForm() {
         return {
-            controller: function($scope, $tree) {
-                $scope.createNode = function() {
-                    // $tree.find();
-                };
-            }
-        }
+            controller: 'NodeCreationFormController',
+            controllerAs: 'nodeCreationFormController'
+        };
     }
 
     NodeCreationForm.$inject = [];

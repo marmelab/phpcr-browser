@@ -24,6 +24,7 @@ define([
 
             $delegate.patchChildren = function(tree, children) {
                 var promises = [];
+                tree.data().children = [];
 
                 angular.forEach(children, function(child) {
                     // Do not use the append method to avoid triggering hooks
@@ -39,6 +40,14 @@ define([
                 activatedTree = tree;
                 tree.attr('active', true);
             };
+
+            $delegate.walkChildren = function(tree, cb) {
+                cb(tree);
+                var children = tree.children();
+                for (var i in children) {
+                    $delegate.walkChildren(children[i], cb);
+                }
+            }
 
             return $delegate;
         }]);

@@ -8224,6 +8224,19 @@ button.close {
 .ns-global > .inner a {
   cursor: pointer;
 }
+/* line 23, ../../../sass/phpcr-browser/global/_namespace.scss */
+.ns-global > .inner input.input-transparent, .ns-global > .inner input.input-transparent:focus {
+  border: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  margin: 0;
+  padding: 0;
+  background-color: transparent;
+}
+/* line 31, ../../../sass/phpcr-browser/global/_namespace.scss */
+.ns-global > .inner .inline-block {
+  display: inline-block;
+}
 /* line 2, ../../../sass/phpcr-browser/global/repositories/_namespace.scss */
 .ns-global > .inner .ns-repositories > .inner {
   margin-left: 0;
@@ -9699,7 +9712,7 @@ table tbody tr:first-child td {
   border-top: 1px solid #ccc;
 }
 /* line 36, ../../../sass/phpcr-browser/tree.scss */
-#tree ul li.active > a {
+#tree ul li.active > div > a {
   color: #ff7373;
 }
 /* line 41, ../../../sass/phpcr-browser/tree.scss */
@@ -9743,49 +9756,32 @@ table tbody tr:first-child td {
   cursor: pointer;
 }
 /* line 87, ../../../sass/phpcr-browser/tree.scss */
-#tree ul li a.active:hover {
-  color: #ff7373;
-  text-decoration: none;
-}
-/* line 92, ../../../sass/phpcr-browser/tree.scss */
 #tree ul li a .hover {
   display: none;
 }
-/* line 96, ../../../sass/phpcr-browser/tree.scss */
+/* line 91, ../../../sass/phpcr-browser/tree.scss */
 #tree ul li a:hover {
   text-decoration: underline;
 }
-/* line 99, ../../../sass/phpcr-browser/tree.scss */
+/* line 94, ../../../sass/phpcr-browser/tree.scss */
 #tree ul li a:hover + ul li a {
   text-decoration: underline;
 }
-/* line 105, ../../../sass/phpcr-browser/tree.scss */
+/* line 100, ../../../sass/phpcr-browser/tree.scss */
 #tree ul li a:hover + ul li::after, #tree ul li a:hover + ul::before, #tree ul li a:hover + ul ul::before {
   border-color: #94a0b4;
 }
-/* line 111, ../../../sass/phpcr-browser/tree.scss */
+/* line 106, ../../../sass/phpcr-browser/tree.scss */
 #tree ul li .glyphicon-folder-open, #tree ul li .glyphicon-folder-close {
   cursor: pointer;
   width: 15px;
 }
 
-/* line 120, ../../../sass/phpcr-browser/tree.scss */
-.node .node-add {
-  font-size: 6pt;
-  visibility: hidden;
-  cursor: pointer;
-}
-/* line 125, ../../../sass/phpcr-browser/tree.scss */
-.node .node-add.focus {
-  visibility: visible;
-}
-/* line 131, ../../../sass/phpcr-browser/tree.scss */
-.node:hover .node-add {
-  visibility: visible;
-}
-/* line 136, ../../../sass/phpcr-browser/tree.scss */
-.node .active {
-  color: #f18a66 !important;
+/* line 114, ../../../sass/phpcr-browser/tree.scss */
+.empty-node {
+  position: absolute;
+  top: -6px;
+  left: 20px;
 }
 
 /* line 3, ../../../sass/phpcr-browser/navbar.scss */

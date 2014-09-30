@@ -3,7 +3,11 @@ define(
         'angular',
         'ng-tree',
 
+        'app/Tree/component/controller/NodeCreationFormController',
+
         'app/Tree/component/service/TreeProvider',
+
+        'app/Tree/component/directive/NodeCreationForm',
 
         'app/Tree/config/decorateTreeFactory',
 
@@ -13,7 +17,11 @@ define(
         angular,
         ngTree,
 
+        NodeCreationFormController,
+
         TreeProvider,
+
+        NodeCreationForm,
 
         decorateTreeFactory,
 
@@ -23,7 +31,11 @@ define(
 
         var TreeModule = angular.module('tree', ['ngTree']);
 
+        TreeModule.controller('NodeCreationFormController', NodeCreationFormController);
+
         TreeModule.provider('$tree', TreeProvider);
+
+        TreeModule.directive('nodeCreationForm', NodeCreationForm);
 
         TreeModule.config(decorateTreeFactory);
 

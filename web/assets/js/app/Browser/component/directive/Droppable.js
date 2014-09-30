@@ -48,14 +48,16 @@ define([], function() {
 
                         this.classList.remove('over');
 
-                        var elementDropped = angular.element(document.getElementById(e.dataTransfer.getData('Text')));
-                        // call the drop passed drop function
+                        var elementDropped = angular.element(document.getElementById(e.dataTransfer.getData('Text'))),
+                            draggableData = elementDropped.scope() ? elementDropped.scope().draggableData : null
+                        ;
 
-                        scope.$emit('$elementDroppedSuccess', {
-                            droppableData: droppableData,
-                            draggableData: elementDropped.scope().draggableData
-                        });
-
+                        if (draggableData) {
+                            scope.$emit('$elementDropSuccess', {
+                                droppableData: droppableData,
+                                draggableData: elementDropped.scope().draggableData
+                            });
+                        }
                         return false;
                     },
                     false

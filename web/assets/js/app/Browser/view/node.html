@@ -2,7 +2,7 @@
     <div class="inner">
         <div id="toolbar">
             <div class="btn-group" ng-if="!nodeController.$pending">
-                <button type="button" class="btn" ghost-text=".title" ng-click="nodeController.showNodeRenameForm()">
+                <button type="button" class="btn" ghost-text=".title" ng-if="node.path !== '/'" ng-click="nodeController.showNodeRenameForm()">
                     <span class="octicon octicon-pencil"></span>
                     <span class="title">{{ 'Rename node' | translate }}</span>
                 </button>

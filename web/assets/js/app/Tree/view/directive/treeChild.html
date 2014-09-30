@@ -3,7 +3,7 @@
         droppable-data="{ tree: tree }"
         draggable="tree.path !== '/'"
         draggable-data="{ tree: tree }"
-        id="{{ tree.path }}"
+        id="{{ tree.path.split('/').join('_') }}"
     >
         <span class="glyphicon glyphicon-refresh"
             ng-if="tree.pending"
