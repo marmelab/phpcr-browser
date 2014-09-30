@@ -10,6 +10,6 @@
             />
         </form>
     </li>
-    <tree-child-view ng-repeat="child in tree.children"  tree="child">
+    <tree-child-view ng-repeat="child in tree.children | orderBy:'[-hasChildren, name]':false"  tree="child">
     </tree-child-view>
 </ul>

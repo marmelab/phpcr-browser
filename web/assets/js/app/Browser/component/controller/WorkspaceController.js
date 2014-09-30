@@ -187,6 +187,10 @@ define([
                 return parent.append(tree)
             })
             .then(function() {
+                self.$treeFactory.walkChildren(parent, function(tree) {
+                    tree.attr('path', tree.path().replace('/root', ''));
+                });
+
                 parent.attr('hasChildren', true);
             })
             .then(function() {
