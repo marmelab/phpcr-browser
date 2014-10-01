@@ -18,7 +18,7 @@ define(
 
         'app/Browser/config/routing',
 
-        'angular-ui-router', 'angular-ui-util-keypress'
+        'ui-router', 'ui-util-keypress'
     ],
     function (
         angular,

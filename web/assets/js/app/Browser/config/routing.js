@@ -49,7 +49,7 @@ define([
                 'controllerAs': 'nodeController',
                 'resolve': {
                     'node': function($graph, $stateParams) {
-                        return $graph.find($stateParams, { cache: false })
+                        return $graph.find($stateParams);
                     }
                 }
             });

@@ -18,7 +18,7 @@ define(
 
         'text!app/config.json',
 
-        'angular-ui-router', 'angular-translate', 'angular-translate-storage-cookie', 'angular-bootstrap-tpls'
+        'ui-router', 'angular-translate', 'angular-translate-storage-cookie', 'ui-bootstrap-tpls'
     ],
     function (
         angular,

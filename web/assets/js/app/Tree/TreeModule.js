@@ -5,6 +5,7 @@ define(
 
         'app/Tree/component/controller/NodeCreationFormController',
 
+        'app/Tree/component/service/FindPatcher',
         'app/Tree/component/service/TreeProvider',
 
         'app/Tree/component/directive/NodeCreationForm',
@@ -19,6 +20,7 @@ define(
 
         NodeCreationFormController,
 
+        FindPatcher,
         TreeProvider,
 
         NodeCreationForm,
@@ -33,6 +35,7 @@ define(
 
         TreeModule.controller('NodeCreationFormController', NodeCreationFormController);
 
+        TreeModule.service('$findPatcher', FindPatcher);
         TreeModule.provider('$tree', TreeProvider);
 
         TreeModule.directive('nodeCreationForm', NodeCreationForm);

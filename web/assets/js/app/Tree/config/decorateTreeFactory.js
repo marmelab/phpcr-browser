@@ -6,7 +6,7 @@ define([
     var $$hashKeyIndex = 0;
 
     function decorateTreeFactory($provide) {
-        $provide.decorator('$treeFactory', ['$delegate', '$q', function($delegate, $q) {
+        $provide.decorator('$treeFactory', ['$delegate', '$q', '$findPatcher', function($delegate, $q, $findPatcher) {
             var activatedTree = null;
 
             var $originalDelegate = $delegate;
@@ -17,21 +17,12 @@ define([
                     node.$$hashKey = $$hashKeyIndex++;
                 });
 
+                $findPatcher.patch(tree);
+
                 return tree;
             };
 
             angular.extend($delegate, $originalDelegate);
-
-            $delegate.patchChildren = function(tree, children) {
-                var promises = [];
-                tree.data().children = [];
-
-                angular.forEach(children, function(child) {
-                    // Do not use the append method to avoid triggering hooks
-                    child._parent = tree.data();
-                    tree.data().children.push(child);
-                });
-            };
 
             $delegate.activate = function(tree) {
                 if (activatedTree) {

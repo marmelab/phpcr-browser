@@ -20,7 +20,8 @@ define([
             $treeFactory,
             $graph,
             $progress,
-            $tree
+            $tree,
+            $cacheFactory
         ;
 
         beforeEach(function() {
@@ -52,6 +53,8 @@ define([
             $progress = new Progress();
             spyOn($progress, 'done').andCallThrough();
 
+            $cacheFactory = $injector.get('$cacheFactory');
+
             $tree = treeProvider.$get[1]({
                 instantiate: function(object, dependencies) {
                     var instance = new object(
@@ -61,7 +64,8 @@ define([
                         $state,
                         $treeFactory,
                         $graph,
-                        $progress
+                        $progress,
+                        $cacheFactory
                     );
 
                     instance.deferred.promise.notify = instance.deferred.notify;
@@ -73,7 +77,10 @@ define([
 
         it('should instanciate Tree service and return a patched promise when $get is called', function() {
             spyOn($tree, 'then').andCallThrough();
-
+            var cache = {
+                removeAll: jasmine.createSpy('removeAll')
+            };
+            spyOn($cacheFactory, 'get').andReturn(cache);
             expect($tree.then).toEqual(jasmine.any(Function));
             expect($tree.notified).toEqual(jasmine.any(Function));
 
@@ -94,6 +101,8 @@ define([
             );
             $rootScope.$digest(); // resolve $q promise
             expect(listener.callCount).toBe(2);
+            expect($cacheFactory.get).toHaveBeenCalledWith('$http');
+            expect(cache.removeAll).toHaveBeenCalled();
         });
 
         it('should call $graph.find on $$init and create a tree', function() {

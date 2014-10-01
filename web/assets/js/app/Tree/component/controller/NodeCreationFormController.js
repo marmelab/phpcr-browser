@@ -1,11 +1,10 @@
 define([], function() {
     'use strict';
 
-    function NodeCreationFormController($scope, $tree, $treeFactory, $$asyncCallback) {
+    function NodeCreationFormController($scope, $tree, $treeFactory) {
         this.$scope = $scope;
         this.$tree = $tree;
         this.$treeFactory = $treeFactory;
-        this.$$asyncCallback = $$asyncCallback;
 
         this.$$init();
     }
@@ -31,17 +30,21 @@ define([], function() {
         var self = this;
 
         var unregisterListener = this.$tree.notified(function(tree) {
-            self.$scope.$emit('$treeCreate', {
-                parent: tree.find('/root' + (self.$scope.tree.path !== '/' ? self.$scope.tree.path : '') ),
-                child: self.$treeFactory({
-                    name: self.$scope.nodeCreationForm.name
-                }),
-                hide: function() {
-                    return self.hideNodeCreationForm()
-                }
-            });
+            tree
+                .find('/root' + (self.$scope.tree.path !== '/' ? self.$scope.tree.path : '') )
+                .then(function(parent) {
+                    self.$scope.$emit('$treeCreate', {
+                        parent: parent,
+                        child: self.$treeFactory({
+                            name: self.$scope.nodeCreationForm.name
+                        }),
+                        hide: function() {
+                            return self.hideNodeCreationForm()
+                        }
+                    });
+                });
 
-            self.$$asyncCallback(function() {
+            self.$scope.$evalAsync(function() {
                 unregisterListener();
             });
         });
@@ -51,10 +54,9 @@ define([], function() {
         // We do not delete $scope because it is shared with the tree
         this.$tree = undefined;
         this.$treeFactory = undefined;
-        this.$$asyncCallback = undefined;
     };
 
-    NodeCreationFormController.$inject = ['$scope', '$tree', '$treeFactory', '$$asyncCallback'];
+    NodeCreationFormController.$inject = ['$scope', '$tree', '$treeFactory'];
 
     return NodeCreationFormController;
 });

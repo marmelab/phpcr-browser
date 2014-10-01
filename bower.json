@@ -4,8 +4,7 @@
   "dependencies": {
     "requirejs": "2.1.11",
     "requirejs-text": "~2.0.12",
-    "angular": "1.2.14",
-    "angular-route": "1.2.6",
+    "angular": "1.2.25",
     "angular-ui-router": "0.2.10",
     "bootstrap": "3.0.2",
     "html5shiv": "3.7.0",
@@ -13,7 +12,6 @@
     "restangular": "1.4.0",
     "angular-ui-utils": "bower-keypress",
     "angular-xeditable": "0.1.8",
-    "jsonpatch": "1.0.0-rc1",
     "requirejs-domready": "2.0.1",
     "angular-translate": "2.1.0",
     "angular-translate-storage-cookie": "2.1.0",
@@ -24,9 +22,9 @@
     "famous-angular": "~0.4.0"
   },
   "devDependencies": {
-    "angular-mocks": "1.2.13"
+    "angular-mocks": "1.2.25"
   },
   "resolutions": {
-    "angular": "1.2.22"
+    "angular": "1.2.25"
   }
 }

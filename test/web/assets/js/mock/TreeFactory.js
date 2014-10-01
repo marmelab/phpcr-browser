@@ -1,10 +1,12 @@
-define('mock/TreeFactory', [], function() {
+define('mock/TreeFactory', [
+    'mixin'
+], function(mixin) {
     'use strict';
 
     var nodeFactory = function() {
         return {
             find: function() {
-                return nodeFactory();
+                return mixin.buildPromise(nodeFactory());
             },
 
             toggle: function() {
@@ -34,6 +36,8 @@ define('mock/TreeFactory', [], function() {
     }
 
     TreeFactory.patchChildren = function() {}
+
+    TreeFactory.walkChildren = function() {}
 
     return TreeFactory;
 });

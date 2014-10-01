@@ -5,7 +5,7 @@ define([
 
     var lastTree = null;
 
-    function Tree(provider, $q, $rootScope, $state, $treeFactory, $graph, $progress) {
+    function Tree(provider, $q, $rootScope, $state, $treeFactory, $graph, $progress, $cacheFactory) {
         this.provider = provider;
         this.$q = $q;
         this.$rootScope = $rootScope;
@@ -13,6 +13,7 @@ define([
         this.$treeFactory = $treeFactory;
         this.$graph = $graph;
         this.$progress = $progress;
+        this.$cacheFactory = $cacheFactory;
 
         this.deferred = $q.defer();
         this.$$init();
@@ -113,20 +114,22 @@ define([
                     children: [root]
                 });
 
-                var current = tree.find('/root' + findParams.path);
-                if (current) {
+                return tree.find('/root' + findParams.path).then(function(current) {
                     self.$treeFactory.activate(current);
                     do {
                         current.attr('collapsed', false);
                     } while (current = current.parent());
-                } else {
-                    var root = tree.find('/root');
-                    root.attr('collapsed', false);
-                    self.$treeFactory.activate(root);
-                }
 
-                self.tree = self.$$decorate(tree);
-                return self.tree;
+                    return self.tree;
+                }, function() {
+                    return tree.find('/root').then(function(root) {
+                        root.attr('collapsed', false);
+                        self.$treeFactory.activate(root);
+                    });
+                }).then(function() {
+                    self.tree = self.$$decorate(tree);
+                    return self.tree;
+                });
             })
             .then(
                 self.deferred.notify,
@@ -142,44 +145,38 @@ define([
             if (toState.name === 'node' &&
                 (fromParams.repository !== toParams.repository || fromParams.workspace !== toParams.workspace)
             ) {
+                // We clear all cache between workspaces
                 lastTree = null;
+                self.$cacheFactory.get('$http').removeAll(); // Maybe improve it to clear only nodes key
+
                 var path = toParams.path === null || toParams.path.length === 0 ? '/' : toParams.path;
+
                 self.$$create({
                     repository: toParams.repository,
                     workspace: toParams.workspace,
                     path: path
                 });
             } else if (toState.name === 'node' && self.tree !== null) {
-                var tree = self.tree.find('/root' + (toParams.path === '/' ? '' : toParams.path));
-
-                if (!tree) {
-                    return self.$$create({
-                        repository: toParams.repository,
-                        workspace: toParams.workspace,
-                        path: (toParams.path === '/' ? '' : toParams.path)
-                    });
-                }
-
-                self.$treeFactory.activate(tree);
+                self.tree.find('/root' + (toParams.path === '/' ? '' : toParams.path)).then(function(node) {
+                    self.$treeFactory.activate(node);
+                });
             }
         });
-    }
+    };
 
-    Tree.$inject = ['provider', '$q', '$rootScope', '$state', '$treeFactory', '$graph', '$progress'];
+    Tree.$inject = ['provider', '$q', '$rootScope', '$state', '$treeFactory', '$graph', '$progress', '$cacheFactory'];
 
 
     function TreeProvider() {}
 
     TreeProvider.prototype.$get = ['$injector', function($injector) {
-        var promise = $injector
-            .instantiate(Tree, {
-                provider: this
-            })
-            .deferred
-            .promise
-        ;
+        var tree = $injector.instantiate(Tree, {
+            provider: this
+        });
 
-        var listeners = [];
+        var promise = tree.deferred.promise,
+            listeners = []
+        ;
 
         promise.then(null, null, function(tree) {
             lastTree = tree;

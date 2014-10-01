@@ -34,17 +34,23 @@ define([
                 return self.$notification.error('You can only drop a node here');
             } else if (!data.droppableData.tree) {
                 if (data.droppableData.trash) {
-                    return self.$$treeRemove(self.$scope.tree.find('/root' + data.draggableData.tree.path));
+                    return self.$scope.tree
+                        .find('/root' + data.draggableData.tree.path)
+                        .then(function(node) {
+                            self.$$treeRemove(node)
+                        });
                 }
                 return self.$notification.error('You can not drop a node here');
             } else if (data.draggableData.tree.path === data.droppableData.tree.path) {
                 return;
             }
 
-            self.$$treeMove(
+            self.$q.all([
                 self.$scope.tree.find('/root' + data.draggableData.tree.path),
                 self.$scope.tree.find('/root' + data.droppableData.tree.path)
-            );
+            ]).then(function(results) {
+                self.$$treeMove(results[0], results[1]);
+            })
         });
 
         this.$scope.$on('$treeCreate', function($event, data) {
@@ -57,68 +63,22 @@ define([
     };
 
     WorkspaceController.prototype.treeClick = function(selectedNode, cache) {
-        var deferred = this.$q.defer(),
-            self = this
-        ;
+        var self = this;
 
-        this.$progress.start();
+        self.$progress.start();
 
-        this.$$patchChildren(selectedNode, cache)
-            .then(
-                function(results) {
-                    return self.$state
-                        .go('node', {
-                            repository: self.$state.params.repository,
-                            workspace: self.$state.params.workspace,
-                            path: selectedNode.path().replace('/root', '')
-                        })
-                        .then(
-                            deferred.resolve,
-                            deferred.reject
-                        )
-                },
-                function(err) {
-                    self.$progress.done();
-                    return self.$q.reject(err);
-                }
-            )
+        return selectedNode
+            .then(function(selectedNode) {
+                return self.$state
+                    .go('node', {
+                        repository: self.$state.params.repository,
+                        workspace: self.$state.params.workspace,
+                        path: selectedNode.path().replace('/root', '')
+                    })
+                ;
+            })
             .finally(function() {
                 self.$progress.done();
-            })
-        ;
-
-        return deferred.promise;
-    };
-
-    WorkspaceController.prototype.$$patchChildren = function(tree, cache) {
-        cache = cache !== undefined ? !!cache : true;
-
-        var path = tree.path().replace('/root', '');
-
-        if (path === '') {
-            path = '/';
-        }
-
-        if (!(tree.attr('hasChildren') && tree.children().length === 0) && cache) {
-            return this.$q.when();
-        }
-
-        tree.attr('pending', true);
-        var self = this,
-            findParams = {
-                repository: this.$state.params.repository,
-                workspace: this.$state.params.workspace,
-                path: path
-            }
-        ;
-
-        return this.$graph
-            .find(findParams, { cache: cache })
-            .then(function(node) {
-                return self.$treeFactory.patchChildren(tree, node.children);
-            })
-            .then(function() {
-                tree.attr('pending', false);
             })
         ;
     };
@@ -131,10 +91,8 @@ define([
         treeToMoved.attr('pending', true);
         treeDestination.attr('pending', true);
 
-        this.$$patchChildren(treeDestination)
-            .then(function() {
-                return treeToMoved.moveTo(treeDestination);
-            })
+        treeToMoved
+            .moveTo(treeDestination)
             .then(function(treeMoved) {
                 self.$treeFactory.walkChildren(treeDestination, function(tree) {
                     tree.attr('path', tree.path().replace('/root', ''));
@@ -143,7 +101,7 @@ define([
                 parent.attr('hasChildren', parent.data().children.length > 0);
             })
             .then(function() {
-                treeDestination.attr('hasChildren', treeDestination.data().children.length > 0);
+                treeDestination.attr('hasChildren', true);
                 return self.$$triggerTreeClick(treeDestination);
             })
             .then(function() {
@@ -169,7 +127,7 @@ define([
                 tree.parent().attr('hasChildren', tree.parent().data().children.length > 0);
 
                 if (tree.path().replace('/root', '') === self.$state.params.path) {
-                    return self.treeClick(tree.parent(), false);
+                    return self.$$triggerTreeClick(tree.parent(), false);
                 }
             }).then(function() {
                 self.$notification.success('Node removed');
@@ -182,10 +140,8 @@ define([
     WorkspaceController.prototype.$$treeCreate = function(parent, tree, hideCallback) {
         var self = this;
 
-        this.$$patchChildren(parent, false).
-            then(function() {
-                return parent.append(tree)
-            })
+        parent
+            .append(tree)
             .then(function() {
                 self.$treeFactory.walkChildren(parent, function(tree) {
                     tree.attr('path', tree.path().replace('/root', ''));
@@ -208,7 +164,7 @@ define([
     }
 
     WorkspaceController.prototype.$$triggerTreeClick = function(tree, cache) {
-        return this.treeClick(tree, cache).then(function() {
+        return this.treeClick(this.$q.when(tree), cache).then(function() {
             tree.attr('collapsed', false);
         })
     };
