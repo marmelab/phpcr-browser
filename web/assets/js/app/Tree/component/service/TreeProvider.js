@@ -114,7 +114,7 @@ define([
                     children: [root]
                 });
 
-                return tree.find('/root' + findParams.path).then(function(current) {
+                return tree.find('/root' + (findParams.path === '/' ? '' : findParams.path)).then(function(current) {
                     self.$treeFactory.activate(current);
                     do {
                         current.attr('collapsed', false);
@@ -158,6 +158,9 @@ define([
                 });
             } else if (toState.name === 'node' && self.tree !== null) {
                 self.tree.find('/root' + (toParams.path === '/' ? '' : toParams.path)).then(function(node) {
+                    self.$treeFactory.walkParent(node, function(parent) {
+                        parent.attr('collapsed', false);
+                    })
                     self.$treeFactory.activate(node);
                 });
             }

@@ -96,19 +96,23 @@ define([
             self.$notification.success('Node renamed');
 
             // We find the node in the tree to update its name and path
-            var currentTree = self.$scope.tree.find('/root' + self.$scope.node.path);
-            currentTree.attr('name', self.$scope.nodeRenameForm.name);
+            self.$scope.tree
+                .find('/root' + self.$scope.node.path)
+                .then(function(currentTree) {
+                    currentTree.attr('name', self.$scope.nodeRenameForm.name);
 
-            self.$treeFactory.walkChildren(currentTree, function(tree) {
-                tree.attr('path', tree.path().replace('/root', ''));
-            });
+                    self.$treeFactory.walkChildren(currentTree, function(tree) {
+                        tree.attr('path', tree.path().replace('/root', ''));
+                    });
 
-            self.hideNodeRenameForm();
-            self.$state.go('node', {
-                repository: self.$state.params.repository,
-                workspace: self.$state.params.workspace,
-                path: currentTree.attr('path')
-            })
+                    self.hideNodeRenameForm();
+                    return self.$state.go('node', {
+                        repository: self.$state.params.repository,
+                        workspace: self.$state.params.workspace,
+                        path: currentTree.attr('path')
+                    });
+                })
+            ;
         }, function(err) {
             self.$notification.errorFromResponse(err);
         });

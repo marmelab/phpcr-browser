@@ -17,7 +17,7 @@ define([
                     node.$$hashKey = $$hashKeyIndex++;
                 });
 
-                $findPatcher.patch(tree);
+                $findPatcher.patch(tree, $originalDelegate);
 
                 return tree;
             };
@@ -37,6 +37,15 @@ define([
                 var children = tree.children();
                 for (var i in children) {
                     $delegate.walkChildren(children[i], cb);
+                }
+            }
+
+            $delegate.walkParent = function(tree, cb) {
+                var parent = tree.parent();
+
+                if (parent) {
+                    cb(parent);
+                    $delegate.walkParent(parent, cb);
                 }
             }
 

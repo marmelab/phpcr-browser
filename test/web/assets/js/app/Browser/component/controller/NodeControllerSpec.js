@@ -3,10 +3,12 @@ define([
     'app/Browser/component/controller/NodeController',
     'mock/Graph',
     'mock/Search',
+    'mock/Notification',
+    'mock/TreeFactory',
     'mixin',
     'angular',
     'angular-mocks'
-], function(NodeController, Graph, Search, mixin, angular) {
+], function(NodeController, Graph, Search, Notification, TreeFactory, mixin, angular) {
     'use strict';
 
     describe('NodeController', function() {
@@ -16,6 +18,8 @@ define([
             $graph,
             $search,
             $fuzzyFilter,
+            $notification,
+            $treeFactory,
             nodeController,
             searchListener,
             removeSearchListener
@@ -51,12 +55,18 @@ define([
 
             $fuzzyFilter = jasmine.createSpy('$fuzzyFilter').andReturn(['a']);
 
+            $notification = new Notification();
+
+            $treeFactory = TreeFactory;
+
             nodeController = new NodeController(
                 $scope,
                 $state,
                 $graph,
                 $search,
-                $fuzzyFilter
+                $fuzzyFilter,
+                $notification,
+                $treeFactory
             );
         });
 
@@ -99,6 +109,56 @@ define([
             ]);
 
             expect($search.registerListener).toHaveBeenCalledWith(searchListener);
+        });
+
+        it('should call node.renameNode when renameNode is called', function() {
+            spyOn(nodeController, 'hideNodeRenameForm');
+            spyOn(nodeController.$notification, 'error');
+            spyOn(nodeController.$notification, 'success');
+            spyOn(nodeController.$treeFactory, 'walkChildren');
+
+            nodeController.$scope.node.rename = jasmine.createSpy('rename').andReturn(mixin.buildPromise());
+            nodeController.$scope.node.path = '/test';
+
+            var tree = {
+                attr: jasmine.createSpy('attr').andReturn('/hi'),
+                path: jasmine.createSpy('path').andReturn('/test')
+            };
+
+            nodeController.$scope.tree = {
+                find: jasmine.createSpy('find').andReturn(mixin.buildPromise(tree))
+            };
+
+            nodeController.$scope.nodeRenameForm.name = null;
+
+            nodeController.renameNode();
+
+            expect(nodeController.$notification.error).toHaveBeenCalledWith('Name is empty');
+
+            nodeController.$notification.error.reset();
+
+            nodeController.$scope.nodeRenameForm.name = nodeController.$scope.node.name;
+            nodeController.renameNode();
+
+            expect(nodeController.$notification.error).not.toHaveBeenCalled();
+            expect(nodeController.hideNodeRenameForm).toHaveBeenCalled();
+
+            nodeController.hideNodeRenameForm.reset();
+
+            nodeController.$scope.nodeRenameForm.name = 'hi';
+
+            nodeController.renameNode();
+
+            expect(nodeController.$scope.node.rename).toHaveBeenCalledWith('hi');
+            expect(nodeController.$scope.tree.find).toHaveBeenCalledWith('/root/test');
+            expect(tree.attr).toHaveBeenCalledWith('name', 'hi');
+            expect(nodeController.$treeFactory.walkChildren).toHaveBeenCalledWith(tree, jasmine.any(Function));
+            expect(nodeController.hideNodeRenameForm).toHaveBeenCalled();
+            expect(nodeController.$state.go).toHaveBeenCalledWith('node', {
+                repository: 'test',
+                workspace: 'default',
+                path: '/hi'
+            })
         });
 
         it('should call $$filterProperties when searchListener is called', function() {
