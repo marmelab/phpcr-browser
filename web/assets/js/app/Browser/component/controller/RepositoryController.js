@@ -42,6 +42,14 @@ define([
         this.$scope.$on('$destroy', function() {
             self.$$destroy();
         });
+
+        this.$scope.$on('$elementDropSuccess', function($event, data) {
+            if (!data.draggableData.workspace && !data.droppableData.trash) {
+                return;
+            }
+
+            return self.$$removeWorkspace(data.draggableData.workspace);
+        });
     };
 
     RepositoryController.prototype.$$loadWorkspaces = function(cache) {
@@ -53,6 +61,7 @@ define([
             self.repository = repository;
             return repository.getWorkspaces({ cache: cache });
         }).then(function(workspaces) {
+            self.workspaces = {};
             angular.forEach(workspaces, function(workspace) {
                 self.workspaces[workspace.name] = workspace;
             });
@@ -106,7 +115,23 @@ define([
                 self.hideWorkspaceCreationForm();
                 self.$$loadWorkspaces(false);
             }, function(err) {
-                self.$notification.error(err.data.message);
+                self.$notification.errorFromResponse(err);
+            })
+        ;
+    };
+
+    RepositoryController.prototype.$$removeWorkspace = function(workspace) {
+        var self = this;
+
+        workspace
+            .remove()
+            .then(function() {
+                self.$notification.success('Workspace deleted');
+            })
+            .then(function() {
+                self.$$loadWorkspaces(false);
+            }, function(err) {
+                self.$notification.errorFromResponse(err);
             })
         ;
     };

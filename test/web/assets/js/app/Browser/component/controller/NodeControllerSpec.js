@@ -174,6 +174,31 @@ define([
             expect(nodeController.$$filterProperties.callCount).toBe(1); // the init call is not spied yet
         });
 
+        it('should hide rename form when hideNodeRenameForm is called', function() {
+            nodeController.$scope.nodeRenameFormDisplayed = true;
+            nodeController.$scope.nodeRenameForm.name = 'Hey';
+
+            nodeController.hideNodeRenameForm();
+
+            expect(nodeController.$scope.nodeRenameFormDisplayed).toBe(false);
+            expect(nodeController.$scope.nodeRenameForm.name).toBe('test');
+        });
+
+        it('should show rename form when showNodeRenameForm is called', function() {
+            nodeController.$scope.node.path = '/';
+            nodeController.$scope.nodeRenameFormDisplayed = false;
+
+            nodeController.showNodeRenameForm();
+
+            expect(nodeController.$scope.nodeRenameFormDisplayed).toBe(false);
+
+            nodeController.$scope.node.path = '/test';
+
+            nodeController.showNodeRenameForm();
+
+            expect(nodeController.$scope.nodeRenameFormDisplayed).toBe(true);
+        });
+
         it('should call $$destroy on $scope.$destroy() and set to undefined all its dependencies', function() {
             spyOn(nodeController, '$$destroy').andCallThrough();
 

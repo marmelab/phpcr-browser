@@ -44,5 +44,19 @@ define([
         it('should return the repository when getRepository is called', function() {
             expect(workspace.getRepository()).toBe(repository);
         });
+
+        it('should call remove on restangularizedElement when remove is called', function() {
+            var remove = jasmine.createSpy('remove');
+            workspace.name = 'default';
+
+            spyOn(restangular, 'one').andReturn({
+                remove: remove
+            });
+
+            workspace.remove();
+
+            expect(restangular.one).toHaveBeenCalledWith('default');
+            expect(remove).toHaveBeenCalled();
+        });
     });
 });

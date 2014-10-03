@@ -23,5 +23,13 @@ define([
         it('should return the workspace when getWorkspace is called', function() {
             expect(node.getWorkspace()).toBe(workspace);
         });
+
+        it('should call remove on restangularizedElement when remove is called', function() {
+            restangular.remove = jasmine.createSpy('remove');
+
+            node.remove();
+
+            expect(restangular.remove).toHaveBeenCalled();
+        });
     });
 });

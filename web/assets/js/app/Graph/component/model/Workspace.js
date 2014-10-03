@@ -9,6 +9,8 @@ define([
 
         this.repository = repository;
         this.nodesCollection = restangularizedElement.all('nodes');
+
+        this.restangularizedElement = restangularizedElement;
     }
 
     Workspace.prototype.getNode = function(path, reducedTree) {
@@ -26,6 +28,10 @@ define([
 
     Workspace.prototype.getRepository = function() {
         return this.repository;
+    };
+
+    Workspace.prototype.remove = function() {
+        return this.restangularizedElement.one(this.name).remove();
     };
 
     return Workspace;

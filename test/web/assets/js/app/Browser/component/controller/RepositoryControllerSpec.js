@@ -151,7 +151,7 @@ define([
             expect(repository.createWorkspace).toHaveBeenCalledWith({ name: 'Hey' });
             expect(repositoryController.$notification.success).toHaveBeenCalledWith('Workspace created');
             expect(repositoryController.hideWorkspaceCreationForm).toHaveBeenCalled();
-            expect(repositoryController.$$loadWorkspaces).toHaveBeenCalled();
+            expect(repositoryController.$$loadWorkspaces).toHaveBeenCalledWith(false);
             expect(repositoryController.$$loadWorkspaces.callCount).toBe(1); // the init call is not spied yet
         });
 
@@ -167,6 +167,21 @@ define([
             repositoryController.hideWorkspaceCreationForm();
             expect(repositoryController.$scope.isWorkspaceCreationFormDisplayed).toBe(false);
             expect(repositoryController.$scope.workspaceCreationForm.name).toBeNull();
+        });
+
+        it('should call workspace.remove when $$removeWorkspace is called', function() {
+            spyOn(repositoryController.$notification, 'success').andCallThrough();
+            spyOn(repositoryController, '$$loadWorkspaces');
+
+            var workspace = {
+                remove: jasmine.createSpy('remove').andReturn(mixin.buildPromise())
+            };
+
+            repositoryController.$$removeWorkspace(workspace);
+            expect(workspace.remove).toHaveBeenCalled();
+            expect(repositoryController.$notification.success).toHaveBeenCalledWith('Workspace deleted');
+            expect(repositoryController.$$loadWorkspaces).toHaveBeenCalledWith(false);
+            expect(repositoryController.$$loadWorkspaces.callCount).toBe(1); // the init call is not spied yet
         });
 
         it('should call $$destroy on $scope.$destroy() and set to undefined all its dependencies', function() {

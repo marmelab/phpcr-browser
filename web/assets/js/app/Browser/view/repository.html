@@ -4,6 +4,7 @@
             <div class="col-sm-2" id="{{ workspace.name }}"
                 ng-repeat="(key, workspace) in workspaces track by $index"
                 draggable="{{ repositoryController.repository.hasSupportedOperation('workspace.delete') }}"
+                draggable-data="{ workspace: workspace }"
             >
                 <div class="panel panel-box" ng-click="repositoryController.openWorkspace(workspace)">
                     <div class="panel-body">
