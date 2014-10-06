@@ -13,9 +13,13 @@ define([
         ;
 
         beforeEach(function() {
-            workspace = {};
+            workspace = {
+                restangularizedElement: new Restangular()
+            };
 
             restangular = new Restangular();
+
+            restangular.path = '/test';
 
             node = new Node(restangular, workspace);
         });

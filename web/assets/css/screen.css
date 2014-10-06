@@ -403,9 +403,9 @@ th {
   }
 
   /* line 77, ../../../../../../../../Library/Ruby/Gems/2.0.0/gems/bootstrap-sass-3.2.0.1/assets/stylesheets/bootstrap/_print.scss */
-  .table td, #properties td,
+  .table td, .ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties td,
   .table th,
-  #properties th {
+  .ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties th {
     background-color: #fff !important;
   }
 
@@ -421,7 +421,7 @@ th {
   }
 
   /* line 91, ../../../../../../../../Library/Ruby/Gems/2.0.0/gems/bootstrap-sass-3.2.0.1/assets/stylesheets/bootstrap/_print.scss */
-  .table, #properties {
+  .table, .ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties {
     border-collapse: collapse !important;
   }
 
@@ -3227,53 +3227,53 @@ th {
 }
 
 /* line 16, ../../../../../../../../Library/Ruby/Gems/2.0.0/gems/bootstrap-sass-3.2.0.1/assets/stylesheets/bootstrap/_tables.scss */
-.table, #properties {
+.table, .ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties {
   width: 100%;
   max-width: 100%;
   margin-bottom: 20px;
 }
 /* line 26, ../../../../../../../../Library/Ruby/Gems/2.0.0/gems/bootstrap-sass-3.2.0.1/assets/stylesheets/bootstrap/_tables.scss */
-.table > thead > tr > th, #properties > thead > tr > th,
+.table > thead > tr > th, .ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties > thead > tr > th,
 .table > thead > tr > td,
-#properties > thead > tr > td,
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties > thead > tr > td,
 .table > tbody > tr > th,
-#properties > tbody > tr > th,
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties > tbody > tr > th,
 .table > tbody > tr > td,
-#properties > tbody > tr > td,
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties > tbody > tr > td,
 .table > tfoot > tr > th,
-#properties > tfoot > tr > th,
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties > tfoot > tr > th,
 .table > tfoot > tr > td,
-#properties > tfoot > tr > td {
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties > tfoot > tr > td {
   padding: 8px;
   line-height: 1.428571429;
   vertical-align: top;
   border-top: 1px solid #dddddd;
 }
 /* line 35, ../../../../../../../../Library/Ruby/Gems/2.0.0/gems/bootstrap-sass-3.2.0.1/assets/stylesheets/bootstrap/_tables.scss */
-.table > thead > tr > th, #properties > thead > tr > th {
+.table > thead > tr > th, .ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties > thead > tr > th {
   vertical-align: bottom;
   border-bottom: 2px solid #dddddd;
 }
 /* line 45, ../../../../../../../../Library/Ruby/Gems/2.0.0/gems/bootstrap-sass-3.2.0.1/assets/stylesheets/bootstrap/_tables.scss */
-.table > caption + thead > tr:first-child > th, #properties > caption + thead > tr:first-child > th,
+.table > caption + thead > tr:first-child > th, .ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties > caption + thead > tr:first-child > th,
 .table > caption + thead > tr:first-child > td,
-#properties > caption + thead > tr:first-child > td,
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties > caption + thead > tr:first-child > td,
 .table > colgroup + thead > tr:first-child > th,
-#properties > colgroup + thead > tr:first-child > th,
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties > colgroup + thead > tr:first-child > th,
 .table > colgroup + thead > tr:first-child > td,
-#properties > colgroup + thead > tr:first-child > td,
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties > colgroup + thead > tr:first-child > td,
 .table > thead:first-child > tr:first-child > th,
-#properties > thead:first-child > tr:first-child > th,
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties > thead:first-child > tr:first-child > th,
 .table > thead:first-child > tr:first-child > td,
-#properties > thead:first-child > tr:first-child > td {
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties > thead:first-child > tr:first-child > td {
   border-top: 0;
 }
 /* line 51, ../../../../../../../../Library/Ruby/Gems/2.0.0/gems/bootstrap-sass-3.2.0.1/assets/stylesheets/bootstrap/_tables.scss */
-.table > tbody + tbody, #properties > tbody + tbody {
+.table > tbody + tbody, .ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties > tbody + tbody {
   border-top: 2px solid #dddddd;
 }
 /* line 56, ../../../../../../../../Library/Ruby/Gems/2.0.0/gems/bootstrap-sass-3.2.0.1/assets/stylesheets/bootstrap/_tables.scss */
-.table .table, #properties .table, .table #properties, #properties #properties {
+.table .table, .ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties .table, .table .ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties, .ns-global > .inner .ns-workspace .ns-node > .inner #properties-list .table #properties, .ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties #properties {
   background-color: #f7f7f7;
 }
 
@@ -3307,16 +3307,16 @@ th {
 }
 
 /* line 110, ../../../../../../../../Library/Ruby/Gems/2.0.0/gems/bootstrap-sass-3.2.0.1/assets/stylesheets/bootstrap/_tables.scss */
-.table-striped > tbody > tr:nth-child(odd) > td, #properties > tbody > tr:nth-child(odd) > td,
+.table-striped > tbody > tr:nth-child(odd) > td, .ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties > tbody > tr:nth-child(odd) > td,
 .table-striped > tbody > tr:nth-child(odd) > th,
-#properties > tbody > tr:nth-child(odd) > th {
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties > tbody > tr:nth-child(odd) > th {
   background-color: #f9f9f9;
 }
 
 /* line 124, ../../../../../../../../Library/Ruby/Gems/2.0.0/gems/bootstrap-sass-3.2.0.1/assets/stylesheets/bootstrap/_tables.scss */
-.table-hover > tbody > tr:hover > td, #properties > tbody > tr:hover > td,
+.table-hover > tbody > tr:hover > td, .ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties > tbody > tr:hover > td,
 .table-hover > tbody > tr:hover > th,
-#properties > tbody > tr:hover > th {
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties > tbody > tr:hover > th {
   background-color: whitesmoke;
 }
 
@@ -3336,152 +3336,152 @@ table th[class*="col-"] {
 }
 
 /* line 12, ../../../../../../../../Library/Ruby/Gems/2.0.0/gems/bootstrap-sass-3.2.0.1/assets/stylesheets/bootstrap/mixins/_table-row.scss */
-.table > thead > tr > td.active, #properties > thead > tr > td.active,
+.table > thead > tr > td.active, .ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties > thead > tr > td.active,
 .table > thead > tr > th.active,
-#properties > thead > tr > th.active, .table > thead > tr.active > td, #properties > thead > tr.active > td, .table > thead > tr.active > th, #properties > thead > tr.active > th,
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties > thead > tr > th.active, .table > thead > tr.active > td, .ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties > thead > tr.active > td, .table > thead > tr.active > th, .ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties > thead > tr.active > th,
 .table > tbody > tr > td.active,
-#properties > tbody > tr > td.active,
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties > tbody > tr > td.active,
 .table > tbody > tr > th.active,
-#properties > tbody > tr > th.active,
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties > tbody > tr > th.active,
 .table > tbody > tr.active > td,
-#properties > tbody > tr.active > td,
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties > tbody > tr.active > td,
 .table > tbody > tr.active > th,
-#properties > tbody > tr.active > th,
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties > tbody > tr.active > th,
 .table > tfoot > tr > td.active,
-#properties > tfoot > tr > td.active,
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties > tfoot > tr > td.active,
 .table > tfoot > tr > th.active,
-#properties > tfoot > tr > th.active,
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties > tfoot > tr > th.active,
 .table > tfoot > tr.active > td,
-#properties > tfoot > tr.active > td,
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties > tfoot > tr.active > td,
 .table > tfoot > tr.active > th,
-#properties > tfoot > tr.active > th {
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties > tfoot > tr.active > th {
   background-color: whitesmoke;
 }
 
 /* line 24, ../../../../../../../../Library/Ruby/Gems/2.0.0/gems/bootstrap-sass-3.2.0.1/assets/stylesheets/bootstrap/mixins/_table-row.scss */
-.table-hover > tbody > tr > td.active:hover, #properties > tbody > tr > td.active:hover,
+.table-hover > tbody > tr > td.active:hover, .ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties > tbody > tr > td.active:hover,
 .table-hover > tbody > tr > th.active:hover,
-#properties > tbody > tr > th.active:hover, .table-hover > tbody > tr.active:hover > td, #properties > tbody > tr.active:hover > td, .table-hover > tbody > tr:hover > .active, #properties > tbody > tr:hover > .active, .table-hover > tbody > tr.active:hover > th, #properties > tbody > tr.active:hover > th {
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties > tbody > tr > th.active:hover, .table-hover > tbody > tr.active:hover > td, .ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties > tbody > tr.active:hover > td, .table-hover > tbody > tr:hover > .active, .ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties > tbody > tr:hover > .active, .table-hover > tbody > tr.active:hover > th, .ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties > tbody > tr.active:hover > th {
   background-color: #e8e8e8;
 }
 
 /* line 12, ../../../../../../../../Library/Ruby/Gems/2.0.0/gems/bootstrap-sass-3.2.0.1/assets/stylesheets/bootstrap/mixins/_table-row.scss */
-.table > thead > tr > td.success, #properties > thead > tr > td.success,
+.table > thead > tr > td.success, .ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties > thead > tr > td.success,
 .table > thead > tr > th.success,
-#properties > thead > tr > th.success, .table > thead > tr.success > td, #properties > thead > tr.success > td, .table > thead > tr.success > th, #properties > thead > tr.success > th,
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties > thead > tr > th.success, .table > thead > tr.success > td, .ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties > thead > tr.success > td, .table > thead > tr.success > th, .ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties > thead > tr.success > th,
 .table > tbody > tr > td.success,
-#properties > tbody > tr > td.success,
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties > tbody > tr > td.success,
 .table > tbody > tr > th.success,
-#properties > tbody > tr > th.success,
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties > tbody > tr > th.success,
 .table > tbody > tr.success > td,
-#properties > tbody > tr.success > td,
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties > tbody > tr.success > td,
 .table > tbody > tr.success > th,
-#properties > tbody > tr.success > th,
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties > tbody > tr.success > th,
 .table > tfoot > tr > td.success,
-#properties > tfoot > tr > td.success,
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties > tfoot > tr > td.success,
 .table > tfoot > tr > th.success,
-#properties > tfoot > tr > th.success,
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties > tfoot > tr > th.success,
 .table > tfoot > tr.success > td,
-#properties > tfoot > tr.success > td,
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties > tfoot > tr.success > td,
 .table > tfoot > tr.success > th,
-#properties > tfoot > tr.success > th {
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties > tfoot > tr.success > th {
   background-color: #dff0d8;
 }
 
 /* line 24, ../../../../../../../../Library/Ruby/Gems/2.0.0/gems/bootstrap-sass-3.2.0.1/assets/stylesheets/bootstrap/mixins/_table-row.scss */
-.table-hover > tbody > tr > td.success:hover, #properties > tbody > tr > td.success:hover,
+.table-hover > tbody > tr > td.success:hover, .ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties > tbody > tr > td.success:hover,
 .table-hover > tbody > tr > th.success:hover,
-#properties > tbody > tr > th.success:hover, .table-hover > tbody > tr.success:hover > td, #properties > tbody > tr.success:hover > td, .table-hover > tbody > tr:hover > .success, #properties > tbody > tr:hover > .success, .table-hover > tbody > tr.success:hover > th, #properties > tbody > tr.success:hover > th {
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties > tbody > tr > th.success:hover, .table-hover > tbody > tr.success:hover > td, .ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties > tbody > tr.success:hover > td, .table-hover > tbody > tr:hover > .success, .ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties > tbody > tr:hover > .success, .table-hover > tbody > tr.success:hover > th, .ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties > tbody > tr.success:hover > th {
   background-color: #d0e9c6;
 }
 
 /* line 12, ../../../../../../../../Library/Ruby/Gems/2.0.0/gems/bootstrap-sass-3.2.0.1/assets/stylesheets/bootstrap/mixins/_table-row.scss */
-.table > thead > tr > td.info, #properties > thead > tr > td.info,
+.table > thead > tr > td.info, .ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties > thead > tr > td.info,
 .table > thead > tr > th.info,
-#properties > thead > tr > th.info, .table > thead > tr.info > td, #properties > thead > tr.info > td, .table > thead > tr.info > th, #properties > thead > tr.info > th,
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties > thead > tr > th.info, .table > thead > tr.info > td, .ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties > thead > tr.info > td, .table > thead > tr.info > th, .ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties > thead > tr.info > th,
 .table > tbody > tr > td.info,
-#properties > tbody > tr > td.info,
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties > tbody > tr > td.info,
 .table > tbody > tr > th.info,
-#properties > tbody > tr > th.info,
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties > tbody > tr > th.info,
 .table > tbody > tr.info > td,
-#properties > tbody > tr.info > td,
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties > tbody > tr.info > td,
 .table > tbody > tr.info > th,
-#properties > tbody > tr.info > th,
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties > tbody > tr.info > th,
 .table > tfoot > tr > td.info,
-#properties > tfoot > tr > td.info,
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties > tfoot > tr > td.info,
 .table > tfoot > tr > th.info,
-#properties > tfoot > tr > th.info,
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties > tfoot > tr > th.info,
 .table > tfoot > tr.info > td,
-#properties > tfoot > tr.info > td,
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties > tfoot > tr.info > td,
 .table > tfoot > tr.info > th,
-#properties > tfoot > tr.info > th {
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties > tfoot > tr.info > th {
   background-color: #d9edf7;
 }
 
 /* line 24, ../../../../../../../../Library/Ruby/Gems/2.0.0/gems/bootstrap-sass-3.2.0.1/assets/stylesheets/bootstrap/mixins/_table-row.scss */
-.table-hover > tbody > tr > td.info:hover, #properties > tbody > tr > td.info:hover,
+.table-hover > tbody > tr > td.info:hover, .ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties > tbody > tr > td.info:hover,
 .table-hover > tbody > tr > th.info:hover,
-#properties > tbody > tr > th.info:hover, .table-hover > tbody > tr.info:hover > td, #properties > tbody > tr.info:hover > td, .table-hover > tbody > tr:hover > .info, #properties > tbody > tr:hover > .info, .table-hover > tbody > tr.info:hover > th, #properties > tbody > tr.info:hover > th {
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties > tbody > tr > th.info:hover, .table-hover > tbody > tr.info:hover > td, .ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties > tbody > tr.info:hover > td, .table-hover > tbody > tr:hover > .info, .ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties > tbody > tr:hover > .info, .table-hover > tbody > tr.info:hover > th, .ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties > tbody > tr.info:hover > th {
   background-color: #c4e3f3;
 }
 
 /* line 12, ../../../../../../../../Library/Ruby/Gems/2.0.0/gems/bootstrap-sass-3.2.0.1/assets/stylesheets/bootstrap/mixins/_table-row.scss */
-.table > thead > tr > td.warning, #properties > thead > tr > td.warning,
+.table > thead > tr > td.warning, .ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties > thead > tr > td.warning,
 .table > thead > tr > th.warning,
-#properties > thead > tr > th.warning, .table > thead > tr.warning > td, #properties > thead > tr.warning > td, .table > thead > tr.warning > th, #properties > thead > tr.warning > th,
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties > thead > tr > th.warning, .table > thead > tr.warning > td, .ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties > thead > tr.warning > td, .table > thead > tr.warning > th, .ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties > thead > tr.warning > th,
 .table > tbody > tr > td.warning,
-#properties > tbody > tr > td.warning,
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties > tbody > tr > td.warning,
 .table > tbody > tr > th.warning,
-#properties > tbody > tr > th.warning,
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties > tbody > tr > th.warning,
 .table > tbody > tr.warning > td,
-#properties > tbody > tr.warning > td,
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties > tbody > tr.warning > td,
 .table > tbody > tr.warning > th,
-#properties > tbody > tr.warning > th,
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties > tbody > tr.warning > th,
 .table > tfoot > tr > td.warning,
-#properties > tfoot > tr > td.warning,
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties > tfoot > tr > td.warning,
 .table > tfoot > tr > th.warning,
-#properties > tfoot > tr > th.warning,
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties > tfoot > tr > th.warning,
 .table > tfoot > tr.warning > td,
-#properties > tfoot > tr.warning > td,
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties > tfoot > tr.warning > td,
 .table > tfoot > tr.warning > th,
-#properties > tfoot > tr.warning > th {
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties > tfoot > tr.warning > th {
   background-color: #fcf8e3;
 }
 
 /* line 24, ../../../../../../../../Library/Ruby/Gems/2.0.0/gems/bootstrap-sass-3.2.0.1/assets/stylesheets/bootstrap/mixins/_table-row.scss */
-.table-hover > tbody > tr > td.warning:hover, #properties > tbody > tr > td.warning:hover,
+.table-hover > tbody > tr > td.warning:hover, .ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties > tbody > tr > td.warning:hover,
 .table-hover > tbody > tr > th.warning:hover,
-#properties > tbody > tr > th.warning:hover, .table-hover > tbody > tr.warning:hover > td, #properties > tbody > tr.warning:hover > td, .table-hover > tbody > tr:hover > .warning, #properties > tbody > tr:hover > .warning, .table-hover > tbody > tr.warning:hover > th, #properties > tbody > tr.warning:hover > th {
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties > tbody > tr > th.warning:hover, .table-hover > tbody > tr.warning:hover > td, .ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties > tbody > tr.warning:hover > td, .table-hover > tbody > tr:hover > .warning, .ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties > tbody > tr:hover > .warning, .table-hover > tbody > tr.warning:hover > th, .ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties > tbody > tr.warning:hover > th {
   background-color: #faf2cc;
 }
 
 /* line 12, ../../../../../../../../Library/Ruby/Gems/2.0.0/gems/bootstrap-sass-3.2.0.1/assets/stylesheets/bootstrap/mixins/_table-row.scss */
-.table > thead > tr > td.danger, #properties > thead > tr > td.danger,
+.table > thead > tr > td.danger, .ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties > thead > tr > td.danger,
 .table > thead > tr > th.danger,
-#properties > thead > tr > th.danger, .table > thead > tr.danger > td, #properties > thead > tr.danger > td, .table > thead > tr.danger > th, #properties > thead > tr.danger > th,
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties > thead > tr > th.danger, .table > thead > tr.danger > td, .ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties > thead > tr.danger > td, .table > thead > tr.danger > th, .ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties > thead > tr.danger > th,
 .table > tbody > tr > td.danger,
-#properties > tbody > tr > td.danger,
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties > tbody > tr > td.danger,
 .table > tbody > tr > th.danger,
-#properties > tbody > tr > th.danger,
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties > tbody > tr > th.danger,
 .table > tbody > tr.danger > td,
-#properties > tbody > tr.danger > td,
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties > tbody > tr.danger > td,
 .table > tbody > tr.danger > th,
-#properties > tbody > tr.danger > th,
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties > tbody > tr.danger > th,
 .table > tfoot > tr > td.danger,
-#properties > tfoot > tr > td.danger,
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties > tfoot > tr > td.danger,
 .table > tfoot > tr > th.danger,
-#properties > tfoot > tr > th.danger,
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties > tfoot > tr > th.danger,
 .table > tfoot > tr.danger > td,
-#properties > tfoot > tr.danger > td,
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties > tfoot > tr.danger > td,
 .table > tfoot > tr.danger > th,
-#properties > tfoot > tr.danger > th {
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties > tfoot > tr.danger > th {
   background-color: #f2dede;
 }
 
 /* line 24, ../../../../../../../../Library/Ruby/Gems/2.0.0/gems/bootstrap-sass-3.2.0.1/assets/stylesheets/bootstrap/mixins/_table-row.scss */
-.table-hover > tbody > tr > td.danger:hover, #properties > tbody > tr > td.danger:hover,
+.table-hover > tbody > tr > td.danger:hover, .ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties > tbody > tr > td.danger:hover,
 .table-hover > tbody > tr > th.danger:hover,
-#properties > tbody > tr > th.danger:hover, .table-hover > tbody > tr.danger:hover > td, #properties > tbody > tr.danger:hover > td, .table-hover > tbody > tr:hover > .danger, #properties > tbody > tr:hover > .danger, .table-hover > tbody > tr.danger:hover > th, #properties > tbody > tr.danger:hover > th {
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties > tbody > tr > th.danger:hover, .table-hover > tbody > tr.danger:hover > td, .ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties > tbody > tr.danger:hover > td, .table-hover > tbody > tr:hover > .danger, .ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties > tbody > tr:hover > .danger, .table-hover > tbody > tr.danger:hover > th, .ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties > tbody > tr.danger:hover > th {
   background-color: #ebcccc;
 }
 
@@ -3497,21 +3497,21 @@ table th[class*="col-"] {
     -webkit-overflow-scrolling: touch;
   }
   /* line 182, ../../../../../../../../Library/Ruby/Gems/2.0.0/gems/bootstrap-sass-3.2.0.1/assets/stylesheets/bootstrap/_tables.scss */
-  .table-responsive > .table, .table-responsive > #properties {
+  .table-responsive > .table, .ns-global > .inner .ns-workspace .ns-node > .inner #properties-list .table-responsive > #properties {
     margin-bottom: 0;
   }
   /* line 191, ../../../../../../../../Library/Ruby/Gems/2.0.0/gems/bootstrap-sass-3.2.0.1/assets/stylesheets/bootstrap/_tables.scss */
-  .table-responsive > .table > thead > tr > th, .table-responsive > #properties > thead > tr > th,
+  .table-responsive > .table > thead > tr > th, .ns-global > .inner .ns-workspace .ns-node > .inner #properties-list .table-responsive > #properties > thead > tr > th,
   .table-responsive > .table > thead > tr > td,
-  .table-responsive > #properties > thead > tr > td,
+  .ns-global > .inner .ns-workspace .ns-node > .inner #properties-list .table-responsive > #properties > thead > tr > td,
   .table-responsive > .table > tbody > tr > th,
-  .table-responsive > #properties > tbody > tr > th,
+  .ns-global > .inner .ns-workspace .ns-node > .inner #properties-list .table-responsive > #properties > tbody > tr > th,
   .table-responsive > .table > tbody > tr > td,
-  .table-responsive > #properties > tbody > tr > td,
+  .ns-global > .inner .ns-workspace .ns-node > .inner #properties-list .table-responsive > #properties > tbody > tr > td,
   .table-responsive > .table > tfoot > tr > th,
-  .table-responsive > #properties > tfoot > tr > th,
+  .ns-global > .inner .ns-workspace .ns-node > .inner #properties-list .table-responsive > #properties > tfoot > tr > th,
   .table-responsive > .table > tfoot > tr > td,
-  .table-responsive > #properties > tfoot > tr > td {
+  .ns-global > .inner .ns-workspace .ns-node > .inner #properties-list .table-responsive > #properties > tfoot > tr > td {
     white-space: nowrap;
   }
   /* line 199, ../../../../../../../../Library/Ruby/Gems/2.0.0/gems/bootstrap-sass-3.2.0.1/assets/stylesheets/bootstrap/_tables.scss */
@@ -6763,108 +6763,108 @@ a.list-group-item-danger.active, a.list-group-item-danger.active:hover, a.list-g
 }
 
 /* line 101, ../../../../../../../../Library/Ruby/Gems/2.0.0/gems/bootstrap-sass-3.2.0.1/assets/stylesheets/bootstrap/_panels.scss */
-.panel > .table, .panel > #properties,
+.panel > .table, .ns-global > .inner .ns-workspace .ns-node > .inner #properties-list .panel > #properties,
 .panel > .table-responsive > .table,
-.panel > .table-responsive > #properties,
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list .panel > .table-responsive > #properties,
 .panel > .panel-collapse > .table,
-.panel > .panel-collapse > #properties {
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list .panel > .panel-collapse > #properties {
   margin-bottom: 0;
 }
 /* line 106, ../../../../../../../../Library/Ruby/Gems/2.0.0/gems/bootstrap-sass-3.2.0.1/assets/stylesheets/bootstrap/_panels.scss */
-.panel > .table:first-child, .panel > #properties:first-child,
+.panel > .table:first-child, .ns-global > .inner .ns-workspace .ns-node > .inner #properties-list .panel > #properties:first-child,
 .panel > .table-responsive:first-child > .table:first-child,
-.panel > .table-responsive:first-child > #properties:first-child {
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list .panel > .table-responsive:first-child > #properties:first-child {
   border-top-right-radius: 3px;
   border-top-left-radius: 3px;
 }
 /* line 113, ../../../../../../../../Library/Ruby/Gems/2.0.0/gems/bootstrap-sass-3.2.0.1/assets/stylesheets/bootstrap/_panels.scss */
-.panel > .table:first-child > thead:first-child > tr:first-child td:first-child, .panel > #properties:first-child > thead:first-child > tr:first-child td:first-child,
+.panel > .table:first-child > thead:first-child > tr:first-child td:first-child, .ns-global > .inner .ns-workspace .ns-node > .inner #properties-list .panel > #properties:first-child > thead:first-child > tr:first-child td:first-child,
 .panel > .table:first-child > thead:first-child > tr:first-child th:first-child,
-.panel > #properties:first-child > thead:first-child > tr:first-child th:first-child,
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list .panel > #properties:first-child > thead:first-child > tr:first-child th:first-child,
 .panel > .table:first-child > tbody:first-child > tr:first-child td:first-child,
-.panel > #properties:first-child > tbody:first-child > tr:first-child td:first-child,
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list .panel > #properties:first-child > tbody:first-child > tr:first-child td:first-child,
 .panel > .table:first-child > tbody:first-child > tr:first-child th:first-child,
-.panel > #properties:first-child > tbody:first-child > tr:first-child th:first-child,
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list .panel > #properties:first-child > tbody:first-child > tr:first-child th:first-child,
 .panel > .table-responsive:first-child > .table:first-child > thead:first-child > tr:first-child td:first-child,
-.panel > .table-responsive:first-child > #properties:first-child > thead:first-child > tr:first-child td:first-child,
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list .panel > .table-responsive:first-child > #properties:first-child > thead:first-child > tr:first-child td:first-child,
 .panel > .table-responsive:first-child > .table:first-child > thead:first-child > tr:first-child th:first-child,
-.panel > .table-responsive:first-child > #properties:first-child > thead:first-child > tr:first-child th:first-child,
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list .panel > .table-responsive:first-child > #properties:first-child > thead:first-child > tr:first-child th:first-child,
 .panel > .table-responsive:first-child > .table:first-child > tbody:first-child > tr:first-child td:first-child,
-.panel > .table-responsive:first-child > #properties:first-child > tbody:first-child > tr:first-child td:first-child,
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list .panel > .table-responsive:first-child > #properties:first-child > tbody:first-child > tr:first-child td:first-child,
 .panel > .table-responsive:first-child > .table:first-child > tbody:first-child > tr:first-child th:first-child,
-.panel > .table-responsive:first-child > #properties:first-child > tbody:first-child > tr:first-child th:first-child {
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list .panel > .table-responsive:first-child > #properties:first-child > tbody:first-child > tr:first-child th:first-child {
   border-top-left-radius: 3px;
 }
 /* line 117, ../../../../../../../../Library/Ruby/Gems/2.0.0/gems/bootstrap-sass-3.2.0.1/assets/stylesheets/bootstrap/_panels.scss */
-.panel > .table:first-child > thead:first-child > tr:first-child td:last-child, .panel > #properties:first-child > thead:first-child > tr:first-child td:last-child,
+.panel > .table:first-child > thead:first-child > tr:first-child td:last-child, .ns-global > .inner .ns-workspace .ns-node > .inner #properties-list .panel > #properties:first-child > thead:first-child > tr:first-child td:last-child,
 .panel > .table:first-child > thead:first-child > tr:first-child th:last-child,
-.panel > #properties:first-child > thead:first-child > tr:first-child th:last-child,
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list .panel > #properties:first-child > thead:first-child > tr:first-child th:last-child,
 .panel > .table:first-child > tbody:first-child > tr:first-child td:last-child,
-.panel > #properties:first-child > tbody:first-child > tr:first-child td:last-child,
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list .panel > #properties:first-child > tbody:first-child > tr:first-child td:last-child,
 .panel > .table:first-child > tbody:first-child > tr:first-child th:last-child,
-.panel > #properties:first-child > tbody:first-child > tr:first-child th:last-child,
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list .panel > #properties:first-child > tbody:first-child > tr:first-child th:last-child,
 .panel > .table-responsive:first-child > .table:first-child > thead:first-child > tr:first-child td:last-child,
-.panel > .table-responsive:first-child > #properties:first-child > thead:first-child > tr:first-child td:last-child,
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list .panel > .table-responsive:first-child > #properties:first-child > thead:first-child > tr:first-child td:last-child,
 .panel > .table-responsive:first-child > .table:first-child > thead:first-child > tr:first-child th:last-child,
-.panel > .table-responsive:first-child > #properties:first-child > thead:first-child > tr:first-child th:last-child,
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list .panel > .table-responsive:first-child > #properties:first-child > thead:first-child > tr:first-child th:last-child,
 .panel > .table-responsive:first-child > .table:first-child > tbody:first-child > tr:first-child td:last-child,
-.panel > .table-responsive:first-child > #properties:first-child > tbody:first-child > tr:first-child td:last-child,
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list .panel > .table-responsive:first-child > #properties:first-child > tbody:first-child > tr:first-child td:last-child,
 .panel > .table-responsive:first-child > .table:first-child > tbody:first-child > tr:first-child th:last-child,
-.panel > .table-responsive:first-child > #properties:first-child > tbody:first-child > tr:first-child th:last-child {
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list .panel > .table-responsive:first-child > #properties:first-child > tbody:first-child > tr:first-child th:last-child {
   border-top-right-radius: 3px;
 }
 /* line 125, ../../../../../../../../Library/Ruby/Gems/2.0.0/gems/bootstrap-sass-3.2.0.1/assets/stylesheets/bootstrap/_panels.scss */
-.panel > .table:last-child, .panel > #properties:last-child,
+.panel > .table:last-child, .ns-global > .inner .ns-workspace .ns-node > .inner #properties-list .panel > #properties:last-child,
 .panel > .table-responsive:last-child > .table:last-child,
-.panel > .table-responsive:last-child > #properties:last-child {
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list .panel > .table-responsive:last-child > #properties:last-child {
   border-bottom-right-radius: 3px;
   border-bottom-left-radius: 3px;
 }
 /* line 132, ../../../../../../../../Library/Ruby/Gems/2.0.0/gems/bootstrap-sass-3.2.0.1/assets/stylesheets/bootstrap/_panels.scss */
-.panel > .table:last-child > tbody:last-child > tr:last-child td:first-child, .panel > #properties:last-child > tbody:last-child > tr:last-child td:first-child,
+.panel > .table:last-child > tbody:last-child > tr:last-child td:first-child, .ns-global > .inner .ns-workspace .ns-node > .inner #properties-list .panel > #properties:last-child > tbody:last-child > tr:last-child td:first-child,
 .panel > .table:last-child > tbody:last-child > tr:last-child th:first-child,
-.panel > #properties:last-child > tbody:last-child > tr:last-child th:first-child,
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list .panel > #properties:last-child > tbody:last-child > tr:last-child th:first-child,
 .panel > .table:last-child > tfoot:last-child > tr:last-child td:first-child,
-.panel > #properties:last-child > tfoot:last-child > tr:last-child td:first-child,
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list .panel > #properties:last-child > tfoot:last-child > tr:last-child td:first-child,
 .panel > .table:last-child > tfoot:last-child > tr:last-child th:first-child,
-.panel > #properties:last-child > tfoot:last-child > tr:last-child th:first-child,
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list .panel > #properties:last-child > tfoot:last-child > tr:last-child th:first-child,
 .panel > .table-responsive:last-child > .table:last-child > tbody:last-child > tr:last-child td:first-child,
-.panel > .table-responsive:last-child > #properties:last-child > tbody:last-child > tr:last-child td:first-child,
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list .panel > .table-responsive:last-child > #properties:last-child > tbody:last-child > tr:last-child td:first-child,
 .panel > .table-responsive:last-child > .table:last-child > tbody:last-child > tr:last-child th:first-child,
-.panel > .table-responsive:last-child > #properties:last-child > tbody:last-child > tr:last-child th:first-child,
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list .panel > .table-responsive:last-child > #properties:last-child > tbody:last-child > tr:last-child th:first-child,
 .panel > .table-responsive:last-child > .table:last-child > tfoot:last-child > tr:last-child td:first-child,
-.panel > .table-responsive:last-child > #properties:last-child > tfoot:last-child > tr:last-child td:first-child,
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list .panel > .table-responsive:last-child > #properties:last-child > tfoot:last-child > tr:last-child td:first-child,
 .panel > .table-responsive:last-child > .table:last-child > tfoot:last-child > tr:last-child th:first-child,
-.panel > .table-responsive:last-child > #properties:last-child > tfoot:last-child > tr:last-child th:first-child {
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list .panel > .table-responsive:last-child > #properties:last-child > tfoot:last-child > tr:last-child th:first-child {
   border-bottom-left-radius: 3px;
 }
 /* line 136, ../../../../../../../../Library/Ruby/Gems/2.0.0/gems/bootstrap-sass-3.2.0.1/assets/stylesheets/bootstrap/_panels.scss */
-.panel > .table:last-child > tbody:last-child > tr:last-child td:last-child, .panel > #properties:last-child > tbody:last-child > tr:last-child td:last-child,
+.panel > .table:last-child > tbody:last-child > tr:last-child td:last-child, .ns-global > .inner .ns-workspace .ns-node > .inner #properties-list .panel > #properties:last-child > tbody:last-child > tr:last-child td:last-child,
 .panel > .table:last-child > tbody:last-child > tr:last-child th:last-child,
-.panel > #properties:last-child > tbody:last-child > tr:last-child th:last-child,
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list .panel > #properties:last-child > tbody:last-child > tr:last-child th:last-child,
 .panel > .table:last-child > tfoot:last-child > tr:last-child td:last-child,
-.panel > #properties:last-child > tfoot:last-child > tr:last-child td:last-child,
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list .panel > #properties:last-child > tfoot:last-child > tr:last-child td:last-child,
 .panel > .table:last-child > tfoot:last-child > tr:last-child th:last-child,
-.panel > #properties:last-child > tfoot:last-child > tr:last-child th:last-child,
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list .panel > #properties:last-child > tfoot:last-child > tr:last-child th:last-child,
 .panel > .table-responsive:last-child > .table:last-child > tbody:last-child > tr:last-child td:last-child,
-.panel > .table-responsive:last-child > #properties:last-child > tbody:last-child > tr:last-child td:last-child,
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list .panel > .table-responsive:last-child > #properties:last-child > tbody:last-child > tr:last-child td:last-child,
 .panel > .table-responsive:last-child > .table:last-child > tbody:last-child > tr:last-child th:last-child,
-.panel > .table-responsive:last-child > #properties:last-child > tbody:last-child > tr:last-child th:last-child,
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list .panel > .table-responsive:last-child > #properties:last-child > tbody:last-child > tr:last-child th:last-child,
 .panel > .table-responsive:last-child > .table:last-child > tfoot:last-child > tr:last-child td:last-child,
-.panel > .table-responsive:last-child > #properties:last-child > tfoot:last-child > tr:last-child td:last-child,
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list .panel > .table-responsive:last-child > #properties:last-child > tfoot:last-child > tr:last-child td:last-child,
 .panel > .table-responsive:last-child > .table:last-child > tfoot:last-child > tr:last-child th:last-child,
-.panel > .table-responsive:last-child > #properties:last-child > tfoot:last-child > tr:last-child th:last-child {
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list .panel > .table-responsive:last-child > #properties:last-child > tfoot:last-child > tr:last-child th:last-child {
   border-bottom-right-radius: 3px;
 }
 /* line 143, ../../../../../../../../Library/Ruby/Gems/2.0.0/gems/bootstrap-sass-3.2.0.1/assets/stylesheets/bootstrap/_panels.scss */
-.panel > .panel-body + .table, .panel > .panel-body + #properties,
+.panel > .panel-body + .table, .ns-global > .inner .ns-workspace .ns-node > .inner #properties-list .panel > .panel-body + #properties,
 .panel > .panel-body + .table-responsive {
   border-top: 1px solid #dddddd;
 }
 /* line 147, ../../../../../../../../Library/Ruby/Gems/2.0.0/gems/bootstrap-sass-3.2.0.1/assets/stylesheets/bootstrap/_panels.scss */
-.panel > .table > tbody:first-child > tr:first-child th, .panel > #properties > tbody:first-child > tr:first-child th,
+.panel > .table > tbody:first-child > tr:first-child th, .ns-global > .inner .ns-workspace .ns-node > .inner #properties-list .panel > #properties > tbody:first-child > tr:first-child th,
 .panel > .table > tbody:first-child > tr:first-child td,
-.panel > #properties > tbody:first-child > tr:first-child td {
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list .panel > #properties > tbody:first-child > tr:first-child td {
   border-top: 0;
 }
 /* line 151, ../../../../../../../../Library/Ruby/Gems/2.0.0/gems/bootstrap-sass-3.2.0.1/assets/stylesheets/bootstrap/_panels.scss */
@@ -8417,15 +8417,17 @@ button.close {
 }
 /* line 1, ../../../sass/phpcr-browser/global/workspace/node/component/_toolbar.scss */
 .ns-global > .inner .ns-workspace .ns-node > .inner #toolbar {
-  position: fixed;
-  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
   height: 40px;
   line-height: 40px;
   background-color: #f5f5f5;
   border-bottom: 1px solid #ccc;
   z-index: 200;
 }
-/* line 11, ../../../sass/phpcr-browser/global/workspace/node/component/_toolbar.scss */
+/* line 13, ../../../sass/phpcr-browser/global/workspace/node/component/_toolbar.scss */
 .ns-global > .inner .ns-workspace .ns-node > .inner #toolbar .breadcrumb {
   display: inline-block;
   padding: 0;
@@ -8433,52 +8435,81 @@ button.close {
   background-color: transparent;
   font-size: 13px;
 }
-/* line 20, ../../../sass/phpcr-browser/global/workspace/node/component/_toolbar.scss */
+/* line 22, ../../../sass/phpcr-browser/global/workspace/node/component/_toolbar.scss */
 .ns-global > .inner .ns-workspace .ns-node > .inner #toolbar .btn-group {
   position: fixed;
   right: 0;
   margin-top: 6px;
   height: 40px;
 }
-/* line 26, ../../../sass/phpcr-browser/global/workspace/node/component/_toolbar.scss */
+/* line 28, ../../../sass/phpcr-browser/global/workspace/node/component/_toolbar.scss */
 .ns-global > .inner .ns-workspace .ns-node > .inner #toolbar .btn-group .btn {
   background-color: transparent;
   border: none;
   -webkit-box-shadow: none;
   box-shadow: none;
 }
-/* line 31, ../../../sass/phpcr-browser/global/workspace/node/component/_toolbar.scss */
+/* line 33, ../../../sass/phpcr-browser/global/workspace/node/component/_toolbar.scss */
 .ns-global > .inner .ns-workspace .ns-node > .inner #toolbar .btn-group .btn:focus {
   -webkit-box-shadow: none;
   box-shadow: none;
 }
-/* line 37, ../../../sass/phpcr-browser/global/workspace/node/component/_toolbar.scss */
+/* line 39, ../../../sass/phpcr-browser/global/workspace/node/component/_toolbar.scss */
 .ns-global > .inner .ns-workspace .ns-node > .inner #toolbar .btn-group.open .btn {
   -webkit-box-shadow: none;
   box-shadow: none;
 }
-/* line 43, ../../../sass/phpcr-browser/global/workspace/node/component/_toolbar.scss */
+/* line 45, ../../../sass/phpcr-browser/global/workspace/node/component/_toolbar.scss */
 .ns-global > .inner .ns-workspace .ns-node > .inner #toolbar .icon {
-  margin-left: 15px;
+  width: 40px;
+  padding-left: 15px !important;
 }
-/* line 47, ../../../sass/phpcr-browser/global/workspace/node/component/_toolbar.scss */
-.ns-global > .inner .ns-workspace .ns-node > .inner #toolbar form {
-  display: inline-block;
-  width: 90%;
+/* line 50, ../../../sass/phpcr-browser/global/workspace/node/component/_toolbar.scss */
+.ns-global > .inner .ns-workspace .ns-node > .inner #toolbar div[class^="col-xs-"] {
+  padding-left: 0;
+  padding-right: 10px;
 }
-/* line 51, ../../../sass/phpcr-browser/global/workspace/node/component/_toolbar.scss */
-.ns-global > .inner .ns-workspace .ns-node > .inner #toolbar form input {
-  border: none;
-  height: 40px;
-  -webkit-box-shadow: none;
-  box-shadow: none;
+/* line 55, ../../../sass/phpcr-browser/global/workspace/node/component/_toolbar.scss */
+.ns-global > .inner .ns-workspace .ns-node > .inner #toolbar .row {
   margin: 0;
-  padding: 0;
-  background-color: transparent;
 }
 /* line 59, ../../../sass/phpcr-browser/global/workspace/node/component/_toolbar.scss */
-.ns-global > .inner .ns-workspace .ns-node > .inner #toolbar form input.input-full-width {
-  padding-left: 15px;
+.ns-global > .inner .ns-workspace .ns-node > .inner #toolbar form {
+  display: inline-block;
+  padding: 0;
+}
+/* line 63, ../../../sass/phpcr-browser/global/workspace/node/component/_toolbar.scss */
+.ns-global > .inner .ns-workspace .ns-node > .inner #toolbar form select {
+  height: 30px;
+  margin: 0;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  -ms-border-radius: 0;
+  -o-border-radius: 0;
+  border-radius: 0;
+}
+/* line 70, ../../../sass/phpcr-browser/global/workspace/node/component/_toolbar.scss */
+.ns-global > .inner .ns-workspace .ns-node > .inner #toolbar form .form-group {
+  position: relative;
+  width: 100%;
+}
+/* line 74, ../../../sass/phpcr-browser/global/workspace/node/component/_toolbar.scss */
+.ns-global > .inner .ns-workspace .ns-node > .inner #toolbar form .form-group .form-control-feedback {
+  top: 12px;
+}
+/* line 79, ../../../sass/phpcr-browser/global/workspace/node/component/_toolbar.scss */
+.ns-global > .inner .ns-workspace .ns-node > .inner #toolbar form input {
+  height: 30px;
+  margin: 0;
+  margin-top: -3px;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+/* line 85, ../../../sass/phpcr-browser/global/workspace/node/component/_toolbar.scss */
+.ns-global > .inner .ns-workspace .ns-node > .inner #toolbar form input.form-control {
+  width: 100%;
 }
 /* line 1, ../../../sass/phpcr-browser/global/workspace/node/component/_properties-list.scss */
 .ns-global > .inner .ns-workspace .ns-node > .inner #properties-list {
@@ -8490,6 +8521,48 @@ button.close {
   right: 0;
   overflow: auto;
   z-index: 100;
+}
+/* line 10, ../../../sass/phpcr-browser/global/workspace/node/component/_properties-list.scss */
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties {
+  z-index: 1;
+  background-color: #fff;
+  border: 1px solid #dddddd;
+  border-left: none;
+}
+/* line 19, ../../../sass/phpcr-browser/global/workspace/node/component/_properties-list.scss */
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties thead {
+  border-bottom: 2px solid #ddd;
+}
+/* line 23, ../../../sass/phpcr-browser/global/workspace/node/component/_properties-list.scss */
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties tbody {
+  overflow: auto;
+}
+/* line 28, ../../../sass/phpcr-browser/global/workspace/node/component/_properties-list.scss */
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties tbody tr td:first-child {
+  width: 30px;
+  text-align: center;
+  vertical-align: middle;
+  font-size: 12px;
+}
+/* line 34, ../../../sass/phpcr-browser/global/workspace/node/component/_properties-list.scss */
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties tbody tr td:first-child .octicon {
+  visibility: hidden;
+}
+/* line 39, ../../../sass/phpcr-browser/global/workspace/node/component/_properties-list.scss */
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties tbody tr td:nth-child(2), .ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties tbody tr td:last-child {
+  text-align: right;
+}
+/* line 43, ../../../sass/phpcr-browser/global/workspace/node/component/_properties-list.scss */
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties tbody tr td:nth-child(2) {
+  width: 20%;
+}
+/* line 47, ../../../sass/phpcr-browser/global/workspace/node/component/_properties-list.scss */
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties tbody tr td:last-child {
+  padding-right: 15px;
+}
+/* line 54, ../../../sass/phpcr-browser/global/workspace/node/component/_properties-list.scss */
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties tbody tr:hover td:first-child .octicon {
+  visibility: visible;
 }
 
 @font-face {
@@ -9622,15 +9695,15 @@ table tbody tr:first-child td {
 }
 
 /* line 21, ../../../sass/phpcr-browser/tables.scss */
-.table-striped > tbody > tr:nth-child(even) > td, #properties > tbody > tr:nth-child(even) > td,
+.table-striped > tbody > tr:nth-child(even) > td, .ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties > tbody > tr:nth-child(even) > td,
 .table-striped > tbody > tr:nth-child(even) > th,
-#properties > tbody > tr:nth-child(even) > th {
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties > tbody > tr:nth-child(even) > th {
   background-color: #f9f9f9;
 }
 /* line 28, ../../../sass/phpcr-browser/tables.scss */
-.table-striped > tbody > tr:nth-child(odd) > td, #properties > tbody > tr:nth-child(odd) > td,
+.table-striped > tbody > tr:nth-child(odd) > td, .ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties > tbody > tr:nth-child(odd) > td,
 .table-striped > tbody > tr:nth-child(odd) > th,
-#properties > tbody > tr:nth-child(odd) > th {
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties > tbody > tr:nth-child(odd) > th {
   background-color: #fff;
 }
 
@@ -9951,206 +10024,6 @@ table tbody tr:first-child td {
 /* line 41, ../../../sass/phpcr-browser/panels.scss */
 .panel.panel-box.new:hover, .panel.panel-box.new.focused {
   opacity: 1.0;
-}
-
-/* line 4, ../../../sass/phpcr-browser/properties.scss */
-#properties {
-  z-index: 1;
-  background-color: #fff;
-  border: 1px solid #dddddd;
-  border-left: none;
-}
-/* line 13, ../../../sass/phpcr-browser/properties.scss */
-#properties thead {
-  border-bottom: 2px solid #ddd;
-}
-/* line 15, ../../../sass/phpcr-browser/properties.scss */
-#properties thead tr th:nth-child(2) {
-  width: 25%;
-}
-/* line 19, ../../../sass/phpcr-browser/properties.scss */
-#properties thead tr th:nth-child(3) {
-  width: 15%;
-}
-/* line 23, ../../../sass/phpcr-browser/properties.scss */
-#properties thead tr th:first-child {
-  width: 30px;
-}
-/* line 31, ../../../sass/phpcr-browser/properties.scss */
-#properties tbody {
-  overflow: auto;
-}
-/* line 35, ../../../sass/phpcr-browser/properties.scss */
-#properties tr {
-  cursor: pointer;
-}
-/* line 38, ../../../sass/phpcr-browser/properties.scss */
-#properties tr:first-child td {
-  border-top: none;
-}
-/* line 42, ../../../sass/phpcr-browser/properties.scss */
-#properties tr td:nth-child(2) {
-  /* Name column */
-  width: 20%;
-  vertical-align: middle;
-  text-align: right;
-  font-size: 10pt;
-}
-/* line 50, ../../../sass/phpcr-browser/properties.scss */
-#properties tr td:nth-child(3) {
-  font-size: 10pt;
-}
-/* line 54, ../../../sass/phpcr-browser/properties.scss */
-#properties tr td:nth-child(4) {
-  /* Type column */
-  width: 12%;
-  vertical-align: middle;
-  text-align: center;
-}
-/* line 61, ../../../sass/phpcr-browser/properties.scss */
-#properties tr td:last-child {
-  word-wrap: break-word;
-  vertical-align: middle;
-  word-break: break-word;
-}
-/* line 67, ../../../sass/phpcr-browser/properties.scss */
-#properties tr td:first-child {
-  width: 30px;
-  text-align: center;
-  vertical-align: middle;
-  font-size: 12px;
-}
-/* line 72, ../../../sass/phpcr-browser/properties.scss */
-#properties tr td:first-child .octicon {
-  visibility: hidden;
-}
-/* line 79, ../../../sass/phpcr-browser/properties.scss */
-#properties tr:hover td:first-child .octicon {
-  visibility: visible;
-}
-/* line 86, ../../../sass/phpcr-browser/properties.scss */
-#properties table {
-  table-layout: fixed;
-}
-/* line 89, ../../../sass/phpcr-browser/properties.scss */
-#properties table tr th {
-  height: 25px;
-  padding: 0;
-  font-size: 8pt;
-  vertical-align: middle;
-}
-/* line 96, ../../../sass/phpcr-browser/properties.scss */
-#properties table tr td:first-child {
-  width: 20%;
-  vertical-align: middle;
-}
-/* line 101, ../../../sass/phpcr-browser/properties.scss */
-#properties table tr td {
-  text-align: left !important;
-}
-/* line 104, ../../../sass/phpcr-browser/properties.scss */
-#properties table tr td .octicon {
-  display: none;
-}
-/* line 109, ../../../sass/phpcr-browser/properties.scss */
-#properties table tr td:hover .octicon {
-  display: inherit;
-}
-/* line 114, ../../../sass/phpcr-browser/properties.scss */
-#properties table tr td a:hover {
-  text-decoration: none;
-}
-
-/* line 12, ../../../../../../../../Library/Ruby/Gems/2.0.0/gems/bootstrap-sass-3.2.0.1/assets/stylesheets/bootstrap/mixins/_table-row.scss */
-.table > thead > tr > td.property-form, #properties > thead > tr > td.property-form,
-.table > thead > tr > th.property-form,
-#properties > thead > tr > th.property-form, .table > thead > tr.property-form > td, #properties > thead > tr.property-form > td, .table > thead > tr.property-form > th, #properties > thead > tr.property-form > th,
-.table > tbody > tr > td.property-form,
-#properties > tbody > tr > td.property-form,
-.table > tbody > tr > th.property-form,
-#properties > tbody > tr > th.property-form,
-.table > tbody > tr.property-form > td,
-#properties > tbody > tr.property-form > td,
-.table > tbody > tr.property-form > th,
-#properties > tbody > tr.property-form > th,
-.table > tfoot > tr > td.property-form,
-#properties > tfoot > tr > td.property-form,
-.table > tfoot > tr > th.property-form,
-#properties > tfoot > tr > th.property-form,
-.table > tfoot > tr.property-form > td,
-#properties > tfoot > tr.property-form > td,
-.table > tfoot > tr.property-form > th,
-#properties > tfoot > tr.property-form > th {
-  background-color: #dddddd;
-}
-
-/* line 24, ../../../../../../../../Library/Ruby/Gems/2.0.0/gems/bootstrap-sass-3.2.0.1/assets/stylesheets/bootstrap/mixins/_table-row.scss */
-.table-hover > tbody > tr > td.property-form:hover, #properties > tbody > tr > td.property-form:hover,
-.table-hover > tbody > tr > th.property-form:hover,
-#properties > tbody > tr > th.property-form:hover, .table-hover > tbody > tr.property-form:hover > td, #properties > tbody > tr.property-form:hover > td, .table-hover > tbody > tr:hover > .property-form, #properties > tbody > tr:hover > .property-form, .table-hover > tbody > tr.property-form:hover > th, #properties > tbody > tr.property-form:hover > th {
-  background-color: #d0d0d0;
-}
-
-/* line 124, ../../../sass/phpcr-browser/properties.scss */
-#node-toolbar {
-  height: 40px;
-  line-height: 40px;
-}
-/* line 129, ../../../sass/phpcr-browser/properties.scss */
-#node-toolbar .breadcrumb {
-  position: relative;
-  padding: 0;
-  margin: 0;
-  font-size: 13px;
-  white-space: nowrap;
-  overflow: hidden;
-  background-color: transparent;
-}
-/* line 138, ../../../sass/phpcr-browser/properties.scss */
-#node-toolbar .breadcrumb a {
-  color: #000;
-}
-/* line 142, ../../../sass/phpcr-browser/properties.scss */
-#node-toolbar .breadcrumb span.active {
-  color: #f18a66;
-  cursor: default;
-}
-/* line 149, ../../../sass/phpcr-browser/properties.scss */
-#node-toolbar #action.btn-group .btn {
-  background-color: transparent;
-  -webkit-box-shadow: none;
-  -moz-box-shadow: none;
-  box-shadow: none;
-  border: none;
-}
-/* line 156, ../../../sass/phpcr-browser/properties.scss */
-#node-toolbar #action.btn-group.open .btn {
-  background-color: transparent;
-  -webkit-box-shadow: none;
-  -moz-box-shadow: none;
-  box-shadow: none;
-}
-
-/* line 164, ../../../sass/phpcr-browser/properties.scss */
-.property-item .property-options .btn-group {
-  visibility: hidden;
-}
-
-/* line 168, ../../../sass/phpcr-browser/properties.scss */
-.property-item .property-options .btn-group a {
-  color: #bbb;
-}
-
-/* line 172, ../../../sass/phpcr-browser/properties.scss */
-.property-item .property-options .btn-group a:hover {
-  color: #000;
-  text-decoration: none;
-}
-
-/* line 177, ../../../sass/phpcr-browser/properties.scss */
-.property-item:hover .property-options .btn-group {
-  visibility: visible;
-  display: block;
 }
 
 /* line 3, ../../../sass/phpcr-browser/components.scss */

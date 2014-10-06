@@ -4,9 +4,8 @@ define([
     'use strict';
 
     function Node(restangularizedElement, workspace) {
-        this.$$loadAttributes(restangularizedElement);
-
         this.workspace = workspace;
+        this.$$loadAttributes(restangularizedElement);
         this.restangularizedElement = restangularizedElement;
     }
 
@@ -20,6 +19,8 @@ define([
         if (container.reducedTree) {
             this.reducedTree = container.reducedTree;
         }
+
+        this.propertiesCollection = this.workspace.restangularizedElement.all('nodes').all(this.path.slice(1) + '@properties');
     };
 
     Node.prototype.getWorkspace = function() {
@@ -62,6 +63,14 @@ define([
                 self.$$loadAttributes(node);
             })
         ;
+    };
+
+    Node.prototype.createProperty = function(property) {
+        return this.propertiesCollection.customPOST(property);
+    };
+
+    Node.prototype.removeProperty = function(propertyName) {
+        return this.propertiesCollection.one(propertyName).remove();
     };
 
     return Node;

@@ -2,8 +2,9 @@
 define([
     'app/Graph/component/model/Workspace',
     'app/Graph/component/model/Node',
-    'mock/Restangular'
-], function(Workspace, Node, Restangular) {
+    'mock/Restangular',
+    'mixin'
+], function(Workspace, Node, Restangular, mixin) {
     'use strict';
 
     var restangular,
@@ -16,6 +17,8 @@ define([
         repository = {};
 
         nodes = [new Restangular()];
+
+        nodes[0].path = '/test';
 
         restangular = new Restangular(nodes, nodes[0]);
 
@@ -31,7 +34,7 @@ define([
 
         it('should call get when getNode is called and return a Node', function() {
             spyOn(restangular, 'one').andCallThrough();
-            spyOn(restangular, 'get').andCallThrough();
+            spyOn(restangular, 'get').andReturn(mixin.buildPromise(nodes[0]));
 
             workspace.getNode('/toto', true).then(function(node) {
                 // As we use our mock, the promises are always resolved synchronously

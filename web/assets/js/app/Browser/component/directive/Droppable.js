@@ -55,7 +55,7 @@ define([], function() {
                         if (draggableData) {
                             scope.$emit('$elementDropSuccess', {
                                 droppableData: droppableData,
-                                draggableData: elementDropped.scope().draggableData
+                                draggableData: draggableData
                             });
                         }
                         return false;

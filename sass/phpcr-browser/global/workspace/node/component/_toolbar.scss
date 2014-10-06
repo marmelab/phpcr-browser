@@ -1,6 +1,8 @@
 #toolbar {
-    position: fixed;
-    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
     height: $toolbar-height;
     line-height: $toolbar-height;
 
@@ -41,24 +43,47 @@
     }
 
     .icon {
-        margin-left: 15px;
+        width: 40px;
+        padding-left: 15px!important;
+    }
+
+    div[class^="col-xs-"] {
+        padding-left: 0;
+        padding-right: 10px;
+    }
+
+    .row {
+        margin: 0;
     }
 
     form {
         display: inline-block;
-        width: 90%;
+        padding: 0;
+
+        select {
+            height: $toolbar-height - 10px;
+            margin: 0;
+            @include box-shadow(none);
+            @include border-radius(0);
+        }
+
+        .form-group {
+            position: relative;
+            width: 100%;
+
+            .form-control-feedback {
+                top: 12px;
+            }
+        }
 
         input {
-            border: none;
-            height: $toolbar-height;
-            @include box-shadow(none);
+            height: $toolbar-height - 10px;
             margin: 0;
-            padding: 0;
-            background-color: transparent;
+            margin-top: -3px;
+            @include box-shadow(none);
 
-            &.input-full-width {
-                padding-left: 15px;
-
+            &.form-control {
+                width: 100%;
             }
         }
     }

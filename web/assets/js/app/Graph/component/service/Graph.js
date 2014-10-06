@@ -55,6 +55,7 @@ define([
         config = config || {};
 
         if (config.cache === false) {
+
             var key = this.baseUrl;
 
             if (query.repository) {

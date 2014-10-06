@@ -3,14 +3,13 @@ define([
 ], function(angular) {
     'use strict';
 
-    function WorkspaceController($scope, $tree, $q, $state, $graph, $treeFactory, $progress, $notification) {
+    function WorkspaceController($scope, $tree, $q, $state, $graph, $treeFactory, $notification) {
         this.$scope = $scope;
         this.$tree = $tree;
         this.$q = $q;
         this.$state = $state;
         this.$graph = $graph;
         this.$treeFactory = $treeFactory;
-        this.$progress = $progress;
         this.$notification = $notification;
 
         this.$$init();
@@ -29,7 +28,7 @@ define([
 
         this.$scope.$on('$elementDropSuccess', function($event, data) {
             if (!data.draggableData.tree && !data.droppableData.tree) {
-                return;
+                return self.$scope.$broadcast('_$elementDropSuccess_', data);
             } else if (!data.draggableData.tree) {
                 return self.$notification.error('You can only drop a node here');
             } else if (!data.droppableData.tree) {
@@ -65,8 +64,6 @@ define([
     WorkspaceController.prototype.treeClick = function(selectedNode, cache) {
         var self = this;
 
-        self.$progress.start();
-
         return selectedNode
             .then(function(selectedNode) {
                 return self.$state
@@ -76,9 +73,6 @@ define([
                         path: selectedNode.path().replace('/root', '')
                     })
                 ;
-            })
-            .finally(function() {
-                self.$progress.done();
             })
         ;
     };
@@ -178,11 +172,10 @@ define([
         this.$state = undefined;
         this.$graph = undefined;
         this.$treeFactory = undefined;
-        this.$progress = undefined;
         this.$notification = undefined;
     };
 
-    WorkspaceController.$inject = ['$scope', '$tree', '$q', '$state', '$graph', '$treeFactory', '$progress', '$notification'];
+    WorkspaceController.$inject = ['$scope', '$tree', '$q', '$state', '$graph', '$treeFactory', '$notification'];
 
     return WorkspaceController;
 });

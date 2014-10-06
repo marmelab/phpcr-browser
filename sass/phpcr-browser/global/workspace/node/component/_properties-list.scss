@@ -6,4 +6,57 @@
     right: 0;
     overflow: auto;
     z-index: 100;
+
+    #properties {
+        z-index: 1;
+        @extend .table;
+        @extend .table-striped;
+        @extend .table-hover;
+        background-color: #fff;
+        border: 1px solid #dddddd;
+        border-left: none;
+
+        thead {
+            border-bottom: 2px solid #ddd;
+        }
+
+        tbody {
+            overflow: auto;
+
+            tr {
+                td {
+                    &:first-child {
+                        width: 30px;
+
+                        text-align: center;
+                        vertical-align: middle;
+                        font-size: 12px;
+                        .octicon {
+                            visibility: hidden;
+                        }
+                    }
+
+                    &:nth-child(2), &:last-child {
+                        text-align: right;
+                    }
+
+                    &:nth-child(2) {
+                        width: 20%;
+                    }
+
+                    &:last-child {
+                        padding-right: 15px;
+                    }
+                }
+
+                &:hover {
+                    td:first-child {
+                        .octicon {
+                            visibility: visible;
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

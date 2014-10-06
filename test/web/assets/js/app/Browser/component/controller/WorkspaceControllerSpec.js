@@ -3,12 +3,11 @@ define([
     'app/Browser/component/controller/WorkspaceController',
     'mock/Graph',
     'mock/TreeFactory',
-    'mock/Progress',
     'mock/Notification',
     'mixin',
     'angular',
     'angular-mocks'
-], function(WorkspaceController, Graph, TreeFactory, Progress, Notification, mixin, angular) {
+], function(WorkspaceController, Graph, TreeFactory, Notification, mixin, angular) {
     'use strict';
 
     describe('WorkspaceController', function() {
@@ -19,7 +18,6 @@ define([
             $state,
             $graph,
             $treeFactory,
-            $progress,
             $notification,
             workspaceController,
             removeTreeListener,
@@ -61,8 +59,6 @@ define([
             $treeFactory = jasmine.createSpy('$treeFactory').andCallFake(TreeFactory);
             angular.extend($treeFactory, TreeFactory);
 
-            $progress = new Progress();
-
             $notification = new Notification();
 
             workspaceController = new WorkspaceController(
@@ -72,7 +68,6 @@ define([
                 $state,
                 $graph,
                 $treeFactory,
-                $progress,
                 $notification
             );
         });
@@ -169,9 +164,6 @@ define([
         });
 
         it('should call $state.go when treeClick is called', function() {
-            spyOn(workspaceController.$progress, 'start').andCallThrough();
-            spyOn(workspaceController.$progress, 'done').andCallThrough();
-
             var selectedNode = {
                 path: jasmine.createSpy('path').andReturn('/root/test'),
             };
@@ -179,13 +171,11 @@ define([
             workspaceController.treeClick(mixin.buildPromise(selectedNode));
 
             expect(selectedNode.path).toHaveBeenCalled();
-            expect(workspaceController.$progress.start).toHaveBeenCalled();
             expect(workspaceController.$state.go).toHaveBeenCalledWith('node', {
                 repository: 'test',
                 workspace: 'default',
                 path: '/test'
             });
-            expect(workspaceController.$progress.done).toHaveBeenCalled();
         });
 
         it('should call tree.moveTo when $$treeMove is called', function() {
@@ -311,7 +301,6 @@ define([
             expect(workspaceController.$state).toBeUndefined();
             expect(workspaceController.$graph).toBeUndefined();
             expect(workspaceController.$treeFactory).toBeUndefined();
-            expect(workspaceController.$progress).toBeUndefined();
         });
     });
 });

@@ -3,9 +3,10 @@ define([
     'app/Graph/component/model/Server',
     'app/Graph/component/service/Graph',
     'mock/Restangular',
+    'mixin',
     'angular',
     'angular-mocks'
-], function(Server, Graph, Restangular, angular) {
+], function(Server, Graph, Restangular, mixin, angular) {
     'use strict';
 
     describe('Graph', function() {
@@ -57,7 +58,7 @@ define([
         });
 
         it('should call $$findNode if query has a repository name and a workspace name and a path', function() {
-            spyOn($graph, '$$findNode').andCallThrough();
+            spyOn($graph, '$$findNode').andReturn(mixin.buildPromise());
 
             $graph.find({ repository: 'test', workspace: 'default', path: '/toto'}, { reducedTree: false }).then(function() {
                 // As we use our mock, the promises are always resolved synchronously
@@ -69,6 +70,7 @@ define([
             var $httpCache = $cacheFactory('$http');
             spyOn($cacheFactory, 'get').andCallThrough();
             spyOn($httpCache, 'remove');
+            spyOn($graph, '$$findNode').andReturn(mixin.buildPromise());
 
             spyOn($graph, '$$invalidateCacheEntry').andCallThrough();
 

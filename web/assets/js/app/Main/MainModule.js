@@ -10,6 +10,7 @@ define(
         'app/Main/component/service/Search',
 
         'app/Main/config/routing',
+        'app/Main/config/loadHttpInterceptor',
         'app/Main/config/loadLocales',
 
         'app/Main/run/loadStateErrorListener',
@@ -31,6 +32,7 @@ define(
         Search,
 
         routing,
+        loadHttpInterceptor,
         loadLocales,
 
         loadStateErrorListener,
@@ -56,6 +58,7 @@ define(
         MainModule.service('$search', Search);
 
         MainModule.config(routing);
+        MainModule.config(loadHttpInterceptor);
         MainModule.config(loadLocales);
 
         MainModule.run(loadStateErrorListener);

@@ -93,7 +93,7 @@ define([
                 repository: 'test',
                 workspace: 'default',
                 path: '/test'
-            });
+            }, { cache: undefined });
             // As we use our mock, the promises are always resolved synchronously
             expect(nodeController.$scope.node).toEqual({
                 name: 'test',
