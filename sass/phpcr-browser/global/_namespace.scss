@@ -37,6 +37,20 @@
             display: inline-block;
         }
 
+        #alert-container {
+            position: fixed;
+            right: 5px;
+            bottom: 40px;
+            width: 300px;
+            z-index: 999999;
+        }
+
+        @import "component/_navbar.scss";
+        @import "component/_dropper.scss";
+        @import "component/_panel-box.scss";
+        @import "component/_dragdrop.scss";
+        @import "component/_table.scss";
+
         @import "repositories/_namespace.scss";
         @import "repository/_namespace.scss";
         @import "workspace/_namespace.scss";

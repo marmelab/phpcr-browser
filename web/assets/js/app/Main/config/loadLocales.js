@@ -6,7 +6,7 @@ define([
 
     function loadLocales($translateProvider) {
         $translateProvider
-            // .useCookieStorage()
+            .useCookieStorage()
             .translations('en', JSON.parse(en_UK))
             .translations('fr', JSON.parse(fr_FR))
             .fallbackLanguage('en')

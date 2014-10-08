@@ -1,15 +1,9 @@
 @import "compass/reset";
 
-@import "phpcr-browser/variables.scss";
+@import "phpcr-browser/_variables.scss";
 @import "bootstrap";
 
-@import "phpcr-browser/global/namespace.scss";
+@import "phpcr-browser/global/_namespace.scss";
 @import "phpcr-browser/_octicons.scss";
-@import "phpcr-browser/tables.scss";
-@import "phpcr-browser/forms.scss";
-@import "phpcr-browser/tree.scss";
-@import "phpcr-browser/navbar.scss";
-@import "phpcr-browser/dragdrop.scss";
-@import "phpcr-browser/panels.scss";
-@import "phpcr-browser/components.scss";
-@import "phpcr-browser/nprogress.scss";
+@import "phpcr-browser/_nprogress.scss";
+

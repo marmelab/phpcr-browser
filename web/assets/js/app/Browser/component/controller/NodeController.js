@@ -193,9 +193,13 @@ define([
             value
         ;
 
-        if (!this.$scope.nodePropertyForm.type) {
+        this.$scope.nodePropertyForm.type = this.propertyTypes.indexOf(this.$scope.nodePropertyForm.type);
+
+        if (this.$scope.nodePropertyForm.type === -1) {
             this.$scope.nodePropertyForm.type = 0;
         }
+
+
 
         this.$$createProperty(this.$scope.nodePropertyForm)
             .then(function() {
@@ -204,6 +208,7 @@ define([
             .then(function() {
                 self.$notification.success('Property created');
             }, function(err) {
+                self.$scope.nodePropertyForm.type = self.propertyTypes[self.$scope.nodePropertyForm.type];
                 self.$notification.errorFromResponse(err);
             })
         ;
@@ -211,13 +216,14 @@ define([
 
     NodeController.prototype.$$createProperty = function(property) {
         var self = this,
-            value
+            value,
+            oldValue = property.value
         ;
 
         try {
             value = JSON.parse(property.value);
         } catch (e) {
-            value = property.value;
+            value = oldValue;
         }
 
         property.value = value;
@@ -225,13 +231,7 @@ define([
             .then(function() {
                 return self.$$loadNode(false);
             }, function(err) {
-                try {
-                    value = JSON.stringify(property.value);
-                } catch (e) {
-                    value = property.value;
-                }
-
-                property.value = value;
+                property.value = oldValue;
 
                 return self.$q.reject(err);
             })

@@ -19,7 +19,7 @@ Debug::enable();
 
 $app = require __DIR__.'/../src/app.php';
 
-$app->register(new ConfigServiceProvider(__DIR__."/../config/dev.yml"));
+$app->register(new ConfigServiceProvider(__DIR__."/../config/prod.yml"));
 
 $app['debug'] = true;
 $app->run();

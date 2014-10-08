@@ -34,7 +34,7 @@
             <ol class="breadcrumb col-xs-10" ng-if="!nodeController.$pending">
                 <li>
                     <a href="#/{{ node.getWorkspace().getRepository().name }}/{{ node.getWorkspace().name }}">
-                        {{ 'TREE_ROOT_NODE_NAME' | translate }}
+                        {{ 'root' | translate }}
                     </a>
                 </li>
                 <li
@@ -111,10 +111,8 @@
                         </div>
                     </div>
                     <div class="col-xs-2">
-                        <select ng-model="nodePropertyForm.type" class="form-control">
-                            <option ng-repeat="(key, type) in nodeController.propertyTypes" ng-value="key">
-                                {{ type }}
-                            </option>
+                        <select ng-model="nodePropertyForm.type" ng-options="type for type in nodeController.propertyTypes" class="form-control">
+                            <option value="">{{ 'Type' | translate }}</option>
                         </select>
                     </div>
                     <div class="btn-group">
@@ -162,7 +160,7 @@
                         draggable-data="{ property: property }"
                     >
                         <td>
-                            <span class="grab octicon octicon-three-bars" title="{{ 'NODE_DRAG_PROPERTY_PROMPT' | translate }}"></span>
+                            <span class="grab octicon octicon-three-bars" title="{{ 'Drag me to trash to delete me' | translate }}"></span>
                             <span class="drag octicon octicon-hourglass"></span>
                         </td>
                         <td>

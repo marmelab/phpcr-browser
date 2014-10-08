@@ -1,7 +1,7 @@
 <div class="ns-repository">
     <div class="inner">
         <div class="col-lg-12" style="padding-bottom: 40px;">
-            <div class="col-sm-2" id="{{ workspace.name }}"
+            <div class="col-md-2" id="{{ workspace.name }}"
                 ng-repeat="(key, workspace) in workspaces track by $index"
                 draggable="{{ repositoryController.repository.hasSupportedOperation('workspace.delete') }}"
                 draggable-data="{ workspace: workspace }"
@@ -14,7 +14,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-sm-2" ng-if="repositoryController.repository.supportedOperations.indexOf('workspace.create') !== -1">
+            <div class="col-md-2" ng-if="repositoryController.repository.supportedOperations.indexOf('workspace.create') !== -1">
                 <div class="panel panel-box new"
                     ng-click="repositoryController.showWorkspaceCreationForm()"
                     ng-class="{ focused: isWorkspaceCreationFormDisplayed }">
@@ -24,7 +24,7 @@
                             {{ 'New' | translate }}
                         </p>
                         <form ng-submit="repositoryController.createWorkspace()" ng-if="isWorkspaceCreationFormDisplayed">
-                            <input type="text" class="form-control input-ghost" focus
+                            <input type="text" class="form-control input-transparent" focus
                                 ng-model="workspaceCreationForm.name"
                                 ng-blur="repositoryController.hideWorkspaceCreationForm()"
                                 placeholder="{{ 'Name' | translate }}"

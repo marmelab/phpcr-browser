@@ -19,7 +19,7 @@ define(
 
         'text!app/config.json',
 
-        'ui-router', 'angular-translate', 'angular-translate-storage-cookie', 'ui-bootstrap-tpls'
+        'ui-router', 'angular-translate', 'angular-translate-storage-cookie', 'ui-bootstrap-tpls', 'angular-cookies'
     ],
     function (
         angular,
@@ -46,7 +46,8 @@ define(
         var MainModule = angular.module('main', [
             'ui.router',
             'pascalprecht.translate',
-            'ui.bootstrap'
+            'ui.bootstrap',
+            'ngCookies'
         ]);
 
         MainModule.controller('AppController', AppController);

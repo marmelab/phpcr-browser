@@ -1,9 +1,6 @@
 web/assets/bower_components/
 node_modules/
 vendor/
-config/dev.yml
 config/prod.yml
-web/assets/js/browser/config.js
 src/app.db
 .sass-cache
-.gaudi/

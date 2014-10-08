@@ -105,7 +105,7 @@ define([
 
             expect(nodeController.$fuzzyFilter).toHaveBeenCalledWith(['a', 'c'], null);
             expect(nodeController.$scope.properties).toEqual([
-                { name: 'a', value: 'b', type: 'String' }
+                { name: 'a', value: 'b', type: 1 }
             ]);
 
             expect($search.registerListener).toHaveBeenCalledWith(searchListener);
