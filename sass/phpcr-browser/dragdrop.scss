@@ -1,7 +1,6 @@
 @import 'compass/css3';
 
 .drag {
-  /*opacity: 0.5;*/
 
   &.node {
     background-color: inherit;
@@ -12,13 +11,10 @@
     border: 1px solid $brand-primary;
     border-top: 3px solid $brand-primary;
   }
+}
 
-  td {
-    background-color: $brand-primary!important;
-    > span {
-      color: #000000;
-    }
-  }
+tr.drag {
+
 }
 
 .over {

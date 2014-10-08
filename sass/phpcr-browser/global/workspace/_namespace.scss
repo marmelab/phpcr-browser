@@ -1,7 +1,6 @@
 .ns-workspace {
     & > .inner {
-        @include make-row(0); /* make a row without padding */
-        position: fixed;
+        position: absolute;
         top: $navbar-height;
         bottom: 0;
         left: 0;

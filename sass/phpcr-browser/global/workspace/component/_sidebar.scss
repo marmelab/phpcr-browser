@@ -3,6 +3,8 @@
       @include make-md-column(3);
       @include make-lg-column(3);
 
+      display: block;
+
       position: absolute;
       top: 0;
       bottom: 50px;
@@ -12,6 +14,8 @@
       z-index: 1000;
       padding-top: 5px;
       border-right: 1px solid #ddd;
+
+      background-color: $body-bg;
 }
 
 @media (max-width: 767px) {

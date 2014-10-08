@@ -15,15 +15,16 @@
         background-color: #fff;
         border: 1px solid #dddddd;
         border-left: none;
+        margin: 0;
 
         thead {
             border-bottom: 2px solid #ddd;
         }
 
         tbody {
-            overflow: auto;
-
             tr {
+                width: 100%;
+
                 td {
                     &:first-child {
                         width: 30px;

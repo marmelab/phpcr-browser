@@ -1,4 +1,7 @@
 #tree {
+    @include user-select(none);
+    cursor: cursor;
+
     /* Adapted from http://jsfiddle.net/Fh47n/ */
     ul {
         padding-left: 40px;

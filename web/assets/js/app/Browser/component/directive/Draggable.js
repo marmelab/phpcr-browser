@@ -12,6 +12,8 @@ define([], function() {
                 var el = element[0];
                 scope.draggableData = $parse(attrs.draggableData)(scope) || {};
 
+                el.draggable = true;
+
                 el.addEventListener(
                     'dragstart',
                     function(e) {

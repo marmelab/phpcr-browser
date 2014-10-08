@@ -182,11 +182,21 @@ define([
             return this.$notification.error('Value is empty');
         }
 
-        var self = this;
+        var self = this,
+            value
+        ;
 
         if (!this.$scope.nodePropertyForm.type) {
             this.$scope.nodePropertyForm.type = 0;
         }
+
+        try {
+            value = JSON.parse(this.$scope.nodePropertyForm.value);
+        } catch (e) {
+            value = this.$scope.nodePropertyForm.value;
+        }
+
+        this.$scope.nodePropertyForm.value = value;
 
         this.$scope.node.createProperty(this.$scope.nodePropertyForm)
             .then(function() {
@@ -196,6 +206,14 @@ define([
             .then(function() {
                 self.$notification.success('Property created');
             }, function(err) {
+                try {
+                    value = JSON.stringify(self.$scope.nodePropertyForm.value);
+                } catch (e) {
+                    value = self.$scope.nodePropertyForm.value;
+                }
+
+                self.$scope.nodePropertyForm.value = value;
+
                 self.$notification.errorFromResponse(err);
             })
         ;

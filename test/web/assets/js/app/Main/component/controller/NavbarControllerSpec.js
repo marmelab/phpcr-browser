@@ -12,6 +12,7 @@ define([
 
     describe('NavbarController', function() {
         var $injector = angular.injector(['ngMock']),
+            $rootScope,
             $scope,
             $translate,
             $state,
@@ -22,7 +23,9 @@ define([
         ;
 
         beforeEach(function() {
-            $scope = $injector.get('$rootScope').$new();
+            $rootScope  = $injector.get('$rootScope');
+
+            $scope = $rootScope.$new();
             spyOn($scope, '$on').andCallThrough();
             spyOn($scope, '$watch').andCallThrough();
 
@@ -54,7 +57,8 @@ define([
                 $translate,
                 $state,
                 $graph,
-                $search
+                $search,
+                $rootScope
             );
 
             spyOn(navbarController, '$$buildMenu').andCallThrough();
@@ -142,6 +146,7 @@ define([
             expect(navbarController.$state).toBeUndefined();
             expect(navbarController.$graph).toBeUndefined();
             expect(navbarController.$search).toBeUndefined();
+            expect(navbarController.$rootScope).toBeUndefined();
         });
     });
 });

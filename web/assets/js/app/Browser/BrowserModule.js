@@ -10,10 +10,12 @@ define(
         'app/Browser/component/directive/Draggable',
         'app/Browser/component/directive/Droppable',
         'app/Browser/component/directive/Focus',
+        'app/Browser/component/directive/RecursiveTable',
         'app/Browser/component/directive/Trash',
 
         'app/Browser/component/filter/Fuzzy',
         'app/Browser/component/filter/PropertiesSorter',
+        'app/Browser/component/filter/Unsafe',
 
         'app/Browser/config/routing',
 
@@ -30,10 +32,12 @@ define(
         Draggable,
         Droppable,
         Focus,
+        RecursiveTable,
         Trash,
 
         Fuzzy,
         PropertiesSorter,
+        Unsafe,
 
         routing
     ) {
@@ -52,10 +56,12 @@ define(
         BrowserModule.directive('draggable', Draggable);
         BrowserModule.directive('droppable', Droppable);
         BrowserModule.directive('focus', Focus);
+        BrowserModule.directive('recursiveTable', RecursiveTable);
         BrowserModule.directive('trash', Trash);
 
         BrowserModule.filter('$fuzzy', Fuzzy);
         BrowserModule.filter('$propertiesSorter', PropertiesSorter);
+        BrowserModule.filter('unsafe', Unsafe);
 
         BrowserModule.config(routing);
 

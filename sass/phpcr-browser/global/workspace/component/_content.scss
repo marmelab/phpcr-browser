@@ -8,7 +8,12 @@
     bottom: 50px;
     right: 0;
 
+    overflow-x: hidden;
+    overflow-y: auto;
+}
 
-
-    overflow: auto;
+@media (max-width: 767px) {
+    #content {
+        left: 0;
+    }
 }

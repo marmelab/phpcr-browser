@@ -9,9 +9,9 @@
         <a class="navbar-brand" href="#/">
          phpcr-browser
         </a>
-        <a class="tree-toggle visible-xs" ng-if="isWorkspaceState" ng-class="{ active: treeIsDisplayed }" ng-click="broadcast('_tree.toggle'); treeIsDisplayed = !treeIsDisplayed">
-          <span ng-show="!treeIsDisplayed" class="fa fa-indent"></span>
-          <span ng-show="treeIsDisplayed" class="fa fa-dedent"></span>
+        <a class="tree-toggle visible-xs" ng-if="$state.current.name === 'node'" ng-class="{ active: sidebarDisplayed }" ng-click="navbarController.toggleSidebarDisplayed()">
+          <span ng-if="!sidebarDisplayed" class="octicon octicon-split"></span>
+          <span ng-show="sidebarDisplayed" class="octicon octicon-split"></span>
         </a>
     </div>
     <div collapse="navbarCollapsed" class="navbar-collapse collapse">

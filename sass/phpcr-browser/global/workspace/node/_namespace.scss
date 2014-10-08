@@ -2,7 +2,6 @@
 
 .ns-node {
     & > .inner {
-        @include make-row(0); /* make a row without padding */
         position: absolute;
         top: 0;
         bottom: 0;

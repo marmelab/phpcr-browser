@@ -6,12 +6,13 @@ define([], function () {
      * @param {$scope} $scope
      * @constructor
      */
-    function NavbarController($scope, $translate, $state, $graph, $search) {
+    function NavbarController($scope, $translate, $state, $graph, $search, $rootScope) {
         this.$scope = $scope;
         this.$translate = $translate;
         this.$state = $state;
         this.$graph = $graph;
         this.$search = $search;
+        this.$rootScope = $rootScope;
 
         this.$$init();
     }
@@ -23,6 +24,8 @@ define([], function () {
         this.$scope.$state = this.$state;
         this.$scope.offlineStatus = false;
         this.$scope.navbarCollapsed = true;
+
+        this.$rootScope.sidebarDisplayed = false;
 
         this.$scope.$watch('search', function(value) {
             self.$search.notify(value || null);
@@ -37,6 +40,7 @@ define([], function () {
         this.$scope.$on('$stateChangeSuccess', function() {
             self.$$buildMenu();
             self.$scope.offlineStatus = false;
+            self.$scope.navbarCollapsed = true;
         });
 
         this.$scope.$on('$offlineStatusUpdate', function($event, status) {
@@ -89,15 +93,20 @@ define([], function () {
         this.$scope.navbarCollapsed = !this.$scope.navbarCollapsed;
     };
 
+    NavbarController.prototype.toggleSidebarDisplayed = function() {
+        this.$rootScope.sidebarDisplayed = !this.$rootScope.sidebarDisplayed;
+    };
+
     NavbarController.prototype.$$destroy = function() {
         this.$scope = undefined;
         this.$translate = undefined;
         this.$state = undefined;
         this.$graph = undefined;
         this.$search = undefined;
+        this.$rootScope = undefined;
     };
 
-    NavbarController.$inject = ['$scope', '$translate', '$state', '$graph', '$search'];
+    NavbarController.$inject = ['$scope', '$translate', '$state', '$graph', '$search', '$rootScope'];
 
     return NavbarController;
 });
