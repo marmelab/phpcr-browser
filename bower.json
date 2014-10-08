@@ -1,6 +1,6 @@
 {
     "name": "marmelab/phpcr-browser",
-    "version": "1.2",
+    "version": "1.2.0",
     "dependencies": {
         "requirejs": "2.1.15",
         "requirejs-text": "~2.0.12",

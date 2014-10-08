@@ -1,9 +1,9 @@
 require.config({
     paths: {
-        'text' : '../bower_components/requirejs-text/text',
-        'MainModule': 'app/Main/MainModule',
         'BrowserModule': 'app/Browser/BrowserModule',
         'GraphModule': 'app/Graph/GraphModule',
+        'MainModule': 'app/Main/MainModule',
+        'text' : '../bower_components/requirejs-text/text',
         'TreeModule': 'app/Tree/TreeModule'
     },
     shim: {
@@ -12,10 +12,10 @@ require.config({
         {
             name: 'phpcr-browser',
             include: [
-                'text',
-                'MainModule',
                 'BrowserModule',
                 'GraphModule',
+                'MainModule',
+                'text',
                 'TreeModule'
             ],
             exclude: [
