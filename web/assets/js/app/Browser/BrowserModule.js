@@ -7,10 +7,11 @@ define(
         'app/Browser/component/controller/WorkspaceController',
         'app/Browser/component/controller/NodeController',
 
+        'app/Browser/component/directive/Editable',
         'app/Browser/component/directive/Draggable',
         'app/Browser/component/directive/Droppable',
         'app/Browser/component/directive/Focus',
-        'app/Browser/component/directive/RecursiveTable',
+        'app/Browser/component/directive/PropertyValue',
         'app/Browser/component/directive/Trash',
 
         'app/Browser/component/filter/Fuzzy',
@@ -29,10 +30,11 @@ define(
         WorkspaceController,
         NodeController,
 
+        Editable,
         Draggable,
         Droppable,
         Focus,
-        RecursiveTable,
+        PropertyValue,
         Trash,
 
         Fuzzy,
@@ -53,10 +55,11 @@ define(
         BrowserModule.controller('WorkspaceController', WorkspaceController);
         BrowserModule.controller('NodeController', NodeController);
 
+        BrowserModule.directive('editable', Editable);
         BrowserModule.directive('draggable', Draggable);
         BrowserModule.directive('droppable', Droppable);
         BrowserModule.directive('focus', Focus);
-        BrowserModule.directive('recursiveTable', RecursiveTable);
+        BrowserModule.directive('propertyValue', PropertyValue);
         BrowserModule.directive('trash', Trash);
 
         BrowserModule.filter('$fuzzy', Fuzzy);

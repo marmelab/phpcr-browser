@@ -26,6 +26,11 @@
             margin: 0;
             padding: 0;
             background-color: transparent;
+
+            &.input-editable {
+                margin: -7px;
+                padding: 8px 8px 8px 7px;
+            }
         }
 
         .inline-block {

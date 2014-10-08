@@ -9,7 +9,6 @@ require.config({
         'ui-util-keypress': '../bower_components/angular-ui-utils/keypress.min',
         'lodash': '../bower_components/lodash/dist/lodash.min',
         'restangular': '../bower_components/restangular/dist/restangular.min',
-        'xeditable': '../bower_components/angular-xeditable/dist/js/xeditable.min',
         'angular-translate': '../bower_components/angular-translate/angular-translate.min',
         'angular-translate-storage-cookie': '../bower_components/angular-translate-storage-cookie/angular-translate-storage-cookie.min',
         'ng-tree': '../bower_components/ng-tree/ng-tree.min',
@@ -22,7 +21,6 @@ require.config({
         'ui-router': ['angular'],
         'ui-util-keypress': ['angular'],
         'restangular': ['angular', 'lodash'],
-        'xeditable': ['angular'],
         'angular-translate': ['angular'],
         'angular-translate-storage-cookie': ['angular', 'angular-translate', 'angular-cookies'],
         'ui-bootstrap': {
@@ -45,7 +43,6 @@ require.config({
                 'ui-util-keypress',
                 'lodash',
                 'restangular',
-                'xeditable',
                 'angular-translate',
                 'angular-translate-storage-cookie',
                 'tree',

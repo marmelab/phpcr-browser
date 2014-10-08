@@ -141,20 +141,36 @@
         <div id="properties-list">
             <table id="properties">
                 <tbody>
+                    <tr class="warning" ng-if="savedProperty">
+                        <td colspan="4" class="restore">
+                            <ul class="list-inline">
+                                <li>
+                                    {{ 'Do you want to restore' | translate }} {{ savedProperty.name }}?
+                                </li>
+                                <li>
+                                    <a ng-click="nodeController.restoreSavedProperty()">{{ 'Yes' | translate }}</a>
+                                </li>
+                                <li>
+                                    <a ng-click="nodeController.clearSavedProperty()">{{ 'No' | translate }}</a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
                     <tr class="property-item" id="{{ property.name }}"
                         ng-repeat="property in properties"
                         draggable="true"
                         draggable-data="{ property: property }"
                     >
                         <td>
-                            <span class="octicon octicon-three-bars" title="{{ 'NODE_DRAG_PROPERTY_PROMPT' | translate }}"></span>
+                            <span class="grab octicon octicon-three-bars" title="{{ 'NODE_DRAG_PROPERTY_PROMPT' | translate }}"></span>
+                            <span class="drag octicon octicon-hourglass"></span>
                         </td>
                         <td>
                             <span class="text-primary">{{ property.name }}</span>
                         </td>
-                        <td recursive-table="property.value"></td>
+                        <td property-value="property" on-edit="nodeController.editProperty(value, options)"></td>
                         <td>
-                            <small>{{ property.type }}</small>
+                            <small>{{ nodeController.propertyTypes[property.type] }}</small>
                         </td>
                     </tr>
                 </tbody>

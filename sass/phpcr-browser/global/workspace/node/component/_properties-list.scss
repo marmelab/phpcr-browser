@@ -32,8 +32,12 @@
                         text-align: center;
                         vertical-align: middle;
                         font-size: 12px;
-                        .octicon {
-                            visibility: hidden;
+                        .grab {
+                            display: none;
+                        }
+
+                        .drag {
+                            display: none;
                         }
                     }
 
@@ -48,12 +52,39 @@
                     &:last-child {
                         padding-right: 15px;
                     }
+
+                    &.restore {
+                        width: 100;
+                        text-align: left;
+
+                        ul {
+                            margin: 0;
+                        }
+                    }
                 }
 
                 &:hover {
                     td:first-child {
-                        .octicon {
-                            visibility: visible;
+                        .grab {
+                            display: inline-block;
+                        }
+                    }
+                }
+
+                table {
+                    width: 100%;
+                }
+
+                &.drag {
+                    td {
+                        &:first-child {
+                            .drag {
+                                display: inline-block;
+                            }
+
+                            .grab {
+                                display: none;
+                            }
                         }
                     }
                 }

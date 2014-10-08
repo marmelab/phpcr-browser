@@ -8233,7 +8233,12 @@ button.close {
   padding: 0;
   background-color: transparent;
 }
-/* line 31, ../../../sass/phpcr-browser/global/_namespace.scss */
+/* line 30, ../../../sass/phpcr-browser/global/_namespace.scss */
+.ns-global > .inner input.input-transparent.input-editable, .ns-global > .inner input.input-transparent:focus.input-editable {
+  margin: -7px;
+  padding: 8px 8px 8px 7px;
+}
+/* line 36, ../../../sass/phpcr-browser/global/_namespace.scss */
 .ns-global > .inner .inline-block {
   display: inline-block;
 }
@@ -8550,24 +8555,49 @@ button.close {
   font-size: 12px;
 }
 /* line 35, ../../../sass/phpcr-browser/global/workspace/node/component/_properties-list.scss */
-.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties tbody tr td:first-child .octicon {
-  visibility: hidden;
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties tbody tr td:first-child .grab {
+  display: none;
 }
-/* line 40, ../../../sass/phpcr-browser/global/workspace/node/component/_properties-list.scss */
+/* line 39, ../../../sass/phpcr-browser/global/workspace/node/component/_properties-list.scss */
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties tbody tr td:first-child .drag {
+  display: none;
+}
+/* line 44, ../../../sass/phpcr-browser/global/workspace/node/component/_properties-list.scss */
 .ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties tbody tr td:nth-child(2), .ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties tbody tr td:last-child {
   text-align: right;
 }
-/* line 44, ../../../sass/phpcr-browser/global/workspace/node/component/_properties-list.scss */
+/* line 48, ../../../sass/phpcr-browser/global/workspace/node/component/_properties-list.scss */
 .ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties tbody tr td:nth-child(2) {
   width: 20%;
 }
-/* line 48, ../../../sass/phpcr-browser/global/workspace/node/component/_properties-list.scss */
+/* line 52, ../../../sass/phpcr-browser/global/workspace/node/component/_properties-list.scss */
 .ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties tbody tr td:last-child {
   padding-right: 15px;
 }
-/* line 55, ../../../sass/phpcr-browser/global/workspace/node/component/_properties-list.scss */
-.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties tbody tr:hover td:first-child .octicon {
-  visibility: visible;
+/* line 56, ../../../sass/phpcr-browser/global/workspace/node/component/_properties-list.scss */
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties tbody tr td.restore {
+  width: 100;
+  text-align: left;
+}
+/* line 60, ../../../sass/phpcr-browser/global/workspace/node/component/_properties-list.scss */
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties tbody tr td.restore ul {
+  margin: 0;
+}
+/* line 68, ../../../sass/phpcr-browser/global/workspace/node/component/_properties-list.scss */
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties tbody tr:hover td:first-child .grab {
+  display: inline-block;
+}
+/* line 74, ../../../sass/phpcr-browser/global/workspace/node/component/_properties-list.scss */
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties tbody tr table {
+  width: 100%;
+}
+/* line 81, ../../../sass/phpcr-browser/global/workspace/node/component/_properties-list.scss */
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties tbody tr.drag td:first-child .drag {
+  display: inline-block;
+}
+/* line 85, ../../../sass/phpcr-browser/global/workspace/node/component/_properties-list.scss */
+.ns-global > .inner .ns-workspace .ns-node > .inner #properties-list #properties tbody tr.drag td:first-child .grab {
+  display: none;
 }
 
 @font-face {
