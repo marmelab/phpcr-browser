@@ -3,7 +3,7 @@
 PHPCR Browser provides an intuitive web interface to explore and manage [PHPCR](http://phpcr.github.io/) repositories.
 The current implementation supports [Jackalope Jackrabbit](https://github.com/jackalope/jackalope-jackrabbit) and [Jackalope Doctrine DBAL](https://github.com/jackalope/jackalope-doctrine-dbal).
 
-![screenshot](http://marmelab.com/phpcr-browser/img/screenshot.png)
+![screenshot](http://marmelab.com/phpcr-browser/img/screenshot-1.2.png)
 
 Supported Operations
 ---------------
