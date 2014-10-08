@@ -1,0 +1,94 @@
+#properties-list {
+    position: absolute;
+    top: $toolbar-height - 1px; /* -1px to consume the border */
+    bottom: 0;
+    left: 0;
+    right: 0;
+    overflow: auto;
+    z-index: 100;
+
+    #properties {
+        z-index: 1;
+        @extend .table;
+        @extend .table-striped;
+        @extend .table-hover;
+        background-color: #fff;
+        border: 1px solid #dddddd;
+        border-left: none;
+        margin: 0;
+
+        thead {
+            border-bottom: 2px solid #ddd;
+        }
+
+        tbody {
+            tr {
+                width: 100%;
+
+                td {
+                    &:first-child {
+                        width: 30px;
+
+                        text-align: center;
+                        vertical-align: middle;
+                        font-size: 12px;
+                        .grab {
+                            display: none;
+                        }
+
+                        .drag {
+                            display: none;
+                        }
+                    }
+
+                    &:nth-child(2), &:last-child {
+                        text-align: right;
+                    }
+
+                    &:nth-child(2) {
+                        width: 20%;
+                    }
+
+                    &:last-child {
+                        padding-right: 15px;
+                    }
+
+                    &.restore {
+                        width: 100;
+                        text-align: left;
+
+                        ul {
+                            margin: 0;
+                        }
+                    }
+                }
+
+                &:hover {
+                    td:first-child {
+                        .grab {
+                            display: inline-block;
+                        }
+                    }
+                }
+
+                table {
+                    width: 100%;
+                }
+
+                &.drag {
+                    td {
+                        &:first-child {
+                            .drag {
+                                display: inline-block;
+                            }
+
+                            .grab {
+                                display: none;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

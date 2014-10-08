@@ -1,0 +1,15 @@
+.ns-workspace {
+    & > .inner {
+        position: absolute;
+        top: $navbar-height;
+        bottom: 0;
+        left: 0;
+        right: 0;
+
+        @import "component/_sidebar.scss";
+        @import "component/_content.scss";
+        @import "component/_tree.scss";
+    }
+
+    @import "node/_namespace.scss";
+}

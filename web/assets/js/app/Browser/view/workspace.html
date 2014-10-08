@@ -1,0 +1,13 @@
+<div class="ns-workspace">
+    <div class="inner">
+        <div id="sidebar" ng-class="{ active: sidebarDisplayed }">
+            <tree-view id="tree"
+                tree="tree"
+                tree-click="workspaceController.treeClick(tree)"
+                ng-if="tree"
+            ></tree-view>
+        </div>
+        <div id="content" ui-view></div>
+        <trash></trash>
+    </div>
+</div>

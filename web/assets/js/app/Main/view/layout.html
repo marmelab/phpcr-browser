@@ -1,0 +1,11 @@
+<div ui-view="navbar"></div>
+<div id="alert-container">
+    <alert
+        ng-repeat="notification in $notification.notifications"
+        type="{{ notification.type }}" close="$notification.close($index)"
+        ng-if="!notification.expired"
+    >
+        {{ notification.content }}
+    </alert>
+</div>
+<div ui-view class="container-fluid"></div>

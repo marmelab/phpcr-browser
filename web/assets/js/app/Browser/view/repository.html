@@ -1,0 +1,41 @@
+<div class="ns-repository">
+    <div class="inner">
+        <div class="col-lg-12" style="padding-bottom: 40px;">
+            <div class="col-md-2" id="{{ workspace.name }}"
+                ng-repeat="(key, workspace) in workspaces track by $index"
+                draggable="{{ repositoryController.repository.hasSupportedOperation('workspace.delete') }}"
+                draggable-data="{ workspace: workspace }"
+            >
+                <div class="panel panel-box" ng-click="repositoryController.openWorkspace(workspace)">
+                    <div class="panel-body">
+                        <span class="mega-octicon octicon-file-directory pull-right"></span>
+                        <p class="lead">{{ workspace.name }}</p>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2" ng-if="repositoryController.repository.supportedOperations.indexOf('workspace.create') !== -1">
+                <div class="panel panel-box new"
+                    ng-click="repositoryController.showWorkspaceCreationForm()"
+                    ng-class="{ focused: isWorkspaceCreationFormDisplayed }">
+                    <div class="panel-body">
+                        <span class="mega-octicon octicon-plus" ng-if="!isWorkspaceCreationFormDisplayed"></span>
+                        <p class="lead" ng-if="!isWorkspaceCreationFormDisplayed">
+                            {{ 'New' | translate }}
+                        </p>
+                        <form ng-submit="repositoryController.createWorkspace()" ng-if="isWorkspaceCreationFormDisplayed">
+                            <input type="text" class="form-control input-transparent" focus
+                                ng-model="workspaceCreationForm.name"
+                                ng-blur="repositoryController.hideWorkspaceCreationForm()"
+                                placeholder="{{ 'Name' | translate }}"
+                                style="font-size:21px"
+                                ui-keydown="{esc: 'repositoryController.hideWorkspaceCreationForm()'}"
+                            />
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <trash ng-if="repositoryController.repository.hasSupportedOperation('workspace.delete')"></trash>
+    </div>
+</div>

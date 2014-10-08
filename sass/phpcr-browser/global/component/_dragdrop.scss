@@ -1,0 +1,21 @@
+.drag {
+
+    &.node {
+        background-color: inherit;
+        color: $brand-primary;
+    }
+
+    .panel-box {
+        border: 1px solid $brand-primary;
+        border-top: 3px solid $brand-primary;
+    }
+}
+
+.over {
+    border-color: $brand-primary!important;
+    color: $brand-primary!important;
+    &.node {
+        border: none;
+        color: $brand-primary;
+    }
+}

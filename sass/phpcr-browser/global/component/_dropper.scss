@@ -1,0 +1,20 @@
+.dropper {
+    border-top: 1px solid #bbb;
+    color: #bbb;
+    font-size: 30px;
+    text-align: center;
+    width: 100%;
+    z-index: 9999;
+    height: 50px;
+    line-height: 50px;
+    position: fixed!important;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    background-color: #eee;
+
+     .glyphicon {
+        line-height: 50px;
+        top: none;
+    }
+}

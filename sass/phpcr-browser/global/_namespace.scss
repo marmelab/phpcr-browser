@@ -1,0 +1,58 @@
+@import 'compass/css3';
+@import "bootstrap/mixins";
+
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Open Sans'), local('OpenSans'), url(../fonts/OpenSans-Regular.ttf) format('woff');
+}
+
+.ns-global {
+    & > .inner {
+        padding-top: $navbar-height;
+
+        .btn, .panel, input.form-control {
+            @include border-radius(0!important);
+        }
+
+        a {
+            cursor: pointer;
+        }
+
+        input.input-transparent, input.input-transparent:focus {
+            border: none;
+            @include box-shadow(none);
+            margin: 0;
+            padding: 0;
+            background-color: transparent;
+
+            &.input-editable {
+                margin: -7px;
+                padding: 8px 8px 8px 7px;
+            }
+        }
+
+        .inline-block {
+            display: inline-block;
+        }
+
+        #alert-container {
+            position: fixed;
+            right: 5px;
+            bottom: 40px;
+            width: 300px;
+            z-index: 999999;
+        }
+
+        @import "component/_navbar.scss";
+        @import "component/_dropper.scss";
+        @import "component/_panel-box.scss";
+        @import "component/_dragdrop.scss";
+        @import "component/_table.scss";
+
+        @import "repositories/_namespace.scss";
+        @import "repository/_namespace.scss";
+        @import "workspace/_namespace.scss";
+    }
+}

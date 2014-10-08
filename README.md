@@ -3,7 +3,7 @@
 PHPCR Browser provides an intuitive web interface to explore and manage [PHPCR](http://phpcr.github.io/) repositories.
 The current implementation supports [Jackalope Jackrabbit](https://github.com/jackalope/jackalope-jackrabbit) and [Jackalope Doctrine DBAL](https://github.com/jackalope/jackalope-doctrine-dbal).
 
-![screenshot](http://marmelab.com/phpcr-browser/img/screenshot.png)
+![screenshot](http://marmelab.com/phpcr-browser/img/screenshot-1.2.png)
 
 Supported Operations
 ---------------
@@ -75,33 +75,6 @@ Note you can install and use both Jackalope Jackrabbit and Doctrine DBAL at the 
 
 You can add as many repositories as you want into your config file.
 
-Installation with Gaudi
------------------
-
-You can also use [gaudi](http://gaudi.io) to install PHPCR Browser:
-
-```sh
-$ make install-gaudi
-# or
-$ make install-gaudi autoconfig=false
-```
-
-Update
-------
-
-If you want to retrieve the latest version of the browser, run the following commands:
-
-```
-make update
-```
-
-Or if it is running with [gaudi](http://gaudi.io) run:
-
-```
-make update-gaudi
-```
-
-
 Configuration
 -------------
 Create a `config/prod.yml` with the connection settings for the repositories you need to browse. For instance, to use the browser with a local instance of Jackalope Jackrabbit:
@@ -119,12 +92,6 @@ phpcr_repositories:
 The `factory` setting is the type of PHPCR repository you want to browse. See available factories in [marmelab/phpcr-api/config/factories.yml](https://github.com/marmelab/phpcr-api/blob/master/config/factories.yml).
 
 You can also copy the `config/prod.yml-dist` file as `config/prod.yml` to get this exact configuration.
-
-Copy also the angular app config dist file :
-
-```
-cp web/assets/js/browser/config.js-dist web/assets/js/browser/config.js
-```
 
 For using Jackalope Doctrine DBAL refer to [Installation](#installation).
 
@@ -172,7 +139,7 @@ Tests
 The PHPCR Browser AngularJS part is fully unit tested with [Karma](http://karma-runner.github.io/) and [Jasmine](http://jasmine.github.io/).
 If you want to run them, install dependencies by running: `make install-test`
 
-Then run the following command: `make test`
+Then run the following command: `make test-spec`
 
 Sass
 ----

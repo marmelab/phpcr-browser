@@ -1,0 +1,9 @@
+<span ng-if="!$pending" ng-dblclick="edit()" class="inline-block" style="width: 100%;">{{ value }}</span>
+<form ng-submit="save()" ng-if="$pending">
+    <input type="text" class="form-control input-transparent input-editable"
+        focus
+        ng-model="form.value"
+        ng-blur="hide()"
+        ui-keydown="{ 'esc': 'hide()' }"
+    />
+</form>

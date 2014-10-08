@@ -1,0 +1,97 @@
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" ng-click="navbarController.toggleNavbarCollapsed()" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="sr-only">{{ 'Toggle navigation' | translate }}</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#/">
+         phpcr-browser
+        </a>
+        <a class="tree-toggle visible-xs" ng-if="$state.current.name === 'node'" ng-class="{ active: sidebarDisplayed }" ng-click="navbarController.toggleSidebarDisplayed()">
+          <span ng-if="!sidebarDisplayed" class="octicon octicon-split"></span>
+          <span ng-show="sidebarDisplayed" class="octicon octicon-split"></span>
+        </a>
+    </div>
+    <div collapse="navbarCollapsed" class="navbar-collapse collapse">
+        <ul class="nav navbar-nav">
+            <li class="dropdown" ng-if="menu.repositories">
+                <a class="dropdown-toggle" data-toggle="dropdown">
+                  {{ 'Repositories' | translate }}
+                </a>
+                <ul class="dropdown-menu">
+                    <li ng-repeat="repository in menu.repositories"
+                        ng-class="{ active: repository.name === $state.params.repository }"
+                    >
+                        <a ui-sref="repository({ repository: repository.name })">
+                            {{ repository.name }}
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="dropdown" ng-if="menu.workspaces">
+                <a class="dropdown-toggle" data-toggle="dropdown">
+                  {{ $state.params.repository }}
+                </a>
+                <ul class="dropdown-menu">
+                    <li ng-repeat="workspace in menu.workspaces"
+                        ng-class="{ active: workspace.name === $state.params.workspace }"
+                    >
+                        <a ui-sref="node({ repository: workspace.getRepository().name, workspace: workspace.name, path: '/' })">
+                            {{ workspace.name }}
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li ng-if="menu.workspace">
+                <a ui-sref="node({ repository: $state.params.repository, workspace: $state.params.workspace, path: '/' })">
+                  {{ menu.workspace }}
+                </a>
+            </li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li  class="dropdown" ng-if="offlineStatus">
+                <a class="dropdown-toggle" data-toggle="dropdown" title="The repository is unavailable">
+                    <span class="octicon octicon-alert"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li class="dropdown-header">{{ 'The connection with the repository has been lost' | translate }}</li>
+                </ul>
+            </li>
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown">
+                  <span class="hidden-xs octicon octicon-settings"></span>
+                  <span class="visible-xs">{{ 'Settings' | translate }}</span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li class="dropdown-header">{{ 'Change language' | translate }}</li>
+                    <li>
+                        <a ng-click="$translate.use('en')">
+                            <span class="glyphicon glyphicon-ok pull-right" ng-if="$translate.use() === 'en'"></span>
+                            English
+                        </a>
+                    </li>
+                    <li>
+                        <a ng-click="$translate.use('fr')">
+                            <span class="glyphicon glyphicon-ok pull-right" ng-if="$translate.use() === 'fr'"></span>
+                            Français
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="https://github.com/marmelab/phpcr-browser" title="{{ 'See on Github' | translate }}">
+                    <span class="hidden-xs octicon octicon-mark-github"></span>
+                    <span class="visible-xs">{{ 'See on Github' | translate }}</span>
+                </a>
+          </li>
+        </ul>
+        <form class="navbar-form navbar-right" id="search" role="search">
+            <div class="form-group has-feedback">
+                <input type="text" class="form-control" placeholder="{{ 'Search' | translate }}" ng-model="search">
+                <span class="glyphicon glyphicon-search form-control-feedback"></span>
+            </div>
+        </form>
+    </div><!--/.nav-collapse -->
+</div>

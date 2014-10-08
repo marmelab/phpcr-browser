@@ -1,0 +1,30 @@
+#sidebar {
+      @include make-sm-column(4);
+      @include make-md-column(3);
+      @include make-lg-column(3);
+
+      display: block;
+
+      position: absolute;
+      top: 0;
+      bottom: 50px;
+      left: 0;
+
+      overflow: auto;
+      z-index: 1000;
+      padding-top: 5px;
+      border-right: 1px solid #ddd;
+
+      background-color: $body-bg;
+}
+
+@media (max-width: 767px) {
+      #sidebar {
+            width: 300px;
+            display: none;
+
+            &.active {
+              display: block;
+            }
+      }
+}

@@ -1,0 +1,178 @@
+<div class="ns-node">
+    <div class="inner">
+        <div id="toolbar">
+            <div class="btn-group" ng-if="!nodeController.$pending">
+                <button type="button" class="btn"
+                    tooltip="{{ 'Refresh' | translate }}"
+                    tooltip-append-to-body="true"
+                    tooltip-placement="left"
+                    tooltip-animation="false"
+                    ng-click="nodeController.refresh()"
+                >
+                    <span class="octicon octicon-sync"></span>
+                </button>
+                <button type="button" class="btn"
+                    ng-if="node.path !== '/'"
+                    tooltip="{{ 'Rename node' | translate }}"
+                    tooltip-append-to-body="true"
+                    tooltip-placement="left"
+                    tooltip-animation="false"
+                    ng-click="nodeController.showNodeRenameForm()"
+                >
+                    <span class="octicon octicon-pencil"></span>
+                </button>
+                <button type="button" class="btn"
+                    tooltip="{{ 'Add property' | translate }}"
+                    tooltip-append-to-body="true"
+                    tooltip-placement="left"
+                    tooltip-animation="false"
+                    ng-click="nodeController.showNodePropertyForm()"
+                >
+                    <span class="octicon octicon-plus"></span>
+                </button>
+            </div>
+            <ol class="breadcrumb col-xs-10" ng-if="!nodeController.$pending">
+                <li>
+                    <a href="#/{{ node.getWorkspace().getRepository().name }}/{{ node.getWorkspace().name }}">
+                        {{ 'root' | translate }}
+                    </a>
+                </li>
+                <li
+                  ng-repeat="(key, n) in node.path.split('/') track by $index"
+                  ng-if="n.length > 0">
+                    <a  ui-sref="node({ repository: node.getWorkspace().getRepository().name, workspace: node.getWorkspace().name, path: node.path.split('/').slice(0, key + 1).join('/') })"
+                        ng-if="node.path.split('/').slice(0, key + 1).join('/') !== node.path">
+                        {{ n }}
+                    </a>
+                    <span class="active" ng-if="node.path.split('/').slice(0, key + 1).join('/') === node.path">
+                        {{ n }}
+                    </span>
+                </li>
+            </ol>
+            <div ng-if="nodeRenameFormDisplayed" class="row">
+                <div class="col-xs-1 icon">
+                    <span class="octicon octicon-pencil"></span>
+                </div>
+                <form ng-submit="nodeController.renameNode()" class="col-xs-10">
+                    <div class="col-xs-11">
+                        <input type="text" class="form-control input-transparent" placeholder="{{ 'Name of the node' | translate }}"
+                            ng-model="nodeRenameForm.name"
+                            ng-blur="nodeController.hideNodeRenameForm()"
+                            focus
+                            ui-keydown="{esc: 'nodeController.hideNodeRenameForm()'}"
+                            required
+                        />
+                    </div>
+                    <div class="btn-group">
+                        <button type="button" class="btn"
+                            tooltip="{{ 'OK' | translate }}"
+                            tooltip-append-to-body="true"
+                            tooltip-placement="left"
+                            tooltip-animation="false"
+                            ng-mousedown="nodeController.renameNode($event)">
+                            <span class="octicon octicon-check"></span>
+                        </button>
+                        <button type="button" class="btn"
+                            tooltip="{{ 'Cancel' | translate }}"
+                            tooltip-append-to-body="true"
+                            tooltip-placement="left"
+                            tooltip-animation="false"
+                            ng-click="nodeController.hideNodeRenameForm()">
+                            <span class="octicon octicon-x"></span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <div ng-if="nodePropertyFormDisplayed" class="row">
+                <div class="col-xs-1 icon">
+                    <span class="octicon octicon-plus"></span>
+                </div>
+                <form name="propertyForm" ng-submit="nodeController.addProperty()" class="col-xs-10">
+                    <div class="col-xs-4">
+                        <div class="form-group" ng-class="{ 'has-error': !nodeController.isPropertyNameValid(propertyForm.name) }">
+                            <input type="text" name="name" class="form-control" placeholder="{{ 'Name of the property' | translate }}"
+                                ng-model="nodePropertyForm.name"
+                                focus
+                                ui-keydown="{esc: 'nodeController.hideNodePropertyForm()'}"
+                                required
+                            />
+                            <span class="octicon octicon-x form-control-feedback" ng-if="!nodeController.isPropertyNameValid(propertyForm.name)"></span>
+                        </div>
+                    </div>
+                    <div class="col-xs-4">
+                         <div class="form-group" ng-class="{ 'has-error': !nodeController.isPropertyValueValid(propertyForm.value) }">
+                            <input type="text" name="value" class="form-control" placeholder="{{ 'Value of the property' | translate }}"
+                                ng-model="nodePropertyForm.value"
+                                ui-keydown="{esc: 'nodeController.hideNodePropertyForm()'}"
+                                required
+                            />
+                            <span class="octicon octicon-x form-control-feedback" ng-if="!nodeController.isPropertyValueValid(propertyForm.value)"></span>
+                        </div>
+                    </div>
+                    <div class="col-xs-2">
+                        <select ng-model="nodePropertyForm.type" ng-options="type for type in nodeController.propertyTypes" class="form-control">
+                            <option value="">{{ 'Type' | translate }}</option>
+                        </select>
+                    </div>
+                    <div class="btn-group">
+                         <button type="button" class="btn"
+                            tooltip="{{ 'OK' | translate }}"
+                            tooltip-append-to-body="true"
+                            tooltip-placement="left"
+                            tooltip-animation="false"
+                            ng-mousedown="nodeController.addProperty($event)">
+                            <span class="octicon octicon-check"></span>
+                        </button>
+                        <button type="button" class="btn"
+                            tooltip="{{ 'Cancel' | translate }}"
+                            tooltip-append-to-body="true"
+                            tooltip-placement="left"
+                            tooltip-animation="false"
+                            ng-click="nodeController.hideNodePropertyForm()">
+                            <span class="octicon octicon-x"></span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div id="properties-list">
+            <table id="properties">
+                <tbody>
+                    <tr class="warning" ng-if="savedProperty">
+                        <td colspan="4" class="restore">
+                            <ul class="list-inline">
+                                <li>
+                                    {{ 'Do you want to restore' | translate }} {{ savedProperty.name }}?
+                                </li>
+                                <li>
+                                    <a ng-click="nodeController.restoreSavedProperty()">{{ 'Yes' | translate }}</a>
+                                </li>
+                                <li>
+                                    <a ng-click="nodeController.clearSavedProperty()">{{ 'No' | translate }}</a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr class="property-item" id="{{ property.name }}"
+                        ng-repeat="property in properties"
+                        draggable="true"
+                        draggable-data="{ property: property }"
+                    >
+                        <td>
+                            <span class="grab octicon octicon-three-bars" title="{{ 'Drag me to trash to delete me' | translate }}"></span>
+                            <span class="drag octicon octicon-hourglass"></span>
+                        </td>
+                        <td>
+                            <span class="text-primary">{{ property.name }}</span>
+                        </td>
+                        <td property-value="property" on-edit="nodeController.editProperty(value, options)"></td>
+                        <td>
+                            <small>{{ nodeController.propertyTypes[property.type] }}</small>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

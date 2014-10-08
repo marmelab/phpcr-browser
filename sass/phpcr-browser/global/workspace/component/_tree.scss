@@ -1,0 +1,122 @@
+#tree {
+    @include user-select(none);
+    cursor: cursor;
+
+    /* Adapted from http://jsfiddle.net/Fh47n/ */
+    ul {
+        padding-left: 40px;
+
+        li {
+            margin: 0px 0;
+            list-style-type: none;
+            position: relative;
+            margin-left: -15px;
+
+            &::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                width: 1px;
+                height: 100%;
+                right: auto;
+                left: -20px;
+                border-left: 1px solid #ccc;
+                bottom: 50px;
+            }
+
+            /* Horizontal line on the left of each node */
+            &::after {
+                content: '';
+                position: absolute;
+                top: 10px;
+                width: 20px;
+                height: 20px;
+                right: auto;
+                left: -20px;
+                border-top: 1px solid #ccc;
+            }
+
+            &.active > div > a {
+                color:#ff7373;
+            }
+
+            & > div {
+                span.drag, span.over {
+                    display: none;
+                }
+
+                span.over {
+                    position: absolute;
+                    right: 0;
+                    top: 5px;
+                }
+
+                &.drag {
+                    span.drag {
+                        display: inline;
+                    }
+                }
+
+                &.over {
+                    span.over {
+                        display: inline;
+                    }
+                }
+
+                .octicon-plus {
+                    display: none;
+                }
+
+                .octicon-dash, .octicon-plus {
+                    cursor: pointer;
+                }
+
+                &:hover {
+                    .octicon-plus {
+                        display: inline;
+                    }
+                }
+            }
+
+            a {
+                display: inline-block;
+                /*border: 1px solid #ccc;*/
+                padding: 2px 2px;
+                text-decoration: none;
+                color: #666;
+                font-size: 13px;
+                cursor: pointer;
+
+                .hover {
+                    display: none;
+                }
+
+                &:hover {
+                    text-decoration: underline;
+
+                    &+ul li a {
+                        text-decoration: underline;
+                    }
+                }
+
+                &:hover+ul {
+                    li::after, &::before, ul::before {
+                        border-color:  #94a0b4;
+                    }
+                }
+            }
+
+            .glyphicon-folder-open, .glyphicon-folder-close {
+                cursor: pointer;
+                width: 15px;
+            }
+        }
+    }
+}
+
+.empty-node {
+    position: absolute;
+    top: -6px;
+    left: 20px;
+    font-size: 13px;
+}
