@@ -15,8 +15,18 @@ define([
             template: editableTemplate,
             controller: function($scope, $element, $attrs) {
                 var resetForm = function() {
+                    var value = $scope.value;
+
+                    if (angular.isObject($scope.value) || angular.isArray($scope.value)) {
+                        try {
+                            value = JSON.stringify($scope.value);
+                        } catch (e) {
+                            value = $scope.value;
+                        }
+                    }
+
                     $scope.form = {
-                        value: $scope.value
+                        value: value
                     };
                 };
 
@@ -29,7 +39,7 @@ define([
 
                 $scope.hide = function() {
                     $scope.$pending = false;
-                }
+                };
 
                 $scope.save = function() {
                     var result = $scope.editableOnSave({
@@ -43,8 +53,7 @@ define([
 
                     $scope.hide();
                     resetForm();
-                }
-
+                };
             }
         };
     }

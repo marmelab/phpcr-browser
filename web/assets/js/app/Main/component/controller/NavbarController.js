@@ -60,7 +60,7 @@ define([], function () {
         if (this.$state.current.name === 'node') {
             this.$scope.menu.workspace = this.$state.params.workspace;
         }
-    }
+    };
 
     NavbarController.prototype.$$buildMenuRepositories = function() {
         var self = this;

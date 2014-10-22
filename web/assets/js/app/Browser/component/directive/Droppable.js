@@ -1,4 +1,6 @@
-define([], function() {
+define([
+    'angular'
+], function(angular) {
     'use strict';
 
     // From http://blog.parkji.co.uk/2013/08/11/native-drag-and-drop-in-angularjs.html

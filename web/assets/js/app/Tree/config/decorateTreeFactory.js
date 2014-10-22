@@ -36,9 +36,11 @@ define([
                 cb(tree);
                 var children = tree.children();
                 for (var i in children) {
-                    $delegate.walkChildren(children[i], cb);
+                    if (children.hasOwnProperty(i)) {
+                        $delegate.walkChildren(children[i], cb);
+                    }
                 }
-            }
+            };
 
             $delegate.walkParent = function(tree, cb) {
                 var parent = tree.parent();
@@ -47,7 +49,7 @@ define([
                     cb(parent);
                     $delegate.walkParent(parent, cb);
                 }
-            }
+            };
 
             return $delegate;
         }]);

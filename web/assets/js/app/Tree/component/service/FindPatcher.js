@@ -86,11 +86,11 @@ define(['angular'], function(angular) {
         var root = reducedTree['/'];
         root.name = 'root';
 
-        var reducedTree = $treeFactory({
+        reducedTree = $treeFactory({
             children: [root]
         });
 
-        var reducedTree = reducedTree.find(tree.path()).data();
+        reducedTree = reducedTree.find(tree.path()).data();
 
         var recursiveMerge = function(tree, reducedTree) {
             if (tree.hasChildren && tree.children.length === 0) {
