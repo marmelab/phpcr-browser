@@ -46,6 +46,11 @@
 
             .alert {
                 @include border-radius(0);
+                opacity: 0.7;
+
+                &:hover {
+                    opacity: 1.0;
+                }
             }
         }
 

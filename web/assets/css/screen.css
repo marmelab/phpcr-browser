@@ -8241,6 +8241,11 @@ button.close {
   -moz-border-radius: 0;
   -webkit-border-radius: 0;
   border-radius: 0;
+  opacity: 0.7;
+}
+/* line 51, ../../../sass/phpcr-browser/global/_namespace.scss */
+.ns-global > .inner #alert-container .alert:hover {
+  opacity: 1.0;
 }
 /* line 1, ../../../sass/phpcr-browser/global/component/_navbar.scss */
 .ns-global > .inner .navbar {
