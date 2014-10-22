@@ -24,7 +24,7 @@ define([
                 'controllerAs' : 'repositoryController',
                 'resolve': {
                     'repository': function($graph, $stateParams) {
-                        return $graph.find($stateParams, { cache: false })
+                        return $graph.find($stateParams, { cache: false });
                     }
                 }
             })
@@ -37,7 +37,7 @@ define([
                 'controllerAs': 'workspaceController',
                 'resolve': {
                     'workspace': function($graph, $stateParams) {
-                        return $graph.find($stateParams, { cache: false })
+                        return $graph.find($stateParams, { cache: false });
                     }
                 }
             })

@@ -118,7 +118,7 @@ define([
                     self.$treeFactory.activate(current);
                     do {
                         current.attr('collapsed', false);
-                    } while (current = current.parent());
+                    } while ((current = current.parent()));
 
                     return self.tree;
                 }, function() {
@@ -160,7 +160,7 @@ define([
                 self.tree.find('/root' + (toParams.path === '/' ? '' : toParams.path)).then(function(node) {
                     self.$treeFactory.walkParent(node, function(parent) {
                         parent.attr('collapsed', false);
-                    })
+                    });
                     self.$treeFactory.activate(node);
                 });
             }

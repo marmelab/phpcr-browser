@@ -44,7 +44,7 @@ define([], function() {
                             name: self.$scope.nodeCreationForm.name
                         }),
                         hide: function() {
-                            return self.hideNodeCreationForm()
+                            return self.hideNodeCreationForm();
                         }
                     });
                 });

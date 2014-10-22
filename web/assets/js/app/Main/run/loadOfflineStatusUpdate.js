@@ -8,7 +8,7 @@ define([], function () {
             if ($state.current.name !== 'repositories') {
                 params = {
                     repository: $state.params.repository
-                }
+                };
             }
 
             $graph.find(params, { cache: false }).then(function() {

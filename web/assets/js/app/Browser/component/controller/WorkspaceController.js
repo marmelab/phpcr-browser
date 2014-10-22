@@ -36,7 +36,7 @@ define([
                     return self.$scope.tree
                         .find('/root' + data.draggableData.tree.path)
                         .then(function(node) {
-                            self.$$treeRemove(node)
+                            self.$$treeRemove(node);
                         });
                 }
                 return self.$notification.error('You can not drop a node here');
@@ -49,7 +49,7 @@ define([
                 self.$scope.tree.find('/root' + data.droppableData.tree.path)
             ]).then(function(results) {
                 self.$$treeMove(results[0], results[1]);
-            })
+            });
         });
 
         this.$scope.$on('$treeCreate', function($event, data) {
@@ -78,8 +78,8 @@ define([
     };
 
     WorkspaceController.prototype.$$treeMove = function(treeToMoved, treeDestination) {
-        var self = this
-            parent = treeToMoved.parent();
+        var self = this,
+            parent = treeToMoved.parent()
         ;
 
         treeToMoved.attr('pending', true);
@@ -129,7 +129,7 @@ define([
                 self.$notification.errorFromResponse(err);
             })
         ;
-    }
+    };
 
     WorkspaceController.prototype.$$treeCreate = function(parent, tree, hideCallback) {
         var self = this;
@@ -155,12 +155,12 @@ define([
                 self.$notification.errorFromResponse(err);
             })
         ;
-    }
+    };
 
     WorkspaceController.prototype.$$triggerTreeClick = function(tree, cache) {
         return this.treeClick(this.$q.when(tree), cache).then(function() {
             tree.attr('collapsed', false);
-        })
+        });
     };
 
     WorkspaceController.prototype.$$destroy = function() {

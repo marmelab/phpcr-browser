@@ -236,7 +236,7 @@ define([
                 return self.$q.reject(err);
             })
         ;
-    }
+    };
 
     NodeController.prototype.isPropertyNameValid = function(nameField) {
         var valid = !nameField.$dirty || (nameField.$dirty && !nameField.$error.required);
@@ -266,8 +266,8 @@ define([
     NodeController.prototype.clearSavedProperty = function() {
         this.$scope.savedProperty = null;
 
-        if (self.savedPropertyTimeout) {
-            self.$timeout.cancel(self.savedPropertyTimeout);
+        if (this.savedPropertyTimeout) {
+            this.$timeout.cancel(this.savedPropertyTimeout);
         }
     };
 

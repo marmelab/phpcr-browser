@@ -41,7 +41,7 @@ define([
     };
 
     Repository.prototype.hasSupportedOperation = function(name) {
-        return this.supportedOperations.indexOf(name) !== -1
+        return this.supportedOperations.indexOf(name) !== -1;
     };
 
     return Repository;
