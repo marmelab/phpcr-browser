@@ -1,5 +1,7 @@
 .navbar {
     @include user-select(none);
+    border: none;
+
     #search {
         margin-right: 0px;
         padding: 0;
@@ -38,6 +40,9 @@
 
     .navbar-nav > li > .dropdown-menu{
         @include border-radius(0);
+        @include box-shadow(none);
+
+        border-top: none;
 
         &>li {
             &>a {
