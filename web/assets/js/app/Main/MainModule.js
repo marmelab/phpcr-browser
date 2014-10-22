@@ -17,8 +17,6 @@ define(
         'app/Main/run/loadProgress',
         'app/Main/run/loadOfflineStatusUpdate',
 
-        'text!app/config.json',
-
         'ui-router', 'angular-translate', 'angular-translate-storage-cookie', 'ui-bootstrap-tpls', 'angular-cookies'
     ],
     function (
@@ -37,9 +35,7 @@ define(
 
         loadStateErrorListener,
         loadProgress,
-        loadOfflineStatusUpdate,
-
-        config
+        loadOfflineStatusUpdate
     ) {
         'use strict';
 
