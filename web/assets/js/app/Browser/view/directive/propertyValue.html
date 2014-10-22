@@ -1,7 +1,7 @@
 <div ng-if="!isIterable(property.value) || property.value.length === 0" editable="property.value" editable-options="{ property: property }" editable-on-save="edit(value, options)">
     {{ property.value }}
 </div>
-<table class="table table-bordered table-striped" ng-if="isIterable(property.value)">
+<table class="table table-bordered table-striped" ng-if="isIterable(property.value) && property.value.length > 0">
     <tbody>
         <tr ng-repeat="(key, value) in property.value">
             <td style="width: 30%">{{ key }}</td>
