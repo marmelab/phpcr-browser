@@ -107,6 +107,10 @@ Add a VirtualHost to your Apache config (and add in it 'AllowEncodedSlashes On')
   DocumentRoot /path/to/the/browser/web
   ServerName phpcr-browser.lo
   AllowEncodedSlashes On
+  
+  <Directory "/path/to/the/browser/web">
+    AllowOverride All
+  </Directory>
 </VirtualHost>
 ```
 And update your `/etc/hosts` file by adding:
