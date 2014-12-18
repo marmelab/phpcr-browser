@@ -4,3 +4,4 @@ node_js:
 before_script:
   - 'npm install -g bower'
   - 'bower install'
+sudo: false # Use Docker for quicker builds, see http://blog.travis-ci.com/2014-12-17-faster-builds-with-container-based-infrastructure/
