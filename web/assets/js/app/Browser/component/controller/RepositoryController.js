@@ -8,13 +8,15 @@ define([
      * @param {$scope} $scope
      * @constructor
      */
-    function RepositoryController($scope, $state, $graph, $search, $fuzzyFilter, $notification) {
+    function RepositoryController($scope, $state, $graph, $search, $fuzzyFilter, $success, $error, $errorFromResponse) {
         this.$scope = $scope;
         this.$state = $state;
         this.$graph = $graph;
         this.$search = $search;
         this.$fuzzyFilter = $fuzzyFilter;
-        this.$notification = $notification;
+        this.$success = $success;
+        this.$error = $error;
+        this.$errorFromResponse = $errorFromResponse;
 
         this.$$init();
     }
@@ -104,18 +106,26 @@ define([
         var self = this;
 
         if (!this.$scope.workspaceCreationForm.name) {
-            return this.$notification.error('Name is empty');
+            return this.$error()
+                .content('Name is empty')
+                .timeout(3000)
+                .save();
         }
 
         this.repository.createWorkspace(this.$scope.workspaceCreationForm)
             .then(function() {
-                self.$notification.success('Workspace created');
+                self.$success()
+                    .content('Workspace created')
+                    .timeout(3000)
+                    .save();
             })
             .then(function() {
                 self.hideWorkspaceCreationForm();
                 self.$$loadWorkspaces(false);
             }, function(err) {
-                self.$notification.errorFromResponse(err);
+                self.$errorFromResponse(err)
+                    .timeout(3000)
+                    .save();
             })
         ;
     };
@@ -126,12 +136,17 @@ define([
         workspace
             .remove()
             .then(function() {
-                self.$notification.success('Workspace deleted');
+                self.$success()
+                    .content('Workspace deleted')
+                    .timeout(3000)
+                    .save();
             })
             .then(function() {
                 self.$$loadWorkspaces(false);
             }, function(err) {
-                self.$notification.errorFromResponse(err);
+                self.$errorFromResponse(err)
+                    .timeout(3000)
+                    .save();
             })
         ;
     };
@@ -144,11 +159,13 @@ define([
         this.$graph = undefined;
         this.$search = undefined;
         this.$fuzzyFilter = undefined;
-        this.$notification = undefined;
+        this.$success = undefined;
+        this.$error = undefined;
+        this.$errorFromResponse = undefined;
         this.search = undefined;
     };
 
-    RepositoryController.$inject = ['$scope', '$state', '$graph', '$search', '$fuzzyFilter', '$notification'];
+    RepositoryController.$inject = ['$scope', '$state', '$graph', '$search', '$fuzzyFilter', '$success', '$error', '$errorFromResponse'];
 
     return RepositoryController;
 });

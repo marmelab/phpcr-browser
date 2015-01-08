@@ -12,4 +12,3 @@ define([], function () {
 
     return configureRestangular;
 });
-

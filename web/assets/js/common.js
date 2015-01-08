@@ -13,7 +13,8 @@ require.config({
         'ui-bootstrap': '../bower_components/angular-bootstrap/ui-bootstrap.min',
         'ui-bootstrap-tpls': '../bower_components/angular-bootstrap/ui-bootstrap-tpls.min',
         'ui-router': '../bower_components/angular-ui-router/release/angular-ui-router.min',
-        'ui-util-keypress': '../bower_components/angular-ui-utils/keypress.min'
+        'ui-util-keypress': '../bower_components/angular-ui-utils/keypress.min',
+        'ng-n': '../bower_components/ng-n/ng-n.min'
     },
     shim: {
         'angular' : {'exports' : 'angular', 'deps': ['jquery']},
@@ -29,7 +30,8 @@ require.config({
             deps: ['ui-bootstrap']
         },
         'ui-router': ['angular'],
-        'ui-util-keypress': ['angular']
+        'ui-util-keypress': ['angular'],
+        'ng-n': ['angular']
     },
     modules: [
         {
@@ -47,7 +49,8 @@ require.config({
                 'tree',
                 'ui-bootstrap-tpls',
                 'ui-router',
-                'ui-util-keypress'
+                'ui-util-keypress',
+                'ng-n'
             ],
             override: {
                 generateSourceMaps: false,

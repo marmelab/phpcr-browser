@@ -1,10 +1,12 @@
 define([], function () {
     "use strict";
 
-    function loadRequestAnimationFrame($rootScope, $notification, $state) {
+    function loadStateErrorListener($rootScope, $state, $errorFromResponse) {
         var listener = function(evt, toState, toParams, fromState, fromParams, err) {
             return $state.go('repositories').then(function() {
-                $notification.errorFromResponse(err);
+                $errorFromResponse(err)
+                    .timeout(3000)
+                    .save();
             });
         };
 
@@ -13,8 +15,7 @@ define([], function () {
         $rootScope.$on('$stateNotFound', listener);
     }
 
-    loadRequestAnimationFrame.$inject = ['$rootScope', '$notification', '$state'];
+    loadStateErrorListener.$inject = ['$rootScope', '$state', '$errorFromResponse'];
 
-    return loadRequestAnimationFrame;
+    return loadStateErrorListener;
 });
-

@@ -6,9 +6,8 @@ define([], function () {
      * @param {$scope} $scope
      * @constructor
      */
-    function AppController($scope, $notification) {
+    function AppController($scope) {
         this.$scope = $scope;
-        this.$scope.$notification = $notification;
 
         this.$$init();
     }
@@ -25,7 +24,7 @@ define([], function () {
         this.$scope = undefined;
     };
 
-    AppController.$inject = ['$scope', '$notification'];
+    AppController.$inject = ['$scope'];
 
     return AppController;
 });

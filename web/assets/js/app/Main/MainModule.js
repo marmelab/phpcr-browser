@@ -6,8 +6,8 @@ define(
         'app/Main/component/controller/AppController',
         'app/Main/component/controller/NavbarController',
 
-        'app/Main/component/service/Notification',
         'app/Main/component/service/Search',
+        'app/Main/component/service/ErrorFromResponse',
 
         'app/Main/config/routing',
         'app/Main/config/loadHttpInterceptor',
@@ -17,7 +17,10 @@ define(
         'app/Main/run/loadProgress',
         'app/Main/run/loadOfflineStatusUpdate',
 
-        'ui-router', 'angular-translate', 'angular-translate-storage-cookie', 'ui-bootstrap-tpls', 'angular-cookies'
+        'app/Main/util/notificationPatcher',
+
+        'ui-router', 'angular-translate', 'angular-translate-storage-cookie', 'ui-bootstrap-tpls', 'angular-cookies',
+        'ng-n'
     ],
     function (
         angular,
@@ -26,8 +29,8 @@ define(
         AppController,
         NavbarController,
 
-        Notification,
         Search,
+        ErrorFromResponse,
 
         routing,
         loadHttpInterceptor,
@@ -35,7 +38,9 @@ define(
 
         loadStateErrorListener,
         loadProgress,
-        loadOfflineStatusUpdate
+        loadOfflineStatusUpdate,
+
+        notificationPatcher
     ) {
         'use strict';
 
@@ -43,7 +48,8 @@ define(
             'ui.router',
             'pascalprecht.translate',
             'ui.bootstrap',
-            'ngCookies'
+            'ngCookies',
+            'ngN'
         ]);
 
         MainModule.controller('AppController', AppController);
@@ -51,7 +57,28 @@ define(
 
         MainModule.factory('$progress', function() { return NProgress; });
 
-        MainModule.service('$notification', Notification);
+        MainModule.factory('$error', ['$translate', '$n', function($translate, $n) {
+            return notificationPatcher($n.extend({ 'type': 'danger', content: '' }), $translate);
+        }]);
+
+        MainModule.factory('$info', ['$translate', '$n', function($translate, $n) {
+            return notificationPatcher($n.extend({ 'type': 'info', content: '' }), $translate);
+        }]);
+
+        MainModule.factory('$success', ['$translate', '$n', function($translate, $n) {
+            return notificationPatcher($n.extend({ 'type': 'success', content: '' }), $translate);
+        }]);
+
+        MainModule.factory('$warning', ['$translate', '$n', function($translate, $n) {
+            return notificationPatcher($n.extend({ 'type': 'warning', content: '' }), $translate);
+        }]);
+
+        MainModule.factory('$error', ['$translate', '$n', function($translate, $n) {
+            return notificationPatcher($n.extend({ 'type': 'danger', content: '' }), $translate);
+        }]);
+
+        MainModule.factory('$errorFromResponse', ErrorFromResponse);
+
         MainModule.service('$search', Search);
 
         MainModule.config(routing);

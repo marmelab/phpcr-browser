@@ -3,14 +3,16 @@ define([
 ], function(angular) {
     'use strict';
 
-    function WorkspaceController($scope, $tree, $q, $state, $graph, $treeFactory, $notification) {
+    function WorkspaceController($scope, $tree, $q, $state, $graph, $treeFactory, $success, $error, $errorFromResponse) {
         this.$scope = $scope;
         this.$tree = $tree;
         this.$q = $q;
         this.$state = $state;
         this.$graph = $graph;
         this.$treeFactory = $treeFactory;
-        this.$notification = $notification;
+        this.$success = $success;
+        this.$error = $error;
+        this.$errorFromResponse = $errorFromResponse;
 
         this.$$init();
     }
@@ -102,9 +104,14 @@ define([
                 return self.$$triggerTreeClick(treeToMoved);
             })
             .then(function() {
-                self.$notification.success('Node moved');
+                self.$success()
+                    .content('Node moved')
+                    .timeout(3000)
+                    .save();
             }, function(err) {
-                self.$notification.errorFromResponse(err);
+                self.$errorFromResponse(err)
+                    .timeout(3000)
+                    .save();
             })
             .finally(function() {
                 treeToMoved.attr('pending', false);
@@ -124,9 +131,14 @@ define([
                     return self.$$triggerTreeClick(tree.parent(), false);
                 }
             }).then(function() {
-                self.$notification.success('Node removed');
+                self.$success()
+                    .content('Node removed')
+                    .timeout(3000)
+                    .save();
             }, function(err) {
-                self.$notification.errorFromResponse(err);
+                self.$errorFromResponse(err)
+                    .timeout(3000)
+                    .save();
             })
         ;
     };
@@ -145,14 +157,19 @@ define([
             })
             .then(function() {
                 hideCallback();
-                self.$notification.success('Node created');
+                self.$success()
+                    .content('Node created')
+                    .timeout(3000)
+                    .save();
             })
             .then(function() {
                 return self.$$triggerTreeClick(parent);
             }).then(function() {
                 return self.$$triggerTreeClick(tree);
             }, function(err) {
-                self.$notification.errorFromResponse(err);
+                self.$errorFromResponse(err)
+                    .timeout(3000)
+                    .save();
             })
         ;
     };
@@ -172,10 +189,12 @@ define([
         this.$state = undefined;
         this.$graph = undefined;
         this.$treeFactory = undefined;
-        this.$notification = undefined;
+        this.$success = undefined;
+        this.$error = undefined;
+        this.$errorFromResponse = undefined;
     };
 
-    WorkspaceController.$inject = ['$scope', '$tree', '$q', '$state', '$graph', '$treeFactory', '$notification'];
+    WorkspaceController.$inject = ['$scope', '$tree', '$q', '$state', '$graph', '$treeFactory', '$success', '$error', '$errorFromResponse'];
 
     return WorkspaceController;
 });
