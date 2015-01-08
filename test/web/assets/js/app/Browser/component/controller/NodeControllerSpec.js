@@ -3,12 +3,12 @@ define([
     'app/Browser/component/controller/NodeController',
     'mock/Graph',
     'mock/Search',
-    'mock/Notification',
     'mock/TreeFactory',
+    'mock/NotificationFactory',
     'mixin',
     'angular',
     'angular-mocks'
-], function(NodeController, Graph, Search, Notification, TreeFactory, mixin, angular) {
+], function(NodeController, Graph, Search, TreeFactory, NotificationFactory, mixin, angular) {
     'use strict';
 
     describe('NodeController', function() {
@@ -18,8 +18,10 @@ define([
             $graph,
             $search,
             $fuzzyFilter,
-            $notification,
             $treeFactory,
+            $error,
+            $success,
+            $errorFromResponse,
             nodeController,
             searchListener,
             removeSearchListener
@@ -55,9 +57,11 @@ define([
 
             $fuzzyFilter = jasmine.createSpy('$fuzzyFilter').andReturn(['a']);
 
-            $notification = new Notification();
-
             $treeFactory = TreeFactory;
+
+            $error = jasmine.createSpy('$error').andReturn(NotificationFactory());
+            $success = jasmine.createSpy('$success').andReturn(NotificationFactory());
+            $errorFromResponse = jasmine.createSpy('$errorFromResponse').andReturn(NotificationFactory());
 
             nodeController = new NodeController(
                 $scope,
@@ -65,8 +69,12 @@ define([
                 $graph,
                 $search,
                 $fuzzyFilter,
-                $notification,
-                $treeFactory
+                $treeFactory,
+                null,
+                null,
+                $success,
+                $error,
+                $errorFromResponse
             );
         });
 
@@ -113,8 +121,6 @@ define([
 
         it('should call node.renameNode when renameNode is called', function() {
             spyOn(nodeController, 'hideNodeRenameForm');
-            spyOn(nodeController.$notification, 'error');
-            spyOn(nodeController.$notification, 'success');
             spyOn(nodeController.$treeFactory, 'walkChildren');
 
             nodeController.$scope.node.rename = jasmine.createSpy('rename').andReturn(mixin.buildPromise());
@@ -133,14 +139,14 @@ define([
 
             nodeController.renameNode();
 
-            expect(nodeController.$notification.error).toHaveBeenCalledWith('Name is empty');
+            expect(nodeController.$error).toHaveBeenCalled();
 
-            nodeController.$notification.error.reset();
+            nodeController.$error.reset();
 
             nodeController.$scope.nodeRenameForm.name = nodeController.$scope.node.name;
             nodeController.renameNode();
 
-            expect(nodeController.$notification.error).not.toHaveBeenCalled();
+            expect(nodeController.$error).not.toHaveBeenCalled();
             expect(nodeController.hideNodeRenameForm).toHaveBeenCalled();
 
             nodeController.hideNodeRenameForm.reset();
@@ -212,6 +218,9 @@ define([
             expect(nodeController.$graph).toBeUndefined();
             expect(nodeController.$search).toBeUndefined();
             expect(nodeController.$fuzzyFilter).toBeUndefined();
+            expect(nodeController.$success).toBeUndefined();
+            expect(nodeController.$error).toBeUndefined();
+            expect(nodeController.$errorFromResponse).toBeUndefined();
             expect(nodeController.search).toBeUndefined();
             expect(nodeController.propertyTypes).toBeUndefined();
         });

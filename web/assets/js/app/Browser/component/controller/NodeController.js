@@ -139,7 +139,7 @@ define([
         var self = this;
 
         if (this.$scope.nodeRenameForm.name === null || this.$scope.nodeRenameForm.name.trim().length === 0) {
-            return this.$success()
+            return this.$error()
                     .content('Name is empty')
                     .timeout(3000)
                     .save();
@@ -377,7 +377,6 @@ define([
         this.$graph = undefined;
         this.$search = undefined;
         this.$fuzzyFilter = undefined;
-        this.$notification = undefined;
         this.$treeFactory = undefined;
         this.$timeout = undefined;
         this.$q = undefined;

@@ -1,10 +1,9 @@
 /*global describe,it,expect,beforeEach*/
 define([
     'app/Main/component/controller/AppController',
-    'mock/Notification',
     'angular',
     'angular-mocks'
-], function(AppController, Notification, angular) {
+], function(AppController, angular) {
     'use strict';
 
     describe('AppController', function() {
@@ -17,14 +16,8 @@ define([
         beforeEach(function() {
             $scope = $injector.get('$rootScope').$new();
 
-            $notification = new Notification();
-
-            appController = new AppController($scope, $notification);
+            appController = new AppController($scope);
             spyOn(appController, '$$destroy').andCallThrough();
-        });
-
-        it('should expose $notification on its $scope', function() {
-            expect(appController.$scope.$notification).toBe($notification);
         });
 
         it('should call $$destroy on $scope.$destroy() and set to undefined all its dependencies', function() {

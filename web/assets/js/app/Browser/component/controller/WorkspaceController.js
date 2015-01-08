@@ -32,7 +32,10 @@ define([
             if (!data.draggableData.tree && !data.droppableData.tree) {
                 return self.$scope.$broadcast('_$elementDropSuccess_', data);
             } else if (!data.draggableData.tree) {
-                return self.$notification.error('You can only drop a node here');
+                return self.$error()
+                    .content('You can only drop a node here')
+                    .timeout(3000)
+                    .save();
             } else if (!data.droppableData.tree) {
                 if (data.droppableData.trash) {
                     return self.$scope.tree
@@ -41,7 +44,10 @@ define([
                             self.$$treeRemove(node);
                         });
                 }
-                return self.$notification.error('You can not drop a node here');
+                return self.$error()
+                    .content('You can not drop a node here')
+                    .timeout(3000)
+                    .save();
             } else if (data.draggableData.tree.path === data.droppableData.tree.path) {
                 return;
             }
