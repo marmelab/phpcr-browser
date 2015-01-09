@@ -3,7 +3,7 @@ define([
 ], function(angular) {
     'use strict';
 
-    function NodeController($scope, $state, $graph, $search, $fuzzyFilter, $treeFactory, $timeout, $q, $success, $error, $errorFromResponse) {
+    function NodeController($scope, $state, $graph, $search, $fuzzyFilter, $treeFactory, $timeout, $q, $notify) {
         this.$scope = $scope;
         this.$state = $state;
         this.$graph = $graph;
@@ -12,9 +12,7 @@ define([
         this.$treeFactory = $treeFactory;
         this.$timeout = $timeout;
         this.$q = $q;
-        this.$success = $success;
-        this.$error = $error;
-        this.$errorFromResponse = $errorFromResponse;
+        this.$notify = $notify;
 
         this.$$init();
     }
@@ -139,7 +137,8 @@ define([
         var self = this;
 
         if (this.$scope.nodeRenameForm.name === null || this.$scope.nodeRenameForm.name.trim().length === 0) {
-            return this.$error()
+            return this.$notify()
+                    .type('danger')
                     .content('Name is empty')
                     .timeout(3000)
                     .save();
@@ -150,10 +149,11 @@ define([
         }
 
         this.$scope.node.rename(this.$scope.nodeRenameForm.name).then(function() {
-            self.$success()
-                    .content('Node renamed')
-                    .timeout(3000)
-                    .save();
+            self.$notify()
+                .type('success')
+                .content('Node renamed')
+                .timeout(3000)
+                .save();
 
             // We find the node in the tree to update its name and path
             self.$scope.tree
@@ -174,9 +174,11 @@ define([
                 })
             ;
         }, function(err) {
-            self.$errorFromResponse(err)
-                    .timeout(3000)
-                    .save();
+            self.$notify()
+                .type('response')
+                .content(err)
+                .timeout(3000)
+                .save();
         });
     };
 
@@ -188,24 +190,27 @@ define([
         }
 
         if (this.$scope.nodePropertyForm.name === undefined || this.$scope.nodePropertyForm.name.trim().length === 0) {
-            return this.$error()
-                .content('Name is empty')
-                .timeout(3000)
-                .save();
+            return this.$notify()
+                    .type('danger')
+                    .content('Name is empty')
+                    .timeout(3000)
+                    .save();
         }
 
         if (this.$scope.nodePropertyForm.value === undefined || this.$scope.nodePropertyForm.value.trim().length === 0) {
-            return this.$error()
+            return this.$notify()
+                .type('danger')
                 .content('Value is empty')
                 .timeout(3000)
                 .save();
         }
 
         if (Object.keys(this.$scope.node.properties).indexOf(this.$scope.nodePropertyForm.name) !== -1) {
-            return this.$error()
-                .content('The property already exists')
-                .timeout(3000)
-                .save();
+            return this.$notify()
+                    .type('danger')
+                    .content('The property already exists')
+                    .timeout(3000)
+                    .save();
         }
 
         var self = this,
@@ -222,13 +227,16 @@ define([
                 self.hideNodePropertyForm();
             })
             .then(function() {
-                self.$success()
+                self.$notify()
+                    .type('success')
                     .content('Property created')
                     .timeout(3000)
                     .save();
             }, function(err) {
                 self.$scope.nodePropertyForm.type = self.propertyTypes[self.$scope.nodePropertyForm.type];
-                self.$errorFromResponse(err)
+                self.$notify()
+                    .type('response')
+                    .content(err)
                     .timeout(3000)
                     .save();
             });
@@ -276,12 +284,15 @@ define([
         this.$$createProperty(this.$scope.savedProperty)
             .then(function() {
                 self.clearSavedProperty();
-                self.$success()
+                self.$notify()
+                    .type('success')
                     .content('Property restored')
                     .timeout(3000)
                     .save();
             }, function(err) {
-                self.$errorFromResponse(err)
+                self.$notify()
+                    .type('response')
+                    .content(err)
                     .timeout(3000)
                     .save();
             })
@@ -309,12 +320,15 @@ define([
                 self.savedPropertyTimeout = self.$timeout(function() {
                     self.$scope.savedProperty = null;
                 }, 5000);
-                self.$success()
+                self.$notify()
+                    .type('success')
                     .content('Property removed')
                     .timeout(3000)
                     .save();
             }, function(err) {
-                self.$errorFromResponse(err)
+                self.$notify()
+                    .type('response')
+                    .content(err)
                     .timeout(3000)
                     .save();
             })
@@ -325,7 +339,8 @@ define([
         var self = this;
 
         if (value ===  null || value.trim().length === 0) {
-            this.$error()
+            this.$notify()
+                .type('danger')
                 .content('Value is empty')
                 .timeout(3000)
                 .save();
@@ -339,13 +354,16 @@ define([
 
         return this.$$createProperty(property)
             .then(function() {
-                self.$success()
+                self.$notify()
+                    .type('success')
                     .content('Property updated')
                     .timeout(3000)
                     .save();
             }, function(err) {
                 property.value = oldValue;
-                self.$errorFromResponse(err)
+                self.$notify()
+                    .type('response')
+                    .content(err)
                     .timeout(3000)
                     .save();
                 return self.$q.reject(err);
@@ -380,15 +398,13 @@ define([
         this.$treeFactory = undefined;
         this.$timeout = undefined;
         this.$q = undefined;
-        this.$success = undefined;
-        this.$error = undefined;
-        this.$errorFromResponse = undefined;
+        this.$notify = undefined;
 
         this.search = undefined;
         this.propertyTypes = undefined;
     };
 
-    NodeController.$inject = ['$scope', '$state', '$graph', '$search', '$fuzzyFilter', '$treeFactory', '$timeout', '$q', '$success', '$error', '$errorFromResponse'];
+    NodeController.$inject = ['$scope', '$state', '$graph', '$search', '$fuzzyFilter', '$treeFactory', '$timeout', '$q', '$notify'];
 
     return NodeController;
 });

@@ -19,9 +19,7 @@ define([
             $search,
             $fuzzyFilter,
             $treeFactory,
-            $error,
-            $success,
-            $errorFromResponse,
+            $notify,
             nodeController,
             searchListener,
             removeSearchListener
@@ -59,9 +57,7 @@ define([
 
             $treeFactory = TreeFactory;
 
-            $error = jasmine.createSpy('$error').andReturn(NotificationFactory());
-            $success = jasmine.createSpy('$success').andReturn(NotificationFactory());
-            $errorFromResponse = jasmine.createSpy('$errorFromResponse').andReturn(NotificationFactory());
+            $notify = jasmine.createSpy('$notify').andReturn(NotificationFactory());
 
             nodeController = new NodeController(
                 $scope,
@@ -72,9 +68,7 @@ define([
                 $treeFactory,
                 null,
                 null,
-                $success,
-                $error,
-                $errorFromResponse
+                $notify
             );
         });
 
@@ -139,14 +133,14 @@ define([
 
             nodeController.renameNode();
 
-            expect(nodeController.$error).toHaveBeenCalled();
+            expect(nodeController.$notify).toHaveBeenCalled();
 
-            nodeController.$error.reset();
+            nodeController.$notify.reset();
 
             nodeController.$scope.nodeRenameForm.name = nodeController.$scope.node.name;
             nodeController.renameNode();
 
-            expect(nodeController.$error).not.toHaveBeenCalled();
+            expect(nodeController.$notify).not.toHaveBeenCalled();
             expect(nodeController.hideNodeRenameForm).toHaveBeenCalled();
 
             nodeController.hideNodeRenameForm.reset();
@@ -218,9 +212,7 @@ define([
             expect(nodeController.$graph).toBeUndefined();
             expect(nodeController.$search).toBeUndefined();
             expect(nodeController.$fuzzyFilter).toBeUndefined();
-            expect(nodeController.$success).toBeUndefined();
-            expect(nodeController.$error).toBeUndefined();
-            expect(nodeController.$errorFromResponse).toBeUndefined();
+            expect(nodeController.$notify).toBeUndefined();
             expect(nodeController.search).toBeUndefined();
             expect(nodeController.propertyTypes).toBeUndefined();
         });

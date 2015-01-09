@@ -3,16 +3,14 @@ define([
 ], function(angular) {
     'use strict';
 
-    function WorkspaceController($scope, $tree, $q, $state, $graph, $treeFactory, $success, $error, $errorFromResponse) {
+    function WorkspaceController($scope, $tree, $q, $state, $graph, $treeFactory, $notify) {
         this.$scope = $scope;
         this.$tree = $tree;
         this.$q = $q;
         this.$state = $state;
         this.$graph = $graph;
         this.$treeFactory = $treeFactory;
-        this.$success = $success;
-        this.$error = $error;
-        this.$errorFromResponse = $errorFromResponse;
+        this.$notify = $notify;
 
         this.$$init();
     }
@@ -32,10 +30,11 @@ define([
             if (!data.draggableData.tree && !data.droppableData.tree) {
                 return self.$scope.$broadcast('_$elementDropSuccess_', data);
             } else if (!data.draggableData.tree) {
-                return self.$error()
-                    .content('You can only drop a node here')
-                    .timeout(3000)
-                    .save();
+                return self.$notify()
+                            .type('danger')
+                            .content('You can only drop a node here')
+                            .timeout(3000)
+                            .save();
             } else if (!data.droppableData.tree) {
                 if (data.droppableData.trash) {
                     return self.$scope.tree
@@ -44,10 +43,11 @@ define([
                             self.$$treeRemove(node);
                         });
                 }
-                return self.$error()
-                    .content('You can not drop a node here')
-                    .timeout(3000)
-                    .save();
+                return self.$notify()
+                            .type('danger')
+                            .content('You can not drop a node here')
+                            .timeout(3000)
+                            .save();
             } else if (data.draggableData.tree.path === data.droppableData.tree.path) {
                 return;
             }
@@ -110,12 +110,15 @@ define([
                 return self.$$triggerTreeClick(treeToMoved);
             })
             .then(function() {
-                self.$success()
+                self.$notify()
+                    .type('success')
                     .content('Node moved')
                     .timeout(3000)
                     .save();
             }, function(err) {
-                self.$errorFromResponse(err)
+                self.$notify()
+                    .type('response')
+                    .content(err)
                     .timeout(3000)
                     .save();
             })
@@ -137,12 +140,15 @@ define([
                     return self.$$triggerTreeClick(tree.parent(), false);
                 }
             }).then(function() {
-                self.$success()
+                self.$notify()
+                    .type('success')
                     .content('Node removed')
                     .timeout(3000)
                     .save();
             }, function(err) {
-                self.$errorFromResponse(err)
+                self.$notify()
+                    .type('response')
+                    .content(err)
                     .timeout(3000)
                     .save();
             })
@@ -163,7 +169,8 @@ define([
             })
             .then(function() {
                 hideCallback();
-                self.$success()
+                self.$notify()
+                    .type('success')
                     .content('Node created')
                     .timeout(3000)
                     .save();
@@ -173,7 +180,9 @@ define([
             }).then(function() {
                 return self.$$triggerTreeClick(tree);
             }, function(err) {
-                self.$errorFromResponse(err)
+                self.$notify()
+                    .type('response')
+                    .content(err)
                     .timeout(3000)
                     .save();
             })
@@ -195,12 +204,10 @@ define([
         this.$state = undefined;
         this.$graph = undefined;
         this.$treeFactory = undefined;
-        this.$success = undefined;
-        this.$error = undefined;
-        this.$errorFromResponse = undefined;
+        this.$notify = undefined;
     };
 
-    WorkspaceController.$inject = ['$scope', '$tree', '$q', '$state', '$graph', '$treeFactory', '$success', '$error', '$errorFromResponse'];
+    WorkspaceController.$inject = ['$scope', '$tree', '$q', '$state', '$graph', '$treeFactory', '$notify'];
 
     return WorkspaceController;
 });

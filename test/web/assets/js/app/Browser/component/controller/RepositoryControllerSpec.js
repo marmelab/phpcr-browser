@@ -17,9 +17,7 @@ define([
             $graph,
             $search,
             $fuzzyFilter,
-            $error,
-            $success,
-            $errorFromResponse,
+            $notify,
             repositoryController,
             repository,
             searchListener,
@@ -54,9 +52,7 @@ define([
 
             $fuzzyFilter = jasmine.createSpy('$fuzzyFilter').andReturn(['default']);
 
-            $error = jasmine.createSpy('$error').andReturn(NotificationFactory());
-            $success = jasmine.createSpy('$success').andReturn(NotificationFactory());
-            $errorFromResponse = jasmine.createSpy('$errorFromResponse').andReturn(NotificationFactory());
+            $notify = jasmine.createSpy('$notify').andReturn(NotificationFactory());
 
             repositoryController = new RepositoryController(
                 $scope,
@@ -64,9 +60,7 @@ define([
                 $graph,
                 $search,
                 $fuzzyFilter,
-                $success,
-                $error,
-                $errorFromResponse
+                $notify
             );
         });
 
@@ -142,7 +136,7 @@ define([
 
         it('should call $notification.error when createWorkspace is called and $scope.workspaceCreationForm is null', function() {
             repositoryController.createWorkspace();
-            expect(repositoryController.$error).toHaveBeenCalled();
+            expect(repositoryController.$notify).toHaveBeenCalled();
         });
 
         it('should call repository.createWorkspace when createWorkspace is called and $scope.workspaceCreationForm is not null', function() {
@@ -153,7 +147,7 @@ define([
 
             repositoryController.createWorkspace();
             expect(repository.createWorkspace).toHaveBeenCalledWith({ name: 'Hey' });
-            expect(repositoryController.$success).toHaveBeenCalled();
+            expect(repositoryController.$notify).toHaveBeenCalled();
             expect(repositoryController.hideWorkspaceCreationForm).toHaveBeenCalled();
             expect(repositoryController.$$loadWorkspaces).toHaveBeenCalledWith(false);
             expect(repositoryController.$$loadWorkspaces.callCount).toBe(1); // the init call is not spied yet
@@ -182,7 +176,7 @@ define([
 
             repositoryController.$$removeWorkspace(workspace);
             expect(workspace.remove).toHaveBeenCalled();
-            expect(repositoryController.$success).toHaveBeenCalled();
+            expect(repositoryController.$notify).toHaveBeenCalled();
             expect(repositoryController.$$loadWorkspaces).toHaveBeenCalledWith(false);
             expect(repositoryController.$$loadWorkspaces.callCount).toBe(1); // the init call is not spied yet
         });
@@ -200,9 +194,7 @@ define([
             expect(repositoryController.$graph).toBeUndefined();
             expect(repositoryController.$search).toBeUndefined();
             expect(repositoryController.$fuzzyFilter).toBeUndefined();
-            expect(repositoryController.$success).toBeUndefined();
-            expect(repositoryController.$error).toBeUndefined();
-            expect(repositoryController.$errorFromResponse).toBeUndefined();
+            expect(repositoryController.$notify).toBeUndefined();
             expect(repositoryController.search).toBeUndefined();
         });
     });

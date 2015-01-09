@@ -18,9 +18,7 @@ define([
             $state,
             $graph,
             $treeFactory,
-            $error,
-            $success,
-            $errorFromResponse,
+            $notify,
             workspaceController,
             removeTreeListener,
             tree
@@ -61,9 +59,7 @@ define([
             $treeFactory = jasmine.createSpy('$treeFactory').andCallFake(TreeFactory);
             angular.extend($treeFactory, TreeFactory);
 
-            $error = jasmine.createSpy('$error').andReturn(NotificationFactory());
-            $success = jasmine.createSpy('$success').andReturn(NotificationFactory());
-            $errorFromResponse = jasmine.createSpy('$errorFromResponse').andReturn(NotificationFactory());
+            $notify = jasmine.createSpy('$notify').andReturn(NotificationFactory());
 
             workspaceController = new WorkspaceController(
                 $scope,
@@ -72,9 +68,7 @@ define([
                 $state,
                 $graph,
                 $treeFactory,
-                $success,
-                $error,
-                $errorFromResponse
+                $notify
             );
         });
 
@@ -94,11 +88,11 @@ define([
                 droppableData: {},
             });
 
-            expect(workspaceController.$error).not.toHaveBeenCalled();
+            expect(workspaceController.$notify).not.toHaveBeenCalled();
             expect(workspaceController.$$treeRemove).not.toHaveBeenCalled();
             expect(workspaceController.$$treeMove).not.toHaveBeenCalled();
 
-            workspaceController.$error.reset();
+            workspaceController.$notify.reset();
 
             workspaceController.$scope.$broadcast('$elementDropSuccess', {
                 draggableData: {
@@ -107,11 +101,11 @@ define([
                 droppableData: {},
             });
 
-            expect(workspaceController.$error).toHaveBeenCalled();
+            expect(workspaceController.$notify).toHaveBeenCalled();
             expect(workspaceController.$$treeRemove).not.toHaveBeenCalled();
             expect(workspaceController.$$treeMove).not.toHaveBeenCalled();
 
-            workspaceController.$error.reset();
+            workspaceController.$notify.reset();
 
             workspaceController.$scope.$broadcast('$elementDropSuccess', {
                 draggableData: {},
@@ -120,7 +114,7 @@ define([
                 },
             });
 
-            expect(workspaceController.$error).toHaveBeenCalled();
+            expect(workspaceController.$notify).toHaveBeenCalled();
             expect(workspaceController.$$treeRemove).not.toHaveBeenCalled();
             expect(workspaceController.$$treeMove).not.toHaveBeenCalled();
 
@@ -222,7 +216,7 @@ define([
             expect(treeDestination.attr).toHaveBeenCalledWith('hasChildren', true);
             expect(workspaceController.$$triggerTreeClick.calls[0].args).toEqual([treeDestination]);
             expect(workspaceController.$$triggerTreeClick.calls[1].args).toEqual([tree]);
-            expect(workspaceController.$success).toHaveBeenCalled();
+            expect(workspaceController.$notify).toHaveBeenCalled();
         });
 
         it('should call parent.append when $$treeCreate is called', function() {
@@ -245,7 +239,7 @@ define([
             expect($treeFactory.walkChildren).toHaveBeenCalledWith(parent, jasmine.any(Function));
             expect(parent.attr).toHaveBeenCalledWith('hasChildren', true);
             expect(hideCallback).toHaveBeenCalled();
-            expect(workspaceController.$success).toHaveBeenCalled();
+            expect(workspaceController.$notify).toHaveBeenCalled();
             expect(workspaceController.$$triggerTreeClick.calls[0].args).toEqual([parent]);
             expect(workspaceController.$$triggerTreeClick.calls[1].args).toEqual([tree]);
         });
@@ -273,7 +267,7 @@ define([
             expect(tree.remove).toHaveBeenCalled();
             expect(parent.attr).toHaveBeenCalledWith('hasChildren', false);
 
-            expect(workspaceController.$success).toHaveBeenCalled();
+            expect(workspaceController.$notify).toHaveBeenCalled();
             expect(workspaceController.$$triggerTreeClick).not.toHaveBeenCalled()
         });
 
@@ -307,9 +301,7 @@ define([
             expect(workspaceController.$state).toBeUndefined();
             expect(workspaceController.$graph).toBeUndefined();
             expect(workspaceController.$treeFactory).toBeUndefined();
-            expect(workspaceController.$success).toBeUndefined();
-            expect(workspaceController.$error).toBeUndefined();
-            expect(workspaceController.$errorFromResponse).toBeUndefined();
+            expect(workspaceController.$notify).toBeUndefined();
         });
     });
 });

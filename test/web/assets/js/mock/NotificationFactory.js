@@ -3,14 +3,18 @@ define('mock/NotificationFactory', [], function() {
 
     return function() {
         return {
-            content: function() {
+            type: function() {
                 return {
-                    timeout: function() {
+                    content: function() {
                         return {
-                            save: function() {}
-                        }
+                            timeout: function() {
+                                return {
+                                    save: function() {}
+                                };
+                            }
+                        };
                     }
-                }
+                };
             }
         };
     };

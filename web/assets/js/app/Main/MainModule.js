@@ -7,7 +7,6 @@ define(
         'app/Main/component/controller/NavbarController',
 
         'app/Main/component/service/Search',
-        'app/Main/component/service/ErrorFromResponse',
 
         'app/Main/config/routing',
         'app/Main/config/loadHttpInterceptor',
@@ -30,7 +29,6 @@ define(
         NavbarController,
 
         Search,
-        ErrorFromResponse,
 
         routing,
         loadHttpInterceptor,
@@ -57,27 +55,9 @@ define(
 
         MainModule.factory('$progress', function() { return NProgress; });
 
-        MainModule.factory('$error', ['$translate', '$n', function($translate, $n) {
-            return notificationPatcher($n.extend({ 'type': 'danger', content: '' }), $translate);
+        MainModule.factory('$notify', ['$translate', '$n', function($translate, $n) {
+            return notificationPatcher($n.extend({ type: '', content: '' }), $translate);
         }]);
-
-        MainModule.factory('$info', ['$translate', '$n', function($translate, $n) {
-            return notificationPatcher($n.extend({ 'type': 'info', content: '' }), $translate);
-        }]);
-
-        MainModule.factory('$success', ['$translate', '$n', function($translate, $n) {
-            return notificationPatcher($n.extend({ 'type': 'success', content: '' }), $translate);
-        }]);
-
-        MainModule.factory('$warning', ['$translate', '$n', function($translate, $n) {
-            return notificationPatcher($n.extend({ 'type': 'warning', content: '' }), $translate);
-        }]);
-
-        MainModule.factory('$error', ['$translate', '$n', function($translate, $n) {
-            return notificationPatcher($n.extend({ 'type': 'danger', content: '' }), $translate);
-        }]);
-
-        MainModule.factory('$errorFromResponse', ErrorFromResponse);
 
         MainModule.service('$search', Search);
 
