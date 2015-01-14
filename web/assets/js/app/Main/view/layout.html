@@ -1,11 +1,18 @@
 <div ui-view="navbar"></div>
 <div id="alert-container">
-    <alert
-        ng-repeat="notification in $notification.notifications"
-        type="{{ notification.type }}" close="$notification.close($index)"
-        ng-if="!notification.expired"
-    >
-        {{ notification.content }}
-    </alert>
+    <n-view>
+        <alert type="{{ notification.type() }}" close="notification.kill()" ng-if="notification.type() !== 'response'">
+            {{ notification.content() }}
+        </alert>
+        <alert type="warning" close="notification.kill()"
+            ng-if="notification.type() === 'response' && notification.content().status === 423">
+            {{ 'The resource is locked' | translate }}
+        </alert>
+        <alert type="danger" close="notification.kill()"
+            ng-if="notification.type() === 'response' && notification.content().status !== 423">
+            <span ng-if="notification.content().data.message">{{ notification.content().data.message | translate }}</span>
+            <span ng-if="!notification.content().data.message">{{ 'An error occured' | translate }}</span>
+        </alert>
+    </n-view>
 </div>
 <div ui-view class="container-fluid"></div>

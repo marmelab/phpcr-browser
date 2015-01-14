@@ -6,7 +6,6 @@ define(
         'app/Main/component/controller/AppController',
         'app/Main/component/controller/NavbarController',
 
-        'app/Main/component/service/Notification',
         'app/Main/component/service/Search',
 
         'app/Main/config/routing',
@@ -17,7 +16,10 @@ define(
         'app/Main/run/loadProgress',
         'app/Main/run/loadOfflineStatusUpdate',
 
-        'ui-router', 'angular-translate', 'angular-translate-storage-cookie', 'ui-bootstrap-tpls', 'angular-cookies'
+        'app/Main/util/notificationPatcher',
+
+        'ui-router', 'angular-translate', 'angular-translate-storage-cookie', 'ui-bootstrap-tpls', 'angular-cookies',
+        'ng-n'
     ],
     function (
         angular,
@@ -26,7 +28,6 @@ define(
         AppController,
         NavbarController,
 
-        Notification,
         Search,
 
         routing,
@@ -35,7 +36,9 @@ define(
 
         loadStateErrorListener,
         loadProgress,
-        loadOfflineStatusUpdate
+        loadOfflineStatusUpdate,
+
+        notificationPatcher
     ) {
         'use strict';
 
@@ -43,7 +46,8 @@ define(
             'ui.router',
             'pascalprecht.translate',
             'ui.bootstrap',
-            'ngCookies'
+            'ngCookies',
+            'ngN'
         ]);
 
         MainModule.controller('AppController', AppController);
@@ -51,7 +55,10 @@ define(
 
         MainModule.factory('$progress', function() { return NProgress; });
 
-        MainModule.service('$notification', Notification);
+        MainModule.factory('$notify', ['$translate', '$n', function($translate, $n) {
+            return notificationPatcher($n.extend({ type: '', content: '' }), $translate);
+        }]);
+
         MainModule.service('$search', Search);
 
         MainModule.config(routing);

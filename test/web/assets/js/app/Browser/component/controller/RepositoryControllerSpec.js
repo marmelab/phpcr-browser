@@ -3,11 +3,11 @@ define([
     'app/Browser/component/controller/RepositoryController',
     'mock/Graph',
     'mock/Search',
-    'mock/Notification',
+    'mock/NotificationFactory',
     'mixin',
     'angular',
     'angular-mocks'
-], function(RepositoryController, Graph, Search, Notification, mixin, angular) {
+], function(RepositoryController, Graph, Search, NotificationFactory, mixin, angular) {
     'use strict';
 
     describe('RepositoryController', function() {
@@ -17,7 +17,7 @@ define([
             $graph,
             $search,
             $fuzzyFilter,
-            $notification,
+            $notify,
             repositoryController,
             repository,
             searchListener,
@@ -51,7 +51,8 @@ define([
             });
 
             $fuzzyFilter = jasmine.createSpy('$fuzzyFilter').andReturn(['default']);
-            $notification = new Notification();
+
+            $notify = jasmine.createSpy('$notify').andReturn(NotificationFactory());
 
             repositoryController = new RepositoryController(
                 $scope,
@@ -59,7 +60,7 @@ define([
                 $graph,
                 $search,
                 $fuzzyFilter,
-                $notification
+                $notify
             );
         });
 
@@ -134,14 +135,11 @@ define([
         });
 
         it('should call $notification.error when createWorkspace is called and $scope.workspaceCreationForm is null', function() {
-            spyOn(repositoryController.$notification, 'error').andCallThrough();
-
             repositoryController.createWorkspace();
-            expect(repositoryController.$notification.error).toHaveBeenCalledWith('Name is empty');
+            expect(repositoryController.$notify).toHaveBeenCalled();
         });
 
         it('should call repository.createWorkspace when createWorkspace is called and $scope.workspaceCreationForm is not null', function() {
-            spyOn(repositoryController.$notification, 'success').andCallThrough();
             spyOn(repositoryController, 'hideWorkspaceCreationForm');
             spyOn(repositoryController, '$$loadWorkspaces');
 
@@ -149,7 +147,7 @@ define([
 
             repositoryController.createWorkspace();
             expect(repository.createWorkspace).toHaveBeenCalledWith({ name: 'Hey' });
-            expect(repositoryController.$notification.success).toHaveBeenCalledWith('Workspace created');
+            expect(repositoryController.$notify).toHaveBeenCalled();
             expect(repositoryController.hideWorkspaceCreationForm).toHaveBeenCalled();
             expect(repositoryController.$$loadWorkspaces).toHaveBeenCalledWith(false);
             expect(repositoryController.$$loadWorkspaces.callCount).toBe(1); // the init call is not spied yet
@@ -170,7 +168,6 @@ define([
         });
 
         it('should call workspace.remove when $$removeWorkspace is called', function() {
-            spyOn(repositoryController.$notification, 'success').andCallThrough();
             spyOn(repositoryController, '$$loadWorkspaces');
 
             var workspace = {
@@ -179,7 +176,7 @@ define([
 
             repositoryController.$$removeWorkspace(workspace);
             expect(workspace.remove).toHaveBeenCalled();
-            expect(repositoryController.$notification.success).toHaveBeenCalledWith('Workspace deleted');
+            expect(repositoryController.$notify).toHaveBeenCalled();
             expect(repositoryController.$$loadWorkspaces).toHaveBeenCalledWith(false);
             expect(repositoryController.$$loadWorkspaces.callCount).toBe(1); // the init call is not spied yet
         });
@@ -197,7 +194,7 @@ define([
             expect(repositoryController.$graph).toBeUndefined();
             expect(repositoryController.$search).toBeUndefined();
             expect(repositoryController.$fuzzyFilter).toBeUndefined();
-            expect(repositoryController.$notification).toBeUndefined();
+            expect(repositoryController.$notify).toBeUndefined();
             expect(repositoryController.search).toBeUndefined();
         });
     });

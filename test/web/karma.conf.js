@@ -13,7 +13,6 @@ module.exports = function (config) {
             {pattern: 'web/assets/bower_components/jquery/dist/jquery.min.js', included: false},
             {pattern: 'web/assets/bower_components/angular-mocks/angular-mocks.js', included: false},
 
-            // dionysos application files
             {pattern: 'web/assets/js/**/component/**/*.js', included: false},
             {pattern: 'web/assets/js/app/**/view/**/*.html', included: false},
 

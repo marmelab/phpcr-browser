@@ -3,11 +3,11 @@ define([
     'app/Browser/component/controller/WorkspaceController',
     'mock/Graph',
     'mock/TreeFactory',
-    'mock/Notification',
+    'mock/NotificationFactory',
     'mixin',
     'angular',
     'angular-mocks'
-], function(WorkspaceController, Graph, TreeFactory, Notification, mixin, angular) {
+], function(WorkspaceController, Graph, TreeFactory, NotificationFactory, mixin, angular) {
     'use strict';
 
     describe('WorkspaceController', function() {
@@ -18,7 +18,7 @@ define([
             $state,
             $graph,
             $treeFactory,
-            $notification,
+            $notify,
             workspaceController,
             removeTreeListener,
             tree
@@ -59,7 +59,7 @@ define([
             $treeFactory = jasmine.createSpy('$treeFactory').andCallFake(TreeFactory);
             angular.extend($treeFactory, TreeFactory);
 
-            $notification = new Notification();
+            $notify = jasmine.createSpy('$notify').andReturn(NotificationFactory());
 
             workspaceController = new WorkspaceController(
                 $scope,
@@ -68,7 +68,7 @@ define([
                 $state,
                 $graph,
                 $treeFactory,
-                $notification
+                $notify
             );
         });
 
@@ -80,7 +80,6 @@ define([
         it('should add a listener to $elementDropSuccess event', function() {
             expect(workspaceController.$scope.$on).toHaveBeenCalledWith('$elementDropSuccess', jasmine.any(Function));
 
-            spyOn($notification, 'error');
             spyOn(workspaceController, '$$treeRemove');
             spyOn(workspaceController, '$$treeMove');
 
@@ -89,9 +88,11 @@ define([
                 droppableData: {},
             });
 
-            expect($notification.error).not.toHaveBeenCalled();
+            expect(workspaceController.$notify).not.toHaveBeenCalled();
             expect(workspaceController.$$treeRemove).not.toHaveBeenCalled();
             expect(workspaceController.$$treeMove).not.toHaveBeenCalled();
+
+            workspaceController.$notify.reset();
 
             workspaceController.$scope.$broadcast('$elementDropSuccess', {
                 draggableData: {
@@ -100,9 +101,11 @@ define([
                 droppableData: {},
             });
 
-            expect($notification.error).toHaveBeenCalledWith('You can not drop a node here');
+            expect(workspaceController.$notify).toHaveBeenCalled();
             expect(workspaceController.$$treeRemove).not.toHaveBeenCalled();
             expect(workspaceController.$$treeMove).not.toHaveBeenCalled();
+
+            workspaceController.$notify.reset();
 
             workspaceController.$scope.$broadcast('$elementDropSuccess', {
                 draggableData: {},
@@ -111,7 +114,7 @@ define([
                 },
             });
 
-            expect($notification.error).toHaveBeenCalledWith('You can only drop a node here');
+            expect(workspaceController.$notify).toHaveBeenCalled();
             expect(workspaceController.$$treeRemove).not.toHaveBeenCalled();
             expect(workspaceController.$$treeMove).not.toHaveBeenCalled();
 
@@ -181,7 +184,6 @@ define([
         it('should call tree.moveTo when $$treeMove is called', function() {
             spyOn(workspaceController, '$$triggerTreeClick');
             spyOn($treeFactory, 'walkChildren');
-            spyOn($notification, 'success');
 
             var parent = {
                 append: jasmine.createSpy('append'),
@@ -214,13 +216,12 @@ define([
             expect(treeDestination.attr).toHaveBeenCalledWith('hasChildren', true);
             expect(workspaceController.$$triggerTreeClick.calls[0].args).toEqual([treeDestination]);
             expect(workspaceController.$$triggerTreeClick.calls[1].args).toEqual([tree]);
-            expect($notification.success).toHaveBeenCalledWith('Node moved');
+            expect(workspaceController.$notify).toHaveBeenCalled();
         });
 
         it('should call parent.append when $$treeCreate is called', function() {
             spyOn(workspaceController, '$$triggerTreeClick');
             spyOn($treeFactory, 'walkChildren');
-            spyOn($notification, 'success');
 
             var parent = {
                 append: jasmine.createSpy('append').andReturn(mixin.buildPromise()),
@@ -238,7 +239,7 @@ define([
             expect($treeFactory.walkChildren).toHaveBeenCalledWith(parent, jasmine.any(Function));
             expect(parent.attr).toHaveBeenCalledWith('hasChildren', true);
             expect(hideCallback).toHaveBeenCalled();
-            expect($notification.success).toHaveBeenCalledWith('Node created');
+            expect(workspaceController.$notify).toHaveBeenCalled();
             expect(workspaceController.$$triggerTreeClick.calls[0].args).toEqual([parent]);
             expect(workspaceController.$$triggerTreeClick.calls[1].args).toEqual([tree]);
         });
@@ -260,14 +261,13 @@ define([
             };
 
             spyOn(workspaceController, '$$triggerTreeClick');
-            spyOn($notification, 'success');
 
             workspaceController.$$treeRemove(tree);
 
             expect(tree.remove).toHaveBeenCalled();
             expect(parent.attr).toHaveBeenCalledWith('hasChildren', false);
 
-            expect($notification.success).toHaveBeenCalledWith('Node removed');
+            expect(workspaceController.$notify).toHaveBeenCalled();
             expect(workspaceController.$$triggerTreeClick).not.toHaveBeenCalled()
         });
 
@@ -301,6 +301,7 @@ define([
             expect(workspaceController.$state).toBeUndefined();
             expect(workspaceController.$graph).toBeUndefined();
             expect(workspaceController.$treeFactory).toBeUndefined();
+            expect(workspaceController.$notify).toBeUndefined();
         });
     });
 });

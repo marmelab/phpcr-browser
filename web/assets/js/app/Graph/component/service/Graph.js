@@ -5,10 +5,10 @@ define([
     'use strict';
 
     function Graph(Restangular, $cacheFactory) {
-       this.Restangular = Restangular;
-       this.$cacheFactory = $cacheFactory;
+        this.Restangular = Restangular;
+        this.$cacheFactory = $cacheFactory;
 
-       this.$$init();
+        this.$$init();
     }
 
     Graph.prototype.$$init = function() {

@@ -1,11 +1,11 @@
 define([], function() {
     'use strict';
 
-    function NodeCreationFormController($scope, $tree, $treeFactory, $notification) {
+    function NodeCreationFormController($scope, $tree, $treeFactory, $notify) {
         this.$scope = $scope;
         this.$tree = $tree;
         this.$treeFactory = $treeFactory;
-        this.$notification = $notification;
+        this.$notify = $notify;
 
         this.$$init();
     }
@@ -30,8 +30,14 @@ define([], function() {
     NodeCreationFormController.prototype.createNode = function() {
         var self = this;
 
-        if (this.$scope.nodeCreationForm.name === undefined || this.$scope.nodeCreationForm.name.trim().length === 0) {
-            return this.$notification.error('Name is empty');
+        if (this.$scope.nodeCreationForm.name === undefined ||
+            this.$scope.nodeCreationForm.name === null ||
+            this.$scope.nodeCreationForm.name.trim().length === 0) {
+            return this.$notify()
+                    .type('danger')
+                    .content('Name is empty')
+                    .timeout(3000)
+                    .save();
         }
 
         var unregisterListener = this.$tree.notified(function(tree) {
@@ -59,10 +65,10 @@ define([], function() {
         // We do not delete $scope because it is shared with the tree
         this.$tree = undefined;
         this.$treeFactory = undefined;
-        this.$notification = undefined;
+        this.$notify = undefined;
     };
 
-    NodeCreationFormController.$inject = ['$scope', '$tree', '$treeFactory', '$notification'];
+    NodeCreationFormController.$inject = ['$scope', '$tree', '$treeFactory', '$notify'];
 
     return NodeCreationFormController;
 });
