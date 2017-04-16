@@ -98,7 +98,7 @@ For using Jackalope Doctrine DBAL refer to [Installation](#installation).
 Usage
 -----
 
-####Using Apache VirtualHost
+#### Using Apache VirtualHost
 
 Add a VirtualHost to your Apache config (and add in it 'AllowEncodedSlashes On'):
 
@@ -121,7 +121,7 @@ And update your `/etc/hosts` file by adding:
 
 You can now access to the browser on `http://phpcr-browser.lo` (or equivalent domain as configured in your virtual host and hosts file).
 
-####Using PHP 5.4 integrated webserver
+#### Using PHP 5.4 integrated webserver
 
 You can also use PHP 5.4 integrated webserver by calling:
 
